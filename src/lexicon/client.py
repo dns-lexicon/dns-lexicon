@@ -205,7 +205,7 @@ with Client(config) as operations:
 
         if not action:
             raise AttributeError("action")
-        if not rtype:
+        if not rtype and not action == "list":
             raise AttributeError("type")
 
         try:
