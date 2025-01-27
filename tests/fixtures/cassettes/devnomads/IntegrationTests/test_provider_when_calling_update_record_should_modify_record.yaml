@@ -1,0 +1,357 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.21.0
+    method: GET
+    uri: https://api.devnomads.nl/services/dns/zones/example.nl.
+  response:
+    body:
+      string: '{"account": "", "api_rectify": false, "dnssec": false, "id": "example.nl.",
+        "kind": "Master", "last_check": 0, "masters": [], "name": "example.nl.",
+        "notified_serial": 0, "nsec3narrow": false, "nsec3param": "", "rrsets": [{"comments":
+        [], "name": "localhost.example.nl.", "records": [{"content": "127.0.0.1",
+        "disabled": false}], "ttl": 3600, "type": "A"}, {"comments": [], "name": "random.fqdntest.example.nl.",
+        "records": [{"content": "\"challengetoken\"", "disabled": false}], "ttl":
+        3600, "type": "TXT"}, {"comments": [], "name": "random.fulltest.example.nl.",
+        "records": [{"content": "\"challengetoken\"", "disabled": false}], "ttl":
+        3600, "type": "TXT"}, {"comments": [], "name": "random.test.example.nl.",
+        "records": [{"content": "\"challengetoken\"", "disabled": false}], "ttl":
+        3600, "type": "TXT"}, {"comments": [], "name": "_acme-challenge.test.example.nl.",
+        "records": [{"content": "\"challengetoken\"", "disabled": false}], "ttl":
+        3600, "type": "TXT"}, {"comments": [], "name": "_acme-challenge.deleterecordinset.example.nl.",
+        "records": [{"content": "\"challengetoken2\"", "disabled": false}], "ttl":
+        3600, "type": "TXT"}, {"comments": [], "name": "_acme-challenge.listrecordset.example.nl.",
+        "records": [{"content": "\"challengetoken1\"", "disabled": false}, {"content":
+        "\"challengetoken2\"", "disabled": false}], "ttl": 3600, "type": "TXT"}, {"comments":
+        [], "name": "_acme-challenge.createrecordset.example.nl.", "records":
+        [{"content": "\"challengetoken1\"", "disabled": false}, {"content": "\"challengetoken2\"",
+        "disabled": false}], "ttl": 3600, "type": "TXT"}, {"comments": [], "name":
+        "docs.example.nl.", "records": [{"content": "docs.example.com.example.nl.",
+        "disabled": false}], "ttl": 3600, "type": "CNAME"}, {"comments": [], "name":
+        "_acme-challenge.noop.example.nl.", "records": [{"content": "\"challengetoken\"",
+        "disabled": false}], "ttl": 3600, "type": "TXT"}, {"comments": [], "name":
+        "ttl.fqdn.example.nl.", "records": [{"content": "\"ttlshouldbe3600\"",
+        "disabled": false}], "ttl": 3600, "type": "TXT"}, {"comments": [], "name":
+        "_acme-challenge.fqdn.example.nl.", "records": [{"content": "\"challengetoken\"",
+        "disabled": false}], "ttl": 3600, "type": "TXT"}, {"comments": [], "name":
+        "_acme-challenge.full.example.nl.", "records": [{"content": "\"challengetoken\"",
+        "disabled": false}], "ttl": 3600, "type": "TXT"}], "serial": 0, "soa_edit":
+        "", "soa_edit_api": "", "url": "/services/dns/zones/example.nl."}'
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Connection:
+      - close
+      Content-Length:
+      - '2592'
+      Content-Security-Policy:
+      - default-src 'self'; style-src 'self' 'unsafe-inline'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"rrsets": [{"name": "orig.test.example.nl.", "type": "TXT", "records":
+      [{"content": "\"challengetoken\"", "disabled": false}], "ttl": 3600, "changetype":
+      "REPLACE"}]}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '175'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.21.0
+    method: PATCH
+    uri: https://api.devnomads.nl/services/dns/zones/example.nl.
+  response:
+    body:
+      string: ''
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Connection:
+      - close
+      Content-Length:
+      - '0'
+      Content-Security-Policy:
+      - default-src 'self'; style-src 'self' 'unsafe-inline'
+      Server:
+      - nginx
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - 1; mode=block
+    status:
+      code: 204
+      message: No Content
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.21.0
+    method: GET
+    uri: https://api.devnomads.nl/services/dns/zones/example.nl.
+  response:
+    body:
+      string: '{"account": "", "api_rectify": false, "dnssec": false, "id": "example.nl.",
+        "kind": "Master", "last_check": 0, "masters": [], "name": "example.nl.",
+        "notified_serial": 0, "nsec3narrow": false, "nsec3param": "", "rrsets": [{"comments":
+        [], "name": "localhost.example.nl.", "records": [{"content": "127.0.0.1",
+        "disabled": false}], "ttl": 3600, "type": "A"}, {"comments": [], "name": "random.fqdntest.example.nl.",
+        "records": [{"content": "\"challengetoken\"", "disabled": false}], "ttl":
+        3600, "type": "TXT"}, {"comments": [], "name": "random.fulltest.example.nl.",
+        "records": [{"content": "\"challengetoken\"", "disabled": false}], "ttl":
+        3600, "type": "TXT"}, {"comments": [], "name": "random.test.example.nl.",
+        "records": [{"content": "\"challengetoken\"", "disabled": false}], "ttl":
+        3600, "type": "TXT"}, {"comments": [], "name": "orig.test.example.nl.",
+        "records": [{"content": "\"challengetoken\"", "disabled": false}], "ttl":
+        3600, "type": "TXT"}, {"comments": [], "name": "_acme-challenge.test.example.nl.",
+        "records": [{"content": "\"challengetoken\"", "disabled": false}], "ttl":
+        3600, "type": "TXT"}, {"comments": [], "name": "_acme-challenge.deleterecordinset.example.nl.",
+        "records": [{"content": "\"challengetoken2\"", "disabled": false}], "ttl":
+        3600, "type": "TXT"}, {"comments": [], "name": "_acme-challenge.listrecordset.example.nl.",
+        "records": [{"content": "\"challengetoken1\"", "disabled": false}, {"content":
+        "\"challengetoken2\"", "disabled": false}], "ttl": 3600, "type": "TXT"}, {"comments":
+        [], "name": "_acme-challenge.createrecordset.example.nl.", "records":
+        [{"content": "\"challengetoken1\"", "disabled": false}, {"content": "\"challengetoken2\"",
+        "disabled": false}], "ttl": 3600, "type": "TXT"}, {"comments": [], "name":
+        "docs.example.nl.", "records": [{"content": "docs.example.com.example.nl.",
+        "disabled": false}], "ttl": 3600, "type": "CNAME"}, {"comments": [], "name":
+        "_acme-challenge.noop.example.nl.", "records": [{"content": "\"challengetoken\"",
+        "disabled": false}], "ttl": 3600, "type": "TXT"}, {"comments": [], "name":
+        "ttl.fqdn.example.nl.", "records": [{"content": "\"ttlshouldbe3600\"",
+        "disabled": false}], "ttl": 3600, "type": "TXT"}, {"comments": [], "name":
+        "_acme-challenge.fqdn.example.nl.", "records": [{"content": "\"challengetoken\"",
+        "disabled": false}], "ttl": 3600, "type": "TXT"}, {"comments": [], "name":
+        "_acme-challenge.full.example.nl.", "records": [{"content": "\"challengetoken\"",
+        "disabled": false}], "ttl": 3600, "type": "TXT"}], "serial": 0, "soa_edit":
+        "", "soa_edit_api": "", "url": "/services/dns/zones/example.nl."}'
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Connection:
+      - close
+      Content-Length:
+      - '2746'
+      Content-Security-Policy:
+      - default-src 'self'; style-src 'self' 'unsafe-inline'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"rrsets": [{"name": "orig.test.example.nl.", "records": [], "ttl":
+      3600, "type": "TXT", "changetype": "REPLACE"}]}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '123'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.21.0
+    method: PATCH
+    uri: https://api.devnomads.nl/services/dns/zones/example.nl.
+  response:
+    body:
+      string: ''
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Connection:
+      - close
+      Content-Length:
+      - '0'
+      Content-Security-Policy:
+      - default-src 'self'; style-src 'self' 'unsafe-inline'
+      Server:
+      - nginx
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - 1; mode=block
+    status:
+      code: 204
+      message: No Content
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.21.0
+    method: GET
+    uri: https://api.devnomads.nl/services/dns/zones/example.nl.
+  response:
+    body:
+      string: '{"account": "", "api_rectify": false, "dnssec": false, "id": "example.nl.",
+        "kind": "Master", "last_check": 0, "masters": [], "name": "example.nl.",
+        "notified_serial": 0, "nsec3narrow": false, "nsec3param": "", "rrsets": [{"comments":
+        [], "name": "localhost.example.nl.", "records": [{"content": "127.0.0.1",
+        "disabled": false}], "ttl": 3600, "type": "A"}, {"comments": [], "name": "random.fqdntest.example.nl.",
+        "records": [{"content": "\"challengetoken\"", "disabled": false}], "ttl":
+        3600, "type": "TXT"}, {"comments": [], "name": "random.fulltest.example.nl.",
+        "records": [{"content": "\"challengetoken\"", "disabled": false}], "ttl":
+        3600, "type": "TXT"}, {"comments": [], "name": "random.test.example.nl.",
+        "records": [{"content": "\"challengetoken\"", "disabled": false}], "ttl":
+        3600, "type": "TXT"}, {"comments": [], "name": "_acme-challenge.test.example.nl.",
+        "records": [{"content": "\"challengetoken\"", "disabled": false}], "ttl":
+        3600, "type": "TXT"}, {"comments": [], "name": "_acme-challenge.deleterecordinset.example.nl.",
+        "records": [{"content": "\"challengetoken2\"", "disabled": false}], "ttl":
+        3600, "type": "TXT"}, {"comments": [], "name": "_acme-challenge.listrecordset.example.nl.",
+        "records": [{"content": "\"challengetoken1\"", "disabled": false}, {"content":
+        "\"challengetoken2\"", "disabled": false}], "ttl": 3600, "type": "TXT"}, {"comments":
+        [], "name": "_acme-challenge.createrecordset.example.nl.", "records":
+        [{"content": "\"challengetoken1\"", "disabled": false}, {"content": "\"challengetoken2\"",
+        "disabled": false}], "ttl": 3600, "type": "TXT"}, {"comments": [], "name":
+        "docs.example.nl.", "records": [{"content": "docs.example.com.example.nl.",
+        "disabled": false}], "ttl": 3600, "type": "CNAME"}, {"comments": [], "name":
+        "_acme-challenge.noop.example.nl.", "records": [{"content": "\"challengetoken\"",
+        "disabled": false}], "ttl": 3600, "type": "TXT"}, {"comments": [], "name":
+        "ttl.fqdn.example.nl.", "records": [{"content": "\"ttlshouldbe3600\"",
+        "disabled": false}], "ttl": 3600, "type": "TXT"}, {"comments": [], "name":
+        "_acme-challenge.fqdn.example.nl.", "records": [{"content": "\"challengetoken\"",
+        "disabled": false}], "ttl": 3600, "type": "TXT"}, {"comments": [], "name":
+        "_acme-challenge.full.example.nl.", "records": [{"content": "\"challengetoken\"",
+        "disabled": false}], "ttl": 3600, "type": "TXT"}], "serial": 0, "soa_edit":
+        "", "soa_edit_api": "", "url": "/services/dns/zones/example.nl."}'
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Connection:
+      - close
+      Content-Length:
+      - '2592'
+      Content-Security-Policy:
+      - default-src 'self'; style-src 'self' 'unsafe-inline'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"rrsets": [{"name": "updated.test.example.nl.", "type": "TXT",
+      "records": [{"content": "\"challengetoken\"", "disabled": false}], "ttl": 3600,
+      "changetype": "REPLACE"}]}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '178'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.21.0
+    method: PATCH
+    uri: https://api.devnomads.nl/services/dns/zones/example.nl.
+  response:
+    body:
+      string: ''
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Connection:
+      - close
+      Content-Length:
+      - '0'
+      Content-Security-Policy:
+      - default-src 'self'; style-src 'self' 'unsafe-inline'
+      Server:
+      - nginx
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - 1; mode=block
+    status:
+      code: 204
+      message: No Content
+version: 1

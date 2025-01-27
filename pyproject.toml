@@ -128,7 +128,6 @@ envlist = [ "cover", "lint" , "mypy" ]
 [tool.tox.env_run_base]
 runner = "uv-venv-lock-runner"
 with_dev = true
-uv_sync_flags =  [ "--python={env_python}" ]  # Fix until https://github.com/tox-dev/tox-uv/issues/110 is fixed
 extras = [ "full" ]
 setenv.PYTEST_ADDOPTS = "--numprocesses auto"
 setenv.PYTHONHASHSEED = "0"
