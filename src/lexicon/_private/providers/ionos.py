@@ -15,7 +15,6 @@ class Provider(BaseProvider):
     def configure_parser(parser):
         parser.add_argument(
             "--api-key",
-            required=True,
             help="IONOS api key: public prefix + period + key proper",
         )
 
