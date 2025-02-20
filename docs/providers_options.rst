@@ -228,6 +228,9 @@ List of options
 .. _sakuracloud:
 .. include:: providers/sakuracloud.rst
 
+.. _scaleway:
+.. include:: providers/scaleway.rst
+
 .. _softlayer:
 .. include:: providers/softlayer.rst
 
