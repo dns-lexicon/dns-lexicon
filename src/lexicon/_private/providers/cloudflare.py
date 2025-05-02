@@ -16,6 +16,9 @@ LOGGER = logging.getLogger(__name__)
 class Provider(BaseProvider):
     """Provider class for Cloudflare"""
 
+    SPECIAL_TYPES = {"SSHFP", "CAA", "CERT", "DNSKEY", "DS", "HTTPS", "LOC", "NAPTR", "SMIMEA", "SRV",
+                     "SVCB", "TLSA", "URI"}
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["cloudflare.com"]
@@ -227,13 +230,59 @@ class Provider(BaseProvider):
         on the request
         """
         data = None
+        _fp = []
+        if rtype in self.SPECIAL_TYPES:
+            _fp = content.split(" ")
+            content = None
         if rtype == "SSHFP":
             # For some reason the CloudFlare API does not let you set content
             # directly when creating an SSHFP record. You need to pass the
             # fields that make up the record seperately, then the API joins
             # them back together
-            _fp = content.split(" ")
             data = {"algorithm": _fp[0], "type": _fp[1], "fingerprint": _fp[2]}
-            content = None
+        elif rtype == "CAA":
+            data = {"flags": _fp[0], "tag": _fp[1], "value": _fp[2]}
+        elif rtype == "CERT":
+            data = {"type": _fp[0], "key_tag": _fp[1], "algorithm": _fp[2], "certificate": _fp[3]}
+        elif rtype == "DNSKEY":
+            data = {"flags": _fp[0], "protocol": _fp[1], "algorithm": _fp[2], "public_key": _fp[3]}
+        elif rtype == "DS":
+            data = {"key_tag": _fp[0], "algorithm": _fp[1], "digest_type": _fp[2], "digest": _fp[3]}
+        elif rtype == "HTTPS":
+            data = {"priority": _fp[0], "target": _fp[1], "value": _fp[2]}
+        elif rtype == "LOC":
+            data = {
+                "lat_degrees": _fp[0],
+                "lat_minutes": _fp[1],
+                "lat_seconds": _fp[2],
+                "lat_direction": _fp[3],
+                "long_degrees": _fp[4],
+                "long_minutes": _fp[5],
+                "long_seconds": _fp[6],
+                "long_direction": _fp[7],
+                "altitude": _fp[8][:-1],
+                "size": _fp[9][:-1],
+                "precision_horz": _fp[10][:-1],
+                "precision_vert": _fp[11][:-1],
+            }
+        elif rtype == "NAPTR":
+            data = {
+                "order": _fp[0],
+                "preference": _fp[1],
+                "flags": _fp[2],
+                "service": _fp[3],
+                "regex": _fp[4],
+                "replacement": _fp[5]
+            }
+        elif rtype == "SMIMEA":
+            data = {"usage": _fp[0], "selector": _fp[1], "matching_type": _fp[2], "certificate": _fp[3]}
+        elif rtype == "SRV":
+            data = {"priority": _fp[0], "weight": _fp[1], "port": _fp[2], "target": _fp[3]}
+        elif rtype == "SVCB":
+            data = {"priority": _fp[0], "target": _fp[1], "value": _fp[2]}
+        elif rtype == "TLSA":
+            data = {"usage": _fp[0], "selector": _fp[1], "matching_type": _fp[2], "certificate": _fp[3]}
+        elif rtype == "URI":
+            data = {"weight": _fp[0], "target": _fp[1]}
 
         return content, data
