@@ -49,6 +49,42 @@ interactions:
       User-Agent:
       - python-requests/2.23.0
     method: GET
+    uri: https://api.dynu.com/v2/dns/getroot/test.example.com
+  response:
+    body:
+      string: '{"statusCode":200,"id":1024,"domainName":"example.com","hostname":"example.com","node":""}'
+    headers:
+      Cache-Control:
+      - no-store
+      Content-Length:
+      - '90'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Thu, 12 Mar 2020 22:19:14 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - Dynu Web Server
+      X-Powered-By:
+      - Dynu Dynamic DNS Service
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.23.0
+    method: GET
     uri: https://api.dynu.com/v2/dns
   response:
     body:
