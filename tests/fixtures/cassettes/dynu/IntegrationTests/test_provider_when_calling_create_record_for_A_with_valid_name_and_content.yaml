@@ -52,7 +52,7 @@ interactions:
     uri: https://api.dynu.com/v2/dns/getroot/test.example.com
   response:
     body:
-      string: '{"statusCode":200,"id":1024,"domainName":"example.com","hostname":"example.com","node":""}'
+      string: '{"statusCode":200,"id":1024,"domainName":"example.com","hostname":"test.example.com","node":"test"}'
     headers:
       Cache-Control:
       - no-store
