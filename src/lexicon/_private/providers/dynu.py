@@ -297,7 +297,7 @@ class Provider(BaseProvider):
         if not record_name.endswith(root_domain):
             record_name = f"{record_name}.{root_domain}"
         return record_name
-        
+
     def _relative_name(self, record_name: str) -> str:
         # strip trailing period from fqdn if present
         record_name = record_name.rstrip(".")
