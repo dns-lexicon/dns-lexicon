@@ -194,6 +194,48 @@ interactions:
       code: 200
       message: OK
 - request:
+    body: '{"recordType": "TXT", "state": true, "nodeName": "_acme-challenge.noop",
+      "textData": "challengetoken", "ttl": 3600}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '115'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.3
+    method: POST
+    uri: https://api.dynu.com/v2/dns/100373707/record
+  response:
+    body:
+      string: '{"statusCode":200,"id":13690819,"domainId":100373707,"domainName":"example.com","nodeName":"_acme-challenge.noop","hostname":"_acme-challenge.noop.example.com","recordType":"TXT","ttl":3600,"state":true,"content":"_acme-challenge.noop.example.com.
+        3600 IN TXT \"challengetoken\"","updatedOn":"2025-05-06T18:36:37.847","textData":"challengetoken"}'
+    headers:
+      Cache-Control:
+      - no-store
+      Connection:
+      - close
+      Content-Length:
+      - '346'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 06 May 2025 18:36:37 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - Dynu Web Server
+      X-Powered-By:
+      - Dynu Dynamic DNS Service
+    status:
+      code: 200
+      message: OK
+- request:
     body: null
     headers:
       Accept:
