@@ -122,11 +122,11 @@ class Provider(BaseProvider):
                     self.delete_record(identifier)
                     return self.create_record(rtype, name, content)
 
-            records = {identifier: self._to_dynu_record(rtype, None, content)}
+            records = {identifier: original}
 
         for ident, rec in records.items():
             add_rec = self._to_dynu_record(
-                rec["type"], self._relative_name(rec["name"]), rec["content"]
+                rec["type"], self._relative_name(rec["name"]), content
             )
             payload = self._post(f"/dns/{self.domain_id}/record/{ident}", add_rec)
             update = self._from_dynu_record(payload)
@@ -288,3 +288,22 @@ class Provider(BaseProvider):
             }.get(rtype, lambda: {})()
         )
         return output
+
+    def _full_name(self, record_name: str) -> str:
+        # strip trailing period from fqdn if present
+        record_name = record_name.rstrip(".")
+        # check if the record_name is fully specified
+        root_domain = self._get_root_domain_name()
+        if not record_name.endswith(root_domain):
+            record_name = f"{record_name}.{root_domain}"
+        return record_name
+
+    def _relative_name(self, record_name: str) -> str:
+        # strip trailing period from fqdn if present
+        record_name = record_name.rstrip(".")
+        # check if the record_name is fully specified
+        root_domain = self._get_root_domain_name()
+        if record_name.endswith(root_domain):
+            record_name = record_name[: -len(root_domain)]
+            record_name = record_name.rstrip(".")
+        return record_name
