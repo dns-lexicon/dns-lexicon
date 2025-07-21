@@ -165,6 +165,7 @@ class Provider(BaseProvider):
         if rtype is None or name is None:
             raise Exception("Must specify at least both rtype and name")
 
+        update_data = None
         for rrset in self.zone_data()["rrsets"]:
             if rrset["type"] == rtype and self._fqdn_name(
                 rrset["name"]
