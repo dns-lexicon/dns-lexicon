@@ -237,11 +237,12 @@ class Provider(BaseProvider):
                     update_data["changetype"] = "REPLACE"
                 break
 
-        request = {"rrsets": [update_data]}
-        LOGGER.debug("request: %s", request)
+        if update_data:
+            request = {"rrsets": [update_data]}
+            LOGGER.debug("request: %s", request)
 
-        self._patch("/zones/" + self._ensure_dot(self.domain), data=request)
-        self.notify_slaves()
+            self._patch("/zones/" + self._ensure_dot(self.domain), data=request)
+            self.notify_slaves()
 
         self._zone_data = None
         return True
