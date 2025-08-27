@@ -53,16 +53,30 @@ class Provider(BaseProvider):
     def authenticate(self):
         zone_id = self._get_provider_option("zone_id")
         if not zone_id:
-            payload = self._get("/zones", {"name": self.domain})
+            # Fetch all zones and filter locally since Cloudflare deprecated the name filter
+            # Handle pagination to ensure we get all zones
+            all_zones = []
+            page = 1
+            while True:
+                payload = self._get("/zones", {"page": page, "per_page": 100})
+                all_zones.extend(payload["result"])
+                
+                pages = payload["result_info"]["total_pages"]
+                if page >= pages:
+                    break
+                page += 1
+            
+            # Filter zones by domain name locally
+            matching_zones = [zone for zone in all_zones if zone["name"] == self.domain]
 
-            if not payload["result"]:
+            if not matching_zones:
                 raise AuthenticationError("No domain found")
-            if len(payload["result"]) > 1:
+            if len(matching_zones) > 1:
                 raise AuthenticationError(
                     "Too many domains found. This should not happen"
                 )
 
-            self.domain_id = payload["result"][0]["id"]
+            self.domain_id = matching_zones[0]["id"]
         else:
             payload = self._get(f"/zones/{zone_id}")
 
@@ -97,7 +111,7 @@ class Provider(BaseProvider):
                 (
                     True
                     for error in err.response.json()["errors"]
-                    if error["code"] == 81057
+                    if error["code"] in [81057, 81058]
                 ),
                 False,
             )
