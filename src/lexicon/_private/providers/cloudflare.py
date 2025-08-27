@@ -6,6 +6,7 @@ from argparse import ArgumentParser
 from typing import List
 
 import requests
+import requests.exceptions
 
 from lexicon.exceptions import AuthenticationError
 from lexicon.interfaces import Provider as BaseProvider
@@ -53,16 +54,27 @@ class Provider(BaseProvider):
     def authenticate(self):
         zone_id = self._get_provider_option("zone_id")
         if not zone_id:
-            payload = self._get("/zones", {"name": self.domain})
+            # Fetch all zones and find the matching one
+            # Note: Cloudflare deprecated the 'name' filter parameter
+            payload = self._get("/zones")
 
             if not payload["result"]:
-                raise AuthenticationError("No domain found")
-            if len(payload["result"]) > 1:
+                raise AuthenticationError("No zones found in account")
+
+            # Find the zone that matches our domain
+            matching_zones = [
+                zone for zone in payload["result"] 
+                if zone["name"] == self.domain
+            ]
+
+            if not matching_zones:
+                raise AuthenticationError(f"Domain '{self.domain}' not found in available zones")
+            if len(matching_zones) > 1:
                 raise AuthenticationError(
-                    "Too many domains found. This should not happen"
+                    f"Multiple zones found for domain '{self.domain}'. This should not happen"
                 )
 
-            self.domain_id = payload["result"][0]["id"]
+            self.domain_id = matching_zones[0]["id"]
         else:
             payload = self._get(f"/zones/{zone_id}")
 
