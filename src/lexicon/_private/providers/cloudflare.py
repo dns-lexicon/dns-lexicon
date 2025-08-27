@@ -6,7 +6,6 @@ from argparse import ArgumentParser
 from typing import List
 
 import requests
-import requests.exceptions
 
 from lexicon.exceptions import AuthenticationError
 from lexicon.interfaces import Provider as BaseProvider
@@ -43,7 +42,8 @@ class Provider(BaseProvider):
         )
         parser.add_argument(
             "--zone-id",
-            help="specify the zone id (if set, API token can be scoped to the target zone)",
+            help="specify the zone id (if set, API token can be scoped to the "
+            "target zone)",
         )
 
     def __init__(self, config):
@@ -68,10 +68,13 @@ class Provider(BaseProvider):
             ]
 
             if not matching_zones:
-                raise AuthenticationError(f"Domain '{self.domain}' not found in available zones")
+                raise AuthenticationError(
+                    f"Domain '{self.domain}' not found in available zones"
+                )
             if len(matching_zones) > 1:
                 raise AuthenticationError(
-                    f"Multiple zones found for domain '{self.domain}'. This should not happen"
+                    f"Multiple zones found for domain '{self.domain}'. "
+                    "This should not happen"
                 )
 
             self.domain_id = matching_zones[0]["id"]
