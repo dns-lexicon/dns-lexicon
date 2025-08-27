@@ -63,7 +63,7 @@ class Provider(BaseProvider):
 
             # Find the zone that matches our domain
             matching_zones = [
-                zone for zone in payload["result"] 
+                zone for zone in payload["result"]
                 if zone["name"] == self.domain
             ]
 
