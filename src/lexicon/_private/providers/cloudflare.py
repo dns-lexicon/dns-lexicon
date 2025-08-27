@@ -60,12 +60,12 @@ class Provider(BaseProvider):
             while True:
                 payload = self._get("/zones", {"page": page, "per_page": 100})
                 all_zones.extend(payload["result"])
-                
+
                 pages = payload["result_info"]["total_pages"]
                 if page >= pages:
                     break
                 page += 1
-            
+
             # Filter zones by domain name locally
             matching_zones = [zone for zone in all_zones if zone["name"] == self.domain]
 
