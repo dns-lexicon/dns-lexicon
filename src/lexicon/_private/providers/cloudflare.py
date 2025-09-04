@@ -30,10 +30,10 @@ class Provider(BaseProvider):
             2 - Unscoped API token: Use --auth-token with permissions Zone:Zone(read) + Zone:DNS(edit) for all zones.
                 This allows automatic zone discovery.
 
-            3 - Scoped API token: Use --auth-token and --zone-id with permissions Zone:Zone(read) + Zone:DNS(edit) 
+            3 - Scoped API token: Use --auth-token and --zone-id with permissions Zone:Zone(read) + Zone:DNS(edit)
                 for a specific zone. This is the most secure option and REQUIRED for scoped tokens.
-                
-                To find your zone ID: Go to https://dash.cloudflare.com -> select your domain -> 
+
+                To find your zone ID: Go to https://dash.cloudflare.com -> select your domain ->
                 copy the Zone ID from the right sidebar.
 
             Note: If you get "Failed to fetch zones" errors, you likely need to use option 3 with --zone-id.
