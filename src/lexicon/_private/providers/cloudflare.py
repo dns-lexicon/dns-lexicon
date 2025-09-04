@@ -106,7 +106,22 @@ class Provider(BaseProvider):
 
             self.domain_id = matching_zones[0]["id"]
         else:
-            payload = self._get(f"/zones/{zone_id}")
+            try:
+                payload = self._get(f"/zones/{zone_id}")
+            except requests.exceptions.HTTPError as err:
+                if err.response.status_code == 400:
+                    raise AuthenticationError(
+                        f"Unable to access Zone ID {zone_id}. This could mean:\n"
+                        f"1. The Zone ID is incorrect\n"
+                        f"2. Your API token doesn't have permission to access this zone\n"
+                        f"3. Your API token is scoped to a different zone\n"
+                        f"Please verify the Zone ID at https://dash.cloudflare.com and ensure your "
+                        f"API token has Zone:Zone(read) + Zone:DNS(edit) permissions for this specific zone.\n"
+                        f"Original error: {err}"
+                    )
+                else:
+                    # Re-raise non-400 errors
+                    raise
 
             if not payload["result"]:
                 raise AuthenticationError(f"No domain found for Zone ID {zone_id}")
