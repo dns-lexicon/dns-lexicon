@@ -110,13 +110,26 @@ class Provider(BaseProvider):
                 payload = self._get(f"/zones/{zone_id}")
             except requests.exceptions.HTTPError as err:
                 if err.response.status_code == 400:
+                    # Try to get more specific error details from Cloudflare API response
+                    error_details = "No additional details available"
+                    try:
+                        response_data = err.response.json()
+                        if "errors" in response_data and response_data["errors"]:
+                            error_messages = [error.get("message", "Unknown error") for error in response_data["errors"]]
+                            error_codes = [error.get("code", "Unknown code") for error in response_data["errors"]]
+                            error_details = f"Cloudflare errors: {', '.join(error_messages)} (codes: {', '.join(map(str, error_codes))})"
+                    except (ValueError, KeyError):
+                        # If we can't parse the JSON response, use the raw text
+                        error_details = f"Response: {err.response.text[:200]}..."
+
                     raise AuthenticationError(
-                        f"Unable to access Zone ID {zone_id}. This could mean:\n"
-                        f"1. The Zone ID is incorrect\n"
-                        f"2. Your API token doesn't have permission to access this zone\n"
-                        f"3. Your API token is scoped to a different zone\n"
-                        f"Please verify the Zone ID at https://dash.cloudflare.com and ensure your "
-                        f"API token has Zone:Zone(read) + Zone:DNS(edit) permissions for this specific zone.\n"
+                        f"Unable to access Zone ID {zone_id}. Status: {err.response.status_code}\n"
+                        f"{error_details}\n\n"
+                        f"Since you've verified the Zone ID and permissions are correct, this could be:\n"
+                        f"1. API token has IP address restrictions (check your current IP)\n"
+                        f"2. API token has expired or been revoked\n"
+                        f"3. Rate limiting is in effect\n"
+                        f"4. Temporary Cloudflare API issue\n\n"
                         f"Original error: {err}"
                     )
                 else:
