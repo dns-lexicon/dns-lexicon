@@ -23,14 +23,20 @@ class Provider(BaseProvider):
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.description = """
-            There are two ways to provide an authentication granting edition to the target CloudFlare DNS zone.
+            There are three ways to authenticate with the Cloudflare API:
 
-            1 - A Global API key, with --auth-username and --auth-token flags.
+            1 - Global API key: Use --auth-username (email) and --auth-token (global API key).
 
-            2 - An unscoped API token (permissions Zone:Zone(read) + Zone:DNS(edit) for all zones), with --auth-token flag.
+            2 - Unscoped API token: Use --auth-token with permissions Zone:Zone(read) + Zone:DNS(edit) for all zones.
+                This allows automatic zone discovery.
 
-            3 - A scoped API token (permissions Zone:Zone(read) + Zone:DNS(edit) for one zone), with --auth-token and --zone-id flags.
-            Finding zone_id value is explained in CloudFlare `Doc <https://developers.cloudflare.com/fundamentals/setup/find-account-and-zone-ids/>`_
+            3 - Scoped API token: Use --auth-token and --zone-id with permissions Zone:Zone(read) + Zone:DNS(edit) 
+                for a specific zone. This is the most secure option and REQUIRED for scoped tokens.
+                
+                To find your zone ID: Go to https://dash.cloudflare.com -> select your domain -> 
+                copy the Zone ID from the right sidebar.
+
+            Note: If you get "Failed to fetch zones" errors, you likely need to use option 3 with --zone-id.
         """
         parser.add_argument(
             "--auth-username",
@@ -42,7 +48,8 @@ class Provider(BaseProvider):
         )
         parser.add_argument(
             "--zone-id",
-            help="specify the zone id (if set, API token can be scoped to the target zone)",
+            help="specify the zone ID (REQUIRED for scoped API tokens, optional for others). "
+                 "Find it at https://dash.cloudflare.com -> select domain -> Zone ID in sidebar",
         )
 
     def __init__(self, config):
@@ -76,8 +83,12 @@ class Provider(BaseProvider):
                         all_zones = payload["result"]
                     except requests.exceptions.HTTPError as fallback_err:
                         raise AuthenticationError(
-                            f"Failed to fetch zones. API token may lack permissions. "
-                            f"Original error: {err}. Fallback error: {fallback_err}"
+                            f"Failed to fetch zones. This is likely a scoped API token that doesn't have "
+                            f"permission to list all zones. For scoped tokens, you must provide the zone_id parameter. "
+                            f"Find your zone ID at https://dash.cloudflare.com -> select your domain -> "
+                            f"copy the Zone ID from the right sidebar. "
+                            f"Then add --zone-id=YOUR_ZONE_ID to your dns-lexicon command. "
+                            f"Errors: {err}, {fallback_err}"
                         )
                 else:
                     # Re-raise non-400 errors
