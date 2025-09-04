@@ -125,11 +125,14 @@ class Provider(BaseProvider):
                     raise AuthenticationError(
                         f"Unable to access Zone ID {zone_id}. Status: {err.response.status_code}\n"
                         f"{error_details}\n\n"
-                        f"Since you've verified the Zone ID and permissions are correct, this could be:\n"
-                        f"1. API token has IP address restrictions (check your current IP)\n"
-                        f"2. API token has expired or been revoked\n"
-                        f"3. Rate limiting is in effect\n"
-                        f"4. Temporary Cloudflare API issue\n\n"
+                        f"This could mean:\n"
+                        f"1. The Zone ID is incorrect\n"
+                        f"2. Your API token doesn't have permission to access this zone\n"
+                        f"3. Your API token is scoped to a different zone\n"
+                        f"4. API token has IP address restrictions or has expired\n"
+                        f"5. Rate limiting is in effect or temporary Cloudflare API issue\n\n"
+                        f"Please verify the Zone ID at https://dash.cloudflare.com and ensure your "
+                        f"API token has Zone:Zone(read) + Zone:DNS(edit) permissions for this specific zone.\n\n"
                         f"Original error: {err}"
                     )
                 else:
