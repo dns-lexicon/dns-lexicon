@@ -54,17 +54,34 @@ class Provider(BaseProvider):
         zone_id = self._get_provider_option("zone_id")
         if not zone_id:
             # Fetch all zones and filter locally since Cloudflare deprecated the name filter
-            # Handle pagination to ensure we get all zones
+            # Try pagination first, with fallback for restricted API tokens
             all_zones = []
-            page = 1
-            while True:
-                payload = self._get("/zones", {"page": page, "per_page": 100})
-                all_zones.extend(payload["result"])
+            try:
+                # Handle pagination to ensure we get all zones
+                page = 1
+                while True:
+                    payload = self._get("/zones", {"page": page, "per_page": 100})
+                    all_zones.extend(payload["result"])
 
-                pages = payload["result_info"]["total_pages"]
-                if page >= pages:
-                    break
-                page += 1
+                    pages = payload["result_info"]["total_pages"]
+                    if page >= pages:
+                        break
+                    page += 1
+            except requests.exceptions.HTTPError as err:
+                if err.response.status_code == 400:
+                    # Pagination might not be supported for this API token
+                    # Try without pagination parameters as fallback
+                    try:
+                        payload = self._get("/zones")
+                        all_zones = payload["result"]
+                    except requests.exceptions.HTTPError as fallback_err:
+                        raise AuthenticationError(
+                            f"Failed to fetch zones. API token may lack permissions. "
+                            f"Original error: {err}. Fallback error: {fallback_err}"
+                        )
+                else:
+                    # Re-raise non-400 errors
+                    raise
 
             # Filter zones by domain name locally
             matching_zones = [zone for zone in all_zones if zone["name"] == self.domain]
