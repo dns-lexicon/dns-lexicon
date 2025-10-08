@@ -66,6 +66,13 @@ class Provider(ABC):
         self.domain = str(self.config.resolve("lexicon:domain"))
         self.domain_id = None
 
+        # Check the type is valid for the given provider.
+        if not self._type_valid(self.VALID_TYPES):
+            raise ValueError(self._get_lexicon_option('type') + " records are not supported by " + self.provider_name )
+
+    # Default types, override by changing this in the provider, disable check by setting to []
+    VALID_TYPES=["A", "AAAA", "CNAME", "MX", "NS", "SOA", "TXT", "SRV", "LOC"]
+
     # Provider API: instance methods
 
     @abstractmethod
@@ -228,3 +235,12 @@ class Provider(ABC):
 
     def _get_provider_option(self, option: str) -> str | None:
         return self.config.resolve(f"lexicon:{self.provider_name}:{option}")
+
+    def _type_valid(self, types: list[str]=[]) -> bool:
+        if types.len() == 0:
+            return True
+        try:
+            types.index(self._get_lexicon_option("type"))
+        except:
+            return False
+        return True

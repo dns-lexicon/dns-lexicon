@@ -36,7 +36,7 @@ import requests_unixsocket
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
-
+BaseProvider.VALID_TYPES = []
 
 class PowerDNSProviderError(Exception):
     """Generic PowerDNS exception"""
