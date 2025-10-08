@@ -27,6 +27,10 @@ from argparse import ArgumentParser
 from typing import List
 
 import requests
+# Support AF_UNIX pdns server sockets, supported since 5.0
+import os
+import requests_unixsocket
+requests_unixsocket.monkeypatch();
 
 from lexicon.interfaces import Provider as BaseProvider
 
@@ -47,7 +51,7 @@ class Provider(BaseProvider):
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument("--auth-token", help="specify token for authentication")
-        parser.add_argument("--pdns-server", help="URI for PowerDNS server")
+        parser.add_argument("--pdns-server", help="URI for PowerDNS server (provide a filename when communicating with AF_UNIX sockets)")
         parser.add_argument("--pdns-server-id", help="Server ID to interact with")
         parser.add_argument(
             "--pdns-disable-notify", help="Disable slave notifications from master"
@@ -63,6 +67,10 @@ class Provider(BaseProvider):
             )
 
         self.disable_slave_notify = self._get_provider_option("pdns-disable-notify")
+
+        # Mongle the api endpoint if it looks like an AF_UNIX socket
+        if os.path.exists(self.api_endpoint):
+            self.api_endpoint = 'http+unix://' + self.api_endpoint.replace('/','%2F');
 
         if self.api_endpoint.endswith("/"):
             self.api_endpoint = self.api_endpoint[:-1]
