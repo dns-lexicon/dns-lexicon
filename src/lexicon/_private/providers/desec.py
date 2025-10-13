@@ -299,7 +299,7 @@ class Provider(BaseProvider):
     @staticmethod
     def _identifier(match: StrDict, record: str) -> str:
         sha256 = hashlib.sha256()
-        sha256.update(f"{match['created']} => '{record}'".encode())
+        sha256.update(f"{match['name']} => {match['type']} => '{record}'".encode())
         return sha256.hexdigest()[0:7]
 
     @staticmethod
