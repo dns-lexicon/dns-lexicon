@@ -6,7 +6,7 @@ import hashlib
 import requests
 
 from argparse import ArgumentParser
-from typing import Literal, Tuple
+from typing import Optional, Literal, Tuple
 from urllib3.util.retry import Retry
 from requests.adapters import HTTPAdapter
 
@@ -22,11 +22,11 @@ class Provider(BaseProvider):
     """Provider class for deSEC"""
 
     StrDict = dict[str, str]
-    OptStr = str | None
-    OptStrDict = StrDict | None
-    OptStrDictList = list[StrDict] | None
+    OptStr = Optional[str]
+    OptStrDict = Optional[StrDict]
+    OptStrDictList = Optional[list[StrDict]]
     ActionType = Literal["update", "delete", "create"]
-    SanitizedResponseType = Tuple[str, str, dict | None]
+    SanitizedResponseType = Tuple[str, str, Optional[dict]]
 
     @staticmethod
     def get_nameservers() -> list[str]:
@@ -203,34 +203,35 @@ class Provider(BaseProvider):
 
         # Determine and update (or delete) the target record
         new_content = self._sanitize_request_content(content or "", rtype or "")
-        match _action:
-            case "create":
-                if new_content in desec_records:
-                    LOGGER.debug("The record already exists. Ignore.")
-                    return True
-                desec_records.append(new_content)
-            case "delete":
-                if old_content and (content or identifier):
-                    # Specific record
-                    desec_records.remove(old_content)
-                else:
-                    # Whole record set
-                    desec_records.clear()
-            case "update" | _:
-                if old_content not in desec_records:
-                    raise Exception("The record does not exist, so it can't be updated!")
+        if _action == "create":
+            if new_content in desec_records:
+                LOGGER.debug("The record already exists. Ignore.")
+                return True
+            desec_records.append(new_content)
+        elif _action == "delete":
+            if old_content and (content or identifier):
+                # Specific record
+                desec_records.remove(old_content)
+            else:
+                # Whole record set
+                desec_records.clear()
+        elif _action == "update":
+            if old_content not in desec_records:
+                raise Exception("The record does not exist, so it can't be updated!")
 
-                # The subname can't be changed.
-                # We need to delete the old record and create a new one.
-                old_subname = desec_rec["subname"]
-                new_subname = self._relative_name(name or "")
-                if old_subname != new_subname:
-                    LOGGER.debug("%s_record: new subname '%s' differs from old '%s'. Delete and recreate record.", _action, new_subname, old_subname)
-                    return self._record_action("delete", identifier, matches=matches) and \
-                        self.create_record(lexicon_rec["type"], new_subname, content or lexicon_rec["content"])
+            # The subname can't be changed.
+            # We need to delete the old record and create a new one.
+            old_subname = desec_rec["subname"]
+            new_subname = self._relative_name(name or "")
+            if old_subname != new_subname:
+                LOGGER.debug("%s_record: new subname '%s' differs from old '%s'. Delete and recreate record.", _action, new_subname, old_subname)
+                return self._record_action("delete", identifier, matches=matches) and \
+                    self.create_record(lexicon_rec["type"], new_subname, content or lexicon_rec["content"])
 
-                index = desec_records.index(old_content)
-                desec_records[index] = new_content
+            index = desec_records.index(old_content)
+            desec_records[index] = new_content
+        else:
+            raise Exception(f"Invalid action '{_action}'")
 
         # TTL is valid for all deSEC records of this type and subname combination
         if ttl := self._get_lexicon_option("ttl"):
@@ -313,37 +314,33 @@ class Provider(BaseProvider):
         return matches
 
     def _sanitize_request_content(self, content: str, rtype: str) -> str:
-        match rtype:
-            case "TXT":
-                return f"\"{content}\"" if content else ""
-            case "CNAME":
-                return self._fqdn_name(content)
-            case "MX" | "SRV":
-                # The priority is only relevant for MX and SRV types.
-                # deSEC does not support this property, it is part of the record's content.
-                parsed = self._parse_priority_record(content, rtype)
-                priority = parsed.get("priority") or str(self._priority)
-                parsed["priority"] = priority   # Ensure fallback for join operation
-                if not priority:
-                    raise ValueError("Priority value is not defined.")
-                if self._priority and self._priority != priority:
-                    raise ValueError(f"The priority was specified as an argument ({self._priority}) "
-                                     f"and in the content ({priority}), but it doesn't match.")
-                return " ".join(parsed.values())
-            case _:
-                return content
+        if rtype == "TXT":
+            return f"\"{content}\"" if content else ""
+        if rtype == "CNAME":
+            return self._fqdn_name(content)
+        if rtype in ("MX", "SRV"):
+            # The priority is only relevant for MX and SRV types.
+            # deSEC does not support this property, it is part of the record's content.
+            parsed = self._parse_priority_record(content, rtype)
+            priority = parsed.get("priority") or str(self._priority)
+            parsed["priority"] = priority   # Ensure fallback for join operation
+            if not priority:
+                raise ValueError("Priority value is not defined.")
+            if self._priority and self._priority != priority:
+                raise ValueError(f"The priority was specified as an argument ({self._priority}) "
+                                 f"and in the content ({priority}), but it doesn't match.")
+            return " ".join(parsed.values())
+        return content
 
     def _sanitize_response_content(self, content: str, rtype: str) -> SanitizedResponseType:
-        match rtype:
-            case "MX" | "SRV":
-                parsed = self._parse_priority_record(content, rtype)
-                if not (priority := parsed.get("priority")) or not priority.isnumeric():
-                    raise Exception("Priority value is not present in content.")
-                # Convert numeric options to int, see `technical_workbook.rst`
-                options: dict = {k: (int(v) if v.isnumeric() else v) for k, v in parsed.items()}
-                return " ".join(parsed.values()), content, {rtype.lower(): options}
-            case _:
-                return content.strip("\""), content, None
+        if rtype in ("MX", "SRV"):
+            parsed = self._parse_priority_record(content, rtype)
+            if not (priority := parsed.get("priority")) or not priority.isnumeric():
+                raise Exception("Priority value is not present in content.")
+            # Convert numeric options to int, see `technical_workbook.rst`
+            options: dict = {k: (int(v) if v.isnumeric() else v) for k, v in parsed.items()}
+            return " ".join(parsed.values()), content, {rtype.lower(): options}
+        return content.strip("\""), content, None
 
     def _parse_priority_record(self, content: str, rtype: str) -> StrDict:
         if not (match := self._re[rtype].match(content)):
