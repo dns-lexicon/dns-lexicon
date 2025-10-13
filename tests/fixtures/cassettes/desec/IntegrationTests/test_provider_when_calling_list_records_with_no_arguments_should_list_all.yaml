@@ -1,0 +1,126 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - lexicon/3.21.1 desec
+    method: GET
+    uri: https://desec.io/api/v1/domains
+  response:
+    body:
+      string: ''
+    headers:
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Type:
+      - text/html; charset=utf-8
+      Date:
+      - Mon, 13 Oct 2025 13:16:09 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:01 GMT
+      Location:
+      - /api/v1/domains/
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - origin
+    status:
+      code: 301
+      message: Moved Permanently
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - lexicon/3.21.1 desec
+    method: GET
+    uri: https://desec.io/api/v1/domains/
+  response:
+    body:
+      string: '[{"created":"2025-10-13T13:14:06.564749Z","published":"2025-10-13T13:16:09.182507Z","name":"example.online","minimum_ttl":3600,"touched":"2025-10-13T13:16:09.182507Z"}]'
+    headers:
+      Allow:
+      - GET, POST, HEAD, OPTIONS
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '168'
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 13 Oct 2025 13:16:09 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:01 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Vary:
+      - origin
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - lexicon/3.21.1 desec
+    method: GET
+    uri: https://desec.io/api/v1/domains/example.online/rrsets/
+  response:
+    body:
+      string: '[{"created":"2025-10-13T13:16:09.105903Z","domain":"example.online","subname":"random.test","name":"random.test.example.online.","records":["\"challengetoken\""],"ttl":3600,"type":"TXT","touched":"2025-10-13T13:16:09.115221Z"},{"created":"2025-10-13T13:16:08.302279Z","domain":"example.online","subname":"random.fulltest","name":"random.fulltest.example.online.","records":["\"challengetoken\""],"ttl":3600,"type":"TXT","touched":"2025-10-13T13:16:08.316210Z"},{"created":"2025-10-13T13:16:06.716290Z","domain":"example.online","subname":"random.fqdntest","name":"random.fqdntest.example.online.","records":["\"challengetoken\""],"ttl":3600,"type":"TXT","touched":"2025-10-13T13:16:06.723290Z"},{"created":"2025-10-13T13:16:04.924357Z","domain":"example.online","subname":"_acme-challenge.listrecordset","name":"_acme-challenge.listrecordset.example.online.","records":["\"challengetoken2\"","\"challengetoken1\""],"ttl":3600,"type":"TXT","touched":"2025-10-13T13:16:06.224843Z"},{"created":"2025-10-13T13:16:04.385257Z","domain":"example.online","subname":"ttl.fqdn","name":"ttl.fqdn.example.online.","records":["\"ttlshouldbe3600\""],"ttl":3600,"type":"TXT","touched":"2025-10-13T13:16:04.392613Z"},{"created":"2025-10-13T13:15:57.962806Z","domain":"example.online","subname":"_acme-challenge.deleterecordinset","name":"_acme-challenge.deleterecordinset.example.online.","records":["\"challengetoken2\""],"ttl":3600,"type":"TXT","touched":"2025-10-13T13:15:59.647596Z"},{"created":"2025-10-13T13:15:03.722426Z","domain":"example.online","subname":"_acme-challenge.noop","name":"_acme-challenge.noop.example.online.","records":["\"challengetoken\""],"ttl":3600,"type":"TXT","touched":"2025-10-13T13:15:03.764830Z"},{"created":"2025-10-13T13:15:00.988087Z","domain":"example.online","subname":"_acme-challenge.createrecordset","name":"_acme-challenge.createrecordset.example.online.","records":["\"challengetoken1\"","\"challengetoken2\""],"ttl":3600,"type":"TXT","touched":"2025-10-13T13:15:02.671698Z"},{"created":"2025-10-13T13:15:00.450362Z","domain":"example.online","subname":"_acme-challenge.test","name":"_acme-challenge.test.example.online.","records":["\"challengetoken\""],"ttl":3600,"type":"TXT","touched":"2025-10-13T13:15:00.459378Z"},{"created":"2025-10-13T13:14:58.950722Z","domain":"example.online","subname":"_acme-challenge.full","name":"_acme-challenge.full.example.online.","records":["\"challengetoken\""],"ttl":3600,"type":"TXT","touched":"2025-10-13T13:14:58.958997Z"},{"created":"2025-10-13T13:14:58.539062Z","domain":"example.online","subname":"_acme-challenge.fqdn","name":"_acme-challenge.fqdn.example.online.","records":["\"challengetoken\""],"ttl":3600,"type":"TXT","touched":"2025-10-13T13:14:58.547412Z"},{"created":"2025-10-13T13:14:56.992336Z","domain":"example.online","subname":"docs","name":"docs.example.online.","records":["docs.example.com.example.online."],"ttl":3600,"type":"CNAME","touched":"2025-10-13T13:14:57.001739Z"},{"created":"2025-10-13T13:14:56.490642Z","domain":"example.online","subname":"localhost","name":"localhost.example.online.","records":["127.0.0.1"],"ttl":3600,"type":"A","touched":"2025-10-13T13:14:56.498496Z"},{"created":"2025-10-13T13:14:07.494841Z","domain":"example.online","subname":"","name":"example.online.","records":["ns1.desec.io.","ns2.desec.org."],"ttl":3600,"type":"NS","touched":"2025-10-13T13:14:07.499019Z"}]'
+    headers:
+      Allow:
+      - GET, POST, PUT, PATCH, HEAD, OPTIONS
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '3390'
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 13 Oct 2025 13:16:09 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:01 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Vary:
+      - origin
+    status:
+      code: 200
+      message: OK
+version: 1
