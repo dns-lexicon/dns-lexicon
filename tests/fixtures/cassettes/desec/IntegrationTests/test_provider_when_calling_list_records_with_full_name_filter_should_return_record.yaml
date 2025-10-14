@@ -13,63 +13,23 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains
+    uri: https://desec.io/api/v1/domains/example.online/
   response:
     body:
-      string: ''
-    headers:
-      Cache-Control:
-      - no-cache
-      Connection:
-      - keep-alive
-      Content-Type:
-      - text/html; charset=utf-8
-      Date:
-      - Mon, 13 Oct 2025 13:16:06 GMT
-      Expires:
-      - Thu, 01 Jan 1970 00:00:01 GMT
-      Location:
-      - /api/v1/domains/
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      Transfer-Encoding:
-      - chunked
-      Vary:
-      - origin
-    status:
-      code: 301
-      message: Moved Permanently
-- request:
-    body: null
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      User-Agent:
-      - lexicon/3.21.1 desec
-    method: GET
-    uri: https://desec.io/api/v1/domains/
-  response:
-    body:
-      string: '[{"created":"2025-10-13T13:14:06.564749Z","published":"2025-10-13T13:16:06.806104Z","name":"example.online","minimum_ttl":3600,"touched":"2025-10-13T13:16:06.806104Z"}]'
+      string: '{}'
     headers:
       Allow:
-      - GET, POST, HEAD, OPTIONS
+      - GET, DELETE, HEAD, OPTIONS
       Cache-Control:
       - no-cache
       Connection:
       - keep-alive
       Content-Length:
-      - '168'
+      - '524'
       Content-Type:
       - application/json
       Date:
-      - Mon, 13 Oct 2025 13:16:07 GMT
+      - Tue, 14 Oct 2025 21:32:12 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -95,98 +55,10 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.online/rrsets/?type=TXT&subname=random.fulltest
+    uri: https://desec.io/api/v1/domains/example.online/rrsets//?type=TXT&subname=random.fulltest
   response:
     body:
-      string: '[]'
-    headers:
-      Allow:
-      - GET, POST, PUT, PATCH, HEAD, OPTIONS
-      Cache-Control:
-      - no-cache
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      Date:
-      - Mon, 13 Oct 2025 13:16:07 GMT
-      Expires:
-      - Thu, 01 Jan 1970 00:00:01 GMT
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      Vary:
-      - origin
-    status:
-      code: 200
-      message: OK
-- request:
-    body: '[{"records": ["\"challengetoken\""], "type": "TXT", "subname": "random.fulltest",
-      "ttl": 3600}]'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '95'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - lexicon/3.21.1 desec
-    method: PATCH
-    uri: https://desec.io/api/v1/domains/example.online/rrsets/
-  response:
-    body:
-      string: '{"detail":"Request was throttled. Expected available in 1 second."}'
-    headers:
-      Allow:
-      - GET, POST, PUT, PATCH, HEAD, OPTIONS
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '67'
-      Content-Type:
-      - application/json
-      Date:
-      - Mon, 13 Oct 2025 13:16:07 GMT
-      Retry-After:
-      - '1'
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      Vary:
-      - origin
-    status:
-      code: 429
-      message: Too Many Requests
-- request:
-    body: '[{"records": ["\"challengetoken\""], "type": "TXT", "subname": "random.fulltest",
-      "ttl": 3600}]'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '95'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - lexicon/3.21.1 desec
-    method: PATCH
-    uri: https://desec.io/api/v1/domains/example.online/rrsets/
-  response:
-    body:
-      string: '[{"created":"2025-10-13T13:16:08.302279Z","domain":"example.online","subname":"random.fulltest","name":"random.fulltest.example.online.","records":["\"challengetoken\""],"ttl":3600,"type":"TXT","touched":"2025-10-13T13:16:08.316210Z"}]'
+      string: '{}'
     headers:
       Allow:
       - GET, POST, PUT, PATCH, HEAD, OPTIONS
@@ -199,7 +71,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 13 Oct 2025 13:16:08 GMT
+      - Tue, 14 Oct 2025 21:32:12 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -225,10 +97,10 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.online/rrsets/?type=TXT&subname=random.fulltest
+    uri: https://desec.io/api/v1/domains/example.online/rrsets//?type=TXT&subname=random.fulltest
   response:
     body:
-      string: '[{"created":"2025-10-13T13:16:08.302279Z","domain":"example.online","subname":"random.fulltest","name":"random.fulltest.example.online.","records":["\"challengetoken\""],"ttl":3600,"type":"TXT","touched":"2025-10-13T13:16:08.316210Z"}]'
+      string: '{}'
     headers:
       Allow:
       - GET, POST, PUT, PATCH, HEAD, OPTIONS
@@ -241,7 +113,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 13 Oct 2025 13:16:08 GMT
+      - Tue, 14 Oct 2025 21:32:12 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:

@@ -13,63 +13,236 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains
+    uri: https://desec.io/api/v1/domains/example.online/
+  response:
+    body:
+      string: '{}'
+    headers:
+      Allow:
+      - GET, DELETE, HEAD, OPTIONS
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '524'
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 14 Oct 2025 21:31:13 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:01 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Vary:
+      - origin
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - lexicon/3.21.1 desec
+    method: GET
+    uri: https://desec.io/api/v1/domains/example.online/rrsets//?type=TXT&subname=delete.testfilt
+  response:
+    body:
+      string: '{"detail":"Request was throttled. Expected available in 1 second."}'
+    headers:
+      Allow:
+      - GET, POST, PUT, PATCH, HEAD, OPTIONS
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '67'
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 14 Oct 2025 21:31:13 GMT
+      Retry-After:
+      - '1'
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Vary:
+      - origin
+    status:
+      code: 429
+      message: Too Many Requests
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - lexicon/3.21.1 desec
+    method: GET
+    uri: https://desec.io/api/v1/domains/example.online/rrsets//?type=TXT&subname=delete.testfilt
+  response:
+    body:
+      string: '[]'
+    headers:
+      Allow:
+      - GET, POST, PUT, PATCH, HEAD, OPTIONS
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 14 Oct 2025 21:31:14 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:01 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Vary:
+      - origin
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"records": ["\"challengetoken\""], "type": "TXT", "subname": "delete.testfilt",
+      "ttl": 3600}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '93'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - lexicon/3.21.1 desec
+    method: POST
+    uri: https://desec.io/api/v1/domains/example.online/rrsets//
+  response:
+    body:
+      string: '{}'
+    headers:
+      Allow:
+      - GET, POST, PUT, PATCH, HEAD, OPTIONS
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '233'
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 14 Oct 2025 21:31:14 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:01 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Vary:
+      - origin
+    status:
+      code: 201
+      message: Created
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - lexicon/3.21.1 desec
+    method: GET
+    uri: https://desec.io/api/v1/domains/example.online/rrsets//?type=TXT&subname=delete.testfilt
+  response:
+    body:
+      string: '{}'
+    headers:
+      Allow:
+      - GET, POST, PUT, PATCH, HEAD, OPTIONS
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '235'
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 14 Oct 2025 21:31:14 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:01 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Vary:
+      - origin
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"created": "2025-10-14T21:31:14.656504Z", "domain": "example.online",
+      "subname": "delete.testfilt", "name": "delete.testfilt.example.online.", "records":
+      [], "ttl": 3600, "type": "TXT", "touched": "2025-10-14T21:31:14.664282Z"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '228'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - lexicon/3.21.1 desec
+    method: PATCH
+    uri: https://desec.io/api/v1/domains/example.online/rrsets/delete.testfilt/TXT/
   response:
     body:
       string: ''
     headers:
-      Cache-Control:
-      - no-cache
-      Connection:
-      - keep-alive
-      Content-Type:
-      - text/html; charset=utf-8
-      Date:
-      - Mon, 13 Oct 2025 13:15:04 GMT
-      Expires:
-      - Thu, 01 Jan 1970 00:00:01 GMT
-      Location:
-      - /api/v1/domains/
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      Transfer-Encoding:
-      - chunked
-      Vary:
-      - origin
-    status:
-      code: 301
-      message: Moved Permanently
-- request:
-    body: null
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      User-Agent:
-      - lexicon/3.21.1 desec
-    method: GET
-    uri: https://desec.io/api/v1/domains/
-  response:
-    body:
-      string: '[{"created":"2025-10-13T13:14:06.564749Z","published":"2025-10-13T13:15:04.095488Z","name":"example.online","minimum_ttl":3600,"touched":"2025-10-13T13:15:04.095488Z"}]'
-    headers:
       Allow:
-      - GET, POST, HEAD, OPTIONS
+      - GET, PUT, PATCH, DELETE, HEAD, OPTIONS
       Cache-Control:
       - no-cache
       Connection:
       - keep-alive
       Content-Length:
-      - '168'
-      Content-Type:
-      - application/json
+      - '0'
       Date:
-      - Mon, 13 Oct 2025 13:15:04 GMT
+      - Tue, 14 Oct 2025 21:31:15 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -79,8 +252,8 @@ interactions:
       Vary:
       - origin
     status:
-      code: 200
-      message: OK
+      code: 204
+      message: No Content
 - request:
     body: null
     headers:
@@ -95,7 +268,7 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.online/rrsets/?type=TXT&subname=delete.testfilt
+    uri: https://desec.io/api/v1/domains/example.online/rrsets//?type=TXT&subname=delete.testfilt
   response:
     body:
       string: '[]'
@@ -111,182 +284,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 13 Oct 2025 13:15:04 GMT
-      Expires:
-      - Thu, 01 Jan 1970 00:00:01 GMT
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      Vary:
-      - origin
-    status:
-      code: 200
-      message: OK
-- request:
-    body: '[{"records": ["\"challengetoken\""], "type": "TXT", "subname": "delete.testfilt",
-      "ttl": 3600}]'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '95'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - lexicon/3.21.1 desec
-    method: PATCH
-    uri: https://desec.io/api/v1/domains/example.online/rrsets/
-  response:
-    body:
-      string: '[{"created":"2025-10-13T13:15:04.710589Z","domain":"example.online","subname":"delete.testfilt","name":"delete.testfilt.example.online.","records":["\"challengetoken\""],"ttl":3600,"type":"TXT","touched":"2025-10-13T13:15:04.738305Z"}]'
-    headers:
-      Allow:
-      - GET, POST, PUT, PATCH, HEAD, OPTIONS
-      Cache-Control:
-      - no-cache
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '235'
-      Content-Type:
-      - application/json
-      Date:
-      - Mon, 13 Oct 2025 13:15:05 GMT
-      Expires:
-      - Thu, 01 Jan 1970 00:00:01 GMT
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      Vary:
-      - origin
-    status:
-      code: 200
-      message: OK
-- request:
-    body: null
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Type:
-      - application/json
-      User-Agent:
-      - lexicon/3.21.1 desec
-    method: GET
-    uri: https://desec.io/api/v1/domains/example.online/rrsets/?type=TXT&subname=delete.testfilt
-  response:
-    body:
-      string: '[{"created":"2025-10-13T13:15:04.710589Z","domain":"example.online","subname":"delete.testfilt","name":"delete.testfilt.example.online.","records":["\"challengetoken\""],"ttl":3600,"type":"TXT","touched":"2025-10-13T13:15:04.738305Z"}]'
-    headers:
-      Allow:
-      - GET, POST, PUT, PATCH, HEAD, OPTIONS
-      Cache-Control:
-      - no-cache
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '235'
-      Content-Type:
-      - application/json
-      Date:
-      - Mon, 13 Oct 2025 13:15:05 GMT
-      Expires:
-      - Thu, 01 Jan 1970 00:00:01 GMT
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      Vary:
-      - origin
-    status:
-      code: 200
-      message: OK
-- request:
-    body: '[{"created": "2025-10-13T13:15:04.710589Z", "domain": "example.online",
-      "subname": "delete.testfilt", "name": "delete.testfilt.example.online.", "records":
-      [], "ttl": 3600, "type": "TXT", "touched": "2025-10-13T13:15:04.738305Z"}]'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '230'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - lexicon/3.21.1 desec
-    method: PATCH
-    uri: https://desec.io/api/v1/domains/example.online/rrsets/
-  response:
-    body:
-      string: '[]'
-    headers:
-      Allow:
-      - GET, POST, PUT, PATCH, HEAD, OPTIONS
-      Cache-Control:
-      - no-cache
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      Date:
-      - Mon, 13 Oct 2025 13:15:05 GMT
-      Expires:
-      - Thu, 01 Jan 1970 00:00:01 GMT
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      Vary:
-      - origin
-    status:
-      code: 200
-      message: OK
-- request:
-    body: null
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Type:
-      - application/json
-      User-Agent:
-      - lexicon/3.21.1 desec
-    method: GET
-    uri: https://desec.io/api/v1/domains/example.online/rrsets/?type=TXT&subname=delete.testfilt
-  response:
-    body:
-      string: '[]'
-    headers:
-      Allow:
-      - GET, POST, PUT, PATCH, HEAD, OPTIONS
-      Cache-Control:
-      - no-cache
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
-      Date:
-      - Mon, 13 Oct 2025 13:15:05 GMT
+      - Tue, 14 Oct 2025 21:31:15 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:

@@ -15,6 +15,14 @@ class DesecProviderTests(TestCase, IntegrationTestsV2):
     def _filter_headers(self):
         return ["Authorization"]
 
+    def _filter_response(self, response):
+        # Filter dnssec keys / tokens
+        content = response["body"]["string"]
+        if (b"dnskey" in content) or (b"token" in content):
+            response["body"]["string"] = b"{}"
+            return response
+        return response
+
     def _test_fallback_fn(self):
         # Prevent conflict between login credentials and token
         return lambda x: None if x in ("auth_username", "auth_password") else f"placeholder_{x}"

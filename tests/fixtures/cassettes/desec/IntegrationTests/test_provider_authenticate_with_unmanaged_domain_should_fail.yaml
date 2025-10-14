@@ -13,65 +13,21 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains
+    uri: https://desec.io/api/v1/domains/thisisadomainidonotown.com/
   response:
     body:
-      string: ''
-    headers:
-      Cache-Control:
-      - no-cache
-      Connection:
-      - keep-alive
-      Content-Type:
-      - text/html; charset=utf-8
-      Date:
-      - Mon, 13 Oct 2025 13:14:56 GMT
-      Expires:
-      - Thu, 01 Jan 1970 00:00:01 GMT
-      Location:
-      - /api/v1/domains/
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      Transfer-Encoding:
-      - chunked
-      Vary:
-      - origin
-    status:
-      code: 301
-      message: Moved Permanently
-- request:
-    body: null
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      User-Agent:
-      - lexicon/3.21.1 desec
-    method: GET
-    uri: https://desec.io/api/v1/domains/
-  response:
-    body:
-      string: '[{"created":"2025-10-13T13:14:06.564749Z","published":"2025-10-13T13:14:07.526899Z","name":"example.online","minimum_ttl":3600,"touched":"2025-10-13T13:14:07.526899Z"}]'
+      string: '{"detail":"No Domain matches the given query."}'
     headers:
       Allow:
-      - GET, POST, HEAD, OPTIONS
-      Cache-Control:
-      - no-cache
+      - GET, DELETE, HEAD, OPTIONS
       Connection:
       - keep-alive
       Content-Length:
-      - '168'
+      - '47'
       Content-Type:
       - application/json
       Date:
-      - Mon, 13 Oct 2025 13:14:56 GMT
-      Expires:
-      - Thu, 01 Jan 1970 00:00:01 GMT
+      - Tue, 14 Oct 2025 21:31:11 GMT
       Server:
       - nginx
       Strict-Transport-Security:
@@ -79,6 +35,6 @@ interactions:
       Vary:
       - origin
     status:
-      code: 200
-      message: OK
+      code: 404
+      message: Not Found
 version: 1
