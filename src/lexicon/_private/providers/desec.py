@@ -6,27 +6,30 @@ import hashlib
 import requests
 
 from argparse import ArgumentParser
-from typing import Optional, Literal, Tuple
+from typing import Optional, Tuple
 from urllib3.util.retry import Retry
 from requests.adapters import HTTPAdapter
+from requests.exceptions import HTTPError
 
-
+from lexicon.config import ConfigResolver
 from lexicon.exceptions import AuthenticationError
 from lexicon.interfaces import Provider as BaseProvider
 from lexicon._private.discovery import lexicon_version
 
 LOGGER = logging.getLogger(__name__)
 
+# Type aliases
+RecordType = Tuple[dict, int]
+RecordList = dict[str, RecordType]
+StrDict = dict[str, str]
+StrDictList = list[StrDict]
+OptStr = Optional[str]
+OptStrDict = Optional[StrDict]
+SanitizedResponseType = Tuple[str, str, dict]
+
 
 class Provider(BaseProvider):
     """Provider class for deSEC"""
-
-    StrDict = dict[str, str]
-    OptStr = Optional[str]
-    OptStrDict = Optional[StrDict]
-    OptStrDictList = Optional[list[StrDict]]
-    ActionType = Literal["update", "delete", "create"]
-    SanitizedResponseType = Tuple[str, str, Optional[dict]]
 
     @staticmethod
     def get_nameservers() -> list[str]:
@@ -42,9 +45,8 @@ class Provider(BaseProvider):
             "--auth-password", help="specify password for authentication"
         )
 
-    def __init__(self, config):
+    def __init__(self, config: ConfigResolver):
         super(Provider, self).__init__(config)
-        self.domain_id = self.domain
         self.api_endpoint = "https://desec.io/api/v1"
         self._lexicon_version = lexicon_version()
         self._token = self._get_provider_option("auth_token")
@@ -86,168 +88,169 @@ class Provider(BaseProvider):
         if not self._token:
             raise AuthenticationError("No valid authentication mechanism specified.")
 
-        domains = self._get("/domains")
-        for domain in domains:
-            if domain.get("name") == self.domain:
-                LOGGER.debug(f"authenticate: domain '{self.domain}' found.")
-                break
-        else:
-            raise AuthenticationError(f"Domain '{self.domain}' not found.")
+        # Check if domain exists
+        try:
+            self._get("..")
+            self.domain_id = self.domain
+            LOGGER.debug(f"authenticate: domain '{self.domain}' found.")
+        except HTTPError as err:
+            raise AuthenticationError(f"Domain '{self.domain}' not found ({err.response.status_code}).")
 
     def cleanup(self) -> None:
         pass
 
-    # List all records. Return an empty list if no records found
-    # type, name and content are used to filter records.
-    # If possible filter during the query, otherwise filter after response is received.
-    def list_records(self, rtype=None, name=None, content=None) -> list[dict]:
-        filter_query = {}
-        if rtype:
-            filter_query["type"] = rtype
-        if name:
-            filter_query["subname"] = self._relative_name(name)
-
-        payload = self._get(f"/domains/{self.domain}/rrsets/", filter_query)
+    def list_records(self, rtype: OptStr = None, name: OptStr = None, content: OptStr = None) -> list[dict]:
+        rec_sets = self._fetch_record_sets(rtype, name, content)
         records = [
             {
-                "type": match["type"],
-                "ttl": match["ttl"],
-                "name": self._format_name(match),
-                "id": self._identifier(match, record),
-                "content": record,
-                "options": options,
-                "_internal_record": match,   # used internally
-                "_internal_content": dirty,  # used internally
-            }
-            for match in payload
-            for record, dirty, options in [
-                self._sanitize_response_content(dirty, match["type"])
-                for dirty in match["records"]
+                "type": rec_set["type"],
+                "ttl": rec_set["ttl"],
+                "name": self._format_name(rec_set),
+                "id": identifier,
+                "content": sanitized,
+            } | options
+            for identifier, (rec_set, index) in rec_sets.items()
+            for sanitized, dirty, options in [
+                self._sanitize_response_content(rec_set, index)
             ]
-            if not content or content == record or content == dirty
         ]
         LOGGER.debug("list_records: %s", records)
         return records
 
     # Create record. If record already exists with the same content, do nothing
     def create_record(self, rtype: str, name: str, content: str) -> bool:
-        # "create" can't have an identifier and we can't filter for content
-        # it would filter out the type and subname combination
-        # if this content isn't present yet, which is likely while creating a record
-        records = self.list_records(rtype, name) or [
-            # Create a stub for non-existent records
-            {
-                "content": "",
-                "_internal_content": "",
-                "_internal_record": {
-                    "records": [],
+        (desec_rec, index) = self._get_record_set(rtype, name)
+        return self._create_record(desec_rec, index, rtype, name, content)
+
+    def _create_record(self, desec_rec: dict, index: int, rtype: str, name: str, content: str) -> bool:
+        desec_content = self._sanitize_request_content(content, rtype)
+        subname = self._relative_name(name) if name else ""
+        if not desec_rec or index == -1:
+            # Create new record set, as it doesn't exist yet
+            LOGGER.debug("_create_record: Creating new record set")
+            self._post(
+                "",
+                {
+                    "records": [desec_content],
                     "type": rtype,
-                    "subname": self._relative_name(name or ""),
+                    "subname": subname,
                 },
-            },
-        ]
-        matches = self._dedup_matches(records)
-        return self._record_action("create", None, rtype, name, content, matches)
+            )
+            return True
+
+        # Check if record is in record set
+        desec_records: list[str] = desec_rec["records"]
+        if content in desec_records or desec_content in desec_records:
+            LOGGER.debug("_create_record: The record already exists. Ignore.")
+            return True
+
+        # Patch existing record set
+        desec_records.append(desec_content)
+        self._patch(f"{subname}/{rtype}", desec_rec)
+        return True
 
     # Create or update (or delete) a record.
     def update_record(self, identifier: OptStr = None, rtype: OptStr = None, name: OptStr = None, content: OptStr = None) -> bool:
-        matches = []
-        if content and not identifier:
-            records = self.list_records(rtype, name)
-            matches = [record for record in records if record["content"] == content]
-        return self._record_action('update', identifier, rtype, name, content, matches)
+        # We can only update one item at a time
+        # Get first item
+        (desec_rec, index) = self._get_record_set(rtype, name, content, identifier)
+        if not desec_rec or index == -1:
+            LOGGER.warn("update_record: No matching record found. Abort.")
+            return False
+
+        desec_records: list[str] = desec_rec["records"]
+        rtype = rtype or desec_rec["type"]
+        content = content or desec_records[index]
+
+        # The subname is immutable and can't be modified.
+        # We need to delete the old record and create a new one.
+        old_subname = desec_rec["subname"]
+        new_subname = self._relative_name(name) if name else ""
+        if old_subname != new_subname:
+            LOGGER.debug(f"update_record: new subname '{new_subname}' differs from old '{old_subname}'. Delete and recreate record.")
+            return self._delete_record(desec_rec, index, rtype, old_subname) and \
+                self._create_record(desec_rec, index, rtype, new_subname, content)
+
+        # Patch the content
+        new_content = self._sanitize_request_content(content or "", rtype or "")
+        desec_records[index] = new_content
+        self._patch(f"{new_subname or '@'}/{rtype}", desec_rec)
+        return True
+
+    def _fetch_record_sets(self, rtype: OptStr = None, name: OptStr = None, content: OptStr = None) -> RecordList:
+        desec_content = self._sanitize_request_content(content or "", rtype or "")
+        response = self._get(
+            "",
+            {
+                "type": rtype or None,
+                "subname": self._relative_name(name) if name else None,
+            }
+        )
+
+        # Generates a dict with the identifier as key
+        # and a tuple of the record set and the index of related record
+        # {id: (rec_set, index)}
+        id_sets = {
+            self._identifier(rec_set, rec): (rec_set, i)
+            for rec_set in response
+            for i, rec in enumerate(rec_set["records"])
+            if (not content or content == rec)
+            or (not desec_content or desec_content == rec)
+        }
+        LOGGER.debug("_fetch_record_sets: %s", id_sets)
+        return id_sets
+
+    def _get_record_set(self, rtype: OptStr = None, name: OptStr = None, content: OptStr = None, identifier: OptStr = None) -> RecordType:
+        rec_sets = self._fetch_record_sets(rtype, name, content)
+        if not len(rec_sets):
+            # No record set found
+            return ({}, -1)
+
+        rec_set, *_ = rec_sets.values()
+        if identifier and identifier in rec_sets:
+            # Return specified record set
+            return rec_sets[identifier]
+
+        # Return first result
+        return rec_set
 
     # Delete an existing record.
     # If record does not exist, do nothing.
-    def delete_record(self, identifier=None, rtype=None, name=None, content=None) -> bool:
-        # We can only delete all records of an type and (sub)domain combination via the API.
-        # We can update the combination though and remove said record.
-        # If the records are empty, the whole combination will be removed.
-        matches = []
+    def delete_record(self, identifier: OptStr = None, rtype: OptStr = None, name: OptStr = None, content: OptStr = None) -> bool:
+        # Get first item
+        (desec_rec, index) = self._get_record_set(rtype, name, content, identifier)
+        if not desec_rec or index == -1:
+            LOGGER.debug("delete_record: Record not found. Ignore.")
+            return True
+        subname = desec_rec["subname"]
+        rtype = rtype or desec_rec["type"]
         if rtype and name and not (content or identifier):
-            LOGGER.debug(f"delete_record: remove whole '{rtype}' record set for '{name}'")
-            records = self.list_records(rtype, name)
-            if not records:
-                return True
-            matches = self._dedup_matches(records)
+            LOGGER.debug(f"delete_record: remove whole '{rtype}' record set '{subname}'")
+            self._delete(f"{subname}/{rtype}/")
+            return True
+        return self._delete_record(desec_rec, index, rtype, subname)
 
-        return self._record_action("delete", identifier, rtype, name, content, matches)
+    def _delete_record(self, desec_rec: dict, index: int, rtype: str, subname: str) -> bool:
+        # Delete specific record
+        desec_records: list[str] = desec_rec["records"]
+        removed = desec_records.pop(index)
+        self._patch(f"{subname}/{rtype}", desec_rec)
+        LOGGER.debug(f"_delete_record: removed '{rtype}' item from '{subname}' record set, with content '{removed}'")
+        return True
 
     # Helpers
 
-    # Create / update / delete a record.
-    # As multiple records might be associated with a type / subname combo, we use the put method, which allows all operations.
-    def _record_action(self, _action: ActionType, identifier: OptStr = None, rtype: OptStr = None, name: OptStr = None, content: OptStr = None, matches: OptStrDictList = None) -> bool:
-        # Allow matches override, prevent unnecessary API calls.
-        if not matches:
-            # Find lexicon record
-            if identifier:
-                # Identifier takes precedence over filter options
-                records = self.list_records(rtype)
-                matches = [record for record in records if record["id"] == identifier]
-            elif _action == "update":
-                # Update without identifier can't filter for content
-                matches = self.list_records(rtype, name)
-            else:
-                matches = self.list_records(rtype, name, content)
-
-        if len(matches) != 1:
-            LOGGER.debug("%s_record: found %d matches, expected 1", _action, len(matches))
-            return False
-
-        # Shorthands / types
-        lexicon_rec: dict = matches[0]
-        desec_rec: dict = lexicon_rec["_internal_record"]
-        old_content: str = lexicon_rec["_internal_content"]
-        desec_records: list[str] = desec_rec["records"]
-
-        # Determine and update (or delete) the target record
-        new_content = self._sanitize_request_content(content or "", rtype or "")
-        if _action == "create":
-            if new_content in desec_records:
-                LOGGER.debug("The record already exists. Ignore.")
-                return True
-            desec_records.append(new_content)
-        elif _action == "delete":
-            if old_content and (content or identifier):
-                # Specific record
-                desec_records.remove(old_content)
-            else:
-                # Whole record set
-                desec_records.clear()
-        elif _action == "update":
-            if old_content not in desec_records:
-                raise Exception("The record does not exist, so it can't be updated!")
-
-            # The subname can't be changed.
-            # We need to delete the old record and create a new one.
-            old_subname = desec_rec["subname"]
-            new_subname = self._relative_name(name or "")
-            if old_subname != new_subname:
-                LOGGER.debug("%s_record: new subname '%s' differs from old '%s'. Delete and recreate record.", _action, new_subname, old_subname)
-                return self._record_action("delete", identifier, matches=matches) and \
-                    self.create_record(lexicon_rec["type"], new_subname, content or lexicon_rec["content"])
-
-            index = desec_records.index(old_content)
-            desec_records[index] = new_content
-        else:
-            raise Exception(f"Invalid action '{_action}'")
-
-        # TTL is valid for all deSEC records of this type and subname combination
-        if ttl := self._get_lexicon_option("ttl"):
-            desec_rec["ttl"] = ttl
-
-        # The PATCH call can manage create, delete and update at once, on multiple records.
-        # For this reason, it only takes an array, which MyPy doesn't like. Ignore.
-        # See: https://desec.readthedocs.io/en/latest/endpoint-reference.html
-        self._patch(f"/domains/{self.domain}/rrsets/", [desec_rec])     # type: ignore[arg-type]
-        LOGGER.debug("%s_record: %s", _action, True)
-        return True
-
     def _request(self, action: str = "GET", url: str = "/", data: OptStrDict = None, query_params: OptStrDict = None):
+        # TTL is required for all deSEC record sets
+        if data:
+            if ttl := self._get_lexicon_option("ttl"):
+                data["ttl"] = ttl
+            if not data["ttl"]:
+                data["ttl"] = "3600"
+
         response = self._session.request(
             action,
-            self.api_endpoint + url,
+            f"{self.api_endpoint}/domains/{self.domain}/rrsets/{url}/",
             params=query_params,
             json=data,
             headers={
@@ -260,6 +263,9 @@ class Provider(BaseProvider):
 
         # if the request fails for any reason, throw an error.
         response.raise_for_status()
+        # DELETE responses without a body
+        if response.status_code == 204:
+            return {}
         return response.json()
 
     def _login(self, username: str, password: str) -> None:
@@ -302,17 +308,6 @@ class Provider(BaseProvider):
         sha256.update(f"{match['name']} => {match['type']} => '{record}'".encode())
         return sha256.hexdigest()[0:7]
 
-    @staticmethod
-    def _dedup_matches(records: list[dict]) -> list[dict]:
-        assert records
-        # The list_records() call splits the "records" list into multiple entries.
-        # Filtered against the first entry, the list should be empty. Append first entry.
-        first_record = records[0]
-        first_internal = first_record["_internal_record"]
-        matches = [record for record in records if record["_internal_record"] != first_internal]
-        matches.append(first_record)
-        return matches
-
     def _sanitize_request_content(self, content: str, rtype: str) -> str:
         if rtype == "TXT":
             return f"\"{content}\"" if content else ""
@@ -332,7 +327,9 @@ class Provider(BaseProvider):
             return " ".join(parsed.values())
         return content
 
-    def _sanitize_response_content(self, content: str, rtype: str) -> SanitizedResponseType:
+    def _sanitize_response_content(self, rec_set: dict, index: int) -> SanitizedResponseType:
+        rtype = rec_set["type"]
+        content = rec_set["records"][index]
         if rtype in ("MX", "SRV"):
             parsed = self._parse_priority_record(content, rtype)
             if not (priority := parsed.get("priority")) or not priority.isnumeric():
@@ -340,7 +337,7 @@ class Provider(BaseProvider):
             # Convert numeric options to int, see `technical_workbook.rst`
             options: dict = {k: (int(v) if v.isnumeric() else v) for k, v in parsed.items()}
             return " ".join(parsed.values()), content, {rtype.lower(): options}
-        return content.strip("\""), content, None
+        return content.strip("\""), content, {}
 
     def _parse_priority_record(self, content: str, rtype: str) -> StrDict:
         if not (match := self._re[rtype].match(content)):
@@ -348,5 +345,4 @@ class Provider(BaseProvider):
 
         groups = match.groupdict()
         groups["target"] = self._fqdn_name(groups["target"])
-
         return groups
