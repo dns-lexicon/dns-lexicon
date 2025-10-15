@@ -13,7 +13,7 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.online/
+    uri: https://desec.io/api/v1/domains/example.xxx/
   response:
     body:
       string: '{}'
@@ -25,11 +25,11 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '524'
+      - '521'
       Content-Type:
       - application/json
       Date:
-      - Tue, 14 Oct 2025 21:31:12 GMT
+      - Wed, 15 Oct 2025 15:13:47 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -55,10 +55,10 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.online/rrsets//?type=TXT&subname=_acme-challenge.createrecordset
+    uri: https://desec.io/api/v1/domains/example.xxx/rrsets//?type=TXT&subname=_acme-challenge.createrecordset
   response:
     body:
-      string: '{}'
+      string: '[]'
     headers:
       Allow:
       - GET, POST, PUT, PATCH, HEAD, OPTIONS
@@ -67,11 +67,11 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '290'
+      - '2'
       Content-Type:
       - application/json
       Date:
-      - Tue, 14 Oct 2025 21:31:12 GMT
+      - Wed, 15 Oct 2025 15:13:47 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -83,6 +83,51 @@ interactions:
     status:
       code: 200
       message: OK
+- request:
+    body: '{"records": ["\"challengetoken1\""], "type": "TXT", "subname": "_acme-challenge.createrecordset",
+      "ttl": 3600}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '110'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - lexicon/3.21.1 desec
+    method: POST
+    uri: https://desec.io/api/v1/domains/example.xxx/rrsets//
+  response:
+    body:
+      string: '{}'
+    headers:
+      Allow:
+      - GET, POST, PUT, PATCH, HEAD, OPTIONS
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '260'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 15 Oct 2025 15:13:48 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:01 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Vary:
+      - origin
+    status:
+      code: 201
+      message: Created
 - request:
     body: null
     headers:
@@ -97,7 +142,7 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.online/rrsets//?type=TXT&subname=_acme-challenge.createrecordset
+    uri: https://desec.io/api/v1/domains/example.xxx/rrsets//?type=TXT&subname=_acme-challenge.createrecordset
   response:
     body:
       string: '{}'
@@ -109,11 +154,58 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '290'
+      - '262'
       Content-Type:
       - application/json
       Date:
-      - Tue, 14 Oct 2025 21:31:12 GMT
+      - Wed, 15 Oct 2025 15:13:48 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:01 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Vary:
+      - origin
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"created": "2025-10-15T15:13:47.955911Z", "domain": "example.xxx", "subname":
+      "_acme-challenge.createrecordset", "name": "_acme-challenge.createrecordset.example.xxx.",
+      "records": ["\"challengetoken1\"", "\"challengetoken2\""], "ttl": 3600, "type":
+      "TXT", "touched": "2025-10-15T15:13:47.964831Z"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '298'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - lexicon/3.21.1 desec
+    method: PATCH
+    uri: https://desec.io/api/v1/domains/example.xxx/rrsets/_acme-challenge.createrecordset/TXT/
+  response:
+    body:
+      string: '{}'
+    headers:
+      Allow:
+      - GET, PUT, PATCH, DELETE, HEAD, OPTIONS
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '282'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 15 Oct 2025 15:13:49 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:

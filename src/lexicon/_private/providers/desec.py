@@ -120,9 +120,6 @@ class Provider(BaseProvider):
     # Create record. If record already exists with the same content, do nothing
     def create_record(self, rtype: str, name: str, content: str) -> bool:
         (desec_rec, index) = self._get_record_set(rtype, name)
-        return self._create_record(desec_rec, index, rtype, name, content)
-
-    def _create_record(self, desec_rec: dict, index: int, rtype: str, name: str, content: str) -> bool:
         desec_content = self._sanitize_request_content(content, rtype)
         subname = self._relative_name(name) if name else ""
         if not desec_rec or index == -1:
@@ -149,13 +146,21 @@ class Provider(BaseProvider):
         self._patch(f"{subname}/{rtype}", desec_rec)
         return True
 
-    # Create or update (or delete) a record.
+    # Update a record.
     def update_record(self, identifier: OptStr = None, rtype: OptStr = None, name: OptStr = None, content: OptStr = None) -> bool:
-        # We can only update one item at a time
-        # Get first item
-        (desec_rec, index) = self._get_record_set(rtype, name, content, identifier)
+        if identifier and name:
+            # We can only filter for record type, as the subname could differ
+            rec_sets = self._fetch_record_sets(rtype)
+            if identifier not in rec_sets:
+                LOGGER.warning(f"update_record: No match for identifier '{identifier}'. Abort.")
+                return False
+            (desec_rec, index) = rec_sets[identifier]
+        else:
+            # We can't filter for content, as it likely changed
+            (desec_rec, index) = self._get_record_set(rtype, name, None, identifier)
+
         if not desec_rec or index == -1:
-            LOGGER.warn("update_record: No matching record found. Abort.")
+            LOGGER.warning("update_record: No matching record found. Abort.")
             return False
 
         desec_records: list[str] = desec_rec["records"]
@@ -169,50 +174,13 @@ class Provider(BaseProvider):
         if old_subname != new_subname:
             LOGGER.debug(f"update_record: new subname '{new_subname}' differs from old '{old_subname}'. Delete and recreate record.")
             return self._delete_record(desec_rec, index, rtype, old_subname) and \
-                self._create_record(desec_rec, index, rtype, new_subname, content)
+                self.create_record(rtype, new_subname, content)
 
         # Patch the content
         new_content = self._sanitize_request_content(content or "", rtype or "")
         desec_records[index] = new_content
         self._patch(f"{new_subname or '@'}/{rtype}", desec_rec)
         return True
-
-    def _fetch_record_sets(self, rtype: OptStr = None, name: OptStr = None, content: OptStr = None) -> RecordList:
-        desec_content = self._sanitize_request_content(content or "", rtype or "")
-        response = self._get(
-            "",
-            {
-                "type": rtype or None,
-                "subname": self._relative_name(name) if name else None,
-            }
-        )
-
-        # Generates a dict with the identifier as key
-        # and a tuple of the record set and the index of related record
-        # {id: (rec_set, index)}
-        id_sets = {
-            self._identifier(rec_set, rec): (rec_set, i)
-            for rec_set in response
-            for i, rec in enumerate(rec_set["records"])
-            if (not content or content == rec)
-            or (not desec_content or desec_content == rec)
-        }
-        LOGGER.debug("_fetch_record_sets: %s", id_sets)
-        return id_sets
-
-    def _get_record_set(self, rtype: OptStr = None, name: OptStr = None, content: OptStr = None, identifier: OptStr = None) -> RecordType:
-        rec_sets = self._fetch_record_sets(rtype, name, content)
-        if not len(rec_sets):
-            # No record set found
-            return ({}, -1)
-
-        rec_set, *_ = rec_sets.values()
-        if identifier and identifier in rec_sets:
-            # Return specified record set
-            return rec_sets[identifier]
-
-        # Return first result
-        return rec_set
 
     # Delete an existing record.
     # If record does not exist, do nothing.
@@ -288,6 +256,44 @@ class Provider(BaseProvider):
         if not self._token:
             raise AuthenticationError("Login successful, but no token was acquired.")
 
+    def _fetch_record_sets(self, rtype: OptStr = None, name: OptStr = None, content: OptStr = None) -> RecordList:
+        desec_content = self._sanitize_request_content(content or "", rtype or "")
+        response = self._get(
+            "",
+            {
+                "type": rtype or None,
+                "subname": self._relative_name(name) if name else None,
+            }
+        )
+
+        # Generates a dict with the identifier as key
+        # and a tuple of the record set and the index of related record
+        # {id: (rec_set, index)}
+        id_sets = {
+            self._identifier(rec_set, rec): (rec_set, i)
+            for rec_set in response
+            for i, rec in enumerate(rec_set["records"])
+            if (not content or content == rec)
+            or (not desec_content or desec_content == rec)
+        }
+        LOGGER.debug("_fetch_record_sets: %s", id_sets)
+        return id_sets
+
+    def _get_record_set(self, rtype: OptStr = None, name: OptStr = None, content: OptStr = None, identifier: OptStr = None) -> RecordType:
+        rec_sets = self._fetch_record_sets(rtype, name, content)
+        if not len(rec_sets):
+            # No record set found
+            LOGGER.debug("_get_record_set: No match.")
+            return ({}, -1)
+
+        rec_set, *_ = rec_sets.values()
+        if identifier and identifier in rec_sets:
+            # Return specified record set
+            return rec_sets[identifier]
+
+        # Return first result
+        return rec_set
+
     # Override, handle apex
     def _relative_name(self, record_name: str) -> str:
         subname = super()._relative_name(record_name or "@")
@@ -310,7 +316,7 @@ class Provider(BaseProvider):
 
     def _sanitize_request_content(self, content: str, rtype: str) -> str:
         if rtype == "TXT":
-            return f"\"{content}\"" if content else ""
+            return f"\"{content.strip('\"')}\"" if content else ""
         if rtype == "CNAME":
             return self._fqdn_name(content)
         if rtype in ("MX", "SRV"):

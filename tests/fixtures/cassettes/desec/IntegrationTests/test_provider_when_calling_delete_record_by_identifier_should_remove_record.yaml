@@ -13,7 +13,7 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.online/
+    uri: https://desec.io/api/v1/domains/example.xxx/
   response:
     body:
       string: '{}'
@@ -25,11 +25,11 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '524'
+      - '521'
       Content-Type:
       - application/json
       Date:
-      - Tue, 14 Oct 2025 21:31:18 GMT
+      - Wed, 15 Oct 2025 15:13:55 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -55,7 +55,7 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.online/rrsets//?type=TXT&subname=delete.testid
+    uri: https://desec.io/api/v1/domains/example.xxx/rrsets//?type=TXT&subname=delete.testid
   response:
     body:
       string: '[]'
@@ -71,7 +71,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 14 Oct 2025 21:31:19 GMT
+      - Wed, 15 Oct 2025 15:13:55 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -100,50 +100,7 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: POST
-    uri: https://desec.io/api/v1/domains/example.online/rrsets//
-  response:
-    body:
-      string: '{"detail":"Request was throttled. Expected available in 1 second."}'
-    headers:
-      Allow:
-      - GET, POST, PUT, PATCH, HEAD, OPTIONS
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '67'
-      Content-Type:
-      - application/json
-      Date:
-      - Tue, 14 Oct 2025 21:31:19 GMT
-      Retry-After:
-      - '1'
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      Vary:
-      - origin
-    status:
-      code: 429
-      message: Too Many Requests
-- request:
-    body: '{"records": ["\"challengetoken\""], "type": "TXT", "subname": "delete.testid",
-      "ttl": 3600}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '91'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - lexicon/3.21.1 desec
-    method: POST
-    uri: https://desec.io/api/v1/domains/example.online/rrsets//
+    uri: https://desec.io/api/v1/domains/example.xxx/rrsets//
   response:
     body:
       string: '{}'
@@ -155,11 +112,11 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '229'
+      - '223'
       Content-Type:
       - application/json
       Date:
-      - Tue, 14 Oct 2025 21:31:20 GMT
+      - Wed, 15 Oct 2025 15:13:55 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -185,7 +142,7 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.online/rrsets//?type=TXT&subname=delete.testid
+    uri: https://desec.io/api/v1/domains/example.xxx/rrsets//?type=TXT&subname=delete.testid
   response:
     body:
       string: '{}'
@@ -197,11 +154,11 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '231'
+      - '225'
       Content-Type:
       - application/json
       Date:
-      - Tue, 14 Oct 2025 21:31:20 GMT
+      - Wed, 15 Oct 2025 15:13:55 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -227,7 +184,7 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.online/rrsets//
+    uri: https://desec.io/api/v1/domains/example.xxx/rrsets//
   response:
     body:
       string: '{}'
@@ -239,11 +196,11 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '5937'
+      - '2092'
       Content-Type:
       - application/json
       Date:
-      - Tue, 14 Oct 2025 21:31:20 GMT
+      - Wed, 15 Oct 2025 15:13:56 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -256,9 +213,9 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: '{"created": "2025-10-14T21:31:20.270671Z", "domain": "example.online",
-      "subname": "delete.testid", "name": "delete.testid.example.online.", "records":
-      [], "ttl": 3600, "type": "TXT", "touched": "2025-10-14T21:31:20.280818Z"}'
+    body: '{"created": "2025-10-15T15:13:55.779261Z", "domain": "example.xxx", "subname":
+      "delete.testid", "name": "delete.testid.example.xxx.", "records": [], "ttl":
+      3600, "type": "TXT", "touched": "2025-10-15T15:13:55.790810Z"}'
     headers:
       Accept:
       - application/json
@@ -267,13 +224,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '224'
+      - '218'
       Content-Type:
       - application/json
       User-Agent:
       - lexicon/3.21.1 desec
     method: PATCH
-    uri: https://desec.io/api/v1/domains/example.online/rrsets/delete.testid/TXT/
+    uri: https://desec.io/api/v1/domains/example.xxx/rrsets/delete.testid/TXT/
   response:
     body:
       string: ''
@@ -287,7 +244,7 @@ interactions:
       Content-Length:
       - '0'
       Date:
-      - Tue, 14 Oct 2025 21:31:20 GMT
+      - Wed, 15 Oct 2025 15:14:44 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -313,7 +270,7 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.online/rrsets//?type=TXT&subname=delete.testid
+    uri: https://desec.io/api/v1/domains/example.xxx/rrsets//?type=TXT&subname=delete.testid
   response:
     body:
       string: '[]'
@@ -329,7 +286,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 14 Oct 2025 21:31:20 GMT
+      - Wed, 15 Oct 2025 15:14:44 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:

@@ -13,7 +13,7 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.online/
+    uri: https://desec.io/api/v1/domains/example.xxx/
   response:
     body:
       string: '{}'
@@ -25,11 +25,11 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '524'
+      - '521'
       Content-Type:
       - application/json
       Date:
-      - Tue, 14 Oct 2025 21:31:22 GMT
+      - Wed, 15 Oct 2025 15:14:46 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -55,7 +55,7 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.online/rrsets//?type=TXT&subname=_acme-challenge.deleterecordset
+    uri: https://desec.io/api/v1/domains/example.xxx/rrsets//?type=TXT&subname=_acme-challenge.deleterecordset
   response:
     body:
       string: '[]'
@@ -71,7 +71,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 14 Oct 2025 21:31:23 GMT
+      - Wed, 15 Oct 2025 15:14:46 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -100,50 +100,7 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: POST
-    uri: https://desec.io/api/v1/domains/example.online/rrsets//
-  response:
-    body:
-      string: '{"detail":"Request was throttled. Expected available in 1 second."}'
-    headers:
-      Allow:
-      - GET, POST, PUT, PATCH, HEAD, OPTIONS
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '67'
-      Content-Type:
-      - application/json
-      Date:
-      - Tue, 14 Oct 2025 21:31:23 GMT
-      Retry-After:
-      - '1'
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      Vary:
-      - origin
-    status:
-      code: 429
-      message: Too Many Requests
-- request:
-    body: '{"records": ["\"challengetoken1\""], "type": "TXT", "subname": "_acme-challenge.deleterecordset",
-      "ttl": 3600}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '110'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - lexicon/3.21.1 desec
-    method: POST
-    uri: https://desec.io/api/v1/domains/example.online/rrsets//
+    uri: https://desec.io/api/v1/domains/example.xxx/rrsets//
   response:
     body:
       string: '{}'
@@ -155,11 +112,11 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '266'
+      - '260'
       Content-Type:
       - application/json
       Date:
-      - Tue, 14 Oct 2025 21:31:24 GMT
+      - Wed, 15 Oct 2025 15:14:48 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -185,7 +142,7 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.online/rrsets//?type=TXT&subname=_acme-challenge.deleterecordset
+    uri: https://desec.io/api/v1/domains/example.xxx/rrsets//?type=TXT&subname=_acme-challenge.deleterecordset
   response:
     body:
       string: '{}'
@@ -197,11 +154,11 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '268'
+      - '262'
       Content-Type:
       - application/json
       Date:
-      - Tue, 14 Oct 2025 21:31:24 GMT
+      - Wed, 15 Oct 2025 15:14:48 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -214,10 +171,10 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: '{"created": "2025-10-14T21:31:24.185765Z", "domain": "example.online",
-      "subname": "_acme-challenge.deleterecordset", "name": "_acme-challenge.deleterecordset.example.online.",
+    body: '{"created": "2025-10-15T15:14:48.040855Z", "domain": "example.xxx", "subname":
+      "_acme-challenge.deleterecordset", "name": "_acme-challenge.deleterecordset.example.xxx.",
       "records": ["\"challengetoken1\"", "\"challengetoken2\""], "ttl": 3600, "type":
-      "TXT", "touched": "2025-10-14T21:31:24.194267Z"}'
+      "TXT", "touched": "2025-10-15T15:14:48.049932Z"}'
     headers:
       Accept:
       - application/json
@@ -226,13 +183,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '304'
+      - '298'
       Content-Type:
       - application/json
       User-Agent:
       - lexicon/3.21.1 desec
     method: PATCH
-    uri: https://desec.io/api/v1/domains/example.online/rrsets/_acme-challenge.deleterecordset/TXT/
+    uri: https://desec.io/api/v1/domains/example.xxx/rrsets/_acme-challenge.deleterecordset/TXT/
   response:
     body:
       string: '{}'
@@ -244,11 +201,11 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '288'
+      - '282'
       Content-Type:
       - application/json
       Date:
-      - Tue, 14 Oct 2025 21:31:24 GMT
+      - Wed, 15 Oct 2025 15:14:48 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -274,7 +231,7 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.online/rrsets//?type=TXT&subname=_acme-challenge.deleterecordset
+    uri: https://desec.io/api/v1/domains/example.xxx/rrsets//?type=TXT&subname=_acme-challenge.deleterecordset
   response:
     body:
       string: '{}'
@@ -286,11 +243,11 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '290'
+      - '284'
       Content-Type:
       - application/json
       Date:
-      - Tue, 14 Oct 2025 21:31:24 GMT
+      - Wed, 15 Oct 2025 15:14:48 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -318,49 +275,7 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: DELETE
-    uri: https://desec.io/api/v1/domains/example.online/rrsets/_acme-challenge.deleterecordset/TXT//
-  response:
-    body:
-      string: '{"detail":"Request was throttled. Expected available in 1 second."}'
-    headers:
-      Allow:
-      - GET, PUT, PATCH, DELETE, HEAD, OPTIONS
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '67'
-      Content-Type:
-      - application/json
-      Date:
-      - Tue, 14 Oct 2025 21:31:24 GMT
-      Retry-After:
-      - '1'
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      Vary:
-      - origin
-    status:
-      code: 429
-      message: Too Many Requests
-- request:
-    body: null
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '0'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - lexicon/3.21.1 desec
-    method: DELETE
-    uri: https://desec.io/api/v1/domains/example.online/rrsets/_acme-challenge.deleterecordset/TXT//
+    uri: https://desec.io/api/v1/domains/example.xxx/rrsets/_acme-challenge.deleterecordset/TXT//
   response:
     body:
       string: ''
@@ -374,7 +289,7 @@ interactions:
       Content-Length:
       - '0'
       Date:
-      - Tue, 14 Oct 2025 21:31:25 GMT
+      - Wed, 15 Oct 2025 15:14:49 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -400,7 +315,7 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.online/rrsets//?type=TXT&subname=_acme-challenge.deleterecordset
+    uri: https://desec.io/api/v1/domains/example.xxx/rrsets//?type=TXT&subname=_acme-challenge.deleterecordset
   response:
     body:
       string: '[]'
@@ -416,7 +331,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 14 Oct 2025 21:31:26 GMT
+      - Wed, 15 Oct 2025 15:14:49 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:

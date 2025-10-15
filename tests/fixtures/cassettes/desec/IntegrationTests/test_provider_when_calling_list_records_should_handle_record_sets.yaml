@@ -13,7 +13,7 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.online/
+    uri: https://desec.io/api/v1/domains/example.xxx/
   response:
     body:
       string: '{}'
@@ -25,11 +25,11 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '524'
+      - '521'
       Content-Type:
       - application/json
       Date:
-      - Tue, 14 Oct 2025 21:31:26 GMT
+      - Wed, 15 Oct 2025 15:14:50 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -55,23 +55,25 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.online/rrsets//?type=TXT&subname=_acme-challenge.listrecordset
+    uri: https://desec.io/api/v1/domains/example.xxx/rrsets//?type=TXT&subname=_acme-challenge.listrecordset
   response:
     body:
-      string: '{"detail":"Request was throttled. Expected available in 45 seconds."}'
+      string: '[]'
     headers:
       Allow:
       - GET, POST, PUT, PATCH, HEAD, OPTIONS
+      Cache-Control:
+      - no-cache
       Connection:
       - keep-alive
       Content-Length:
-      - '69'
+      - '2'
       Content-Type:
       - application/json
       Date:
-      - Tue, 14 Oct 2025 21:31:26 GMT
-      Retry-After:
-      - '45'
+      - Wed, 15 Oct 2025 15:14:50 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
       - nginx
       Strict-Transport-Security:
@@ -79,8 +81,53 @@ interactions:
       Vary:
       - origin
     status:
-      code: 429
-      message: Too Many Requests
+      code: 200
+      message: OK
+- request:
+    body: '{"records": ["\"challengetoken1\""], "type": "TXT", "subname": "_acme-challenge.listrecordset",
+      "ttl": 3600}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '108'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - lexicon/3.21.1 desec
+    method: POST
+    uri: https://desec.io/api/v1/domains/example.xxx/rrsets//
+  response:
+    body:
+      string: '{}'
+    headers:
+      Allow:
+      - GET, POST, PUT, PATCH, HEAD, OPTIONS
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '256'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 15 Oct 2025 15:14:51 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:01 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Vary:
+      - origin
+    status:
+      code: 201
+      message: Created
 - request:
     body: null
     headers:
@@ -95,7 +142,7 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.online/rrsets//?type=TXT&subname=_acme-challenge.listrecordset
+    uri: https://desec.io/api/v1/domains/example.xxx/rrsets//?type=TXT&subname=_acme-challenge.listrecordset
   response:
     body:
       string: '{}'
@@ -107,11 +154,58 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '286'
+      - '258'
       Content-Type:
       - application/json
       Date:
-      - Tue, 14 Oct 2025 21:32:11 GMT
+      - Wed, 15 Oct 2025 15:14:51 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:01 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Vary:
+      - origin
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"created": "2025-10-15T15:14:51.730354Z", "domain": "example.xxx", "subname":
+      "_acme-challenge.listrecordset", "name": "_acme-challenge.listrecordset.example.xxx.",
+      "records": ["\"challengetoken1\"", "\"challengetoken2\""], "ttl": 3600, "type":
+      "TXT", "touched": "2025-10-15T15:14:51.737601Z"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '294'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - lexicon/3.21.1 desec
+    method: PATCH
+    uri: https://desec.io/api/v1/domains/example.xxx/rrsets/_acme-challenge.listrecordset/TXT/
+  response:
+    body:
+      string: '{}'
+    headers:
+      Allow:
+      - GET, PUT, PATCH, DELETE, HEAD, OPTIONS
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '278'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 15 Oct 2025 15:14:52 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -137,7 +231,7 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.online/rrsets//?type=TXT&subname=_acme-challenge.listrecordset
+    uri: https://desec.io/api/v1/domains/example.xxx/rrsets//?type=TXT&subname=_acme-challenge.listrecordset
   response:
     body:
       string: '{}'
@@ -149,53 +243,11 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '286'
+      - '280'
       Content-Type:
       - application/json
       Date:
-      - Tue, 14 Oct 2025 21:32:11 GMT
-      Expires:
-      - Thu, 01 Jan 1970 00:00:01 GMT
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      Vary:
-      - origin
-    status:
-      code: 200
-      message: OK
-- request:
-    body: null
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Type:
-      - application/json
-      User-Agent:
-      - lexicon/3.21.1 desec
-    method: GET
-    uri: https://desec.io/api/v1/domains/example.online/rrsets//?type=TXT&subname=_acme-challenge.listrecordset
-  response:
-    body:
-      string: '{}'
-    headers:
-      Allow:
-      - GET, POST, PUT, PATCH, HEAD, OPTIONS
-      Cache-Control:
-      - no-cache
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '286'
-      Content-Type:
-      - application/json
-      Date:
-      - Tue, 14 Oct 2025 21:32:11 GMT
+      - Wed, 15 Oct 2025 15:14:52 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:

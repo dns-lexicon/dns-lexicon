@@ -13,7 +13,7 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.online/
+    uri: https://desec.io/api/v1/domains/example.xxx/
   response:
     body:
       string: '{}'
@@ -25,11 +25,11 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '524'
+      - '521'
       Content-Type:
       - application/json
       Date:
-      - Tue, 14 Oct 2025 21:31:11 GMT
+      - Wed, 15 Oct 2025 15:13:43 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -55,10 +55,10 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.online/rrsets//?type=A&subname=localhost
+    uri: https://desec.io/api/v1/domains/example.xxx/rrsets//?type=A&subname=localhost
   response:
     body:
-      string: '[{"created":"2025-10-13T13:14:56.490642Z","domain":"example.online","subname":"localhost","name":"localhost.example.online.","records":["127.0.0.1"],"ttl":3600,"type":"A","touched":"2025-10-13T13:14:56.498496Z"}]'
+      string: '[]'
     headers:
       Allow:
       - GET, POST, PUT, PATCH, HEAD, OPTIONS
@@ -67,11 +67,11 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '212'
+      - '2'
       Content-Type:
       - application/json
       Date:
-      - Tue, 14 Oct 2025 21:31:11 GMT
+      - Wed, 15 Oct 2025 15:13:43 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -83,4 +83,49 @@ interactions:
     status:
       code: 200
       message: OK
+- request:
+    body: '{"records": ["127.0.0.1"], "type": "A", "subname": "localhost", "ttl":
+      3600}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '76'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - lexicon/3.21.1 desec
+    method: POST
+    uri: https://desec.io/api/v1/domains/example.xxx/rrsets//
+  response:
+    body:
+      string: '{"created":"2025-10-15T15:13:43.893456Z","domain":"example.xxx","subname":"localhost","name":"localhost.example.xxx.","records":["127.0.0.1"],"ttl":3600,"type":"A","touched":"2025-10-15T15:13:43.902463Z"}'
+    headers:
+      Allow:
+      - GET, POST, PUT, PATCH, HEAD, OPTIONS
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '204'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 15 Oct 2025 15:13:43 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:01 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Vary:
+      - origin
+    status:
+      code: 201
+      message: Created
 version: 1
