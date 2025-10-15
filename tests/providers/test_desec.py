@@ -10,7 +10,7 @@ class DesecProviderTests(TestCase, IntegrationTestsV2):
     """Integration tests for deSEC provider"""
 
     provider_name = "desec"
-    domain = "example.xxx"
+    domain = "desec.lexicon"
 
     def _filter_headers(self):
         return ["Authorization"]
@@ -25,10 +25,10 @@ class DesecProviderTests(TestCase, IntegrationTestsV2):
         if response["status"]["code"] == 429:
             return None
 
-        # Filter dnssec keys / tokens
+        # Filter dnssec keys / login tokens
         content = response["body"]["string"]
-        if (b"dnskey" in content) or (b"token" in content):
+        if (b"dnskey" in content) or (b"perm_manage_tokens" in content):
             response["body"]["string"] = b"{}"
-            return response
+            response["headers"]["Content-Length"] = ["2"]
 
         return response

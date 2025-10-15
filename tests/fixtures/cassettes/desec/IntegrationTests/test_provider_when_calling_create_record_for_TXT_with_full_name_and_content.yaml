@@ -13,7 +13,7 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.xxx/
+    uri: https://desec.io/api/v1/domains/desec.lexicon/
   response:
     body:
       string: '{}'
@@ -25,11 +25,11 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '521'
+      - '2'
       Content-Type:
       - application/json
       Date:
-      - Wed, 15 Oct 2025 15:13:45 GMT
+      - Wed, 15 Oct 2025 23:22:16 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -55,7 +55,7 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.xxx/rrsets//?type=TXT&subname=_acme-challenge.full
+    uri: https://desec.io/api/v1/domains/desec.lexicon/rrsets//?type=TXT&subname=_acme-challenge.full
   response:
     body:
       string: '[]'
@@ -71,7 +71,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 15 Oct 2025 15:13:45 GMT
+      - Wed, 15 Oct 2025 23:22:16 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -100,10 +100,10 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: POST
-    uri: https://desec.io/api/v1/domains/example.xxx/rrsets//
+    uri: https://desec.io/api/v1/domains/desec.lexicon/rrsets//
   response:
     body:
-      string: '{}'
+      string: '{"created":"2025-10-15T23:22:17.074012Z","domain":"desec.lexicon","subname":"_acme-challenge.full","name":"_acme-challenge.full.desec.lexicon.","records":["\"challengetoken\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:22:17.083285Z"}'
     headers:
       Allow:
       - GET, POST, PUT, PATCH, HEAD, OPTIONS
@@ -112,11 +112,11 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '237'
+      - '241'
       Content-Type:
       - application/json
       Date:
-      - Wed, 15 Oct 2025 15:13:46 GMT
+      - Wed, 15 Oct 2025 23:22:17 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:

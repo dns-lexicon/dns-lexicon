@@ -13,7 +13,7 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.xxx/
+    uri: https://desec.io/api/v1/domains/desec.lexicon/
   response:
     body:
       string: '{}'
@@ -25,11 +25,11 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '521'
+      - '2'
       Content-Type:
       - application/json
       Date:
-      - Wed, 15 Oct 2025 15:13:43 GMT
+      - Wed, 15 Oct 2025 23:22:14 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:

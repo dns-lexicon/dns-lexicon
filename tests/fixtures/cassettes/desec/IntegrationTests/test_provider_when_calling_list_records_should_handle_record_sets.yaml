@@ -13,7 +13,7 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.xxx/
+    uri: https://desec.io/api/v1/domains/desec.lexicon/
   response:
     body:
       string: '{}'
@@ -25,11 +25,11 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '521'
+      - '2'
       Content-Type:
       - application/json
       Date:
-      - Wed, 15 Oct 2025 15:14:50 GMT
+      - Wed, 15 Oct 2025 23:23:21 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -55,7 +55,7 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.xxx/rrsets//?type=TXT&subname=_acme-challenge.listrecordset
+    uri: https://desec.io/api/v1/domains/desec.lexicon/rrsets//?type=TXT&subname=_acme-challenge.listrecordset
   response:
     body:
       string: '[]'
@@ -71,7 +71,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 15 Oct 2025 15:14:50 GMT
+      - Wed, 15 Oct 2025 23:23:21 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -100,10 +100,10 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: POST
-    uri: https://desec.io/api/v1/domains/example.xxx/rrsets//
+    uri: https://desec.io/api/v1/domains/desec.lexicon/rrsets//
   response:
     body:
-      string: '{}'
+      string: '{"created":"2025-10-15T23:23:22.646786Z","domain":"desec.lexicon","subname":"_acme-challenge.listrecordset","name":"_acme-challenge.listrecordset.desec.lexicon.","records":["\"challengetoken1\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:23:22.655445Z"}'
     headers:
       Allow:
       - GET, POST, PUT, PATCH, HEAD, OPTIONS
@@ -112,11 +112,11 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '256'
+      - '260'
       Content-Type:
       - application/json
       Date:
-      - Wed, 15 Oct 2025 15:14:51 GMT
+      - Wed, 15 Oct 2025 23:23:22 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -142,10 +142,10 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.xxx/rrsets//?type=TXT&subname=_acme-challenge.listrecordset
+    uri: https://desec.io/api/v1/domains/desec.lexicon/rrsets//?type=TXT&subname=_acme-challenge.listrecordset
   response:
     body:
-      string: '{}'
+      string: '[{"created":"2025-10-15T23:23:22.646786Z","domain":"desec.lexicon","subname":"_acme-challenge.listrecordset","name":"_acme-challenge.listrecordset.desec.lexicon.","records":["\"challengetoken1\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:23:22.655445Z"}]'
     headers:
       Allow:
       - GET, POST, PUT, PATCH, HEAD, OPTIONS
@@ -154,11 +154,11 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '258'
+      - '262'
       Content-Type:
       - application/json
       Date:
-      - Wed, 15 Oct 2025 15:14:51 GMT
+      - Wed, 15 Oct 2025 23:23:22 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -171,10 +171,10 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: '{"created": "2025-10-15T15:14:51.730354Z", "domain": "example.xxx", "subname":
-      "_acme-challenge.listrecordset", "name": "_acme-challenge.listrecordset.example.xxx.",
+    body: '{"created": "2025-10-15T23:23:22.646786Z", "domain": "desec.lexicon", "subname":
+      "_acme-challenge.listrecordset", "name": "_acme-challenge.listrecordset.desec.lexicon.",
       "records": ["\"challengetoken1\"", "\"challengetoken2\""], "ttl": 3600, "type":
-      "TXT", "touched": "2025-10-15T15:14:51.737601Z"}'
+      "TXT", "touched": "2025-10-15T23:23:22.655445Z"}'
     headers:
       Accept:
       - application/json
@@ -183,16 +183,16 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '294'
+      - '298'
       Content-Type:
       - application/json
       User-Agent:
       - lexicon/3.21.1 desec
     method: PATCH
-    uri: https://desec.io/api/v1/domains/example.xxx/rrsets/_acme-challenge.listrecordset/TXT/
+    uri: https://desec.io/api/v1/domains/desec.lexicon/rrsets/_acme-challenge.listrecordset/TXT/
   response:
     body:
-      string: '{}'
+      string: '{"created":"2025-10-15T23:23:22.646786Z","domain":"desec.lexicon","subname":"_acme-challenge.listrecordset","name":"_acme-challenge.listrecordset.desec.lexicon.","records":["\"challengetoken1\"","\"challengetoken2\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:23:22.910207Z"}'
     headers:
       Allow:
       - GET, PUT, PATCH, DELETE, HEAD, OPTIONS
@@ -201,11 +201,11 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '278'
+      - '282'
       Content-Type:
       - application/json
       Date:
-      - Wed, 15 Oct 2025 15:14:52 GMT
+      - Wed, 15 Oct 2025 23:23:22 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -231,10 +231,10 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.xxx/rrsets//?type=TXT&subname=_acme-challenge.listrecordset
+    uri: https://desec.io/api/v1/domains/desec.lexicon/rrsets//?type=TXT&subname=_acme-challenge.listrecordset
   response:
     body:
-      string: '{}'
+      string: '[{"created":"2025-10-15T23:23:22.646786Z","domain":"desec.lexicon","subname":"_acme-challenge.listrecordset","name":"_acme-challenge.listrecordset.desec.lexicon.","records":["\"challengetoken1\"","\"challengetoken2\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:23:22.911095Z"}]'
     headers:
       Allow:
       - GET, POST, PUT, PATCH, HEAD, OPTIONS
@@ -243,11 +243,11 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '280'
+      - '284'
       Content-Type:
       - application/json
       Date:
-      - Wed, 15 Oct 2025 15:14:52 GMT
+      - Wed, 15 Oct 2025 23:23:23 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:

@@ -13,7 +13,7 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.xxx/
+    uri: https://desec.io/api/v1/domains/desec.lexicon/
   response:
     body:
       string: '{}'
@@ -25,11 +25,11 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '521'
+      - '2'
       Content-Type:
       - application/json
       Date:
-      - Wed, 15 Oct 2025 15:15:45 GMT
+      - Wed, 15 Oct 2025 23:24:15 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -55,7 +55,7 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.xxx/rrsets//?type=TXT&subname=orig.nameonly.test
+    uri: https://desec.io/api/v1/domains/desec.lexicon/rrsets//?type=TXT&subname=orig.nameonly.test
   response:
     body:
       string: '[]'
@@ -71,7 +71,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 15 Oct 2025 15:15:45 GMT
+      - Wed, 15 Oct 2025 23:24:15 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -100,10 +100,10 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: POST
-    uri: https://desec.io/api/v1/domains/example.xxx/rrsets//
+    uri: https://desec.io/api/v1/domains/desec.lexicon/rrsets//
   response:
     body:
-      string: '{}'
+      string: '{"created":"2025-10-15T23:24:15.739773Z","domain":"desec.lexicon","subname":"orig.nameonly.test","name":"orig.nameonly.test.desec.lexicon.","records":["\"challengetoken\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:24:15.747185Z"}'
     headers:
       Allow:
       - GET, POST, PUT, PATCH, HEAD, OPTIONS
@@ -112,11 +112,11 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '233'
+      - '237'
       Content-Type:
       - application/json
       Date:
-      - Wed, 15 Oct 2025 15:15:45 GMT
+      - Wed, 15 Oct 2025 23:24:15 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -142,10 +142,10 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.xxx/rrsets//?type=TXT&subname=orig.nameonly.test
+    uri: https://desec.io/api/v1/domains/desec.lexicon/rrsets//?type=TXT&subname=orig.nameonly.test
   response:
     body:
-      string: '{}'
+      string: '[{"created":"2025-10-15T23:24:15.739773Z","domain":"desec.lexicon","subname":"orig.nameonly.test","name":"orig.nameonly.test.desec.lexicon.","records":["\"challengetoken\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:24:15.747185Z"}]'
     headers:
       Allow:
       - GET, POST, PUT, PATCH, HEAD, OPTIONS
@@ -154,11 +154,11 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '235'
+      - '239'
       Content-Type:
       - application/json
       Date:
-      - Wed, 15 Oct 2025 15:15:45 GMT
+      - Wed, 15 Oct 2025 23:24:15 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -171,9 +171,9 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: '{"created": "2025-10-15T15:15:45.598143Z", "domain": "example.xxx", "subname":
-      "orig.nameonly.test", "name": "orig.nameonly.test.example.xxx.", "records":
-      ["\"updated\""], "ttl": 3600, "type": "TXT", "touched": "2025-10-15T15:15:45.608684Z"}'
+    body: '{"created": "2025-10-15T23:24:15.739773Z", "domain": "desec.lexicon", "subname":
+      "orig.nameonly.test", "name": "orig.nameonly.test.desec.lexicon.", "records":
+      ["\"updated\""], "ttl": 3600, "type": "TXT", "touched": "2025-10-15T23:24:15.747185Z"}'
     headers:
       Accept:
       - application/json
@@ -182,16 +182,16 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '241'
+      - '245'
       Content-Type:
       - application/json
       User-Agent:
       - lexicon/3.21.1 desec
     method: PATCH
-    uri: https://desec.io/api/v1/domains/example.xxx/rrsets/orig.nameonly.test/TXT/
+    uri: https://desec.io/api/v1/domains/desec.lexicon/rrsets/orig.nameonly.test/TXT/
   response:
     body:
-      string: '{"created":"2025-10-15T15:15:45.598143Z","domain":"example.xxx","subname":"orig.nameonly.test","name":"orig.nameonly.test.example.xxx.","records":["\"updated\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T15:15:46.986233Z"}'
+      string: '{"created":"2025-10-15T23:24:15.739773Z","domain":"desec.lexicon","subname":"orig.nameonly.test","name":"orig.nameonly.test.desec.lexicon.","records":["\"updated\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:24:17.123325Z"}'
     headers:
       Allow:
       - GET, PUT, PATCH, DELETE, HEAD, OPTIONS
@@ -200,11 +200,11 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '226'
+      - '230'
       Content-Type:
       - application/json
       Date:
-      - Wed, 15 Oct 2025 15:15:47 GMT
+      - Wed, 15 Oct 2025 23:24:17 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:

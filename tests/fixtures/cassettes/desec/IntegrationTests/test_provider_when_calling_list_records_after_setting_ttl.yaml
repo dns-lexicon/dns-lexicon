@@ -13,7 +13,7 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.xxx/
+    uri: https://desec.io/api/v1/domains/desec.lexicon/
   response:
     body:
       string: '{}'
@@ -25,11 +25,11 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '521'
+      - '2'
       Content-Type:
       - application/json
       Date:
-      - Wed, 15 Oct 2025 15:14:49 GMT
+      - Wed, 15 Oct 2025 23:23:20 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -55,7 +55,7 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.xxx/rrsets//?type=TXT&subname=ttl.fqdn
+    uri: https://desec.io/api/v1/domains/desec.lexicon/rrsets//?type=TXT&subname=ttl.fqdn
   response:
     body:
       string: '[]'
@@ -71,7 +71,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 15 Oct 2025 15:14:50 GMT
+      - Wed, 15 Oct 2025 23:23:20 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -100,10 +100,10 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: POST
-    uri: https://desec.io/api/v1/domains/example.xxx/rrsets//
+    uri: https://desec.io/api/v1/domains/desec.lexicon/rrsets//
   response:
     body:
-      string: '{"created":"2025-10-15T15:14:50.175112Z","domain":"example.xxx","subname":"ttl.fqdn","name":"ttl.fqdn.example.xxx.","records":["\"ttlshouldbe3600\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T15:14:50.182007Z"}'
+      string: '{"created":"2025-10-15T23:23:21.047448Z","domain":"desec.lexicon","subname":"ttl.fqdn","name":"ttl.fqdn.desec.lexicon.","records":["\"ttlshouldbe3600\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:23:21.055394Z"}'
     headers:
       Allow:
       - GET, POST, PUT, PATCH, HEAD, OPTIONS
@@ -112,11 +112,11 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '214'
+      - '218'
       Content-Type:
       - application/json
       Date:
-      - Wed, 15 Oct 2025 15:14:50 GMT
+      - Wed, 15 Oct 2025 23:23:21 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
@@ -142,10 +142,10 @@ interactions:
       User-Agent:
       - lexicon/3.21.1 desec
     method: GET
-    uri: https://desec.io/api/v1/domains/example.xxx/rrsets//?type=TXT&subname=ttl.fqdn
+    uri: https://desec.io/api/v1/domains/desec.lexicon/rrsets//?type=TXT&subname=ttl.fqdn
   response:
     body:
-      string: '[{"created":"2025-10-15T15:14:50.175112Z","domain":"example.xxx","subname":"ttl.fqdn","name":"ttl.fqdn.example.xxx.","records":["\"ttlshouldbe3600\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T15:14:50.182007Z"}]'
+      string: '[{"created":"2025-10-15T23:23:21.047448Z","domain":"desec.lexicon","subname":"ttl.fqdn","name":"ttl.fqdn.desec.lexicon.","records":["\"ttlshouldbe3600\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:23:21.055394Z"}]'
     headers:
       Allow:
       - GET, POST, PUT, PATCH, HEAD, OPTIONS
@@ -154,11 +154,11 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '216'
+      - '220'
       Content-Type:
       - application/json
       Date:
-      - Wed, 15 Oct 2025 15:14:50 GMT
+      - Wed, 15 Oct 2025 23:23:21 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:01 GMT
       Server:
