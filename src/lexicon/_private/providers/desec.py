@@ -316,7 +316,8 @@ class Provider(BaseProvider):
 
     def _sanitize_request_content(self, content: str, rtype: str) -> str:
         if rtype == "TXT":
-            return f"\"{content.strip('"')}\"" if content else ""
+            content = content.strip('"')
+            return f'"{content}"' if content else ''
         if rtype == "CNAME":
             return self._fqdn_name(content)
         if rtype in ("MX", "SRV"):
