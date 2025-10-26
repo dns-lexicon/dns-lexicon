@@ -154,7 +154,7 @@ Lexicon currently supports 88 providers:
 .. _gratisdns:
 .. _henet: https://dns.he.net/
 .. _hetzner: https://dns.hetzner.com/api-docs/
-.. _hostingde:
+.. _hostingde: https://www.hosting.de/
 .. _hover: https://www.hover.com/
 .. _infoblox: https://docs.infoblox.com/display/ilp/infoblox+documentation+portal
 .. _infomaniak: https://www.infomaniak.com
