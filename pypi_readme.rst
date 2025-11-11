@@ -121,6 +121,7 @@ Lexicon currently supports 89 providers:
 .. _conoha: https://www.conoha.jp/docs/
 .. _constellix: https://api-docs.constellix.com/?version=latest
 .. _ddns: https://www.rfc-editor.org/rfc/rfc2136
+.. _desec: https://desec.readthedocs.io/en/latest/
 .. _devnomads: https://api.devnomads.nl/api/documentation
 .. _digitalocean: https://developers.digitalocean.com/documentation/v2/#create-a-new-domain
 .. _dinahosting: https://en.dinahosting.com/api
