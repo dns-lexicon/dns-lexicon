@@ -1,7 +1,5 @@
 """Integration tests for Softlayer"""
 
-from unittest import TestCase
-
 from integration_tests import IntegrationTestsV1
 
 
@@ -9,7 +7,7 @@ from integration_tests import IntegrationTestsV1
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from define_tests.TheTests
 # TODO: migrate to IntegrationTestsV2 and its extended test suite
-class SoftLayerProviderTests(TestCase, IntegrationTestsV1):
+class TestSoftLayerProvider(IntegrationTestsV1):
     """TestCase for SoftLayer"""
 
     provider_name = "softlayer"

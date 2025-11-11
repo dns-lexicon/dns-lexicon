@@ -1,11 +1,9 @@
 """Integration tests for Goddady"""
 
-from unittest import TestCase
-
 from integration_tests import IntegrationTestsV2
 
 
-class GoDaddyProviderTests(TestCase, IntegrationTestsV2):
+class TestGoDaddyProvider(IntegrationTestsV2):
     """TestCase for Godaddy"""
 
     provider_name = "godaddy"

@@ -1,14 +1,12 @@
 """Integration tests for Constellix"""
 
-from unittest import TestCase
-
 from integration_tests import IntegrationTestsV2
 
 
 # Constellix does not currently have a sandbox and they enforce domain
 # uniqueness across the service.  You'll need your own production credentials
 # and a unique domain name if you want to run these tests natively.
-class ConstellixProviderTests(TestCase, IntegrationTestsV2):
+class TestConstellixProvider(IntegrationTestsV2):
     """TestCase for Constellix"""
 
     provider_name = "constellix"

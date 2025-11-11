@@ -1,11 +1,9 @@
 """Integration tests for Onapp"""
 
-from unittest import TestCase
-
 from integration_tests import IntegrationTestsV2
 
 
-class OnappProviderTests(TestCase, IntegrationTestsV2):
+class TestOnappProvider(IntegrationTestsV2):
     """TestCase for Oneapp"""
 
     provider_name = "onapp"

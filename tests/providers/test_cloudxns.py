@@ -1,7 +1,5 @@
 """Integration tests for CloudXNS"""
 
-from unittest import TestCase
-
 import pytest
 from integration_tests import IntegrationTestsV2
 
@@ -10,7 +8,7 @@ from integration_tests import IntegrationTestsV2
 # pass, by inheritance from define_tests.TheTests
 
 
-class CloudXNSProviderTests(TestCase, IntegrationTestsV2):
+class TestCloudXNSProvider(IntegrationTestsV2):
     """TestCase for CloudXNS"""
 
     provider_name = "cloudxns"

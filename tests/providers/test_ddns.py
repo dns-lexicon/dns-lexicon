@@ -1,5 +1,3 @@
-from unittest import TestCase
-
 import pytest
 from integration_tests import IntegrationTestsV2
 
@@ -8,7 +6,7 @@ from integration_tests import IntegrationTestsV2
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
 @pytest.mark.skip(reason="missing tests, will require to run Bind in docker")
-class DDNSProviderTests(TestCase, IntegrationTestsV2):
+class TestDDNSProvider(IntegrationTestsV2):
     """Integration tests for DDNS provider"""
 
     provider_name = "DDNS"

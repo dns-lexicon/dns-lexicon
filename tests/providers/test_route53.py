@@ -1,7 +1,5 @@
 """Test for route53 implementation of the interface."""
 
-from unittest import TestCase
-
 import pytest
 from integration_tests import (
     EngineOverrideConfigSource,
@@ -10,7 +8,7 @@ from integration_tests import (
 )
 
 
-class Route53ProviderTests(TestCase, IntegrationTestsV2):
+class TestRoute53Provider(IntegrationTestsV2):
     """Route53 Provider Tests."""
 
     provider_name = "route53"

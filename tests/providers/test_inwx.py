@@ -1,11 +1,9 @@
 """Integration tests for INWX"""
 
-from unittest import TestCase
-
 from integration_tests import IntegrationTestsV2
 
 
-class InwxProviderTests(TestCase, IntegrationTestsV2):
+class TestInwxProvider(IntegrationTestsV2):
     """TestCase for INWX"""
 
     provider_name = "inwx"

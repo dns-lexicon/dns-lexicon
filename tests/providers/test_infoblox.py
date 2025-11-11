@@ -20,7 +20,6 @@ auth_psw = placeholder_auth_psw
 """
 
 import os
-from unittest import TestCase
 
 from integration_tests import IntegrationTestsV2
 
@@ -28,7 +27,7 @@ from integration_tests import IntegrationTestsV2
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
-class InfobloxProviderTests(TestCase, IntegrationTestsV2):
+class TestInfobloxProvider(IntegrationTestsV2):
     """TestCase for Infoblox"""
 
     provider_name = "infoblox"

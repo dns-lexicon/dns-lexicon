@@ -1,6 +1,7 @@
 """Base class for provider integration tests"""
 
 import os
+from types import ModuleType
 import warnings
 from functools import wraps
 from typing import Optional
@@ -91,10 +92,9 @@ class IntegrationTestsV1:
     IntegrationTestsV1 is used for providers developed before IntegrationTestsV2 has been created.
     """
 
-    def __init__(self):
-        self.domain = None
-        self.provider_name = None
-        self.provider_module = None
+    domain: str
+    provider_name: str
+    provider_module: ModuleType
 
     def setup_method(self, _):
         warnings.filterwarnings(

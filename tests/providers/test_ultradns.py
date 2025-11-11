@@ -1,14 +1,12 @@
 """Integration tests for UltraDNS"""
 
-from unittest import TestCase
-
 from integration_tests import IntegrationTestsV2
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
-class UltradnsProviderTests(TestCase, IntegrationTestsV2):
+class TestUltradnsProvider(IntegrationTestsV2):
     """TestCase for UltraDNS"""
 
     provider_name = "ultradns"

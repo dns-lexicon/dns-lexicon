@@ -1,7 +1,5 @@
 """Integration tests for FlexibleEngine Cloud"""
 
-from unittest import TestCase
-
 import pytest
 from integration_tests import IntegrationTestsV2
 
@@ -10,7 +8,7 @@ from integration_tests import IntegrationTestsV2
 # pass, by inheritance from define_tests.TheTests
 
 
-class FlexibleEngineProviderTests(TestCase, IntegrationTestsV2):
+class TestFlexibleEngineProvider(IntegrationTestsV2):
     """TestCase for FlexibleEngine"""
 
     provider_name = "flexibleengine"

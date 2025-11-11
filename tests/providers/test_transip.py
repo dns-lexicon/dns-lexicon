@@ -1,7 +1,6 @@
 """Integration tests for Transip"""
 
 import re
-from unittest import TestCase
 
 import pytest
 from integration_tests import IntegrationTestsV2, vcr_integration_test
@@ -45,7 +44,7 @@ KPeh76yhdzsFwzh+0LBPfkFgFn3YlHp0eoywNpm57MFxWx8u3U2Hkw==
 #  - remove auth_api_key entry from the dict returned by _test_parameters_overrides function.
 
 
-class TransipProviderTests(TestCase, IntegrationTestsV2):
+class TestTransipProvider(IntegrationTestsV2):
     """TestCase for Transip"""
 
     provider_name = "transip"
