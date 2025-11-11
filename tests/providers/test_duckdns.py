@@ -1,7 +1,8 @@
 # Test for one implementation of the interface, mock
 
-import pytest
 from unittest import mock
+
+import pytest
 from integration_tests import IntegrationTestsV2
 
 from lexicon._private.providers.duckdns import Provider

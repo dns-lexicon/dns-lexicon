@@ -1,9 +1,9 @@
 """Base class for provider integration tests"""
 
 import os
-from types import ModuleType
 import warnings
 from functools import wraps
+from types import ModuleType
 from typing import Optional
 
 import pytest

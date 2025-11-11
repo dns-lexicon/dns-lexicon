@@ -1,4 +1,5 @@
 """Integration tests for deSEC"""
+
 from integration_tests import IntegrationTestsV2
 
 
@@ -16,7 +17,9 @@ class DesecProviderTests(IntegrationTestsV2):
 
     def _test_fallback_fn(self):
         # Prevent conflict between login credentials and token
-        return lambda x: None if x in ("auth_username", "auth_password") else f"placeholder_{x}"
+        return lambda x: (
+            None if x in ("auth_username", "auth_password") else f"placeholder_{x}"
+        )
 
     def _filter_response(self, response):
         # Remove retry requests/responses

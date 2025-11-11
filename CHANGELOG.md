@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.23.0 - 11/11/2025
 ### Added
 * Add `desec` provider (#55)
 
