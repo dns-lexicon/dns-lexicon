@@ -1,6 +1,12 @@
 # Changelog
 
 ## master - CURRENT
+### Added
+* Add `desec` provider (#55)
+
+### Removed
+* Replace the old `linode` provider with `linode4`. `linode4` provider name 
+  is still usable for retro-compatibility purpose.
 
 ## 3.22.0 - 11/11/2025
 ### Added
