@@ -29,7 +29,8 @@ def _nslookup_mock(request):
 # Guys, are we online ?
 def _there_is_no_network():
     try:
-        socket.create_connection(("www.google.com", 80))
+        conn = socket.create_connection(("www.google.com", 80))
+        conn.close()
         return False
     except (OSError, IOError):
         pass
