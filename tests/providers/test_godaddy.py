@@ -4,6 +4,7 @@ from unittest import TestCase
 
 from integration_tests import IntegrationTestsV2
 
+
 class GoDaddyProviderTests(TestCase, IntegrationTestsV2):
     """TestCase for Godaddy"""
 
