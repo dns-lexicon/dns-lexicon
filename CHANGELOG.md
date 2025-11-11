@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.22.0 - 11/11/2025
 ### Added
 * Add support of Python 3.14
 * Add relevant URLs in the pyproject.toml for publication in PyPI
