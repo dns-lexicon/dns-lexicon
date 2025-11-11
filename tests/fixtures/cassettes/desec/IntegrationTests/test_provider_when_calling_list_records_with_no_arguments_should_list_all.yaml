@@ -1,0 +1,86 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - lexicon/3.21.1 desec
+    method: GET
+    uri: https://desec.io/api/v1/domains/desec.lexicon/
+  response:
+    body:
+      string: '{}'
+    headers:
+      Allow:
+      - GET, DELETE, HEAD, OPTIONS
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 15 Oct 2025 23:23:26 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:01 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Vary:
+      - origin
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - lexicon/3.21.1 desec
+    method: GET
+    uri: https://desec.io/api/v1/domains/desec.lexicon/rrsets//
+  response:
+    body:
+      string: '[{"created":"2025-10-15T23:23:25.774392Z","domain":"desec.lexicon","subname":"random.test","name":"random.test.desec.lexicon.","records":["\"challengetoken\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:23:25.783179Z"},{"created":"2025-10-15T23:23:25.060971Z","domain":"desec.lexicon","subname":"random.fulltest","name":"random.fulltest.desec.lexicon.","records":["\"challengetoken\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:23:25.066131Z"},{"created":"2025-10-15T23:23:24.547921Z","domain":"desec.lexicon","subname":"random.fqdntest","name":"random.fqdntest.desec.lexicon.","records":["\"challengetoken\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:23:24.555714Z"},{"created":"2025-10-15T23:23:22.646786Z","domain":"desec.lexicon","subname":"_acme-challenge.listrecordset","name":"_acme-challenge.listrecordset.desec.lexicon.","records":["\"challengetoken1\"","\"challengetoken2\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:23:22.911095Z"},{"created":"2025-10-15T23:23:21.047448Z","domain":"desec.lexicon","subname":"ttl.fqdn","name":"ttl.fqdn.desec.lexicon.","records":["\"ttlshouldbe3600\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:23:21.055394Z"},{"created":"2025-10-15T23:23:15.670003Z","domain":"desec.lexicon","subname":"_acme-challenge.deleterecordinset","name":"_acme-challenge.deleterecordinset.desec.lexicon.","records":["\"challengetoken2\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:23:17.339543Z"},{"created":"2025-10-15T23:22:20.829125Z","domain":"desec.lexicon","subname":"_acme-challenge.noop","name":"_acme-challenge.noop.desec.lexicon.","records":["\"challengetoken\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:22:20.838309Z"},{"created":"2025-10-15T23:22:18.998737Z","domain":"desec.lexicon","subname":"_acme-challenge.createrecordset","name":"_acme-challenge.createrecordset.desec.lexicon.","records":["\"challengetoken2\"","\"challengetoken1\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:22:20.426954Z"},{"created":"2025-10-15T23:22:18.534935Z","domain":"desec.lexicon","subname":"_acme-challenge.test","name":"_acme-challenge.test.desec.lexicon.","records":["\"challengetoken\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:22:18.545587Z"},{"created":"2025-10-15T23:22:17.074012Z","domain":"desec.lexicon","subname":"_acme-challenge.full","name":"_acme-challenge.full.desec.lexicon.","records":["\"challengetoken\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:22:17.083285Z"},{"created":"2025-10-15T23:22:16.693600Z","domain":"desec.lexicon","subname":"_acme-challenge.fqdn","name":"_acme-challenge.fqdn.desec.lexicon.","records":["\"challengetoken\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:22:16.702366Z"},{"created":"2025-10-15T23:22:15.178386Z","domain":"desec.lexicon","subname":"docs","name":"docs.desec.lexicon.","records":["docs.example.com.desec.lexicon."],"ttl":3600,"type":"CNAME","touched":"2025-10-15T23:22:15.187019Z"},{"created":"2025-10-15T23:22:14.754330Z","domain":"desec.lexicon","subname":"localhost","name":"localhost.desec.lexicon.","records":["127.0.0.1"],"ttl":3600,"type":"A","touched":"2025-10-15T23:22:14.762918Z"},{"created":"2025-10-15T23:20:43.420735Z","domain":"desec.lexicon","subname":"","name":"desec.lexicon.","records":["ns1.desec.io.","ns2.desec.org."],"ttl":3600,"type":"NS","touched":"2025-10-15T23:20:43.426909Z"}]'
+    headers:
+      Allow:
+      - GET, POST, PUT, PATCH, HEAD, OPTIONS
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '3361'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 15 Oct 2025 23:23:26 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:01 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Vary:
+      - origin
+    status:
+      code: 200
+      message: OK
+version: 1

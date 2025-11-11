@@ -1,0 +1,346 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - lexicon/3.21.1 desec
+    method: GET
+    uri: https://desec.io/api/v1/domains/desec.lexicon/
+  response:
+    body:
+      string: '{}'
+    headers:
+      Allow:
+      - GET, DELETE, HEAD, OPTIONS
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 15 Oct 2025 23:24:17 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:01 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Vary:
+      - origin
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - lexicon/3.21.1 desec
+    method: GET
+    uri: https://desec.io/api/v1/domains/desec.lexicon/rrsets//?type=TXT&subname=orig.testfqdn
+  response:
+    body:
+      string: '[]'
+    headers:
+      Allow:
+      - GET, POST, PUT, PATCH, HEAD, OPTIONS
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 15 Oct 2025 23:24:17 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:01 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Vary:
+      - origin
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"records": ["\"challengetoken\""], "type": "TXT", "subname": "orig.testfqdn",
+      "ttl": 3600}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '91'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - lexicon/3.21.1 desec
+    method: POST
+    uri: https://desec.io/api/v1/domains/desec.lexicon/rrsets//
+  response:
+    body:
+      string: '{"created":"2025-10-15T23:24:17.452467Z","domain":"desec.lexicon","subname":"orig.testfqdn","name":"orig.testfqdn.desec.lexicon.","records":["\"challengetoken\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:24:17.459643Z"}'
+    headers:
+      Allow:
+      - GET, POST, PUT, PATCH, HEAD, OPTIONS
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '227'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 15 Oct 2025 23:24:17 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:01 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Vary:
+      - origin
+    status:
+      code: 201
+      message: Created
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - lexicon/3.21.1 desec
+    method: GET
+    uri: https://desec.io/api/v1/domains/desec.lexicon/rrsets//?type=TXT&subname=orig.testfqdn
+  response:
+    body:
+      string: '[{"created":"2025-10-15T23:24:17.452467Z","domain":"desec.lexicon","subname":"orig.testfqdn","name":"orig.testfqdn.desec.lexicon.","records":["\"challengetoken\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:24:17.459643Z"}]'
+    headers:
+      Allow:
+      - GET, POST, PUT, PATCH, HEAD, OPTIONS
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '229'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 15 Oct 2025 23:24:17 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:01 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Vary:
+      - origin
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - lexicon/3.21.1 desec
+    method: GET
+    uri: https://desec.io/api/v1/domains/desec.lexicon/rrsets//?type=TXT
+  response:
+    body:
+      string: '[{"created":"2025-10-15T23:24:17.452467Z","domain":"desec.lexicon","subname":"orig.testfqdn","name":"orig.testfqdn.desec.lexicon.","records":["\"challengetoken\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:24:17.459643Z"},{"created":"2025-10-15T23:24:15.739773Z","domain":"desec.lexicon","subname":"orig.nameonly.test","name":"orig.nameonly.test.desec.lexicon.","records":["\"updated\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:24:17.124304Z"},{"created":"2025-10-15T23:24:15.285754Z","domain":"desec.lexicon","subname":"updated.test","name":"updated.test.desec.lexicon.","records":["\"challengetoken\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:24:15.297036Z"},{"created":"2025-10-15T23:23:25.774392Z","domain":"desec.lexicon","subname":"random.test","name":"random.test.desec.lexicon.","records":["\"challengetoken\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:23:25.783179Z"},{"created":"2025-10-15T23:23:25.060971Z","domain":"desec.lexicon","subname":"random.fulltest","name":"random.fulltest.desec.lexicon.","records":["\"challengetoken\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:23:25.066131Z"},{"created":"2025-10-15T23:23:24.547921Z","domain":"desec.lexicon","subname":"random.fqdntest","name":"random.fqdntest.desec.lexicon.","records":["\"challengetoken\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:23:24.555714Z"},{"created":"2025-10-15T23:23:22.646786Z","domain":"desec.lexicon","subname":"_acme-challenge.listrecordset","name":"_acme-challenge.listrecordset.desec.lexicon.","records":["\"challengetoken1\"","\"challengetoken2\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:23:22.911095Z"},{"created":"2025-10-15T23:23:21.047448Z","domain":"desec.lexicon","subname":"ttl.fqdn","name":"ttl.fqdn.desec.lexicon.","records":["\"ttlshouldbe3600\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:23:21.055394Z"},{"created":"2025-10-15T23:23:15.670003Z","domain":"desec.lexicon","subname":"_acme-challenge.deleterecordinset","name":"_acme-challenge.deleterecordinset.desec.lexicon.","records":["\"challengetoken2\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:23:17.339543Z"},{"created":"2025-10-15T23:22:20.829125Z","domain":"desec.lexicon","subname":"_acme-challenge.noop","name":"_acme-challenge.noop.desec.lexicon.","records":["\"challengetoken\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:22:20.838309Z"},{"created":"2025-10-15T23:22:18.998737Z","domain":"desec.lexicon","subname":"_acme-challenge.createrecordset","name":"_acme-challenge.createrecordset.desec.lexicon.","records":["\"challengetoken2\"","\"challengetoken1\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:22:20.426954Z"},{"created":"2025-10-15T23:22:18.534935Z","domain":"desec.lexicon","subname":"_acme-challenge.test","name":"_acme-challenge.test.desec.lexicon.","records":["\"challengetoken\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:22:18.545587Z"},{"created":"2025-10-15T23:22:17.074012Z","domain":"desec.lexicon","subname":"_acme-challenge.full","name":"_acme-challenge.full.desec.lexicon.","records":["\"challengetoken\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:22:17.083285Z"},{"created":"2025-10-15T23:22:16.693600Z","domain":"desec.lexicon","subname":"_acme-challenge.fqdn","name":"_acme-challenge.fqdn.desec.lexicon.","records":["\"challengetoken\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:22:16.702366Z"}]'
+    headers:
+      Allow:
+      - GET, POST, PUT, PATCH, HEAD, OPTIONS
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '3400'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 15 Oct 2025 23:24:17 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:01 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Vary:
+      - origin
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"created": "2025-10-15T23:24:17.452467Z", "domain": "desec.lexicon", "subname":
+      "orig.testfqdn", "name": "orig.testfqdn.desec.lexicon.", "records": [], "ttl":
+      3600, "type": "TXT", "touched": "2025-10-15T23:24:17.459643Z"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '222'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - lexicon/3.21.1 desec
+    method: PATCH
+    uri: https://desec.io/api/v1/domains/desec.lexicon/rrsets/orig.testfqdn/TXT/
+  response:
+    body:
+      string: ''
+    headers:
+      Allow:
+      - GET, PUT, PATCH, DELETE, HEAD, OPTIONS
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      Date:
+      - Wed, 15 Oct 2025 23:24:19 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:01 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Vary:
+      - origin
+    status:
+      code: 204
+      message: No Content
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - lexicon/3.21.1 desec
+    method: GET
+    uri: https://desec.io/api/v1/domains/desec.lexicon/rrsets//?type=TXT&subname=updated.testfqdn
+  response:
+    body:
+      string: '[]'
+    headers:
+      Allow:
+      - GET, POST, PUT, PATCH, HEAD, OPTIONS
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 15 Oct 2025 23:24:19 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:01 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Vary:
+      - origin
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"records": ["\"challengetoken\""], "type": "TXT", "subname": "updated.testfqdn",
+      "ttl": 3600}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '94'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - lexicon/3.21.1 desec
+    method: POST
+    uri: https://desec.io/api/v1/domains/desec.lexicon/rrsets//
+  response:
+    body:
+      string: '{"created":"2025-10-15T23:24:19.272517Z","domain":"desec.lexicon","subname":"updated.testfqdn","name":"updated.testfqdn.desec.lexicon.","records":["\"challengetoken\""],"ttl":3600,"type":"TXT","touched":"2025-10-15T23:24:19.279161Z"}'
+    headers:
+      Allow:
+      - GET, POST, PUT, PATCH, HEAD, OPTIONS
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '233'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 15 Oct 2025 23:24:19 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:01 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Vary:
+      - origin
+    status:
+      code: 201
+      message: Created
+version: 1
