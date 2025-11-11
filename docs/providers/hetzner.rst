@@ -1,2 +1,2 @@
 hetzner
-    * ``auth_token`` Specify hetzner dns api token
+    * ``auth_token`` Specify hetzner cloud api token

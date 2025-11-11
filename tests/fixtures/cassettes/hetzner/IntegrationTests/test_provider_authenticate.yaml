@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: !!python/unicode '{}'
+    body: '{}'
     headers:
       Accept:
       - '*/*'
@@ -11,39 +11,62 @@ interactions:
       Content-Length:
       - '2'
       Content-Type:
-      - !!python/unicode application/json
+      - application/json
       User-Agent:
-      - python-requests/2.23.0
+      - python-requests/2.32.3
     method: GET
-    uri: https://dns.hetzner.com/api/v1/zones?name=hetzner-api-test.de
+    uri: https://api.hetzner.cloud/v1/zones/devcoop.de
   response:
     body:
-      string: !!python/unicode '{"zones":[{"id":"hetznerapizoneid","name":"hetzner-api-test.de","ttl":3600,"registrar":"","legacy_dns_host":"","legacy_ns":["ns1.first-ns.de.","robotns2.second-ns.de.","robotns3.second-ns.com."],"ns":["hydrogen.ns.hetzner.com","oxygen.ns.hetzner.com","helium.ns.hetzner.de"],"created":"2020-04-07
-        01:24:00 +0000 UTC","verified":"2020-04-07 01:51:26.114056422 +0000 UTC m=+478.240428717","modified":"2020-06-11
-        07:02:20.999 +0000 UTC","project":"","owner":"","permission":"","zone_type":{"id":"","name":"","description":"","prices":null},"status":"verified","paused":false,"is_secondary_dns":false,"txt_verification":{"name":"","token":""},"records_count":9}],"meta":{"pagination":{"page":1,"per_page":100,"previous_page":1,"next_page":1,"last_page":1,"total_entries":12}}}
-
-        '
+      string: "{\n    \"zone\": {\n        \"id\": 53091,\n        \"name\": \"devcoop.de\",\n
+        \       \"mode\": \"primary\",\n        \"ttl\": 86400,\n        \"labels\":
+        {},\n        \"primary_nameservers\": [],\n        \"created\": \"2025-10-28T13:34:24Z\",\n
+        \       \"protection\": {\n            \"delete\": false\n        },\n        \"status\":
+        \"ok\",\n        \"authoritative_nameservers\": {\n            \"assigned\":
+        [\n                \"hydrogen.ns.hetzner.com.\",\n                \"oxygen.ns.hetzner.com.\",\n
+        \               \"helium.ns.hetzner.de.\"\n            ],\n            \"delegated\":
+        [\n                \"helium.ns.hetzner.de.\",\n                \"hydrogen.ns.hetzner.com.\",\n
+        \               \"oxygen.ns.hetzner.com.\"\n            ],\n            \"delegation_last_check\":
+        \"2025-10-28T13:34:54Z\",\n            \"delegation_status\": \"valid\"\n
+        \       },\n        \"record_count\": 8,\n        \"registrar\": \"hetzner\"\n
+        \   }\n}"
     headers:
-      access-control-allow-origin:
+      Access-Control-Allow-Headers:
+      - X-Requested-With,Authorization,Content-Type
+      Access-Control-Allow-Methods:
+      - OPTIONS,GET,POST,PUT,PATCH,DELETE
+      Access-Control-Allow-Origin:
       - '*'
-      connection:
+      Access-Control-Expose-Headers:
+      - Link,X-Correlation-ID
+      Access-Control-Max-Age:
+      - '86400'
+      Connection:
       - keep-alive
-      content-length:
-      - '7886'
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Fri, 12 Jun 2020 08:20:36 GMT
-      transfer-encoding:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 05 Nov 2025 10:03:51 GMT
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Traceparent:
+      - 00-79f13c42afe07439c41125374efbfc7b-d23180e9a644db93-01
+      Transfer-Encoding:
       - chunked
-      vary:
-      - Origin
-      via:
-      - kong/2.0.2
-      x-kong-proxy-latency:
-      - '2'
-      x-kong-upstream-latency:
-      - '243'
+      Uber-Trace-Id:
+      - 79f13c42afe07439c41125374efbfc7b:d23180e9a644db93:0:1
+      Vary:
+      - Accept-Encoding
+      X-Correlation-Id:
+      - 79f13c42afe07439c41125374efbfc7b
+      content-length:
+      - '855'
+      ratelimit-limit:
+      - '3600'
+      ratelimit-remaining:
+      - '3599'
+      ratelimit-reset:
+      - '1762337032'
     status:
       code: 200
       message: OK

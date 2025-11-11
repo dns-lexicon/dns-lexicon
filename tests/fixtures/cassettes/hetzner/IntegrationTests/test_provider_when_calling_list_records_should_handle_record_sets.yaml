@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: !!python/unicode '{}'
+    body: '{}'
     headers:
       Accept:
       - '*/*'
@@ -11,44 +11,67 @@ interactions:
       Content-Length:
       - '2'
       Content-Type:
-      - !!python/unicode application/json
+      - application/json
       User-Agent:
-      - python-requests/2.23.0
+      - python-requests/2.32.3
     method: GET
-    uri: https://dns.hetzner.com/api/v1/zones?name=hetzner-api-test.de
+    uri: https://api.hetzner.cloud/v1/zones/devcoop.de
   response:
     body:
-      string: !!python/unicode '{"zones":[{"id":"hetznerapizoneid","name":"hetzner-api-test.de","ttl":3600,"registrar":"","legacy_dns_host":"","legacy_ns":["ns1.first-ns.de.","robotns2.second-ns.de.","robotns3.second-ns.com."],"ns":["hydrogen.ns.hetzner.com","oxygen.ns.hetzner.com","helium.ns.hetzner.de"],"created":"2020-04-07
-        01:24:00 +0000 UTC","verified":"2020-04-07 01:51:26.114056422 +0000 UTC m=+478.240428717","modified":"2020-06-11
-        07:02:20.999 +0000 UTC","project":"","owner":"","permission":"","zone_type":{"id":"","name":"","description":"","prices":null},"status":"verified","paused":false,"is_secondary_dns":false,"txt_verification":{"name":"","token":""},"records_count":9}],"meta":{"pagination":{"page":1,"per_page":100,"previous_page":1,"next_page":1,"last_page":1,"total_entries":12}}}
-
-        '
+      string: "{\n    \"zone\": {\n        \"id\": 53091,\n        \"name\": \"devcoop.de\",\n
+        \       \"mode\": \"primary\",\n        \"ttl\": 86400,\n        \"labels\":
+        {},\n        \"primary_nameservers\": [],\n        \"created\": \"2025-10-28T13:34:24Z\",\n
+        \       \"protection\": {\n            \"delete\": false\n        },\n        \"status\":
+        \"updating\",\n        \"authoritative_nameservers\": {\n            \"assigned\":
+        [\n                \"hydrogen.ns.hetzner.com.\",\n                \"oxygen.ns.hetzner.com.\",\n
+        \               \"helium.ns.hetzner.de.\"\n            ],\n            \"delegated\":
+        [\n                \"helium.ns.hetzner.de.\",\n                \"hydrogen.ns.hetzner.com.\",\n
+        \               \"oxygen.ns.hetzner.com.\"\n            ],\n            \"delegation_last_check\":
+        \"2025-10-28T13:34:54Z\",\n            \"delegation_status\": \"valid\"\n
+        \       },\n        \"record_count\": 18,\n        \"registrar\": \"hetzner\"\n
+        \   }\n}"
     headers:
-      access-control-allow-origin:
+      Access-Control-Allow-Headers:
+      - X-Requested-With,Authorization,Content-Type
+      Access-Control-Allow-Methods:
+      - OPTIONS,GET,POST,PUT,PATCH,DELETE
+      Access-Control-Allow-Origin:
       - '*'
-      connection:
+      Access-Control-Expose-Headers:
+      - Link,X-Correlation-ID
+      Access-Control-Max-Age:
+      - '86400'
+      Connection:
       - keep-alive
-      content-length:
-      - '7887'
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Fri, 12 Jun 2020 08:21:06 GMT
-      transfer-encoding:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 05 Nov 2025 10:03:58 GMT
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Traceparent:
+      - 00-15e64777f40781d4afe08d5fe6717049-ea4b853e9f41db9f-01
+      Transfer-Encoding:
       - chunked
-      vary:
-      - Origin
-      via:
-      - kong/2.0.2
-      x-kong-proxy-latency:
-      - '1'
-      x-kong-upstream-latency:
-      - '230'
+      Uber-Trace-Id:
+      - 15e64777f40781d4afe08d5fe6717049:ea4b853e9f41db9f:0:1
+      Vary:
+      - Accept-Encoding
+      X-Correlation-Id:
+      - 15e64777f40781d4afe08d5fe6717049
+      content-length:
+      - '862'
+      ratelimit-limit:
+      - '3600'
+      ratelimit-remaining:
+      - '3553'
+      ratelimit-reset:
+      - '1762337084'
     status:
       code: 200
       message: OK
 - request:
-    body: !!python/unicode '{}'
+    body: '{}'
     headers:
       Accept:
       - '*/*'
@@ -59,64 +82,153 @@ interactions:
       Content-Length:
       - '2'
       Content-Type:
-      - !!python/unicode application/json
+      - application/json
       User-Agent:
-      - python-requests/2.23.0
+      - python-requests/2.32.3
     method: GET
-    uri: https://dns.hetzner.com/api/v1/records?zone_id=hetznerapizoneid
+    uri: https://api.hetzner.cloud/v1/zones/53091/rrsets
   response:
     body:
-      string: !!python/unicode '{"records":[{"id":"9720b5653ca6fd0517ec91a8c6104685","type":"SOA","name":"@","value":"ns1.first-ns.de.
-        dns.hetzner.com. 2020061224 14400 3600 1814400 3600","zone_id":"hetznerapizoneid","created":"2020-04-07
-        01:24:42 +0000 UTC","modified":"2020-06-12 08:21:05.72 +0000 UTC"},{"id":"5b378a7097bdb11e6cbb5f58db6bb101","type":"MX","name":"@","value":"10
-        mail.server-zugang.eu.","zone_id":"hetznerapizoneid","created":"2020-04-07
-        01:25:12 +0000 UTC","modified":"2020-04-07 01:25:12 +0000 UTC"},{"id":"a26cfdd36217e559c14b305a558f2a3c","type":"AAAA","name":"@","value":"2a01:4f8:121:31ec::b","zone_id":"hetznerapizoneid","created":"2020-04-07
-        01:25:37 +0000 UTC","modified":"2020-04-07 01:25:37 +0000 UTC"},{"id":"7d6f741802597845b97713596e35eaa7","type":"AAAA","name":"*","value":"2a01:4f8:121:31ec::b","zone_id":"hetznerapizoneid","created":"2020-04-07
-        01:25:37 +0000 UTC","modified":"2020-04-07 01:25:37 +0000 UTC"},{"id":"993bafd3e3b110a6a3acde9fe874426a","type":"NS","name":"@","value":"ns1.first-ns.de.","zone_id":"hetznerapizoneid","created":"2020-04-07
-        01:25:41 +0000 UTC","modified":"2020-04-07 01:25:41 +0000 UTC"},{"id":"cc3e8297060b7bd794fed5fdec3ed91b","type":"NS","name":"@","value":"robotns2.second-ns.de.","zone_id":"hetznerapizoneid","created":"2020-04-07
-        01:25:41 +0000 UTC","modified":"2020-04-07 01:25:41 +0000 UTC"},{"id":"c4602b1239d9f0747016f551c52b5774","type":"NS","name":"@","value":"robotns3.second-ns.com.","zone_id":"hetznerapizoneid","created":"2020-04-07
-        01:25:41 +0000 UTC","modified":"2020-04-07 01:25:41 +0000 UTC"},{"id":"77ae87e42a04bace81119eb2280c8dca","type":"A","name":"@","value":"178.63.80.254","zone_id":"hetznerapizoneid","created":"2020-04-07
-        01:25:41 +0000 UTC","modified":"2020-04-07 01:25:41 +0000 UTC"},{"id":"faff62d59434c666bac4174a1d18a955","type":"A","name":"*","value":"178.63.80.254","zone_id":"hetznerapizoneid","created":"2020-04-07
-        01:25:41 +0000 UTC","modified":"2020-04-07 01:25:41 +0000 UTC"},{"id":"fe6ac2081c630974662caeaa8715d435","type":"A","name":"localhost","value":"127.0.0.1","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:20:37.307 +0000 UTC","modified":"2020-06-12 08:20:37.307 +0000 UTC"},{"id":"8e6b81a856d20f0c1802703b56d1b53d","type":"CNAME","name":"docs","value":"docs.example.com","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:20:38.743 +0000 UTC","modified":"2020-06-12 08:20:38.743 +0000 UTC"},{"id":"a5fc9854314c160019d9bd0fcaaf2e2a","type":"TXT","name":"_acme-challenge.fqdn","value":"challengetoken","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:20:40.141 +0000 UTC","modified":"2020-06-12 08:20:40.141 +0000 UTC"},{"id":"101296724cdf3710d18ea43a06b39e6c","type":"TXT","name":"_acme-challenge.full","value":"challengetoken","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:20:41.421 +0000 UTC","modified":"2020-06-12 08:20:41.421 +0000 UTC"},{"id":"1c06fee6923324bc2727916d2157b3d8","type":"TXT","name":"_acme-challenge.test","value":"challengetoken","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:20:43.363 +0000 UTC","modified":"2020-06-12 08:20:43.363 +0000 UTC"},{"id":"97dcfc7f529a65b944a11554e15dcdfb","type":"TXT","name":"_acme-challenge.createrecordset","value":"challengetoken1","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:20:44.557 +0000 UTC","modified":"2020-06-12 08:20:44.557 +0000 UTC"},{"id":"880d3713398b9301dda21a611cbd9ab0","type":"TXT","name":"_acme-challenge.createrecordset","value":"challengetoken2","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:20:45.499 +0000 UTC","modified":"2020-06-12 08:20:45.499 +0000 UTC"},{"id":"f794c3584778621edfa903a30a993f9b","type":"TXT","name":"_acme-challenge.noop","value":"challengetoken","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:20:46.766 +0000 UTC","modified":"2020-06-12 08:20:46.766 +0000 UTC"},{"id":"fe7ddc85cc3c919385d8d2aabfa407eb","type":"TXT","name":"_acme-challenge.deleterecordinset","value":"challengetoken2","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:20:58.928 +0000 UTC","modified":"2020-06-12 08:20:58.928 +0000 UTC"},{"id":"61efb963c73466f54f6bba592e9340d4","type":"TXT","name":"ttl.fqdn","value":"ttlshouldbe3600","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:21:05.618 +0000 UTC","modified":"2020-06-12 08:21:05.618 +0000 UTC"}]}
-
-        '
+      string: "{\n    \"meta\": {\n        \"pagination\": {\n            \"last_page\":
+        1,\n            \"next_page\": null,\n            \"page\": 1,\n            \"per_page\":
+        25,\n            \"previous_page\": null,\n            \"total_entries\":
+        15\n        }\n    },\n    \"rrsets\": [\n        {\n            \"id\": \"nominatim/AAAA\",\n
+        \           \"name\": \"nominatim\",\n            \"type\": \"AAAA\",\n            \"ttl\":
+        3600,\n            \"labels\": {},\n            \"protection\": {\n                \"change\":
+        false\n            },\n            \"records\": [\n                {\n                    \"value\":
+        \"2a01:4f8:c012:9603::1\",\n                    \"comment\": \"\"\n                }\n
+        \           ],\n            \"zone\": 53091\n        },\n        {\n            \"id\":
+        \"@/SOA\",\n            \"name\": \"@\",\n            \"type\": \"SOA\",\n
+        \           \"ttl\": null,\n            \"labels\": {},\n            \"protection\":
+        {\n                \"change\": false\n            },\n            \"records\":
+        [\n                {\n                    \"value\": \"hydrogen.ns.hetzner.com.
+        dns.hetzner.com. 2025110623 86400 10800 3600000 3600\",\n                    \"comment\":
+        \"\"\n                }\n            ],\n            \"zone\": 53091\n        },\n
+        \       {\n            \"id\": \"osm.service.linke.projects/AAAA\",\n            \"name\":
+        \"osm.service.linke.projects\",\n            \"type\": \"AAAA\",\n            \"ttl\":
+        1800,\n            \"labels\": {},\n            \"protection\": {\n                \"change\":
+        false\n            },\n            \"records\": [\n                {\n                    \"value\":
+        \"2a01:4f8:1c1c:4181::1\",\n                    \"comment\": \"\"\n                }\n
+        \           ],\n            \"zone\": 53091\n        },\n        {\n            \"id\":
+        \"osm.service.linke.projects/A\",\n            \"name\": \"osm.service.linke.projects\",\n
+        \           \"type\": \"A\",\n            \"ttl\": 1800,\n            \"labels\":
+        {},\n            \"protection\": {\n                \"change\": false\n            },\n
+        \           \"records\": [\n                {\n                    \"value\":
+        \"195.201.131.78\",\n                    \"comment\": \"\"\n                }\n
+        \           ],\n            \"zone\": 53091\n        },\n        {\n            \"id\":
+        \"nominatim/A\",\n            \"name\": \"nominatim\",\n            \"type\":
+        \"A\",\n            \"ttl\": 3600,\n            \"labels\": {},\n            \"protection\":
+        {\n                \"change\": false\n            },\n            \"records\":
+        [\n                {\n                    \"value\": \"128.140.58.208\",\n
+        \                   \"comment\": \"\"\n                }\n            ],\n
+        \           \"zone\": 53091\n        },\n        {\n            \"id\": \"@/NS\",\n
+        \           \"name\": \"@\",\n            \"type\": \"NS\",\n            \"ttl\":
+        null,\n            \"labels\": {},\n            \"protection\": {\n                \"change\":
+        false\n            },\n            \"records\": [\n                {\n                    \"value\":
+        \"helium.ns.hetzner.de.\",\n                    \"comment\": \"\"\n                },\n
+        \               {\n                    \"value\": \"hydrogen.ns.hetzner.com.\",\n
+        \                   \"comment\": \"\"\n                },\n                {\n
+        \                   \"value\": \"oxygen.ns.hetzner.com.\",\n                    \"comment\":
+        \"\"\n                }\n            ],\n            \"zone\": 53091\n        },\n
+        \       {\n            \"id\": \"localhost/A\",\n            \"name\": \"localhost\",\n
+        \           \"type\": \"A\",\n            \"ttl\": 3600,\n            \"labels\":
+        {},\n            \"protection\": {\n                \"change\": false\n            },\n
+        \           \"records\": [\n                {\n                    \"value\":
+        \"127.0.0.1\",\n                    \"comment\": \"\"\n                }\n
+        \           ],\n            \"zone\": 53091\n        },\n        {\n            \"id\":
+        \"docs/CNAME\",\n            \"name\": \"docs\",\n            \"type\": \"CNAME\",\n
+        \           \"ttl\": 3600,\n            \"labels\": {},\n            \"protection\":
+        {\n                \"change\": false\n            },\n            \"records\":
+        [\n                {\n                    \"value\": \"docs.example.com\",\n
+        \                   \"comment\": \"\"\n                }\n            ],\n
+        \           \"zone\": 53091\n        },\n        {\n            \"id\": \"_acme-challenge.fqdn/TXT\",\n
+        \           \"name\": \"_acme-challenge.fqdn\",\n            \"type\": \"TXT\",\n
+        \           \"ttl\": 3600,\n            \"labels\": {},\n            \"protection\":
+        {\n                \"change\": false\n            },\n            \"records\":
+        [\n                {\n                    \"value\": \"\\\"challengetoken\\\"\",\n
+        \                   \"comment\": \"\"\n                }\n            ],\n
+        \           \"zone\": 53091\n        },\n        {\n            \"id\": \"_acme-challenge.full/TXT\",\n
+        \           \"name\": \"_acme-challenge.full\",\n            \"type\": \"TXT\",\n
+        \           \"ttl\": 3600,\n            \"labels\": {},\n            \"protection\":
+        {\n                \"change\": false\n            },\n            \"records\":
+        [\n                {\n                    \"value\": \"\\\"challengetoken\\\"\",\n
+        \                   \"comment\": \"\"\n                }\n            ],\n
+        \           \"zone\": 53091\n        },\n        {\n            \"id\": \"_acme-challenge.test/TXT\",\n
+        \           \"name\": \"_acme-challenge.test\",\n            \"type\": \"TXT\",\n
+        \           \"ttl\": 3600,\n            \"labels\": {},\n            \"protection\":
+        {\n                \"change\": false\n            },\n            \"records\":
+        [\n                {\n                    \"value\": \"\\\"challengetoken\\\"\",\n
+        \                   \"comment\": \"\"\n                }\n            ],\n
+        \           \"zone\": 53091\n        },\n        {\n            \"id\": \"_acme-challenge.createrecordset/TXT\",\n
+        \           \"name\": \"_acme-challenge.createrecordset\",\n            \"type\":
+        \"TXT\",\n            \"ttl\": 3600,\n            \"labels\": {},\n            \"protection\":
+        {\n                \"change\": false\n            },\n            \"records\":
+        [\n                {\n                    \"value\": \"\\\"challengetoken1\\\"\",\n
+        \                   \"comment\": \"\"\n                },\n                {\n
+        \                   \"value\": \"\\\"challengetoken2\\\"\",\n                    \"comment\":
+        \"\"\n                }\n            ],\n            \"zone\": 53091\n        },\n
+        \       {\n            \"id\": \"_acme-challenge.noop/TXT\",\n            \"name\":
+        \"_acme-challenge.noop\",\n            \"type\": \"TXT\",\n            \"ttl\":
+        3600,\n            \"labels\": {},\n            \"protection\": {\n                \"change\":
+        false\n            },\n            \"records\": [\n                {\n                    \"value\":
+        \"\\\"challengetoken\\\"\",\n                    \"comment\": \"\"\n                }\n
+        \           ],\n            \"zone\": 53091\n        },\n        {\n            \"id\":
+        \"_acme-challenge.deleterecordinset/TXT\",\n            \"name\": \"_acme-challenge.deleterecordinset\",\n
+        \           \"type\": \"TXT\",\n            \"ttl\": 3600,\n            \"labels\":
+        {},\n            \"protection\": {\n                \"change\": false\n            },\n
+        \           \"records\": [\n                {\n                    \"value\":
+        \"\\\"challengetoken2\\\"\",\n                    \"comment\": \"\"\n                }\n
+        \           ],\n            \"zone\": 53091\n        },\n        {\n            \"id\":
+        \"ttl.fqdn/TXT\",\n            \"name\": \"ttl.fqdn\",\n            \"type\":
+        \"TXT\",\n            \"ttl\": 3600,\n            \"labels\": {},\n            \"protection\":
+        {\n                \"change\": false\n            },\n            \"records\":
+        [\n                {\n                    \"value\": \"\\\"ttlshouldbe3600\\\"\",\n
+        \                   \"comment\": \"\"\n                }\n            ],\n
+        \           \"zone\": 53091\n        }\n    ]\n}"
     headers:
-      access-control-allow-origin:
+      Access-Control-Allow-Headers:
+      - X-Requested-With,Authorization,Content-Type
+      Access-Control-Allow-Methods:
+      - OPTIONS,GET,POST,PUT,PATCH,DELETE
+      Access-Control-Allow-Origin:
       - '*'
-      connection:
+      Access-Control-Expose-Headers:
+      - Link,X-Correlation-ID
+      Access-Control-Max-Age:
+      - '86400'
+      Connection:
       - keep-alive
-      content-length:
-      - '4491'
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Fri, 12 Jun 2020 08:21:06 GMT
-      transfer-encoding:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 05 Nov 2025 10:03:58 GMT
+      Link:
+      - <https://api.hetzner.cloud/v1/zones/53091/rrsets?page=1&per_page=25>; rel="last"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Traceparent:
+      - 00-00b6444b1ac33cdc5094f7cd7ac8a481-ce298683d49a6afe-01
+      Transfer-Encoding:
       - chunked
-      vary:
-      - Origin
-      via:
-      - kong/2.0.2
-      x-kong-proxy-latency:
-      - '1'
-      x-kong-upstream-latency:
-      - '72'
+      Uber-Trace-Id:
+      - 00b6444b1ac33cdc5094f7cd7ac8a481:ce298683d49a6afe:0:1
+      Vary:
+      - Accept-Encoding
+      X-Correlation-Id:
+      - 00b6444b1ac33cdc5094f7cd7ac8a481
+      content-length:
+      - '7318'
+      ratelimit-limit:
+      - '3600'
+      ratelimit-remaining:
+      - '3552'
+      ratelimit-reset:
+      - '1762337086'
     status:
       code: 200
       message: OK
 - request:
-    body: !!python/unicode '{"ttl": 3600, "type": "TXT", "name": "_acme-challenge.listrecordset",
-      "value": "challengetoken1", "zone_id": "hetznerapizoneid"}'
+    body: '{"ttl": 3600, "records": [{"value": "\"challengetoken1\""}]}'
     headers:
       Accept:
       - '*/*'
@@ -125,45 +237,59 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '134'
+      - '60'
       Content-Type:
-      - !!python/unicode application/json
+      - application/json
       User-Agent:
-      - python-requests/2.23.0
+      - python-requests/2.32.3
     method: POST
-    uri: https://dns.hetzner.com/api/v1/records
+    uri: https://api.hetzner.cloud/v1/zones/53091/rrsets/_acme-challenge.listrecordset/TXT/actions/add_records
   response:
     body:
-      string: !!python/unicode '{"record":{"id":"2d5abe2e3b1030903b6ededf674fb76a","type":"TXT","name":"_acme-challenge.listrecordset","value":"challengetoken1","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:21:07.078 +0000 UTC","modified":"2020-06-12 08:21:07.078 +0000 UTC"}}
-
-        '
+      string: "{\n    \"action\": {\n        \"id\": 590729811149992,\n        \"status\":
+        \"running\",\n        \"command\": \"add_rrset_records\",\n        \"progress\":
+        0,\n        \"started\": \"2025-11-05T10:03:58.210279Z\",\n        \"finished\":
+        null,\n        \"error\": null,\n        \"resources\": [\n            {\n
+        \               \"id\": 53091,\n                \"type\": \"zone\"\n            }\n
+        \       ]\n    }\n}"
     headers:
-      access-control-allow-origin:
+      Access-Control-Allow-Headers:
+      - X-Requested-With,Authorization,Content-Type
+      Access-Control-Allow-Methods:
+      - OPTIONS,GET,POST,PUT,PATCH,DELETE
+      Access-Control-Allow-Origin:
       - '*'
-      connection:
+      Access-Control-Expose-Headers:
+      - Link,X-Correlation-ID
+      Access-Control-Max-Age:
+      - '86400'
+      Connection:
       - keep-alive
-      content-length:
-      - '270'
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Fri, 12 Jun 2020 08:21:07 GMT
-      transfer-encoding:
-      - chunked
-      vary:
-      - Origin
-      via:
-      - kong/2.0.2
-      x-kong-proxy-latency:
-      - '1'
-      x-kong-upstream-latency:
-      - '611'
+      Content-Length:
+      - '368'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 05 Nov 2025 10:03:58 GMT
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Traceparent:
+      - 00-daf78e71ce6f4f8b650f20fb7293ce52-821615d5fdb41dd2-01
+      Uber-Trace-Id:
+      - daf78e71ce6f4f8b650f20fb7293ce52:821615d5fdb41dd2:0:1
+      X-Correlation-Id:
+      - daf78e71ce6f4f8b650f20fb7293ce52
+      ratelimit-limit:
+      - '7200'
+      ratelimit-remaining:
+      - '7179'
+      ratelimit-reset:
+      - '1762337048'
     status:
-      code: 200
-      message: OK
+      code: 201
+      message: Created
 - request:
-    body: !!python/unicode '{}'
+    body: '{}'
     headers:
       Accept:
       - '*/*'
@@ -174,65 +300,159 @@ interactions:
       Content-Length:
       - '2'
       Content-Type:
-      - !!python/unicode application/json
+      - application/json
       User-Agent:
-      - python-requests/2.23.0
+      - python-requests/2.32.3
     method: GET
-    uri: https://dns.hetzner.com/api/v1/records?zone_id=hetznerapizoneid
+    uri: https://api.hetzner.cloud/v1/zones/53091/rrsets
   response:
     body:
-      string: !!python/unicode '{"records":[{"id":"9720b5653ca6fd0517ec91a8c6104685","type":"SOA","name":"@","value":"ns1.first-ns.de.
-        dns.hetzner.com. 2020061225 14400 3600 1814400 3600","zone_id":"hetznerapizoneid","created":"2020-04-07
-        01:24:42 +0000 UTC","modified":"2020-06-12 08:21:07.196 +0000 UTC"},{"id":"5b378a7097bdb11e6cbb5f58db6bb101","type":"MX","name":"@","value":"10
-        mail.server-zugang.eu.","zone_id":"hetznerapizoneid","created":"2020-04-07
-        01:25:12 +0000 UTC","modified":"2020-04-07 01:25:12 +0000 UTC"},{"id":"a26cfdd36217e559c14b305a558f2a3c","type":"AAAA","name":"@","value":"2a01:4f8:121:31ec::b","zone_id":"hetznerapizoneid","created":"2020-04-07
-        01:25:37 +0000 UTC","modified":"2020-04-07 01:25:37 +0000 UTC"},{"id":"7d6f741802597845b97713596e35eaa7","type":"AAAA","name":"*","value":"2a01:4f8:121:31ec::b","zone_id":"hetznerapizoneid","created":"2020-04-07
-        01:25:37 +0000 UTC","modified":"2020-04-07 01:25:37 +0000 UTC"},{"id":"993bafd3e3b110a6a3acde9fe874426a","type":"NS","name":"@","value":"ns1.first-ns.de.","zone_id":"hetznerapizoneid","created":"2020-04-07
-        01:25:41 +0000 UTC","modified":"2020-04-07 01:25:41 +0000 UTC"},{"id":"cc3e8297060b7bd794fed5fdec3ed91b","type":"NS","name":"@","value":"robotns2.second-ns.de.","zone_id":"hetznerapizoneid","created":"2020-04-07
-        01:25:41 +0000 UTC","modified":"2020-04-07 01:25:41 +0000 UTC"},{"id":"c4602b1239d9f0747016f551c52b5774","type":"NS","name":"@","value":"robotns3.second-ns.com.","zone_id":"hetznerapizoneid","created":"2020-04-07
-        01:25:41 +0000 UTC","modified":"2020-04-07 01:25:41 +0000 UTC"},{"id":"77ae87e42a04bace81119eb2280c8dca","type":"A","name":"@","value":"178.63.80.254","zone_id":"hetznerapizoneid","created":"2020-04-07
-        01:25:41 +0000 UTC","modified":"2020-04-07 01:25:41 +0000 UTC"},{"id":"faff62d59434c666bac4174a1d18a955","type":"A","name":"*","value":"178.63.80.254","zone_id":"hetznerapizoneid","created":"2020-04-07
-        01:25:41 +0000 UTC","modified":"2020-04-07 01:25:41 +0000 UTC"},{"id":"fe6ac2081c630974662caeaa8715d435","type":"A","name":"localhost","value":"127.0.0.1","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:20:37.307 +0000 UTC","modified":"2020-06-12 08:20:37.307 +0000 UTC"},{"id":"8e6b81a856d20f0c1802703b56d1b53d","type":"CNAME","name":"docs","value":"docs.example.com","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:20:38.743 +0000 UTC","modified":"2020-06-12 08:20:38.743 +0000 UTC"},{"id":"a5fc9854314c160019d9bd0fcaaf2e2a","type":"TXT","name":"_acme-challenge.fqdn","value":"challengetoken","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:20:40.141 +0000 UTC","modified":"2020-06-12 08:20:40.141 +0000 UTC"},{"id":"101296724cdf3710d18ea43a06b39e6c","type":"TXT","name":"_acme-challenge.full","value":"challengetoken","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:20:41.421 +0000 UTC","modified":"2020-06-12 08:20:41.421 +0000 UTC"},{"id":"1c06fee6923324bc2727916d2157b3d8","type":"TXT","name":"_acme-challenge.test","value":"challengetoken","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:20:43.363 +0000 UTC","modified":"2020-06-12 08:20:43.363 +0000 UTC"},{"id":"97dcfc7f529a65b944a11554e15dcdfb","type":"TXT","name":"_acme-challenge.createrecordset","value":"challengetoken1","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:20:44.557 +0000 UTC","modified":"2020-06-12 08:20:44.557 +0000 UTC"},{"id":"880d3713398b9301dda21a611cbd9ab0","type":"TXT","name":"_acme-challenge.createrecordset","value":"challengetoken2","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:20:45.499 +0000 UTC","modified":"2020-06-12 08:20:45.499 +0000 UTC"},{"id":"f794c3584778621edfa903a30a993f9b","type":"TXT","name":"_acme-challenge.noop","value":"challengetoken","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:20:46.766 +0000 UTC","modified":"2020-06-12 08:20:46.766 +0000 UTC"},{"id":"fe7ddc85cc3c919385d8d2aabfa407eb","type":"TXT","name":"_acme-challenge.deleterecordinset","value":"challengetoken2","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:20:58.928 +0000 UTC","modified":"2020-06-12 08:20:58.928 +0000 UTC"},{"id":"61efb963c73466f54f6bba592e9340d4","type":"TXT","name":"ttl.fqdn","value":"ttlshouldbe3600","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:21:05.618 +0000 UTC","modified":"2020-06-12 08:21:05.618 +0000 UTC"},{"id":"2d5abe2e3b1030903b6ededf674fb76a","type":"TXT","name":"_acme-challenge.listrecordset","value":"challengetoken1","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:21:07.078 +0000 UTC","modified":"2020-06-12 08:21:07.078 +0000 UTC"}]}
-
-        '
+      string: "{\n    \"meta\": {\n        \"pagination\": {\n            \"last_page\":
+        1,\n            \"next_page\": null,\n            \"page\": 1,\n            \"per_page\":
+        25,\n            \"previous_page\": null,\n            \"total_entries\":
+        16\n        }\n    },\n    \"rrsets\": [\n        {\n            \"id\": \"osm.service.linke.projects/A\",\n
+        \           \"name\": \"osm.service.linke.projects\",\n            \"type\":
+        \"A\",\n            \"ttl\": 1800,\n            \"labels\": {},\n            \"protection\":
+        {\n                \"change\": false\n            },\n            \"records\":
+        [\n                {\n                    \"value\": \"195.201.131.78\",\n
+        \                   \"comment\": \"\"\n                }\n            ],\n
+        \           \"zone\": 53091\n        },\n        {\n            \"id\": \"@/SOA\",\n
+        \           \"name\": \"@\",\n            \"type\": \"SOA\",\n            \"ttl\":
+        null,\n            \"labels\": {},\n            \"protection\": {\n                \"change\":
+        false\n            },\n            \"records\": [\n                {\n                    \"value\":
+        \"hydrogen.ns.hetzner.com. dns.hetzner.com. 2025110624 86400 10800 3600000
+        3600\",\n                    \"comment\": \"\"\n                }\n            ],\n
+        \           \"zone\": 53091\n        },\n        {\n            \"id\": \"osm.service.linke.projects/AAAA\",\n
+        \           \"name\": \"osm.service.linke.projects\",\n            \"type\":
+        \"AAAA\",\n            \"ttl\": 1800,\n            \"labels\": {},\n            \"protection\":
+        {\n                \"change\": false\n            },\n            \"records\":
+        [\n                {\n                    \"value\": \"2a01:4f8:1c1c:4181::1\",\n
+        \                   \"comment\": \"\"\n                }\n            ],\n
+        \           \"zone\": 53091\n        },\n        {\n            \"id\": \"nominatim/A\",\n
+        \           \"name\": \"nominatim\",\n            \"type\": \"A\",\n            \"ttl\":
+        3600,\n            \"labels\": {},\n            \"protection\": {\n                \"change\":
+        false\n            },\n            \"records\": [\n                {\n                    \"value\":
+        \"128.140.58.208\",\n                    \"comment\": \"\"\n                }\n
+        \           ],\n            \"zone\": 53091\n        },\n        {\n            \"id\":
+        \"nominatim/AAAA\",\n            \"name\": \"nominatim\",\n            \"type\":
+        \"AAAA\",\n            \"ttl\": 3600,\n            \"labels\": {},\n            \"protection\":
+        {\n                \"change\": false\n            },\n            \"records\":
+        [\n                {\n                    \"value\": \"2a01:4f8:c012:9603::1\",\n
+        \                   \"comment\": \"\"\n                }\n            ],\n
+        \           \"zone\": 53091\n        },\n        {\n            \"id\": \"@/NS\",\n
+        \           \"name\": \"@\",\n            \"type\": \"NS\",\n            \"ttl\":
+        null,\n            \"labels\": {},\n            \"protection\": {\n                \"change\":
+        false\n            },\n            \"records\": [\n                {\n                    \"value\":
+        \"helium.ns.hetzner.de.\",\n                    \"comment\": \"\"\n                },\n
+        \               {\n                    \"value\": \"hydrogen.ns.hetzner.com.\",\n
+        \                   \"comment\": \"\"\n                },\n                {\n
+        \                   \"value\": \"oxygen.ns.hetzner.com.\",\n                    \"comment\":
+        \"\"\n                }\n            ],\n            \"zone\": 53091\n        },\n
+        \       {\n            \"id\": \"localhost/A\",\n            \"name\": \"localhost\",\n
+        \           \"type\": \"A\",\n            \"ttl\": 3600,\n            \"labels\":
+        {},\n            \"protection\": {\n                \"change\": false\n            },\n
+        \           \"records\": [\n                {\n                    \"value\":
+        \"127.0.0.1\",\n                    \"comment\": \"\"\n                }\n
+        \           ],\n            \"zone\": 53091\n        },\n        {\n            \"id\":
+        \"docs/CNAME\",\n            \"name\": \"docs\",\n            \"type\": \"CNAME\",\n
+        \           \"ttl\": 3600,\n            \"labels\": {},\n            \"protection\":
+        {\n                \"change\": false\n            },\n            \"records\":
+        [\n                {\n                    \"value\": \"docs.example.com\",\n
+        \                   \"comment\": \"\"\n                }\n            ],\n
+        \           \"zone\": 53091\n        },\n        {\n            \"id\": \"_acme-challenge.fqdn/TXT\",\n
+        \           \"name\": \"_acme-challenge.fqdn\",\n            \"type\": \"TXT\",\n
+        \           \"ttl\": 3600,\n            \"labels\": {},\n            \"protection\":
+        {\n                \"change\": false\n            },\n            \"records\":
+        [\n                {\n                    \"value\": \"\\\"challengetoken\\\"\",\n
+        \                   \"comment\": \"\"\n                }\n            ],\n
+        \           \"zone\": 53091\n        },\n        {\n            \"id\": \"_acme-challenge.full/TXT\",\n
+        \           \"name\": \"_acme-challenge.full\",\n            \"type\": \"TXT\",\n
+        \           \"ttl\": 3600,\n            \"labels\": {},\n            \"protection\":
+        {\n                \"change\": false\n            },\n            \"records\":
+        [\n                {\n                    \"value\": \"\\\"challengetoken\\\"\",\n
+        \                   \"comment\": \"\"\n                }\n            ],\n
+        \           \"zone\": 53091\n        },\n        {\n            \"id\": \"_acme-challenge.test/TXT\",\n
+        \           \"name\": \"_acme-challenge.test\",\n            \"type\": \"TXT\",\n
+        \           \"ttl\": 3600,\n            \"labels\": {},\n            \"protection\":
+        {\n                \"change\": false\n            },\n            \"records\":
+        [\n                {\n                    \"value\": \"\\\"challengetoken\\\"\",\n
+        \                   \"comment\": \"\"\n                }\n            ],\n
+        \           \"zone\": 53091\n        },\n        {\n            \"id\": \"_acme-challenge.createrecordset/TXT\",\n
+        \           \"name\": \"_acme-challenge.createrecordset\",\n            \"type\":
+        \"TXT\",\n            \"ttl\": 3600,\n            \"labels\": {},\n            \"protection\":
+        {\n                \"change\": false\n            },\n            \"records\":
+        [\n                {\n                    \"value\": \"\\\"challengetoken1\\\"\",\n
+        \                   \"comment\": \"\"\n                },\n                {\n
+        \                   \"value\": \"\\\"challengetoken2\\\"\",\n                    \"comment\":
+        \"\"\n                }\n            ],\n            \"zone\": 53091\n        },\n
+        \       {\n            \"id\": \"_acme-challenge.noop/TXT\",\n            \"name\":
+        \"_acme-challenge.noop\",\n            \"type\": \"TXT\",\n            \"ttl\":
+        3600,\n            \"labels\": {},\n            \"protection\": {\n                \"change\":
+        false\n            },\n            \"records\": [\n                {\n                    \"value\":
+        \"\\\"challengetoken\\\"\",\n                    \"comment\": \"\"\n                }\n
+        \           ],\n            \"zone\": 53091\n        },\n        {\n            \"id\":
+        \"_acme-challenge.deleterecordinset/TXT\",\n            \"name\": \"_acme-challenge.deleterecordinset\",\n
+        \           \"type\": \"TXT\",\n            \"ttl\": 3600,\n            \"labels\":
+        {},\n            \"protection\": {\n                \"change\": false\n            },\n
+        \           \"records\": [\n                {\n                    \"value\":
+        \"\\\"challengetoken2\\\"\",\n                    \"comment\": \"\"\n                }\n
+        \           ],\n            \"zone\": 53091\n        },\n        {\n            \"id\":
+        \"ttl.fqdn/TXT\",\n            \"name\": \"ttl.fqdn\",\n            \"type\":
+        \"TXT\",\n            \"ttl\": 3600,\n            \"labels\": {},\n            \"protection\":
+        {\n                \"change\": false\n            },\n            \"records\":
+        [\n                {\n                    \"value\": \"\\\"ttlshouldbe3600\\\"\",\n
+        \                   \"comment\": \"\"\n                }\n            ],\n
+        \           \"zone\": 53091\n        },\n        {\n            \"id\": \"_acme-challenge.listrecordset/TXT\",\n
+        \           \"name\": \"_acme-challenge.listrecordset\",\n            \"type\":
+        \"TXT\",\n            \"ttl\": 3600,\n            \"labels\": {},\n            \"protection\":
+        {\n                \"change\": false\n            },\n            \"records\":
+        [\n                {\n                    \"value\": \"\\\"challengetoken1\\\"\",\n
+        \                   \"comment\": \"\"\n                }\n            ],\n
+        \           \"zone\": 53091\n        }\n    ]\n}"
     headers:
-      access-control-allow-origin:
+      Access-Control-Allow-Headers:
+      - X-Requested-With,Authorization,Content-Type
+      Access-Control-Allow-Methods:
+      - OPTIONS,GET,POST,PUT,PATCH,DELETE
+      Access-Control-Allow-Origin:
       - '*'
-      connection:
+      Access-Control-Expose-Headers:
+      - Link,X-Correlation-ID
+      Access-Control-Max-Age:
+      - '86400'
+      Connection:
       - keep-alive
-      content-length:
-      - '4751'
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Fri, 12 Jun 2020 08:21:07 GMT
-      transfer-encoding:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 05 Nov 2025 10:03:58 GMT
+      Link:
+      - <https://api.hetzner.cloud/v1/zones/53091/rrsets?page=1&per_page=25>; rel="last"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Traceparent:
+      - 00-e7390e4f1203534278de90c2923806d5-6dedea6979daf8c0-01
+      Transfer-Encoding:
       - chunked
-      vary:
-      - Origin
-      via:
-      - kong/2.0.2
-      x-kong-proxy-latency:
-      - '1'
-      x-kong-upstream-latency:
-      - '107'
+      Uber-Trace-Id:
+      - e7390e4f1203534278de90c2923806d5:6dedea6979daf8c0:0:1
+      Vary:
+      - Accept-Encoding
+      X-Correlation-Id:
+      - e7390e4f1203534278de90c2923806d5
+      content-length:
+      - '7788'
+      ratelimit-limit:
+      - '3600'
+      ratelimit-remaining:
+      - '3551'
+      ratelimit-reset:
+      - '1762337087'
     status:
       code: 200
       message: OK
 - request:
-    body: !!python/unicode '{"ttl": 3600, "type": "TXT", "name": "_acme-challenge.listrecordset",
-      "value": "challengetoken2", "zone_id": "hetznerapizoneid"}'
+    body: '{"ttl": 3600, "records": [{"value": "\"challengetoken2\""}]}'
     headers:
       Accept:
       - '*/*'
@@ -241,45 +461,59 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '134'
+      - '60'
       Content-Type:
-      - !!python/unicode application/json
+      - application/json
       User-Agent:
-      - python-requests/2.23.0
+      - python-requests/2.32.3
     method: POST
-    uri: https://dns.hetzner.com/api/v1/records
+    uri: https://api.hetzner.cloud/v1/zones/53091/rrsets/_acme-challenge.listrecordset/TXT/actions/add_records
   response:
     body:
-      string: !!python/unicode '{"record":{"id":"50aaf8ab858357c3289d2a51d2ea04dc","type":"TXT","name":"_acme-challenge.listrecordset","value":"challengetoken2","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:21:08.01 +0000 UTC","modified":"2020-06-12 08:21:08.01 +0000 UTC"}}
-
-        '
+      string: "{\n    \"action\": {\n        \"id\": 590729811149993,\n        \"status\":
+        \"running\",\n        \"command\": \"add_rrset_records\",\n        \"progress\":
+        0,\n        \"started\": \"2025-11-05T10:03:58.405716Z\",\n        \"finished\":
+        null,\n        \"error\": null,\n        \"resources\": [\n            {\n
+        \               \"id\": 53091,\n                \"type\": \"zone\"\n            }\n
+        \       ]\n    }\n}"
     headers:
-      access-control-allow-origin:
+      Access-Control-Allow-Headers:
+      - X-Requested-With,Authorization,Content-Type
+      Access-Control-Allow-Methods:
+      - OPTIONS,GET,POST,PUT,PATCH,DELETE
+      Access-Control-Allow-Origin:
       - '*'
-      connection:
+      Access-Control-Expose-Headers:
+      - Link,X-Correlation-ID
+      Access-Control-Max-Age:
+      - '86400'
+      Connection:
       - keep-alive
-      content-length:
-      - '268'
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Fri, 12 Jun 2020 08:21:08 GMT
-      transfer-encoding:
-      - chunked
-      vary:
-      - Origin
-      via:
-      - kong/2.0.2
-      x-kong-proxy-latency:
-      - '2'
-      x-kong-upstream-latency:
-      - '674'
+      Content-Length:
+      - '368'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 05 Nov 2025 10:03:58 GMT
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Traceparent:
+      - 00-93fcdf39005281e6add953f66356a429-1ef298a0dae27405-01
+      Uber-Trace-Id:
+      - 93fcdf39005281e6add953f66356a429:1ef298a0dae27405:0:1
+      X-Correlation-Id:
+      - 93fcdf39005281e6add953f66356a429
+      ratelimit-limit:
+      - '7200'
+      ratelimit-remaining:
+      - '7178'
+      ratelimit-reset:
+      - '1762337049'
     status:
-      code: 200
-      message: OK
+      code: 201
+      message: Created
 - request:
-    body: !!python/unicode '{}'
+    body: '{}'
     headers:
       Accept:
       - '*/*'
@@ -290,60 +524,156 @@ interactions:
       Content-Length:
       - '2'
       Content-Type:
-      - !!python/unicode application/json
+      - application/json
       User-Agent:
-      - python-requests/2.23.0
+      - python-requests/2.32.3
     method: GET
-    uri: https://dns.hetzner.com/api/v1/records?zone_id=hetznerapizoneid
+    uri: https://api.hetzner.cloud/v1/zones/53091/rrsets
   response:
     body:
-      string: !!python/unicode '{"records":[{"id":"9720b5653ca6fd0517ec91a8c6104685","type":"SOA","name":"@","value":"ns1.first-ns.de.
-        dns.hetzner.com. 2020061226 14400 3600 1814400 3600","zone_id":"hetznerapizoneid","created":"2020-04-07
-        01:24:42 +0000 UTC","modified":"2020-06-12 08:21:08.129 +0000 UTC"},{"id":"5b378a7097bdb11e6cbb5f58db6bb101","type":"MX","name":"@","value":"10
-        mail.server-zugang.eu.","zone_id":"hetznerapizoneid","created":"2020-04-07
-        01:25:12 +0000 UTC","modified":"2020-04-07 01:25:12 +0000 UTC"},{"id":"a26cfdd36217e559c14b305a558f2a3c","type":"AAAA","name":"@","value":"2a01:4f8:121:31ec::b","zone_id":"hetznerapizoneid","created":"2020-04-07
-        01:25:37 +0000 UTC","modified":"2020-04-07 01:25:37 +0000 UTC"},{"id":"7d6f741802597845b97713596e35eaa7","type":"AAAA","name":"*","value":"2a01:4f8:121:31ec::b","zone_id":"hetznerapizoneid","created":"2020-04-07
-        01:25:37 +0000 UTC","modified":"2020-04-07 01:25:37 +0000 UTC"},{"id":"993bafd3e3b110a6a3acde9fe874426a","type":"NS","name":"@","value":"ns1.first-ns.de.","zone_id":"hetznerapizoneid","created":"2020-04-07
-        01:25:41 +0000 UTC","modified":"2020-04-07 01:25:41 +0000 UTC"},{"id":"cc3e8297060b7bd794fed5fdec3ed91b","type":"NS","name":"@","value":"robotns2.second-ns.de.","zone_id":"hetznerapizoneid","created":"2020-04-07
-        01:25:41 +0000 UTC","modified":"2020-04-07 01:25:41 +0000 UTC"},{"id":"c4602b1239d9f0747016f551c52b5774","type":"NS","name":"@","value":"robotns3.second-ns.com.","zone_id":"hetznerapizoneid","created":"2020-04-07
-        01:25:41 +0000 UTC","modified":"2020-04-07 01:25:41 +0000 UTC"},{"id":"77ae87e42a04bace81119eb2280c8dca","type":"A","name":"@","value":"178.63.80.254","zone_id":"hetznerapizoneid","created":"2020-04-07
-        01:25:41 +0000 UTC","modified":"2020-04-07 01:25:41 +0000 UTC"},{"id":"faff62d59434c666bac4174a1d18a955","type":"A","name":"*","value":"178.63.80.254","zone_id":"hetznerapizoneid","created":"2020-04-07
-        01:25:41 +0000 UTC","modified":"2020-04-07 01:25:41 +0000 UTC"},{"id":"fe6ac2081c630974662caeaa8715d435","type":"A","name":"localhost","value":"127.0.0.1","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:20:37.307 +0000 UTC","modified":"2020-06-12 08:20:37.307 +0000 UTC"},{"id":"8e6b81a856d20f0c1802703b56d1b53d","type":"CNAME","name":"docs","value":"docs.example.com","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:20:38.743 +0000 UTC","modified":"2020-06-12 08:20:38.743 +0000 UTC"},{"id":"a5fc9854314c160019d9bd0fcaaf2e2a","type":"TXT","name":"_acme-challenge.fqdn","value":"challengetoken","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:20:40.141 +0000 UTC","modified":"2020-06-12 08:20:40.141 +0000 UTC"},{"id":"101296724cdf3710d18ea43a06b39e6c","type":"TXT","name":"_acme-challenge.full","value":"challengetoken","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:20:41.421 +0000 UTC","modified":"2020-06-12 08:20:41.421 +0000 UTC"},{"id":"1c06fee6923324bc2727916d2157b3d8","type":"TXT","name":"_acme-challenge.test","value":"challengetoken","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:20:43.363 +0000 UTC","modified":"2020-06-12 08:20:43.363 +0000 UTC"},{"id":"97dcfc7f529a65b944a11554e15dcdfb","type":"TXT","name":"_acme-challenge.createrecordset","value":"challengetoken1","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:20:44.557 +0000 UTC","modified":"2020-06-12 08:20:44.557 +0000 UTC"},{"id":"880d3713398b9301dda21a611cbd9ab0","type":"TXT","name":"_acme-challenge.createrecordset","value":"challengetoken2","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:20:45.499 +0000 UTC","modified":"2020-06-12 08:20:45.499 +0000 UTC"},{"id":"f794c3584778621edfa903a30a993f9b","type":"TXT","name":"_acme-challenge.noop","value":"challengetoken","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:20:46.766 +0000 UTC","modified":"2020-06-12 08:20:46.766 +0000 UTC"},{"id":"fe7ddc85cc3c919385d8d2aabfa407eb","type":"TXT","name":"_acme-challenge.deleterecordinset","value":"challengetoken2","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:20:58.928 +0000 UTC","modified":"2020-06-12 08:20:58.928 +0000 UTC"},{"id":"61efb963c73466f54f6bba592e9340d4","type":"TXT","name":"ttl.fqdn","value":"ttlshouldbe3600","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:21:05.618 +0000 UTC","modified":"2020-06-12 08:21:05.618 +0000 UTC"},{"id":"2d5abe2e3b1030903b6ededf674fb76a","type":"TXT","name":"_acme-challenge.listrecordset","value":"challengetoken1","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:21:07.078 +0000 UTC","modified":"2020-06-12 08:21:07.078 +0000 UTC"},{"id":"50aaf8ab858357c3289d2a51d2ea04dc","type":"TXT","name":"_acme-challenge.listrecordset","value":"challengetoken2","ttl":3600,"zone_id":"hetznerapizoneid","created":"2020-06-12
-        08:21:08.01 +0000 UTC","modified":"2020-06-12 08:21:08.01 +0000 UTC"}]}
-
-        '
+      string: "{\n    \"meta\": {\n        \"pagination\": {\n            \"last_page\":
+        1,\n            \"next_page\": null,\n            \"page\": 1,\n            \"per_page\":
+        25,\n            \"previous_page\": null,\n            \"total_entries\":
+        16\n        }\n    },\n    \"rrsets\": [\n        {\n            \"id\": \"osm.service.linke.projects/A\",\n
+        \           \"name\": \"osm.service.linke.projects\",\n            \"type\":
+        \"A\",\n            \"ttl\": 1800,\n            \"labels\": {},\n            \"protection\":
+        {\n                \"change\": false\n            },\n            \"records\":
+        [\n                {\n                    \"value\": \"195.201.131.78\",\n
+        \                   \"comment\": \"\"\n                }\n            ],\n
+        \           \"zone\": 53091\n        },\n        {\n            \"id\": \"@/SOA\",\n
+        \           \"name\": \"@\",\n            \"type\": \"SOA\",\n            \"ttl\":
+        null,\n            \"labels\": {},\n            \"protection\": {\n                \"change\":
+        false\n            },\n            \"records\": [\n                {\n                    \"value\":
+        \"hydrogen.ns.hetzner.com. dns.hetzner.com. 2025110625 86400 10800 3600000
+        3600\",\n                    \"comment\": \"\"\n                }\n            ],\n
+        \           \"zone\": 53091\n        },\n        {\n            \"id\": \"osm.service.linke.projects/AAAA\",\n
+        \           \"name\": \"osm.service.linke.projects\",\n            \"type\":
+        \"AAAA\",\n            \"ttl\": 1800,\n            \"labels\": {},\n            \"protection\":
+        {\n                \"change\": false\n            },\n            \"records\":
+        [\n                {\n                    \"value\": \"2a01:4f8:1c1c:4181::1\",\n
+        \                   \"comment\": \"\"\n                }\n            ],\n
+        \           \"zone\": 53091\n        },\n        {\n            \"id\": \"nominatim/A\",\n
+        \           \"name\": \"nominatim\",\n            \"type\": \"A\",\n            \"ttl\":
+        3600,\n            \"labels\": {},\n            \"protection\": {\n                \"change\":
+        false\n            },\n            \"records\": [\n                {\n                    \"value\":
+        \"128.140.58.208\",\n                    \"comment\": \"\"\n                }\n
+        \           ],\n            \"zone\": 53091\n        },\n        {\n            \"id\":
+        \"nominatim/AAAA\",\n            \"name\": \"nominatim\",\n            \"type\":
+        \"AAAA\",\n            \"ttl\": 3600,\n            \"labels\": {},\n            \"protection\":
+        {\n                \"change\": false\n            },\n            \"records\":
+        [\n                {\n                    \"value\": \"2a01:4f8:c012:9603::1\",\n
+        \                   \"comment\": \"\"\n                }\n            ],\n
+        \           \"zone\": 53091\n        },\n        {\n            \"id\": \"@/NS\",\n
+        \           \"name\": \"@\",\n            \"type\": \"NS\",\n            \"ttl\":
+        null,\n            \"labels\": {},\n            \"protection\": {\n                \"change\":
+        false\n            },\n            \"records\": [\n                {\n                    \"value\":
+        \"helium.ns.hetzner.de.\",\n                    \"comment\": \"\"\n                },\n
+        \               {\n                    \"value\": \"hydrogen.ns.hetzner.com.\",\n
+        \                   \"comment\": \"\"\n                },\n                {\n
+        \                   \"value\": \"oxygen.ns.hetzner.com.\",\n                    \"comment\":
+        \"\"\n                }\n            ],\n            \"zone\": 53091\n        },\n
+        \       {\n            \"id\": \"localhost/A\",\n            \"name\": \"localhost\",\n
+        \           \"type\": \"A\",\n            \"ttl\": 3600,\n            \"labels\":
+        {},\n            \"protection\": {\n                \"change\": false\n            },\n
+        \           \"records\": [\n                {\n                    \"value\":
+        \"127.0.0.1\",\n                    \"comment\": \"\"\n                }\n
+        \           ],\n            \"zone\": 53091\n        },\n        {\n            \"id\":
+        \"docs/CNAME\",\n            \"name\": \"docs\",\n            \"type\": \"CNAME\",\n
+        \           \"ttl\": 3600,\n            \"labels\": {},\n            \"protection\":
+        {\n                \"change\": false\n            },\n            \"records\":
+        [\n                {\n                    \"value\": \"docs.example.com\",\n
+        \                   \"comment\": \"\"\n                }\n            ],\n
+        \           \"zone\": 53091\n        },\n        {\n            \"id\": \"_acme-challenge.fqdn/TXT\",\n
+        \           \"name\": \"_acme-challenge.fqdn\",\n            \"type\": \"TXT\",\n
+        \           \"ttl\": 3600,\n            \"labels\": {},\n            \"protection\":
+        {\n                \"change\": false\n            },\n            \"records\":
+        [\n                {\n                    \"value\": \"\\\"challengetoken\\\"\",\n
+        \                   \"comment\": \"\"\n                }\n            ],\n
+        \           \"zone\": 53091\n        },\n        {\n            \"id\": \"_acme-challenge.full/TXT\",\n
+        \           \"name\": \"_acme-challenge.full\",\n            \"type\": \"TXT\",\n
+        \           \"ttl\": 3600,\n            \"labels\": {},\n            \"protection\":
+        {\n                \"change\": false\n            },\n            \"records\":
+        [\n                {\n                    \"value\": \"\\\"challengetoken\\\"\",\n
+        \                   \"comment\": \"\"\n                }\n            ],\n
+        \           \"zone\": 53091\n        },\n        {\n            \"id\": \"_acme-challenge.test/TXT\",\n
+        \           \"name\": \"_acme-challenge.test\",\n            \"type\": \"TXT\",\n
+        \           \"ttl\": 3600,\n            \"labels\": {},\n            \"protection\":
+        {\n                \"change\": false\n            },\n            \"records\":
+        [\n                {\n                    \"value\": \"\\\"challengetoken\\\"\",\n
+        \                   \"comment\": \"\"\n                }\n            ],\n
+        \           \"zone\": 53091\n        },\n        {\n            \"id\": \"_acme-challenge.createrecordset/TXT\",\n
+        \           \"name\": \"_acme-challenge.createrecordset\",\n            \"type\":
+        \"TXT\",\n            \"ttl\": 3600,\n            \"labels\": {},\n            \"protection\":
+        {\n                \"change\": false\n            },\n            \"records\":
+        [\n                {\n                    \"value\": \"\\\"challengetoken1\\\"\",\n
+        \                   \"comment\": \"\"\n                },\n                {\n
+        \                   \"value\": \"\\\"challengetoken2\\\"\",\n                    \"comment\":
+        \"\"\n                }\n            ],\n            \"zone\": 53091\n        },\n
+        \       {\n            \"id\": \"_acme-challenge.noop/TXT\",\n            \"name\":
+        \"_acme-challenge.noop\",\n            \"type\": \"TXT\",\n            \"ttl\":
+        3600,\n            \"labels\": {},\n            \"protection\": {\n                \"change\":
+        false\n            },\n            \"records\": [\n                {\n                    \"value\":
+        \"\\\"challengetoken\\\"\",\n                    \"comment\": \"\"\n                }\n
+        \           ],\n            \"zone\": 53091\n        },\n        {\n            \"id\":
+        \"_acme-challenge.deleterecordinset/TXT\",\n            \"name\": \"_acme-challenge.deleterecordinset\",\n
+        \           \"type\": \"TXT\",\n            \"ttl\": 3600,\n            \"labels\":
+        {},\n            \"protection\": {\n                \"change\": false\n            },\n
+        \           \"records\": [\n                {\n                    \"value\":
+        \"\\\"challengetoken2\\\"\",\n                    \"comment\": \"\"\n                }\n
+        \           ],\n            \"zone\": 53091\n        },\n        {\n            \"id\":
+        \"ttl.fqdn/TXT\",\n            \"name\": \"ttl.fqdn\",\n            \"type\":
+        \"TXT\",\n            \"ttl\": 3600,\n            \"labels\": {},\n            \"protection\":
+        {\n                \"change\": false\n            },\n            \"records\":
+        [\n                {\n                    \"value\": \"\\\"ttlshouldbe3600\\\"\",\n
+        \                   \"comment\": \"\"\n                }\n            ],\n
+        \           \"zone\": 53091\n        },\n        {\n            \"id\": \"_acme-challenge.listrecordset/TXT\",\n
+        \           \"name\": \"_acme-challenge.listrecordset\",\n            \"type\":
+        \"TXT\",\n            \"ttl\": 3600,\n            \"labels\": {},\n            \"protection\":
+        {\n                \"change\": false\n            },\n            \"records\":
+        [\n                {\n                    \"value\": \"\\\"challengetoken1\\\"\",\n
+        \                   \"comment\": \"\"\n                },\n                {\n
+        \                   \"value\": \"\\\"challengetoken2\\\"\",\n                    \"comment\":
+        \"\"\n                }\n            ],\n            \"zone\": 53091\n        }\n
+        \   ]\n}"
     headers:
-      access-control-allow-origin:
+      Access-Control-Allow-Headers:
+      - X-Requested-With,Authorization,Content-Type
+      Access-Control-Allow-Methods:
+      - OPTIONS,GET,POST,PUT,PATCH,DELETE
+      Access-Control-Allow-Origin:
       - '*'
-      connection:
+      Access-Control-Expose-Headers:
+      - Link,X-Correlation-ID
+      Access-Control-Max-Age:
+      - '86400'
+      Connection:
       - keep-alive
-      content-length:
-      - '5008'
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Fri, 12 Jun 2020 08:21:08 GMT
-      transfer-encoding:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 05 Nov 2025 10:03:58 GMT
+      Link:
+      - <https://api.hetzner.cloud/v1/zones/53091/rrsets?page=1&per_page=25>; rel="last"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Traceparent:
+      - 00-afbee2f1ac4b874bec16c96bfdbc8806-c3bc1460ce746178-01
+      Transfer-Encoding:
       - chunked
-      vary:
-      - Origin
-      via:
-      - kong/2.0.2
-      x-kong-proxy-latency:
-      - '1'
-      x-kong-upstream-latency:
-      - '74'
+      Uber-Trace-Id:
+      - afbee2f1ac4b874bec16c96bfdbc8806:c3bc1460ce746178:0:1
+      Vary:
+      - Accept-Encoding
+      X-Correlation-Id:
+      - afbee2f1ac4b874bec16c96bfdbc8806
+      content-length:
+      - '7911'
+      ratelimit-limit:
+      - '3600'
+      ratelimit-remaining:
+      - '3550'
+      ratelimit-reset:
+      - '1762337088'
     status:
       code: 200
       message: OK

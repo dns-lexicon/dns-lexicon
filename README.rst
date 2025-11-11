@@ -76,7 +76,7 @@ Only DNS providers who have an API can be supported by `lexicon`.
 
 .. tag: providers-table-begin
 
-Lexicon currently supports 88 providers:
+Lexicon currently supports 89 providers:
 
 +-----------------+-----------------+-----------------+-----------------+-----------------+
 | aliyun_         | arvancloud_     | aurora_         | azure_          | cloudflare_     |
@@ -93,27 +93,27 @@ Lexicon currently supports 88 providers:
 +-----------------+-----------------+-----------------+-----------------+-----------------+
 | godaddy_        | googleclouddns_ | gransy_         | gratisdns_      | henet_          |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| hetzner_        | hostingde_      | hover_          | infoblox_       | infomaniak_     |
+| hetzner_        | hetzner_legacy_ | hostingde_      | hover_          | infoblox_       |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| internetbs_     | inwx_           | ionos_          | joker_          | linode_         |
+| infomaniak_     | internetbs_     | inwx_           | ionos_          | joker_          |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| linode4_        | localzone_      | luadns_         | memset_         | misaka_         |
+| linode_         | linode4_        | localzone_      | luadns_         | memset_         |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| mythicbeasts_   | namecheap_      | namecom_        | namesilo_       | netcup_         |
+| misaka_         | mythicbeasts_   | namecheap_      | namecom_        | namesilo_       | 
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| nfsn_           | njalla_         | nsone_          | oci_            | onapp_          |
+| netcup_         | nfsn_           | njalla_         | nsone_          | oci_            |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| online_         | ovh_            | plesk_          | pointhq_        | porkbun_        |
+| onapp_          |  online_        | ovh_            | plesk_          | pointhq_        |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| powerdns_       | qcloud_         | rackspace_      | rage4_          | rcodezero_      |
+| porkbun_        | powerdns_       | qcloud_         | rackspace_      | rage4_          |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| regfish_        | route53_        | safedns_        | sakuracloud_    | scaleway_       |
+| rcodezero_      | regfish_        | route53_        | safedns_        | sakuracloud_    |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| softlayer_      | timeweb_        | transip_        | ultradns_       | valuedomain_    |
+| scaleway_       |  softlayer_     | timeweb_        | transip_        | ultradns_       | 
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| vercel_         | vultr_          | wedos_          | yandex_         | yandexcloud_    |
+|  valuedomain_   | vercel_         | vultr_          | wedos_          | yandex_         |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| zeit_           | zilore_         | zonomi_         |                 |                 |
+|  yandexcloud_   | zeit_           | zilore_         | zonomi_         |                 |                 
 +-----------------+-----------------+-----------------+-----------------+-----------------+
 
 .. tag: providers-table-end
@@ -153,7 +153,8 @@ Lexicon currently supports 88 providers:
 .. _gransy: https://subreg.cz/manual/
 .. _gratisdns:
 .. _henet: https://dns.he.net/
-.. _hetzner: https://dns.hetzner.com/api-docs/
+.. _hetzner: https://docs.hetzner.cloud/reference/cloud#dns
+.. _hetzner_legacy: https://dns.hetzner.com/api-docs/
 .. _hostingde:
 .. _hover: https://www.hover.com/
 .. _infoblox: https://docs.infoblox.com/display/ilp/infoblox+documentation+portal

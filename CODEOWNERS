@@ -45,7 +45,8 @@ lexicon/providers/glesys.py         @hecd
 lexicon/providers/godaddy.py        @adferrand
 lexicon/providers/gratisdns.py      @skeen
 lexicon/providers/henet.py          @hank
-lexicon/providers/hetzner.py        @rembik @cgoIT
+lexicon/providers/hetzner.py        @ctrlaltcoop @yuri-becker
+lexicon/providers/hetzner_legacy.py @rembik @cgoIT
 lexicon/providers/hostingde.py      @initit
 lexicon/providers/hover.py          @bkanuka
 lexicon/providers/infomaniak.py     @l3o-pold
