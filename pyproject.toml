@@ -18,11 +18,11 @@ classifiers = [
     "Topic :: Utilities",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
 ]
 authors = [
     { name = "Jason Kulatunga", email = "jason@thesparktree.com" },
@@ -30,7 +30,7 @@ authors = [
 ]
 readme = "pypi_readme.rst"
 
-requires-python = ">= 3.9"
+requires-python = ">= 3.10"
 dependencies = [
     "tldextract >= 2",
     "cryptography >= 2",
@@ -100,7 +100,7 @@ filterwarnings = [
     # Fail for any warning, except...
     "error",
     # CGI, a transitive dependency for zeep (used by Gransy provider)
-    # is deprecated. Let zeep manage that by Python 3.13.
+    # is deprecated. Let zeep manage that by Python 3.14.
     "ignore:'cgi' is deprecated:DeprecationWarning",
     # Ignore our own deprecation warnings.
     "ignore:Method execute\\(\\) is deprecated:DeprecationWarning",

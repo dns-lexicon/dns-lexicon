@@ -1,4 +1,4 @@
-FROM python:3.13.1-slim
+FROM python:3.14.0-slim
 LABEL org.opencontainers.image.authors="adferrand@github"
 
 # Setup dependencies

@@ -1,6 +1,16 @@
 # Changelog
 
 ## master - CURRENT
+### Added
+* Add support of Python 3.14
+* Add relevant URLs in the pyproject.toml for publication in PyPI
+
+### Modified
+* Make domain comparison case insensitive in DYNU provider to cope with zones with uppercase characters
+* Properly close sockets during integration tests
+
+### Removed
+* Drop support of Python 3.9
 
 ## 3.21.1 - 28/04/2025
 ### Modified
