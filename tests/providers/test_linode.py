@@ -13,16 +13,16 @@ class LinodeProviderTests(TestCase, IntegrationTestsV2):
     """TestCase for Linode"""
 
     provider_name = "linode"
-    domain = "lexicon-example.com"
+    domain = "lexicon-test.com"
 
     def _filter_post_data_parameters(self):
         return []
 
     def _filter_headers(self):
-        return []
+        return ["Authorization"]
 
     def _filter_query_parameters(self):
-        return ["api_key"]
+        return []
 
     @pytest.mark.skip(reason="can not set ttl when creating/updating records")
     def test_provider_when_calling_list_records_after_setting_ttl(self):

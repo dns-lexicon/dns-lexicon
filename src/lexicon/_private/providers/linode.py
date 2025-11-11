@@ -18,7 +18,7 @@ class Provider(BaseProvider):
 
     @staticmethod
     def get_nameservers() -> List[str]:
-        return []
+        return ["linode.com"]
 
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
@@ -27,15 +27,15 @@ class Provider(BaseProvider):
     def __init__(self, config):
         super(Provider, self).__init__(config)
         self.domain_id = None
-        self.api_endpoint = "https://api.linode.com/api/"
+        self.api_endpoint = "https://api.linode.com/v4/"
 
     def authenticate(self):
         self.domain_id = None
-        payload = self._get("domain.list")
-        for domain in payload["DATA"]:
-            if domain["DOMAIN"].lower() == self.domain.lower():
-                self.domain_id = domain["DOMAINID"]
-                break
+        payload = self._get(
+            "domains", query_params={"filter": {"domain": self.domain.lower()}}
+        )
+        if payload["data"]:
+            self.domain_id = payload["data"][0]["id"]
         else:
             raise AuthenticationError("Domain not found")
 
@@ -44,15 +44,12 @@ class Provider(BaseProvider):
 
     def create_record(self, rtype, name, content):
         if not self.list_records(rtype, name, content):
-            self._get(
-                "domain.resource.create",
-                query_params={
-                    "DomainID": self.domain_id,
-                    "Name": self._relative_name(name).lower(),
-                    "Type": rtype,
-                    "Target": content,
-                    "TTL_sec": 0,
-                },
+            if name:
+                name = self._relative_name(name).lower()
+
+            self._post(
+                f"domains/{self.domain_id}/records",
+                data={"name": name, "type": rtype, "target": content, "ttl_sec": 0},
             )
 
         return True
@@ -61,37 +58,47 @@ class Provider(BaseProvider):
     # type, name and content are used to filter records.
     # If possible filter during the query, otherwise filter after response is received.
     def list_records(self, rtype=None, name=None, content=None):
-        payload = self._get(
-            "domain.resource.list", query_params={"DomainID": self.domain_id}
-        )
-        resource_list = payload["DATA"]
-        if rtype:
-            resource_list = [
-                resource for resource in resource_list if resource["TYPE"] == rtype
-            ]
+        resources_url = f"domains/{self.domain_id}/records"
+
         if name:
-            cmp_name = self._relative_name(name).lower()
-            resource_list = [
-                resource
-                for resource in resource_list
-                if resource["NAME"].lower() == cmp_name
-            ]
-        if content:
-            resource_list = [
-                resource for resource in resource_list if resource["TARGET"] == content
-            ]
+            name = self._relative_name(name).lower()
 
         processed_records = []
-        for resource in resource_list:
-            processed_records.append(
-                {
-                    "id": resource["RESOURCEID"],
-                    "type": resource["TYPE"],
-                    "name": self._full_name(resource["NAME"]).lower(),
-                    "ttl": resource["TTL_SEC"],
-                    "content": resource["TARGET"],
-                }
-            )
+
+        payload = self._get(resources_url)
+        for page in range(1, payload["pages"] + 1, 1):
+            if page > 1:
+                payload = self._get(resources_url, query_params={"page": page})
+
+            resource_list = payload["data"]
+            if rtype:
+                resource_list = [
+                    resource for resource in resource_list if resource["type"] == rtype
+                ]
+            if name:
+                resource_list = [
+                    resource
+                    for resource in resource_list
+                    if self._relative_name(resource["name"]).lower() == name
+                ]
+            if content:
+                resource_list = [
+                    resource
+                    for resource in resource_list
+                    if resource["target"] == content
+                ]
+
+            for resource in resource_list:
+                processed_records.append(
+                    {
+                        "id": resource["id"],
+                        "type": resource["type"],
+                        "name": self._full_name(resource["name"]).lower(),
+                        "ttl": resource["ttl_sec"],
+                        "content": resource["target"],
+                    }
+                )
+
         LOGGER.debug("list_records: %s", processed_records)
         return processed_records
 
@@ -103,14 +110,16 @@ class Provider(BaseProvider):
 
         LOGGER.debug("update_record: %s", identifier)
 
-        self._get(
-            "domain.resource.update",
-            query_params={
-                "DomainID": self.domain_id,
-                "ResourceID": identifier,
-                "Name": self._relative_name(name).lower() if name else None,
-                "Type": rtype if rtype else None,
-                "Target": content if content else None,
+        if name:
+            name = self._relative_name(name).lower()
+
+        url = f"domains/{self.domain_id}/records/{identifier}"
+        self._put(
+            url,
+            data={
+                "name": name.lower() if name else None,
+                "type": rtype if rtype else None,
+                "target": content if content else None,
             },
         )
 
@@ -129,10 +138,7 @@ class Provider(BaseProvider):
         LOGGER.debug("delete_records: %s", delete_resource_id)
 
         for resource_id in delete_resource_id:
-            self._get(
-                "domain.resource.delete",
-                query_params={"DomainID": self.domain_id, "ResourceID": resource_id},
-            )
+            self._delete(f"domains/{self.domain_id}/records/{resource_id}")
 
         return True
 
@@ -145,15 +151,19 @@ class Provider(BaseProvider):
         default_headers = {
             "Accept": "application/json",
             "Content-Type": "application/json",
+            "Authorization": f"Bearer {self._get_provider_option('auth_token')}",
         }
 
-        query_params["api_key"] = self._get_provider_option("auth_token")
-        query_params["resultFormat"] = "JSON"
-        query_params["api_action"] = url
+        request_filter = query_params["filter"] if "filter" in query_params else None
+        if request_filter is not None:
+            default_headers["X-Filter"] = json.dumps(request_filter)
+            del query_params["filter"]
+
+        request_url = f"{self.api_endpoint}{url}"
 
         response = requests.request(
             action,
-            self.api_endpoint,
+            request_url,
             params=query_params,
             data=json.dumps(data),
             headers=default_headers,
@@ -163,6 +173,4 @@ class Provider(BaseProvider):
         if action == "DELETE":
             return ""
         result = response.json()
-        if result["ERRORARRAY"]:
-            raise Exception(f"Linode api error: {result['ERRORARRAY']}")
         return result
