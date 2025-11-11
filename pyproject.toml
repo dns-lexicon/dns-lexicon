@@ -109,6 +109,10 @@ filterwarnings = [
     "ignore:.*datetime\\.utcfromtimestamp\\(\\) is deprecated:DeprecationWarning",
     # Ignore deprecation usages of urllib3 in boto
     "ignore:The 'strict' parameter is no longer needed on Python 3+:DeprecationWarning",
+    # Per PEP-765, return/break/continue in finally raise a syntax warning and will
+    # not be supported in the future. Tencentcloud SDK has this kind of code.
+    # Ignore this warning until https://github.com/TencentCloud/tencentcloud-sdk-python/issues/229 is fixed
+    "ignore:'return' in a 'finally' block",
 ]
 
 [tool.mypy]
