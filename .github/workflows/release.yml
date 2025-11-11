@@ -20,7 +20,7 @@ jobs:
     needs: [main]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Install uv
         uses: astral-sh/setup-uv@v6
       - name: Publish sdist & wheel to PyPI
@@ -34,7 +34,7 @@ jobs:
     needs: [pypi]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Get project version
         run: echo "VERSION=$(cat pyproject.toml | grep '^version = .*' | sed -E 's/version = "(.*)"/\1/g')" >> $GITHUB_ENV
       - name: Configure Python
@@ -56,7 +56,7 @@ jobs:
       id-token: write
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Get project version
         run: echo "VERSION=$(cat pyproject.toml | grep '^version = .*' | sed -E 's/version = "(.*)"/\1/g')" >> $GITHUB_ENV
       - name: Log-in to the Container registry
