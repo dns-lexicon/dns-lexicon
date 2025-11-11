@@ -136,6 +136,7 @@ with_dev = true
 extras = ["full"]
 setenv.PYTEST_ADDOPTS = "--numprocesses auto"
 setenv.PYTHONHASHSEED = "0"
+commands_pre = [["tldextract", "--update"]]
 commands = [
     [
         "pytest",
@@ -174,8 +175,10 @@ commands = [
 
 # Lint env will check for code quality and errors, and fails if it does not match the minimal requirements.
 [tool.tox.env.lint]
+commands_pre = []
 commands = [["flake8", "src", "tests"]]
 
 # Mypy env will check for types in the Lexicon codebase.
 [tool.tox.env.mypy]
+commands_pre = []
 commands = [["mypy", "src", "tests"]]
