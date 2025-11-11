@@ -76,44 +76,44 @@ Only DNS providers who have an API can be supported by `lexicon`.
 
 .. tag: providers-table-begin
 
-Lexicon currently supports 88 providers:
+Lexicon currently supports 89 providers:
 
 +-----------------+-----------------+-----------------+-----------------+-----------------+
 | aliyun_         | arvancloud_     | aurora_         | azure_          | cloudflare_     |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
 | cloudns_        | cloudxns_       | conoha_         | constellix_     | ddns_           |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| devnomads_      | digitalocean_   | dinahosting_    | directadmin_    | dnsimple_       |
+| desec_          | devnomads_      | digitalocean_   | dinahosting_    | directadmin_    |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| dnsmadeeasy_    | dnspark_        | dnspod_         | dnsservices_    | dreamhost_      |
+| dnsimple_       | dnsmadeeasy_    | dnspark_        | dnspod_         | dnsservices_    |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| duckdns_        | dynu_           | easydns_        | easyname_       | euserv_         |
+| dreamhost_      | duckdns_        | dynu_           | easydns_        | easyname_       |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| exoscale_       | flexibleengine_ | gandi_          | gehirn_         | glesys_         |
+| euserv_         | exoscale_       | flexibleengine_ | gandi_          | gehirn_         |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| godaddy_        | googleclouddns_ | gransy_         | gratisdns_      | henet_          |
+| glesys_         | godaddy_        | googleclouddns_ | gransy_         | gratisdns_      |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| hetzner_        | hostingde_      | hover_          | infoblox_       | infomaniak_     |
+| henet_          | hetzner_        | hostingde_      | hover_          | infoblox_       |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| internetbs_     | inwx_           | ionos_          | joker_          | linode_         |
+| infomaniak_     | internetbs_     | inwx_           | ionos_          | joker_          |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| linode4_        | localzone_      | luadns_         | memset_         | misaka_         |
+| linode_         | linode4_        | localzone_      | luadns_         | memset_         |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| mythicbeasts_   | namecheap_      | namecom_        | namesilo_       | netcup_         |
+| misaka_         | mythicbeasts_   | namecheap_      | namecom_        | namesilo_       |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| nfsn_           | njalla_         | nsone_          | oci_            | onapp_          |
+| netcup_         | nfsn_           | njalla_         | nsone_          | oci_            |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| online_         | ovh_            | plesk_          | pointhq_        | porkbun_        |
+| onapp_          | online_         | ovh_            | plesk_          | pointhq_        |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| powerdns_       | qcloud_         | rackspace_      | rage4_          | rcodezero_      |
+| porkbun_        | powerdns_       | qcloud_         | rackspace_      | rage4_          |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| regfish_        | route53_        | safedns_        | sakuracloud_    | scaleway_       |
+| rcodezero_      | regfish_        | route53_        | safedns_        | sakuracloud_    |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| softlayer_      | timeweb_        | transip_        | ultradns_       | valuedomain_    |
+| scaleway_       | softlayer_      | timeweb_        | transip_        | ultradns_       |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| vercel_         | vultr_          | wedos_          | yandex_         | yandexcloud_    |
+| valuedomain_    | vercel_         | vultr_          | wedos_          | yandex_         |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| zeit_           | zilore_         | zonomi_         |                 |                 |
+| yandexcloud_    | zeit_           | zilore_         | zonomi_         |                 |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
 
 .. tag: providers-table-end
