@@ -36,6 +36,7 @@ dependencies = [
     "cryptography >= 2",
     "pyyaml >= 3",
     "requests >= 2",
+    "requests_unixsocket >= 0.4",
     "beautifulsoup4 >= 4",
     "pyotp >= 2",
     "dnspython >= 2",
