@@ -211,6 +211,7 @@ class Provider(BaseProvider):
         if rtype is None or name is None:
             raise Exception("Must specify at least both rtype and name")
 
+        update_data = None
         for rrset in self.zone_data()["rrsets"]:
             if rrset["type"] == rtype and self._fqdn_name(
                 rrset["name"]
@@ -236,11 +237,12 @@ class Provider(BaseProvider):
                     update_data["changetype"] = "REPLACE"
                 break
 
-        request = {"rrsets": [update_data]}
-        LOGGER.debug("request: %s", request)
+        if update_data:
+            request = {"rrsets": [update_data]}
+            LOGGER.debug("request: %s", request)
 
-        self._patch("/zones/" + self._ensure_dot(self.domain), data=request)
-        self.notify_slaves()
+            self._patch("/zones/" + self._ensure_dot(self.domain), data=request)
+            self.notify_slaves()
 
         self._zone_data = None
         return True

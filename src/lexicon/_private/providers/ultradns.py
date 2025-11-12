@@ -208,6 +208,7 @@ class Provider(BaseProvider):
 
         rname = self._fqdn_name(name)
 
+        update_data = None
         found = False
         for rrset in data["rrSets"]:
             if (
@@ -234,7 +235,7 @@ class Provider(BaseProvider):
         request = {"rrSets": [update_data]}
         LOGGER.debug("request: %s", request)
 
-        if update_data["rdata"]:
+        if update_data is not None and update_data["rdata"]:
             self._put(
                 f"/zones/{self._ensure_dot(self.domain)}/rrsets/{rtype}/{rname}",
                 data=update_data,
