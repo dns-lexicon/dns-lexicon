@@ -5,7 +5,7 @@ interactions:
       Accept:
       - application/json
       Accept-Encoding:
-      - gzip, deflate
+      - gzip, deflate, zstd
       Connection:
       - keep-alive
       Content-Length:
@@ -13,21 +13,60 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.32.3
+      - python-requests/2.32.5
     method: GET
     uri: https://api.scaleway.com/domain/v2beta1/dns-zones/example.com/records
   response:
     body:
-      string: '{"total_count":11,"records":[{"id":"8c1f9e92-8b3e-45bb-b02f-3d7b79d26fb7","data":"ns0.dom.scw.cloud.","name":"","priority":0,"ttl":1800,"type":"NS","comment":null},{"id":"99f36c78-379a-49aa-bd9e-c31729cb7835","data":"ns1.dom.scw.cloud.","name":"","priority":0,"ttl":1800,"type":"NS","comment":null},{"id":"3f5f1a92-c9e1-4e1d-a880-8e97624302a2","data":"\"challengetoken1\"","name":"_acme-challenge.createrecordset","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"fd69310f-9eca-4b15-8249-5df208bac537","data":"\"challengetoken2\"","name":"_acme-challenge.createrecordset","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"dbd0420f-f1cb-4d60-832f-5f5a047d5813","data":"\"challengetoken2\"","name":"_acme-challenge.deleterecordinset","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"59a85922-293f-41dc-9335-3fcbb2a37d41","data":"\"challengetoken\"","name":"_acme-challenge.fqdn","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"3fd6c397-186b-4d6a-a05f-4d570776e7d9","data":"\"challengetoken\"","name":"_acme-challenge.full.example.com","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"63d4bddb-ac82-4028-831b-54d06831108a","data":"\"challengetoken\"","name":"_acme-challenge.noop","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"f9ebaf3b-6483-478e-8abd-45107f967cea","data":"\"challengetoken\"","name":"_acme-challenge.test","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"e7bc35b1-eedd-4a31-95c4-462dfca87975","data":"docs.example.com.example.com.","name":"docs","priority":0,"ttl":3600,"type":"CNAME","comment":null},{"id":"f1a347f3-1435-432f-84ae-e3bc381e0b1b","data":"127.0.0.1","name":"localhost","priority":0,"ttl":3600,"type":"A","comment":null}]}'
+      string: '{"total_count":20, "records":[{"id":"f5836d62-5e3a-40fb-a618-b3d868633c54",
+        "data":"ns0.dom.scw.cloud.", "name":"", "priority":0, "ttl":1800, "type":"NS",
+        "comment":null}, {"id":"639c2716-f72f-471a-acdc-02b5d4001a01", "data":"ns1.dom.scw.cloud.",
+        "name":"", "priority":0, "ttl":1800, "type":"NS", "comment":null}, {"id":"6b51eeb6-b716-43d0-b5ed-88c3af16dcd8",
+        "data":"\"challengetoken2\"", "name":"_acme-challenge.createrecordset", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"7aa3bb23-96e1-478c-b8c5-c448111c60e4",
+        "data":"\"challengetoken1\"", "name":"_acme-challenge.createrecordset", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"300b8351-30ac-4807-9b6a-0284492c5c56",
+        "data":"\"challengetoken\"", "name":"_acme-challenge.fqdn", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"0917f4b3-be77-46ed-90d6-1708067bd65d",
+        "data":"\"challengetoken\"", "name":"_acme-challenge.full.example.com",
+        "priority":0, "ttl":3600, "type":"TXT", "comment":null}, {"id":"033adb27-0b74-4007-86e3-a2621fd1308e",
+        "data":"\"challengetoken2\"", "name":"_acme-challenge.listrecordset", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"fb09c8ff-4b60-47bf-a0c8-42e890c989e9",
+        "data":"\"challengetoken1\"", "name":"_acme-challenge.listrecordset", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"c3db4444-df4e-472a-8bee-d2dd9e8a9aba",
+        "data":"\"challengetoken\"", "name":"_acme-challenge.noop", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"dd6537d9-be1f-4766-911a-c91dd99bfbc2",
+        "data":"\"challengetoken\"", "name":"_acme-challenge.test", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"73124e73-b66b-4753-9a07-cd0717862f73",
+        "data":"docs.example.com.example.com.", "name":"docs", "priority":0,
+        "ttl":3600, "type":"CNAME", "comment":null}, {"id":"65f60dd7-4468-4bc6-836f-020b5efb88f4",
+        "data":"127.0.0.1", "name":"localhost", "priority":0, "ttl":3600, "type":"A",
+        "comment":null}, {"id":"085d0296-1f9d-4737-89cb-548d44150af8", "data":"\"updated\"",
+        "name":"orig.nameonly.test", "priority":0, "ttl":3600, "type":"TXT", "comment":null},
+        {"id":"b61592ac-932f-432a-a749-905e12da9ce2", "data":"\"challengetoken\"",
+        "name":"random.fqdntest", "priority":0, "ttl":3600, "type":"TXT", "comment":null},
+        {"id":"53809802-8459-40be-ac74-349cb0249c51", "data":"\"challengetoken\"",
+        "name":"random.fulltest.example.com", "priority":0, "ttl":3600, "type":"TXT",
+        "comment":null}, {"id":"4ab87377-72f6-4db0-9251-7143e6f41715", "data":"\"challengetoken\"",
+        "name":"random.test", "priority":0, "ttl":3600, "type":"TXT", "comment":null},
+        {"id":"ef6d344a-fb90-4178-8f6c-3d5de52fdf6b", "data":"\"ttlshouldbe3600\"",
+        "name":"ttl.fqdn", "priority":0, "ttl":3600, "type":"TXT", "comment":null},
+        {"id":"b8575a0c-3cbf-49e2-ada3-dfac97ded926", "data":"\"challengetoken\"",
+        "name":"updated.test", "priority":0, "ttl":3600, "type":"TXT", "comment":null},
+        {"id":"541ae116-7cb0-4cf1-b2f2-c51f1eb0ce45", "data":"\"challengetoken\"",
+        "name":"updated.testfqdn", "priority":0, "ttl":3600, "type":"TXT", "comment":null},
+        {"id":"42e42e49-e529-4222-accf-4347f53fd268", "data":"\"challengetoken\"",
+        "name":"updated.testfull.example.com", "priority":0, "ttl":3600,
+        "type":"TXT", "comment":null}]}'
     headers:
       content-length:
-      - '1727'
+      - '3284'
       content-security-policy:
       - default-src 'none'; frame-ancestors 'none'
       content-type:
       - application/json
       date:
-      - Wed, 19 Feb 2025 20:30:05 GMT
+      - Thu, 13 Nov 2025 12:22:58 GMT
       server:
       - Scaleway API Gateway (fr-par-3;edge02)
       strict-transport-security:
@@ -37,7 +76,7 @@ interactions:
       x-frame-options:
       - DENY
       x-request-id:
-      - 659aed42-6e86-4a15-ab73-8415588438f5
+      - 54c01355-f49b-4404-b43f-c6434c8e5182
     status:
       code: 200
       message: OK
@@ -47,7 +86,7 @@ interactions:
       Accept:
       - application/json
       Accept-Encoding:
-      - gzip, deflate
+      - gzip, deflate, zstd
       Connection:
       - keep-alive
       Content-Length:
@@ -55,23 +94,62 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.32.3
+      - python-requests/2.32.5
     method: GET
-    uri: https://api.scaleway.com/domain/v2beta1/dns-zones/example.com/records
+    uri: https://api.scaleway.com/domain/v2beta1/dns-zones/example.com/records?page=1
   response:
     body:
-      string: '{"total_count":11,"records":[{"id":"8c1f9e92-8b3e-45bb-b02f-3d7b79d26fb7","data":"ns0.dom.scw.cloud.","name":"","priority":0,"ttl":1800,"type":"NS","comment":null},{"id":"99f36c78-379a-49aa-bd9e-c31729cb7835","data":"ns1.dom.scw.cloud.","name":"","priority":0,"ttl":1800,"type":"NS","comment":null},{"id":"3f5f1a92-c9e1-4e1d-a880-8e97624302a2","data":"\"challengetoken1\"","name":"_acme-challenge.createrecordset","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"fd69310f-9eca-4b15-8249-5df208bac537","data":"\"challengetoken2\"","name":"_acme-challenge.createrecordset","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"dbd0420f-f1cb-4d60-832f-5f5a047d5813","data":"\"challengetoken2\"","name":"_acme-challenge.deleterecordinset","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"59a85922-293f-41dc-9335-3fcbb2a37d41","data":"\"challengetoken\"","name":"_acme-challenge.fqdn","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"3fd6c397-186b-4d6a-a05f-4d570776e7d9","data":"\"challengetoken\"","name":"_acme-challenge.full.example.com","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"63d4bddb-ac82-4028-831b-54d06831108a","data":"\"challengetoken\"","name":"_acme-challenge.noop","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"f9ebaf3b-6483-478e-8abd-45107f967cea","data":"\"challengetoken\"","name":"_acme-challenge.test","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"e7bc35b1-eedd-4a31-95c4-462dfca87975","data":"docs.example.com.example.com.","name":"docs","priority":0,"ttl":3600,"type":"CNAME","comment":null},{"id":"f1a347f3-1435-432f-84ae-e3bc381e0b1b","data":"127.0.0.1","name":"localhost","priority":0,"ttl":3600,"type":"A","comment":null}]}'
+      string: '{"total_count":20, "records":[{"id":"f5836d62-5e3a-40fb-a618-b3d868633c54",
+        "data":"ns0.dom.scw.cloud.", "name":"", "priority":0, "ttl":1800, "type":"NS",
+        "comment":null}, {"id":"639c2716-f72f-471a-acdc-02b5d4001a01", "data":"ns1.dom.scw.cloud.",
+        "name":"", "priority":0, "ttl":1800, "type":"NS", "comment":null}, {"id":"6b51eeb6-b716-43d0-b5ed-88c3af16dcd8",
+        "data":"\"challengetoken2\"", "name":"_acme-challenge.createrecordset", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"7aa3bb23-96e1-478c-b8c5-c448111c60e4",
+        "data":"\"challengetoken1\"", "name":"_acme-challenge.createrecordset", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"300b8351-30ac-4807-9b6a-0284492c5c56",
+        "data":"\"challengetoken\"", "name":"_acme-challenge.fqdn", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"0917f4b3-be77-46ed-90d6-1708067bd65d",
+        "data":"\"challengetoken\"", "name":"_acme-challenge.full.example.com",
+        "priority":0, "ttl":3600, "type":"TXT", "comment":null}, {"id":"033adb27-0b74-4007-86e3-a2621fd1308e",
+        "data":"\"challengetoken2\"", "name":"_acme-challenge.listrecordset", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"fb09c8ff-4b60-47bf-a0c8-42e890c989e9",
+        "data":"\"challengetoken1\"", "name":"_acme-challenge.listrecordset", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"c3db4444-df4e-472a-8bee-d2dd9e8a9aba",
+        "data":"\"challengetoken\"", "name":"_acme-challenge.noop", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"dd6537d9-be1f-4766-911a-c91dd99bfbc2",
+        "data":"\"challengetoken\"", "name":"_acme-challenge.test", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"73124e73-b66b-4753-9a07-cd0717862f73",
+        "data":"docs.example.com.example.com.", "name":"docs", "priority":0,
+        "ttl":3600, "type":"CNAME", "comment":null}, {"id":"65f60dd7-4468-4bc6-836f-020b5efb88f4",
+        "data":"127.0.0.1", "name":"localhost", "priority":0, "ttl":3600, "type":"A",
+        "comment":null}, {"id":"085d0296-1f9d-4737-89cb-548d44150af8", "data":"\"updated\"",
+        "name":"orig.nameonly.test", "priority":0, "ttl":3600, "type":"TXT", "comment":null},
+        {"id":"b61592ac-932f-432a-a749-905e12da9ce2", "data":"\"challengetoken\"",
+        "name":"random.fqdntest", "priority":0, "ttl":3600, "type":"TXT", "comment":null},
+        {"id":"53809802-8459-40be-ac74-349cb0249c51", "data":"\"challengetoken\"",
+        "name":"random.fulltest.example.com", "priority":0, "ttl":3600, "type":"TXT",
+        "comment":null}, {"id":"4ab87377-72f6-4db0-9251-7143e6f41715", "data":"\"challengetoken\"",
+        "name":"random.test", "priority":0, "ttl":3600, "type":"TXT", "comment":null},
+        {"id":"ef6d344a-fb90-4178-8f6c-3d5de52fdf6b", "data":"\"ttlshouldbe3600\"",
+        "name":"ttl.fqdn", "priority":0, "ttl":3600, "type":"TXT", "comment":null},
+        {"id":"b8575a0c-3cbf-49e2-ada3-dfac97ded926", "data":"\"challengetoken\"",
+        "name":"updated.test", "priority":0, "ttl":3600, "type":"TXT", "comment":null},
+        {"id":"541ae116-7cb0-4cf1-b2f2-c51f1eb0ce45", "data":"\"challengetoken\"",
+        "name":"updated.testfqdn", "priority":0, "ttl":3600, "type":"TXT", "comment":null},
+        {"id":"42e42e49-e529-4222-accf-4347f53fd268", "data":"\"challengetoken\"",
+        "name":"updated.testfull.example.com", "priority":0, "ttl":3600,
+        "type":"TXT", "comment":null}]}'
     headers:
       content-length:
-      - '1727'
+      - '3284'
       content-security-policy:
       - default-src 'none'; frame-ancestors 'none'
       content-type:
       - application/json
       date:
-      - Wed, 19 Feb 2025 20:30:05 GMT
+      - Thu, 13 Nov 2025 12:22:58 GMT
       server:
-      - Scaleway API Gateway (fr-par-3;edge01)
+      - Scaleway API Gateway (fr-par-3;edge02)
       strict-transport-security:
       - max-age=63072000
       x-content-type-options:
@@ -79,7 +157,7 @@ interactions:
       x-frame-options:
       - DENY
       x-request-id:
-      - bec21022-e4ce-441d-973f-5133e31ab67c
+      - 9df23de5-9f89-4094-9a24-82ad0382a4bd
     status:
       code: 200
       message: OK
@@ -90,71 +168,31 @@ interactions:
       Accept:
       - application/json
       Accept-Encoding:
-      - gzip, deflate
+      - gzip, deflate, zstd
       Connection:
       - keep-alive
       Content-Length:
-      - '149'
+      - '159'
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.32.3
+      - python-requests/2.32.5
     method: PATCH
     uri: https://api.scaleway.com/domain/v2beta1/dns-zones/example.com/records
   response:
     body:
-      string: '{"records":[{"id":"b6a19354-5882-4f14-a315-871e94cb0ee3","data":"\"challengetoken1\"","name":"_acme-challenge.deleterecordset","priority":0,"ttl":3600,"type":"TXT","comment":null}]}'
+      string: '{"records":[{"id":"6ccd870c-bc4f-4000-94db-80cea9b64e72", "data":"\"challengetoken1\"",
+        "name":"_acme-challenge.deleterecordset", "priority":0, "ttl":3600, "type":"TXT",
+        "comment":null}]}'
     headers:
       content-length:
-      - '181'
+      - '187'
       content-security-policy:
       - default-src 'none'; frame-ancestors 'none'
       content-type:
       - application/json
       date:
-      - Wed, 19 Feb 2025 20:30:05 GMT
-      server:
-      - Scaleway API Gateway (fr-par-3;edge03)
-      strict-transport-security:
-      - max-age=63072000
-      x-content-type-options:
-      - nosniff
-      x-frame-options:
-      - DENY
-      x-request-id:
-      - 7aae295a-81d3-43f0-85c2-21c84b2c0955
-    status:
-      code: 200
-      message: OK
-- request:
-    body: 'null'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '4'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - python-requests/2.32.3
-    method: GET
-    uri: https://api.scaleway.com/domain/v2beta1/dns-zones/example.com/records
-  response:
-    body:
-      string: '{"total_count":12,"records":[{"id":"8c1f9e92-8b3e-45bb-b02f-3d7b79d26fb7","data":"ns0.dom.scw.cloud.","name":"","priority":0,"ttl":1800,"type":"NS","comment":null},{"id":"99f36c78-379a-49aa-bd9e-c31729cb7835","data":"ns1.dom.scw.cloud.","name":"","priority":0,"ttl":1800,"type":"NS","comment":null},{"id":"fd69310f-9eca-4b15-8249-5df208bac537","data":"\"challengetoken2\"","name":"_acme-challenge.createrecordset","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"3f5f1a92-c9e1-4e1d-a880-8e97624302a2","data":"\"challengetoken1\"","name":"_acme-challenge.createrecordset","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"dbd0420f-f1cb-4d60-832f-5f5a047d5813","data":"\"challengetoken2\"","name":"_acme-challenge.deleterecordinset","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"b6a19354-5882-4f14-a315-871e94cb0ee3","data":"\"challengetoken1\"","name":"_acme-challenge.deleterecordset","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"59a85922-293f-41dc-9335-3fcbb2a37d41","data":"\"challengetoken\"","name":"_acme-challenge.fqdn","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"3fd6c397-186b-4d6a-a05f-4d570776e7d9","data":"\"challengetoken\"","name":"_acme-challenge.full.example.com","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"63d4bddb-ac82-4028-831b-54d06831108a","data":"\"challengetoken\"","name":"_acme-challenge.noop","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"f9ebaf3b-6483-478e-8abd-45107f967cea","data":"\"challengetoken\"","name":"_acme-challenge.test","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"e7bc35b1-eedd-4a31-95c4-462dfca87975","data":"docs.example.com.example.com.","name":"docs","priority":0,"ttl":3600,"type":"CNAME","comment":null},{"id":"f1a347f3-1435-432f-84ae-e3bc381e0b1b","data":"127.0.0.1","name":"localhost","priority":0,"ttl":3600,"type":"A","comment":null}]}'
-    headers:
-      content-length:
-      - '1895'
-      content-security-policy:
-      - default-src 'none'; frame-ancestors 'none'
-      content-type:
-      - application/json
-      date:
-      - Wed, 19 Feb 2025 20:30:06 GMT
+      - Thu, 13 Nov 2025 12:22:59 GMT
       server:
       - Scaleway API Gateway (fr-par-3;edge01)
       strict-transport-security:
@@ -164,7 +202,131 @@ interactions:
       x-frame-options:
       - DENY
       x-request-id:
-      - 955b3cad-0dfc-43bd-b268-6b0d05a1f867
+      - 4f3bc099-fce1-4ba5-b075-0cbe01ac4ca7
+    status:
+      code: 200
+      message: OK
+- request:
+    body: 'null'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '4'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.5
+    method: GET
+    uri: https://api.scaleway.com/domain/v2beta1/dns-zones/example.com/records?page=1
+  response:
+    body:
+      string: '{"total_count":21, "records":[{"id":"f5836d62-5e3a-40fb-a618-b3d868633c54",
+        "data":"ns0.dom.scw.cloud.", "name":"", "priority":0, "ttl":1800, "type":"NS",
+        "comment":null}, {"id":"639c2716-f72f-471a-acdc-02b5d4001a01", "data":"ns1.dom.scw.cloud.",
+        "name":"", "priority":0, "ttl":1800, "type":"NS", "comment":null}, {"id":"6b51eeb6-b716-43d0-b5ed-88c3af16dcd8",
+        "data":"\"challengetoken2\"", "name":"_acme-challenge.createrecordset", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"7aa3bb23-96e1-478c-b8c5-c448111c60e4",
+        "data":"\"challengetoken1\"", "name":"_acme-challenge.createrecordset", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"6ccd870c-bc4f-4000-94db-80cea9b64e72",
+        "data":"\"challengetoken1\"", "name":"_acme-challenge.deleterecordset", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"300b8351-30ac-4807-9b6a-0284492c5c56",
+        "data":"\"challengetoken\"", "name":"_acme-challenge.fqdn", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"0917f4b3-be77-46ed-90d6-1708067bd65d",
+        "data":"\"challengetoken\"", "name":"_acme-challenge.full.example.com",
+        "priority":0, "ttl":3600, "type":"TXT", "comment":null}, {"id":"033adb27-0b74-4007-86e3-a2621fd1308e",
+        "data":"\"challengetoken2\"", "name":"_acme-challenge.listrecordset", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"fb09c8ff-4b60-47bf-a0c8-42e890c989e9",
+        "data":"\"challengetoken1\"", "name":"_acme-challenge.listrecordset", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"c3db4444-df4e-472a-8bee-d2dd9e8a9aba",
+        "data":"\"challengetoken\"", "name":"_acme-challenge.noop", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"dd6537d9-be1f-4766-911a-c91dd99bfbc2",
+        "data":"\"challengetoken\"", "name":"_acme-challenge.test", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"73124e73-b66b-4753-9a07-cd0717862f73",
+        "data":"docs.example.com.example.com.", "name":"docs", "priority":0,
+        "ttl":3600, "type":"CNAME", "comment":null}, {"id":"65f60dd7-4468-4bc6-836f-020b5efb88f4",
+        "data":"127.0.0.1", "name":"localhost", "priority":0, "ttl":3600, "type":"A",
+        "comment":null}, {"id":"085d0296-1f9d-4737-89cb-548d44150af8", "data":"\"updated\"",
+        "name":"orig.nameonly.test", "priority":0, "ttl":3600, "type":"TXT", "comment":null},
+        {"id":"b61592ac-932f-432a-a749-905e12da9ce2", "data":"\"challengetoken\"",
+        "name":"random.fqdntest", "priority":0, "ttl":3600, "type":"TXT", "comment":null},
+        {"id":"53809802-8459-40be-ac74-349cb0249c51", "data":"\"challengetoken\"",
+        "name":"random.fulltest.example.com", "priority":0, "ttl":3600, "type":"TXT",
+        "comment":null}, {"id":"4ab87377-72f6-4db0-9251-7143e6f41715", "data":"\"challengetoken\"",
+        "name":"random.test", "priority":0, "ttl":3600, "type":"TXT", "comment":null},
+        {"id":"ef6d344a-fb90-4178-8f6c-3d5de52fdf6b", "data":"\"ttlshouldbe3600\"",
+        "name":"ttl.fqdn", "priority":0, "ttl":3600, "type":"TXT", "comment":null},
+        {"id":"b8575a0c-3cbf-49e2-ada3-dfac97ded926", "data":"\"challengetoken\"",
+        "name":"updated.test", "priority":0, "ttl":3600, "type":"TXT", "comment":null},
+        {"id":"541ae116-7cb0-4cf1-b2f2-c51f1eb0ce45", "data":"\"challengetoken\"",
+        "name":"updated.testfqdn", "priority":0, "ttl":3600, "type":"TXT", "comment":null}]}'
+    headers:
+      content-length:
+      - '3279'
+      content-security-policy:
+      - default-src 'none'; frame-ancestors 'none'
+      content-type:
+      - application/json
+      date:
+      - Thu, 13 Nov 2025 12:22:59 GMT
+      server:
+      - Scaleway API Gateway (fr-par-3;edge02)
+      strict-transport-security:
+      - max-age=63072000
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-request-id:
+      - 7ea94f2e-3cb4-479e-8c55-4e17e62fa342
+    status:
+      code: 200
+      message: OK
+- request:
+    body: 'null'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '4'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.5
+    method: GET
+    uri: https://api.scaleway.com/domain/v2beta1/dns-zones/example.com/records?page=2
+  response:
+    body:
+      string: '{"total_count":21, "records":[{"id":"42e42e49-e529-4222-accf-4347f53fd268",
+        "data":"\"challengetoken\"", "name":"updated.testfull.example.com",
+        "priority":0, "ttl":3600, "type":"TXT", "comment":null}]}'
+    headers:
+      content-length:
+      - '210'
+      content-security-policy:
+      - default-src 'none'; frame-ancestors 'none'
+      content-type:
+      - application/json
+      date:
+      - Thu, 13 Nov 2025 12:22:59 GMT
+      server:
+      - Scaleway API Gateway (fr-par-3;edge01)
+      strict-transport-security:
+      - max-age=63072000
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-request-id:
+      - 4520e008-0d11-4559-850e-cc13340a0595
     status:
       code: 200
       message: OK
@@ -175,29 +337,31 @@ interactions:
       Accept:
       - application/json
       Accept-Encoding:
-      - gzip, deflate
+      - gzip, deflate, zstd
       Connection:
       - keep-alive
       Content-Length:
-      - '149'
+      - '159'
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.32.3
+      - python-requests/2.32.5
     method: PATCH
     uri: https://api.scaleway.com/domain/v2beta1/dns-zones/example.com/records
   response:
     body:
-      string: '{"records":[{"id":"f8eb69ee-3abc-4757-a606-08fd591f33a3","data":"\"challengetoken2\"","name":"_acme-challenge.deleterecordset","priority":0,"ttl":3600,"type":"TXT","comment":null}]}'
+      string: '{"records":[{"id":"9b39b481-56c8-4fd4-bcbf-24a162b470c9", "data":"\"challengetoken2\"",
+        "name":"_acme-challenge.deleterecordset", "priority":0, "ttl":3600, "type":"TXT",
+        "comment":null}]}'
     headers:
       content-length:
-      - '181'
+      - '187'
       content-security-policy:
       - default-src 'none'; frame-ancestors 'none'
       content-type:
       - application/json
       date:
-      - Wed, 19 Feb 2025 20:30:06 GMT
+      - Thu, 13 Nov 2025 12:22:59 GMT
       server:
       - Scaleway API Gateway (fr-par-3;edge02)
       strict-transport-security:
@@ -207,7 +371,7 @@ interactions:
       x-frame-options:
       - DENY
       x-request-id:
-      - 44069752-4603-441c-8ea6-dbb653255976
+      - 9712babe-012e-4820-a067-84d21695cfe2
     status:
       code: 200
       message: OK
@@ -217,7 +381,7 @@ interactions:
       Accept:
       - application/json
       Accept-Encoding:
-      - gzip, deflate
+      - gzip, deflate, zstd
       Connection:
       - keep-alive
       Content-Length:
@@ -225,23 +389,61 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.32.3
+      - python-requests/2.32.5
     method: GET
-    uri: https://api.scaleway.com/domain/v2beta1/dns-zones/example.com/records
+    uri: https://api.scaleway.com/domain/v2beta1/dns-zones/example.com/records?page=1
   response:
     body:
-      string: '{"total_count":13,"records":[{"id":"99f36c78-379a-49aa-bd9e-c31729cb7835","data":"ns1.dom.scw.cloud.","name":"","priority":0,"ttl":1800,"type":"NS","comment":null},{"id":"8c1f9e92-8b3e-45bb-b02f-3d7b79d26fb7","data":"ns0.dom.scw.cloud.","name":"","priority":0,"ttl":1800,"type":"NS","comment":null},{"id":"3f5f1a92-c9e1-4e1d-a880-8e97624302a2","data":"\"challengetoken1\"","name":"_acme-challenge.createrecordset","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"fd69310f-9eca-4b15-8249-5df208bac537","data":"\"challengetoken2\"","name":"_acme-challenge.createrecordset","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"dbd0420f-f1cb-4d60-832f-5f5a047d5813","data":"\"challengetoken2\"","name":"_acme-challenge.deleterecordinset","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"f8eb69ee-3abc-4757-a606-08fd591f33a3","data":"\"challengetoken2\"","name":"_acme-challenge.deleterecordset","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"b6a19354-5882-4f14-a315-871e94cb0ee3","data":"\"challengetoken1\"","name":"_acme-challenge.deleterecordset","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"59a85922-293f-41dc-9335-3fcbb2a37d41","data":"\"challengetoken\"","name":"_acme-challenge.fqdn","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"3fd6c397-186b-4d6a-a05f-4d570776e7d9","data":"\"challengetoken\"","name":"_acme-challenge.full.example.com","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"63d4bddb-ac82-4028-831b-54d06831108a","data":"\"challengetoken\"","name":"_acme-challenge.noop","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"f9ebaf3b-6483-478e-8abd-45107f967cea","data":"\"challengetoken\"","name":"_acme-challenge.test","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"e7bc35b1-eedd-4a31-95c4-462dfca87975","data":"docs.example.com.example.com.","name":"docs","priority":0,"ttl":3600,"type":"CNAME","comment":null},{"id":"f1a347f3-1435-432f-84ae-e3bc381e0b1b","data":"127.0.0.1","name":"localhost","priority":0,"ttl":3600,"type":"A","comment":null}]}'
+      string: '{"total_count":22, "records":[{"id":"f5836d62-5e3a-40fb-a618-b3d868633c54",
+        "data":"ns0.dom.scw.cloud.", "name":"", "priority":0, "ttl":1800, "type":"NS",
+        "comment":null}, {"id":"639c2716-f72f-471a-acdc-02b5d4001a01", "data":"ns1.dom.scw.cloud.",
+        "name":"", "priority":0, "ttl":1800, "type":"NS", "comment":null}, {"id":"6b51eeb6-b716-43d0-b5ed-88c3af16dcd8",
+        "data":"\"challengetoken2\"", "name":"_acme-challenge.createrecordset", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"7aa3bb23-96e1-478c-b8c5-c448111c60e4",
+        "data":"\"challengetoken1\"", "name":"_acme-challenge.createrecordset", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"9b39b481-56c8-4fd4-bcbf-24a162b470c9",
+        "data":"\"challengetoken2\"", "name":"_acme-challenge.deleterecordset", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"6ccd870c-bc4f-4000-94db-80cea9b64e72",
+        "data":"\"challengetoken1\"", "name":"_acme-challenge.deleterecordset", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"300b8351-30ac-4807-9b6a-0284492c5c56",
+        "data":"\"challengetoken\"", "name":"_acme-challenge.fqdn", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"0917f4b3-be77-46ed-90d6-1708067bd65d",
+        "data":"\"challengetoken\"", "name":"_acme-challenge.full.example.com",
+        "priority":0, "ttl":3600, "type":"TXT", "comment":null}, {"id":"033adb27-0b74-4007-86e3-a2621fd1308e",
+        "data":"\"challengetoken2\"", "name":"_acme-challenge.listrecordset", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"fb09c8ff-4b60-47bf-a0c8-42e890c989e9",
+        "data":"\"challengetoken1\"", "name":"_acme-challenge.listrecordset", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"c3db4444-df4e-472a-8bee-d2dd9e8a9aba",
+        "data":"\"challengetoken\"", "name":"_acme-challenge.noop", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"dd6537d9-be1f-4766-911a-c91dd99bfbc2",
+        "data":"\"challengetoken\"", "name":"_acme-challenge.test", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"73124e73-b66b-4753-9a07-cd0717862f73",
+        "data":"docs.example.com.example.com.", "name":"docs", "priority":0,
+        "ttl":3600, "type":"CNAME", "comment":null}, {"id":"65f60dd7-4468-4bc6-836f-020b5efb88f4",
+        "data":"127.0.0.1", "name":"localhost", "priority":0, "ttl":3600, "type":"A",
+        "comment":null}, {"id":"085d0296-1f9d-4737-89cb-548d44150af8", "data":"\"updated\"",
+        "name":"orig.nameonly.test", "priority":0, "ttl":3600, "type":"TXT", "comment":null},
+        {"id":"b61592ac-932f-432a-a749-905e12da9ce2", "data":"\"challengetoken\"",
+        "name":"random.fqdntest", "priority":0, "ttl":3600, "type":"TXT", "comment":null},
+        {"id":"53809802-8459-40be-ac74-349cb0249c51", "data":"\"challengetoken\"",
+        "name":"random.fulltest.example.com", "priority":0, "ttl":3600, "type":"TXT",
+        "comment":null}, {"id":"4ab87377-72f6-4db0-9251-7143e6f41715", "data":"\"challengetoken\"",
+        "name":"random.test", "priority":0, "ttl":3600, "type":"TXT", "comment":null},
+        {"id":"ef6d344a-fb90-4178-8f6c-3d5de52fdf6b", "data":"\"ttlshouldbe3600\"",
+        "name":"ttl.fqdn", "priority":0, "ttl":3600, "type":"TXT", "comment":null},
+        {"id":"b8575a0c-3cbf-49e2-ada3-dfac97ded926", "data":"\"challengetoken\"",
+        "name":"updated.test", "priority":0, "ttl":3600, "type":"TXT", "comment":null}]}'
     headers:
       content-length:
-      - '2063'
+      - '3295'
       content-security-policy:
       - default-src 'none'; frame-ancestors 'none'
       content-type:
       - application/json
       date:
-      - Wed, 19 Feb 2025 20:30:06 GMT
+      - Thu, 13 Nov 2025 12:22:59 GMT
       server:
-      - Scaleway API Gateway (fr-par-3;edge02)
+      - Scaleway API Gateway (fr-par-3;edge03)
       strict-transport-security:
       - max-age=63072000
       x-content-type-options:
@@ -249,18 +451,64 @@ interactions:
       x-frame-options:
       - DENY
       x-request-id:
-      - a96cf5ef-1cab-466b-82ea-d38dffa02c53
+      - 15b0f950-45fd-4706-9af6-1d8c7d4b305d
     status:
       code: 200
       message: OK
 - request:
-    body: '{"changes": [{"delete": {"id": "f8eb69ee-3abc-4757-a606-08fd591f33a3"}},
-      {"delete": {"id": "b6a19354-5882-4f14-a315-871e94cb0ee3"}}]}'
+    body: 'null'
     headers:
       Accept:
       - application/json
       Accept-Encoding:
-      - gzip, deflate
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '4'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.5
+    method: GET
+    uri: https://api.scaleway.com/domain/v2beta1/dns-zones/example.com/records?page=2
+  response:
+    body:
+      string: '{"total_count":22, "records":[{"id":"541ae116-7cb0-4cf1-b2f2-c51f1eb0ce45",
+        "data":"\"challengetoken\"", "name":"updated.testfqdn", "priority":0, "ttl":3600,
+        "type":"TXT", "comment":null}, {"id":"42e42e49-e529-4222-accf-4347f53fd268",
+        "data":"\"challengetoken\"", "name":"updated.testfull.example.com",
+        "priority":0, "ttl":3600, "type":"TXT", "comment":null}]}'
+    headers:
+      content-length:
+      - '369'
+      content-security-policy:
+      - default-src 'none'; frame-ancestors 'none'
+      content-type:
+      - application/json
+      date:
+      - Thu, 13 Nov 2025 12:23:00 GMT
+      server:
+      - Scaleway API Gateway (fr-par-3;edge01)
+      strict-transport-security:
+      - max-age=63072000
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-request-id:
+      - ab7dae01-1569-46d7-b429-3450025c6669
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"changes": [{"delete": {"id": "9b39b481-56c8-4fd4-bcbf-24a162b470c9"}},
+      {"delete": {"id": "6ccd870c-bc4f-4000-94db-80cea9b64e72"}}]}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate, zstd
       Connection:
       - keep-alive
       Content-Length:
@@ -268,7 +516,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.32.3
+      - python-requests/2.32.5
     method: PATCH
     uri: https://api.scaleway.com/domain/v2beta1/dns-zones/example.com/records
   response:
@@ -282,49 +530,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 19 Feb 2025 20:30:06 GMT
-      server:
-      - Scaleway API Gateway (fr-par-3;edge03)
-      strict-transport-security:
-      - max-age=63072000
-      x-content-type-options:
-      - nosniff
-      x-frame-options:
-      - DENY
-      x-request-id:
-      - 54854372-a2d4-4c12-99b0-d241d7400b53
-    status:
-      code: 200
-      message: OK
-- request:
-    body: 'null'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '4'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - python-requests/2.32.3
-    method: GET
-    uri: https://api.scaleway.com/domain/v2beta1/dns-zones/example.com/records
-  response:
-    body:
-      string: '{"total_count":11,"records":[{"id":"8c1f9e92-8b3e-45bb-b02f-3d7b79d26fb7","data":"ns0.dom.scw.cloud.","name":"","priority":0,"ttl":1800,"type":"NS","comment":null},{"id":"99f36c78-379a-49aa-bd9e-c31729cb7835","data":"ns1.dom.scw.cloud.","name":"","priority":0,"ttl":1800,"type":"NS","comment":null},{"id":"3f5f1a92-c9e1-4e1d-a880-8e97624302a2","data":"\"challengetoken1\"","name":"_acme-challenge.createrecordset","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"fd69310f-9eca-4b15-8249-5df208bac537","data":"\"challengetoken2\"","name":"_acme-challenge.createrecordset","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"dbd0420f-f1cb-4d60-832f-5f5a047d5813","data":"\"challengetoken2\"","name":"_acme-challenge.deleterecordinset","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"59a85922-293f-41dc-9335-3fcbb2a37d41","data":"\"challengetoken\"","name":"_acme-challenge.fqdn","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"3fd6c397-186b-4d6a-a05f-4d570776e7d9","data":"\"challengetoken\"","name":"_acme-challenge.full.example.com","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"63d4bddb-ac82-4028-831b-54d06831108a","data":"\"challengetoken\"","name":"_acme-challenge.noop","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"f9ebaf3b-6483-478e-8abd-45107f967cea","data":"\"challengetoken\"","name":"_acme-challenge.test","priority":0,"ttl":3600,"type":"TXT","comment":null},{"id":"e7bc35b1-eedd-4a31-95c4-462dfca87975","data":"docs.example.com.example.com.","name":"docs","priority":0,"ttl":3600,"type":"CNAME","comment":null},{"id":"f1a347f3-1435-432f-84ae-e3bc381e0b1b","data":"127.0.0.1","name":"localhost","priority":0,"ttl":3600,"type":"A","comment":null}]}'
-    headers:
-      content-length:
-      - '1727'
-      content-security-policy:
-      - default-src 'none'; frame-ancestors 'none'
-      content-type:
-      - application/json
-      date:
-      - Wed, 19 Feb 2025 20:30:07 GMT
+      - Thu, 13 Nov 2025 12:23:00 GMT
       server:
       - Scaleway API Gateway (fr-par-3;edge02)
       strict-transport-security:
@@ -334,7 +540,88 @@ interactions:
       x-frame-options:
       - DENY
       x-request-id:
-      - 7fb33cd7-3235-4eae-8fd2-400101d8a220
+      - b78a65af-7e96-40d2-a023-e4b7847cc72d
+    status:
+      code: 200
+      message: OK
+- request:
+    body: 'null'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '4'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.5
+    method: GET
+    uri: https://api.scaleway.com/domain/v2beta1/dns-zones/example.com/records?page=1
+  response:
+    body:
+      string: '{"total_count":20, "records":[{"id":"f5836d62-5e3a-40fb-a618-b3d868633c54",
+        "data":"ns0.dom.scw.cloud.", "name":"", "priority":0, "ttl":1800, "type":"NS",
+        "comment":null}, {"id":"639c2716-f72f-471a-acdc-02b5d4001a01", "data":"ns1.dom.scw.cloud.",
+        "name":"", "priority":0, "ttl":1800, "type":"NS", "comment":null}, {"id":"6b51eeb6-b716-43d0-b5ed-88c3af16dcd8",
+        "data":"\"challengetoken2\"", "name":"_acme-challenge.createrecordset", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"7aa3bb23-96e1-478c-b8c5-c448111c60e4",
+        "data":"\"challengetoken1\"", "name":"_acme-challenge.createrecordset", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"300b8351-30ac-4807-9b6a-0284492c5c56",
+        "data":"\"challengetoken\"", "name":"_acme-challenge.fqdn", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"0917f4b3-be77-46ed-90d6-1708067bd65d",
+        "data":"\"challengetoken\"", "name":"_acme-challenge.full.example.com",
+        "priority":0, "ttl":3600, "type":"TXT", "comment":null}, {"id":"033adb27-0b74-4007-86e3-a2621fd1308e",
+        "data":"\"challengetoken2\"", "name":"_acme-challenge.listrecordset", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"fb09c8ff-4b60-47bf-a0c8-42e890c989e9",
+        "data":"\"challengetoken1\"", "name":"_acme-challenge.listrecordset", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"c3db4444-df4e-472a-8bee-d2dd9e8a9aba",
+        "data":"\"challengetoken\"", "name":"_acme-challenge.noop", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"dd6537d9-be1f-4766-911a-c91dd99bfbc2",
+        "data":"\"challengetoken\"", "name":"_acme-challenge.test", "priority":0,
+        "ttl":3600, "type":"TXT", "comment":null}, {"id":"73124e73-b66b-4753-9a07-cd0717862f73",
+        "data":"docs.example.com.example.com.", "name":"docs", "priority":0,
+        "ttl":3600, "type":"CNAME", "comment":null}, {"id":"65f60dd7-4468-4bc6-836f-020b5efb88f4",
+        "data":"127.0.0.1", "name":"localhost", "priority":0, "ttl":3600, "type":"A",
+        "comment":null}, {"id":"085d0296-1f9d-4737-89cb-548d44150af8", "data":"\"updated\"",
+        "name":"orig.nameonly.test", "priority":0, "ttl":3600, "type":"TXT", "comment":null},
+        {"id":"b61592ac-932f-432a-a749-905e12da9ce2", "data":"\"challengetoken\"",
+        "name":"random.fqdntest", "priority":0, "ttl":3600, "type":"TXT", "comment":null},
+        {"id":"53809802-8459-40be-ac74-349cb0249c51", "data":"\"challengetoken\"",
+        "name":"random.fulltest.example.com", "priority":0, "ttl":3600, "type":"TXT",
+        "comment":null}, {"id":"4ab87377-72f6-4db0-9251-7143e6f41715", "data":"\"challengetoken\"",
+        "name":"random.test", "priority":0, "ttl":3600, "type":"TXT", "comment":null},
+        {"id":"ef6d344a-fb90-4178-8f6c-3d5de52fdf6b", "data":"\"ttlshouldbe3600\"",
+        "name":"ttl.fqdn", "priority":0, "ttl":3600, "type":"TXT", "comment":null},
+        {"id":"b8575a0c-3cbf-49e2-ada3-dfac97ded926", "data":"\"challengetoken\"",
+        "name":"updated.test", "priority":0, "ttl":3600, "type":"TXT", "comment":null},
+        {"id":"541ae116-7cb0-4cf1-b2f2-c51f1eb0ce45", "data":"\"challengetoken\"",
+        "name":"updated.testfqdn", "priority":0, "ttl":3600, "type":"TXT", "comment":null},
+        {"id":"42e42e49-e529-4222-accf-4347f53fd268", "data":"\"challengetoken\"",
+        "name":"updated.testfull.example.com", "priority":0, "ttl":3600,
+        "type":"TXT", "comment":null}]}'
+    headers:
+      content-length:
+      - '3284'
+      content-security-policy:
+      - default-src 'none'; frame-ancestors 'none'
+      content-type:
+      - application/json
+      date:
+      - Thu, 13 Nov 2025 12:23:00 GMT
+      server:
+      - Scaleway API Gateway (fr-par-3;edge02)
+      strict-transport-security:
+      - max-age=63072000
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-request-id:
+      - 01dce49b-4b95-4d07-bc17-915ffcc83c08
     status:
       code: 200
       message: OK

@@ -64,17 +64,24 @@ class Provider(BaseProvider):
         return True
 
     def list_records(self, rtype=None, name=None, content=None):
-        results = self._get(self._records_url())
+        # Up to 20 records are listed with default page-size, we need to request all pages.
+        page = 1
+        total = 0
         records = []
-        for result in results["records"]:
-            record = {
-                "id": result["id"],
-                "type": result["type"],
-                "name": self._full_name(result["name"]),
-                "ttl": result["ttl"],
-                "content": self._decode_content(result["type"], result["data"]),
-            }
-            records.append(record)
+        while page == 1 or len(records) < total:
+            results = self._get(self._records_url() + f"?page={page}")
+            for result in results["records"]:
+                record = {
+                    "id": result["id"],
+                    "type": result["type"],
+                    "name": self._full_name(result["name"]),
+                    "ttl": result["ttl"],
+                    "content": self._decode_content(result["type"], result["data"]),
+                }
+                records.append(record)
+
+            total = results["total_count"]
+            page += 1
         return self._filter_records(records, rtype, name, content)
 
     @staticmethod
