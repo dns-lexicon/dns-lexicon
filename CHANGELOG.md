@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+### Added
+* Support subdomains in `dynu` providers (#34)
 
 ## 3.23.1 - 14/11/2025
 ### Modified
