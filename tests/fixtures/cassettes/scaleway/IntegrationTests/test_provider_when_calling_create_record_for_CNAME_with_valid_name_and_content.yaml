@@ -5,7 +5,7 @@ interactions:
       Accept:
       - application/json
       Accept-Encoding:
-      - gzip, deflate
+      - gzip, deflate, zstd
       Connection:
       - keep-alive
       Content-Length:
@@ -13,23 +13,28 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.32.3
+      - python-requests/2.32.5
     method: GET
     uri: https://api.scaleway.com/domain/v2beta1/dns-zones/example.com/records
   response:
     body:
-      string: '{"total_count":3,"records":[{"id":"8c1f9e92-8b3e-45bb-b02f-3d7b79d26fb7","data":"ns0.dom.scw.cloud.","name":"","priority":0,"ttl":1800,"type":"NS","comment":null},{"id":"99f36c78-379a-49aa-bd9e-c31729cb7835","data":"ns1.dom.scw.cloud.","name":"","priority":0,"ttl":1800,"type":"NS","comment":null},{"id":"f1a347f3-1435-432f-84ae-e3bc381e0b1b","data":"127.0.0.1","name":"localhost","priority":0,"ttl":3600,"type":"A","comment":null}]}'
+      string: '{"total_count":3, "records":[{"id":"f5836d62-5e3a-40fb-a618-b3d868633c54",
+        "data":"ns0.dom.scw.cloud.", "name":"", "priority":0, "ttl":1800, "type":"NS",
+        "comment":null}, {"id":"639c2716-f72f-471a-acdc-02b5d4001a01", "data":"ns1.dom.scw.cloud.",
+        "name":"", "priority":0, "ttl":1800, "type":"NS", "comment":null}, {"id":"65f60dd7-4468-4bc6-836f-020b5efb88f4",
+        "data":"127.0.0.1", "name":"localhost", "priority":0, "ttl":3600, "type":"A",
+        "comment":null}]}'
     headers:
       content-length:
-      - '433'
+      - '454'
       content-security-policy:
       - default-src 'none'; frame-ancestors 'none'
       content-type:
       - application/json
       date:
-      - Wed, 19 Feb 2025 20:29:53 GMT
+      - Thu, 13 Nov 2025 12:22:40 GMT
       server:
-      - Scaleway API Gateway (fr-par-3;edge01)
+      - Scaleway API Gateway (fr-par-3;edge02)
       strict-transport-security:
       - max-age=63072000
       x-content-type-options:
@@ -37,7 +42,7 @@ interactions:
       x-frame-options:
       - DENY
       x-request-id:
-      - 026f865d-0d6e-4434-a52a-5c8d6fb80152
+      - 16de80d6-3596-47e0-ae23-a33cd39ea3f2
     status:
       code: 200
       message: OK
@@ -47,7 +52,7 @@ interactions:
       Accept:
       - application/json
       Accept-Encoding:
-      - gzip, deflate
+      - gzip, deflate, zstd
       Connection:
       - keep-alive
       Content-Length:
@@ -55,23 +60,28 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.32.3
+      - python-requests/2.32.5
     method: GET
-    uri: https://api.scaleway.com/domain/v2beta1/dns-zones/example.com/records
+    uri: https://api.scaleway.com/domain/v2beta1/dns-zones/example.com/records?page=1
   response:
     body:
-      string: '{"total_count":3,"records":[{"id":"8c1f9e92-8b3e-45bb-b02f-3d7b79d26fb7","data":"ns0.dom.scw.cloud.","name":"","priority":0,"ttl":1800,"type":"NS","comment":null},{"id":"99f36c78-379a-49aa-bd9e-c31729cb7835","data":"ns1.dom.scw.cloud.","name":"","priority":0,"ttl":1800,"type":"NS","comment":null},{"id":"f1a347f3-1435-432f-84ae-e3bc381e0b1b","data":"127.0.0.1","name":"localhost","priority":0,"ttl":3600,"type":"A","comment":null}]}'
+      string: '{"total_count":3, "records":[{"id":"f5836d62-5e3a-40fb-a618-b3d868633c54",
+        "data":"ns0.dom.scw.cloud.", "name":"", "priority":0, "ttl":1800, "type":"NS",
+        "comment":null}, {"id":"639c2716-f72f-471a-acdc-02b5d4001a01", "data":"ns1.dom.scw.cloud.",
+        "name":"", "priority":0, "ttl":1800, "type":"NS", "comment":null}, {"id":"65f60dd7-4468-4bc6-836f-020b5efb88f4",
+        "data":"127.0.0.1", "name":"localhost", "priority":0, "ttl":3600, "type":"A",
+        "comment":null}]}'
     headers:
       content-length:
-      - '433'
+      - '454'
       content-security-policy:
       - default-src 'none'; frame-ancestors 'none'
       content-type:
       - application/json
       date:
-      - Wed, 19 Feb 2025 20:29:53 GMT
+      - Thu, 13 Nov 2025 12:22:40 GMT
       server:
-      - Scaleway API Gateway (fr-par-3;edge03)
+      - Scaleway API Gateway (fr-par-3;edge02)
       strict-transport-security:
       - max-age=63072000
       x-content-type-options:
@@ -79,7 +89,7 @@ interactions:
       x-frame-options:
       - DENY
       x-request-id:
-      - 7566dd98-8990-4db0-aad6-5534446b28cb
+      - 8765b033-b968-4e84-ba2c-450bffac40ee
     status:
       code: 200
       message: OK
@@ -90,7 +100,7 @@ interactions:
       Accept:
       - application/json
       Accept-Encoding:
-      - gzip, deflate
+      - gzip, deflate, zstd
       Connection:
       - keep-alive
       Content-Length:
@@ -98,23 +108,24 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.32.3
+      - python-requests/2.32.5
     method: PATCH
     uri: https://api.scaleway.com/domain/v2beta1/dns-zones/example.com/records
   response:
     body:
-      string: '{"records":[{"id":"e7bc35b1-eedd-4a31-95c4-462dfca87975","data":"docs.example.com.example.com.","name":"docs","priority":0,"ttl":3600,"type":"CNAME","comment":null}]}'
+      string: '{"records":[{"id":"73124e73-b66b-4753-9a07-cd0717862f73", "data":"docs.example.com.example.com.",
+        "name":"docs", "priority":0, "ttl":3600, "type":"CNAME", "comment":null}]}'
     headers:
       content-length:
-      - '165'
+      - '181'
       content-security-policy:
       - default-src 'none'; frame-ancestors 'none'
       content-type:
       - application/json
       date:
-      - Wed, 19 Feb 2025 20:29:54 GMT
+      - Thu, 13 Nov 2025 12:22:41 GMT
       server:
-      - Scaleway API Gateway (fr-par-3;edge03)
+      - Scaleway API Gateway (fr-par-3;edge01)
       strict-transport-security:
       - max-age=63072000
       x-content-type-options:
@@ -122,7 +133,7 @@ interactions:
       x-frame-options:
       - DENY
       x-request-id:
-      - 76d82935-02d8-44c9-bb14-0a68b7003f57
+      - 76bdaa18-d1a5-459f-90fc-50635e958037
     status:
       code: 200
       message: OK
