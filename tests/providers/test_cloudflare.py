@@ -10,7 +10,7 @@ class TestCloudflareProvider(IntegrationTestsV2):
     """TestCase for Cloudflare"""
 
     provider_name = "cloudflare"
-    domain = "pacalis.net"
+    domain = "byemike.org"
 
     def _filter_headers(self):
         return ["X-Auth-Email", "X-Auth-Key", "set-cookie"]
