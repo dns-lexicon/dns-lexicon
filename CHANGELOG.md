@@ -1,6 +1,9 @@
 # Changelog
 
 ## master - CURRENT
+### Modified
+* Fix pagination in `scaleway` provider (#64)
+* Fix tests in `godaddy` provider
 
 ## 3.23.0 - 11/11/2025
 ### Added
