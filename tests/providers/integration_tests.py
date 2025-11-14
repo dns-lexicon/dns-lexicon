@@ -22,6 +22,9 @@ PROVIDER_VCR = vcr.VCR(
     ),
     record_mode=RECORD_MODE,
     decode_compressed_response=True,
+    ignore_hosts=[
+        "publicsuffix.org",
+    ],
 )
 
 
