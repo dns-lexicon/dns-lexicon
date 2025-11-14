@@ -50,7 +50,7 @@ jobs:
         run: uvx --with tox-uv tox -e ${{ matrix.toxenv }}
       - name: Upload test results
         if: ${{ !cancelled() && matrix.toxenv != 'lint' && matrix.toxenv != 'mypy' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: test-results-${{ matrix.os }}-${{ matrix.python }}-${{ matrix.toxenv }}
           path: |
@@ -62,7 +62,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Upload
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: event_file
           path: ${{ github.event_path }}
