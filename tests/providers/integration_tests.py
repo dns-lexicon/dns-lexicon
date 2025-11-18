@@ -3,6 +3,7 @@
 import os
 import warnings
 from functools import wraps
+from types import ModuleType
 from typing import Optional
 
 import pytest
@@ -21,6 +22,9 @@ PROVIDER_VCR = vcr.VCR(
     ),
     record_mode=RECORD_MODE,
     decode_compressed_response=True,
+    ignore_hosts=[
+        "publicsuffix.org",
+    ],
 )
 
 
@@ -91,10 +95,9 @@ class IntegrationTestsV1:
     IntegrationTestsV1 is used for providers developed before IntegrationTestsV2 has been created.
     """
 
-    def __init__(self):
-        self.domain = None
-        self.provider_name = None
-        self.provider_module = None
+    domain: str
+    provider_name: str
+    provider_module: ModuleType
 
     def setup_method(self, _):
         warnings.filterwarnings(

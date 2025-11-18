@@ -2,7 +2,7 @@
 
 import socket
 from shutil import which
-from unittest import TestCase, mock
+from unittest import mock
 
 import pytest
 from integration_tests import IntegrationTestsV2
@@ -29,7 +29,8 @@ def _nslookup_mock(request):
 # Guys, are we online ?
 def _there_is_no_network():
     try:
-        socket.create_connection(("www.google.com", 80))
+        conn = socket.create_connection(("www.google.com", 80))
+        conn.close()
         return False
     except (OSError, IOError):
         pass
@@ -39,7 +40,7 @@ def _there_is_no_network():
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
-class AutoProviderTests(TestCase, IntegrationTestsV2):
+class TestAutoProvider(IntegrationTestsV2):
     """TestCase for auto"""
 
     provider_name = "auto"

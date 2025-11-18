@@ -1,7 +1,6 @@
 """Integration tests for Name.com"""
 
 import json
-from unittest import TestCase
 from unittest.mock import ANY, Mock, call, patch
 
 import pytest
@@ -15,7 +14,7 @@ from lexicon.config import DictConfigSource
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
-class NamecomProviderTests(TestCase, IntegrationTestsV2):
+class TestNamecomProvider(IntegrationTestsV2):
     """TestCase for Name.com"""
 
     # I don't think we really need some docstrings here.

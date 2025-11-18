@@ -17,15 +17,13 @@ parameters must be provided:
 - LEXICON_NFSN_DOMAIN -> Domain you want to test with
 """
 
-from unittest import TestCase
-
 from integration_tests import IntegrationTestsV2
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
-class NFSNProviderTests(TestCase, IntegrationTestsV2):
+class TestNFSNProvider(IntegrationTestsV2):
     """TestCase for NFSN"""
 
     provider_name = "nfsn"

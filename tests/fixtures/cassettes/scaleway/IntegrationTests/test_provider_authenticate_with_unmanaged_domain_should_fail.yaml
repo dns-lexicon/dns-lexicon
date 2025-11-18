@@ -5,7 +5,7 @@ interactions:
       Accept:
       - application/json
       Accept-Encoding:
-      - gzip, deflate
+      - gzip, deflate, zstd
       Connection:
       - keep-alive
       Content-Length:
@@ -13,7 +13,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.32.3
+      - python-requests/2.32.5
     method: GET
     uri: https://api.scaleway.com/domain/v2beta1/dns-zones/thisisadomainidonotown.com/records
   response:
@@ -27,9 +27,9 @@ interactions:
       content-type:
       - application/json
       date:
-      - Wed, 19 Feb 2025 20:29:52 GMT
+      - Thu, 13 Nov 2025 12:22:39 GMT
       server:
-      - Scaleway API Gateway (fr-par-3;edge03)
+      - Scaleway API Gateway (fr-par-3;edge02)
       strict-transport-security:
       - max-age=63072000
       x-content-type-options:
@@ -37,7 +37,7 @@ interactions:
       x-frame-options:
       - DENY
       x-request-id:
-      - 915ece46-66f9-4d29-8d7c-9db6cfa42b7d
+      - efc4c6f9-aa2a-423c-a0a1-7aa55aed790f
     status:
       code: 403
       message: Forbidden

@@ -166,7 +166,7 @@ class Provider(BaseProvider):
             records = [
                 record
                 for record in records
-                if record["content"].lower() == content.lower()
+                if record["content"].lower() in {content.lower(), f"\"{content.lower()}\""}
             ]
 
         LOGGER.debug("list_records: %s", records)

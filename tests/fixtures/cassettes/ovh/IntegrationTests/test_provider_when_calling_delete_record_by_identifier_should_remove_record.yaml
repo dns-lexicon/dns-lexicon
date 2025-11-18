@@ -103,7 +103,7 @@ interactions:
           involved. You want to challenge yourself? Join us! http://ovh.jobs']
     status: {code: 200, message: OK}
 - request:
-    body: '{"fieldType": "TXT", "subDomain": "delete.testid", "target": "challengetoken",
+    body: '{"fieldType": "TXT", "subDomain": "delete.testid", "target": "\"challengetoken\"",
       "ttl": 3600}'
     headers:
       Accept: ['*/*']
@@ -116,7 +116,7 @@ interactions:
     method: POST
     uri: https://eu.api.ovh.com/1.0/domain/zone/pacalis.net/record
   response:
-    body: {string: '{"target":"challengetoken","ttl":3600,"zone":"pacalis.net","fieldType":"TXT","id":1553659763,"subDomain":"delete.testid"}'}
+    body: {string: '{"target":"\"challengetoken\"","ttl":3600,"zone":"pacalis.net","fieldType":"TXT","id":1553659763,"subDomain":"delete.testid"}'}
     headers:
       Access-Control-Allow-Origin: ['*']
       Cache-Control: [no-cache]
@@ -198,7 +198,7 @@ interactions:
     method: GET
     uri: https://eu.api.ovh.com/1.0/domain/zone/pacalis.net/record/1553659763
   response:
-    body: {string: '{"target":"challengetoken","ttl":3600,"zone":"pacalis.net","fieldType":"TXT","id":1553659763,"subDomain":"delete.testid"}'}
+    body: {string: '{"target":"\"challengetoken\"","ttl":3600,"zone":"pacalis.net","fieldType":"TXT","id":1553659763,"subDomain":"delete.testid"}'}
     headers:
       Access-Control-Allow-Origin: ['*']
       Cache-Control: [no-cache]

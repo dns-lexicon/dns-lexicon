@@ -1,7 +1,6 @@
 """Integration tests for Azure Cloud DNS"""
 
 import re
-from unittest import TestCase
 
 from integration_tests import IntegrationTestsV2
 
@@ -10,7 +9,7 @@ from integration_tests import IntegrationTestsV2
 # pass, by inheritance from integration_tests.IntegrationTests
 
 
-class AzureTests(TestCase, IntegrationTestsV2):
+class TestAzure(IntegrationTestsV2):
     """TestCase for Azure Cloud DNS"""
 
     provider_name = "azure"

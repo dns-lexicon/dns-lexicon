@@ -7,7 +7,7 @@ interactions:
       Accept-Encoding:
       - gzip, deflate
       Authorization:
-      - Bearer gWLX2tc008RPN0yxuphRS2wGw-LviphCKb_KdRFw
+      - Bearer huWytmPWrDK4s2AaJwE33EOfs8GanXR0EDCHItU-
       Connection:
       - keep-alive
       Content-Length:
@@ -15,18 +15,23 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.22.0
+      - python-requests/2.32.3
     method: GET
-    uri: https://api.cloudflare.com/client/v4/zones?name=thisisadomainidonotown.com
+    uri: https://api.cloudflare.com/client/v4/zones?page=1&per_page=100
   response:
     body:
-      string: '{"success":false,"errors":[{"code":0,"message":"Actor ''com.cloudflare.api.token.a633057935c0c4ff1a07cfd50ae97df6''
-        requires permission ''com.cloudflare.api.account.zone.list'' to list zones"}],"messages":[],"result":null}'
+      string: '{"result":[{"id":"457dd20dded351b97830cb528f507819","name":"byemike.org","status":"active","paused":false,"type":"full","development_mode":0,"name_servers":["blakely.ns.cloudflare.com","vin.ns.cloudflare.com"],"original_name_servers":null,"original_registrar":null,"original_dnshost":null,"modified_on":"2025-06-27T16:15:05.621864Z","created_on":"2025-06-27T16:15:01.206882Z","activated_on":"2025-06-27T16:15:05.465417Z","vanity_name_servers":[],"vanity_name_servers_ips":null,"meta":{"step":4,"custom_certificate_quota":0,"page_rule_quota":3,"phishing_detected":false},"owner":{"id":null,"type":"user","email":null},"account":{"id":"8d76151cc3a22bf025f36489c7a0be23","name":"M4gc52kndg@privaterelay.appleid.com''s
+        Account"},"tenant":{"id":null,"name":null},"tenant_unit":{"id":null},"permissions":["#dns_records:edit","#dns_records:read","#zone:read"],"plan":{"id":"0feeeeeeeeeeeeeeeeeeeeeeeeeeeeee","name":"Free
+        Website","price":0,"currency":"USD","frequency":"","is_subscribed":false,"can_subscribe":false,"legacy_id":"free","legacy_discount":false,"externally_managed":false}},{"id":"64789f348d16a1ac1c1fd5cd8028476c","name":"mikeleave.com","status":"active","paused":false,"type":"full","development_mode":0,"name_servers":["blakely.ns.cloudflare.com","vin.ns.cloudflare.com"],"original_name_servers":null,"original_registrar":null,"original_dnshost":null,"modified_on":"2025-06-27T16:08:29.911954Z","created_on":"2025-06-27T16:08:25.436586Z","activated_on":"2025-06-27T16:08:29.784391Z","vanity_name_servers":[],"vanity_name_servers_ips":null,"meta":{"step":4,"custom_certificate_quota":0,"page_rule_quota":3,"phishing_detected":false},"owner":{"id":null,"type":"user","email":null},"account":{"id":"8d76151cc3a22bf025f36489c7a0be23","name":"M4gc52kndg@privaterelay.appleid.com''s
+        Account"},"tenant":{"id":null,"name":null},"tenant_unit":{"id":null},"permissions":["#dns_records:edit","#dns_records:read","#zone:read"],"plan":{"id":"0feeeeeeeeeeeeeeeeeeeeeeeeeeeeee","name":"Free
+        Website","price":0,"currency":"USD","frequency":"","is_subscribed":false,"can_subscribe":false,"legacy_id":"free","legacy_discount":false,"externally_managed":false}},{"id":"542399cd507f4535eb47a9c3392fa199","name":"mikeleave.org","status":"active","paused":false,"type":"full","development_mode":0,"name_servers":["blakely.ns.cloudflare.com","vin.ns.cloudflare.com"],"original_name_servers":null,"original_registrar":null,"original_dnshost":null,"modified_on":"2025-06-27T16:05:24.272460Z","created_on":"2025-06-27T16:05:19.428666Z","activated_on":"2025-06-27T16:05:24.138722Z","vanity_name_servers":[],"vanity_name_servers_ips":null,"meta":{"step":4,"custom_certificate_quota":0,"page_rule_quota":3,"phishing_detected":false},"owner":{"id":null,"type":"user","email":null},"account":{"id":"8d76151cc3a22bf025f36489c7a0be23","name":"M4gc52kndg@privaterelay.appleid.com''s
+        Account"},"tenant":{"id":null,"name":null},"tenant_unit":{"id":null},"permissions":["#dns_records:edit","#dns_records:read","#zone:read"],"plan":{"id":"0feeeeeeeeeeeeeeeeeeeeeeeeeeeeee","name":"Free
+        Website","price":0,"currency":"USD","frequency":"","is_subscribed":false,"can_subscribe":false,"legacy_id":"free","legacy_discount":false,"externally_managed":false}}],"result_info":{"page":1,"per_page":100,"total_pages":1,"count":3,"total_count":3},"success":true,"errors":[],"messages":[]}'
     headers:
       CF-Cache-Status:
       - DYNAMIC
       CF-Ray:
-      - 58ed9026ed9d0847-CDG
+      - 975e5c37687f1258-SLC
       Cache-Control:
       - no-store, no-cache, must-revalidate, post-check=0, pre-check=0
       Connection:
@@ -34,9 +39,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 05 May 2020 21:30:31 GMT
-      Expect-CT:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      - Wed, 27 Aug 2025 20:36:17 GMT
       Expires:
       - Sun, 25 Jan 1981 05:00:00 GMT
       Pragma:
@@ -44,23 +47,30 @@ interactions:
       Server:
       - cloudflare
       Set-Cookie:
-      - __cfduid=d98ce1f6d6f23be2e3915420f1f2366bf1588714230; expires=Thu, 04-Jun-20
-        21:30:30 GMT; path=/; domain=.api.cloudflare.com; HttpOnly; SameSite=Lax
+      - __cflb=0H28vgHxwvgAQtjUGUFqYFDiSDreGJnV2Ah3cPe5pAq; SameSite=Lax; path=/;
+        expires=Wed, 27-Aug-25 23:06:18 GMT; HttpOnly
+      - __cf_bm=b5dUwxLtsEy.9PrgIYYlar7y2uHp7tjptjshyp1vyFA-1756326977-1.0.1.1-jKIAAqwqZMkyeV9OMAWXmeKpaI09456yPGdDYbsYd21RskTIg9IGmmx3._PWna2T_hYcDE8ucst_bHN1hcxx6qPeVCLc4QJ2CBiQ808hAGg;
+        path=/; expires=Wed, 27-Aug-25 21:06:17 GMT; domain=.api.cloudflare.com; HttpOnly;
+        Secure; SameSite=None
+      - _cfuvid=U5dr0yEJ7xtX_QuPKTRbYdvegyteYg4bBIZRvRPRAqc-1756326977296-0.0.1.1-604800000;
+        path=/; domain=.api.cloudflare.com; HttpOnly; Secure; SameSite=None
       Strict-Transport-Security:
       - max-age=31536000
       Transfer-Encoding:
       - chunked
       Vary:
-      - Accept-Encoding
+      - accept-encoding
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
       - SAMEORIGIN
-      cf-request-id:
-      - 0288586c54000008475db95200000001
+      api-version:
+      - '2025-08-27'
+      cf-auditlog-id:
+      - 0198ed3e-deb9-7e79-bd39-371936324053
       content-length:
-      - '218'
+      - '3346'
     status:
-      code: 403
-      message: Forbidden
+      code: 200
+      message: OK
 version: 1

@@ -42,7 +42,6 @@ The required Environment Variables for a live test are:
 """
 
 import os
-from unittest import TestCase
 
 import pytest
 from integration_tests import IntegrationTestsV2
@@ -52,7 +51,7 @@ from integration_tests import IntegrationTestsV2
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
 @pytest.mark.skip(reason="Cassettes need to be recorded again from live API")
-class NamecheapProviderTests(TestCase, IntegrationTestsV2):
+class TestNamecheapProvider(IntegrationTestsV2):
     """TestCase for Namecheap"""
 
     provider_name = "namecheap"
@@ -78,7 +77,7 @@ class NamecheapProviderTests(TestCase, IntegrationTestsV2):
 
 
 @pytest.mark.skip(reason="Cassettes need to be recorded again from live API")
-class NamecheapManagedProviderTests(NamecheapProviderTests):
+class TestNamecheapManagedProvider(TestNamecheapProvider):
     """
     The Namecheap API behaves differently for domains that are "Managed" by an
     account instead of "Owned" by the account.  Some endpoints won't work;

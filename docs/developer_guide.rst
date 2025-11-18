@@ -184,10 +184,8 @@ Then you'll need to populate it with the following template:
 
     from integration_tests import IntegrationTestsV2
 
-    # Hook into testing framework by inheriting unittest.TestCase and reuse
-    # the tests which *each and every* implementation of the interface must
-    # pass, by inheritance from integration_tests.IntegrationTestsV2
-    class FooProviderTests(TestCase, IntegrationTestsV2):
+    # Extends IntegrationTestsV2 to use the extended tests suite.
+    class TestFooProvider(IntegrationTestsV2):
         """Integration tests for Foo provider"""
 
         provider_name = 'foo'
@@ -279,16 +277,14 @@ any individual test that does not apply (and will never pass)
     def test_provider_when_calling_list_records_after_setting_ttl(self):
         return
 
-You can also skip extended test suites by inheriting your provider test class from ``IntegrationTestsV1``
+You can also skip the extended tests suite by inheriting your provider test class from ``IntegrationTestsV1``
 instead of ``IntegrationTestsV2``:
 
 .. code-block:: python
 
-    from unittest import TestCase
-    
     from integration_tests import IntegrationTestsV1
     
-    class FooProviderTests(TestCase, IntegrationTestsV1):
+    class TestFooProvider(IntegrationTestsV1):
         """Integration tests for Foo provider"""
 
         ...

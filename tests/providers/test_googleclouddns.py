@@ -1,7 +1,5 @@
 """Integration tests for Google Cloud DNS"""
 
-from unittest import TestCase
-
 from integration_tests import IntegrationTestsV2
 
 # All data in the following service_account base64-encoded file have been invalidated
@@ -12,7 +10,7 @@ SERVICE_ACCOUNT_INFO_BASE64 = "ew0KICAidHlwZSI6ICJzZXJ2aWNlX2FjY291bnQiLA0KICAic
 # pass, by inheritance from integration_tests.IntegrationTests
 
 
-class GoogleCloudDnsTests(TestCase, IntegrationTestsV2):
+class TestGoogleCloudDns(IntegrationTestsV2):
     """TestCase for Google Cloud DNS"""
 
     provider_name = "googleclouddns"

@@ -1,11 +1,9 @@
 """Integration tests for EasyName"""
 
-from unittest import TestCase
-
 from integration_tests import IntegrationTestsV2
 
 
-class EasynameProviderTests(TestCase, IntegrationTestsV2):
+class TestEasynameProvider(IntegrationTestsV2):
     """TestCase for EasyName"""
 
     provider_name = "easyname"

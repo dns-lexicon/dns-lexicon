@@ -1,7 +1,5 @@
 """Integration tests for Njalla provider"""
 
-from unittest import TestCase
-
 import pytest
 from integration_tests import IntegrationTestsV2
 
@@ -10,7 +8,7 @@ from integration_tests import IntegrationTestsV2
 # pass, by inheritance from integration_tests.IntegrationTests
 
 
-class NjallaProviderTests(TestCase, IntegrationTestsV2):
+class TestNjallaProvider(IntegrationTestsV2):
     """TestCase for Njalla"""
 
     provider_name = "njalla"

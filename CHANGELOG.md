@@ -2,6 +2,35 @@
 
 ## master - CURRENT
 
+## 3.23.2 - 14/11/2025
+### Added
+* Support subdomains in `dynu` providers (#34)
+
+## 3.23.1 - 14/11/2025
+### Modified
+* Fix pagination in `scaleway` provider (#64)
+* Fix tests in `godaddy` provider
+
+## 3.23.0 - 11/11/2025
+### Added
+* Add `desec` provider (#55)
+
+### Removed
+* Replace the old `linode` provider with `linode4`. `linode4` provider name 
+  is still usable for retro-compatibility purpose.
+
+## 3.22.0 - 11/11/2025
+### Added
+* Add support of Python 3.14
+* Add relevant URLs in the pyproject.toml for publication in PyPI
+
+### Modified
+* Make domain comparison case insensitive in DYNU provider to cope with zones with uppercase characters
+* Properly close sockets during integration tests
+
+### Removed
+* Drop support of Python 3.9
+
 ## 3.21.1 - 28/04/2025
 ### Modified
 * Make provider `dynu` able to work not only with the root domain of a zone (#31)

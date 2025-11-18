@@ -11,21 +11,23 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.23.0
+      - python-requests/2.32.3
     method: GET
     uri: https://api.dynu.com/v2/dns/getroot/example.com
   response:
     body:
-      string: '{"statusCode":200,"id":1024,"domainName":"example.com","hostname":"example.com","node":""}'
+      string: '{"statusCode":200,"id":100373707,"domainName":"example.com","hostname":"example.com","node":""}'
     headers:
       Cache-Control:
       - no-store
+      Connection:
+      - close
       Content-Length:
-      - '90'
+      - '95'
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Thu, 12 Mar 2020 22:19:14 GMT
+      - Tue, 06 May 2025 18:36:3 GMT
       Pragma:
       - no-cache
       Server:
@@ -47,61 +49,23 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.23.0
+      - python-requests/2.32.3
     method: GET
     uri: https://api.dynu.com/v2/dns
   response:
     body:
-      string: '{"statusCode":200,"domains":[{"id":1024,"name":"example.com","unicodeName":"example.com","token":"LQFTMTBQVOYUGQRFIQMU","state":"Complete","location":"lexicon","group":"lexicon","ipv4Address":"127.0.0.1","ipv6Address":"::1","ttl":120,"ipv4":true,"ipv6":true,"ipv4WildcardAlias":true,"ipv6WildcardAlias":true,"createdOn":"2019-06-16T18:26:58","updatedOn":"2020-03-12T22:12:56.42"}]}'
+      string: '{"statusCode":200,"domains":[{"id":100373707,"name":"example.com","unicodeName":"example.com","token":"CSOMGFFULQJEBBNYVNQF","state":"Complete","group":"","ipv4Address":"120.196.114.45","ipv6Address":null,"ttl":60,"ipv4":true,"ipv6":true,"ipv4WildcardAlias":false,"ipv6WildcardAlias":false,"allowZoneTransfer":false,"dnssec":false,"createdOn":"2025-05-06T18:31:27","updatedOn":"2025-05-06T18:32:32.19"}]}'
     headers:
       Cache-Control:
       - no-store
-      Content-Length:
-      - '381'
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Thu, 12 Mar 2020 22:19:22 GMT
-      Pragma:
-      - no-cache
-      Server:
-      - Dynu Web Server
-      X-Powered-By:
-      - Dynu Dynamic DNS Service
-    status:
-      code: 200
-      message: OK
-- request:
-    body: '{"recordType": "A", "state": true, "nodeName": "test", "ipv4Address": "127.0.0.1",
-      "ttl": 3600}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
       Connection:
-      - keep-alive
+      - close
       Content-Length:
-      - '95'
-      Content-Type:
-      - application/json
-      User-Agent:
-      - python-requests/2.23.0
-    method: POST
-    uri: https://api.dynu.com/v2/dns/1024/record
-  response:
-    body:
-      string: '{"statusCode":200,"id":6052991,"domainId":1024,"domainName":"example.com","nodeName":"test","hostname":"test.example.com","recordType":"A","ttl":3600,"state":true,"content":"test.example.com.
-        3600 IN A 127.0.0.1","updatedOn":"2020-03-12T22:19:19.287","location":"","ipv4Address":"127.0.0.1"}'
-    headers:
-      Cache-Control:
-      - no-store
-      Content-Length:
-      - '291'
+      - '404'
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Thu, 12 Mar 2020 22:19:24 GMT
+      - Tue, 06 May 2025 18:36:4 GMT
       Pragma:
       - no-cache
       Server:
@@ -120,26 +84,68 @@ interactions:
       - gzip, deflate
       Connection:
       - keep-alive
-      Content-Length:
-      - '0'
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.23.0
-    method: DELETE
-    uri: https://api.dynu.com/v2/dns/1024/record/6052991
+      - python-requests/2.32.3
+    method: GET
+    uri: https://api.dynu.com/v2/dns/getroot/example.com
   response:
     body:
-      string: '{"statusCode":200}'
+      string: '{"statusCode":200,"id":100373707,"domainName":"example.com","hostname":"example.com","node":""}'
     headers:
       Cache-Control:
       - no-store
+      Connection:
+      - close
       Content-Length:
-      - '18'
+      - '95'
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Thu, 12 Mar 2020 22:19:21 GMT
+      - Tue, 06 May 2025 18:36:5 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - Dynu Web Server
+      X-Powered-By:
+      - Dynu Dynamic DNS Service
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"recordType": "A", "state": true, "nodeName": "localhost", "ipv4Address":
+      "127.0.0.1", "ttl": 3600}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '100'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.3
+    method: POST
+    uri: https://api.dynu.com/v2/dns/100373707/record
+  response:
+    body:
+      string: '{"statusCode":200,"id":13690812,"domainId":100373707,"domainName":"example.com","nodeName":"localhost","hostname":"localhost.example.com","recordType":"A","ttl":3600,"state":true,"content":"localhost.example.com.
+        3600 IN A 127.0.0.1","updatedOn":"2025-05-06T18:36:06.03","location":"","group":"","ipv4Address":"127.0.0.1"}'
+    headers:
+      Cache-Control:
+      - no-store
+      Connection:
+      - close
+      Content-Length:
+      - '322'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 06 May 2025 18:36:10 GMT
       Pragma:
       - no-cache
       Server:

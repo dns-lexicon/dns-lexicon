@@ -20,9 +20,9 @@ jobs:
     needs: [main]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Install uv
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v7
       - name: Publish sdist & wheel to PyPI
         run: |
           uv build
@@ -34,11 +34,11 @@ jobs:
     needs: [pypi]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Get project version
         run: echo "VERSION=$(cat pyproject.toml | grep '^version = .*' | sed -E 's/version = "(.*)"/\1/g')" >> $GITHUB_ENV
       - name: Configure Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
       - name: Prepare changelog
         run: python utils/extract_changelog.py ${VERSION} > release_${VERSION}.md
       - name: Publish Github release
@@ -56,7 +56,7 @@ jobs:
       id-token: write
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Get project version
         run: echo "VERSION=$(cat pyproject.toml | grep '^version = .*' | sed -E 's/version = "(.*)"/\1/g')" >> $GITHUB_ENV
       - name: Log-in to the Container registry
@@ -82,7 +82,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
       - name: Generate artifact attestation
-        uses: actions/attest-build-provenance@v2
+        uses: actions/attest-build-provenance@v3
         with:
           subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
           subject-digest: ${{ steps.push.outputs.digest }}

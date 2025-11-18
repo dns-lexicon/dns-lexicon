@@ -329,7 +329,7 @@ interactions:
     method: GET
     uri: https://eu.api.ovh.com/1.0/domain/zone/pacalis.net/record/1553659838
   response:
-    body: {string: '{"target":"challengetoken","ttl":3600,"zone":"pacalis.net","fieldType":"TXT","id":1553659838,"subDomain":"random.fqdntest"}'}
+    body: {string: '{"target":"\"challengetoken\"","ttl":3600,"zone":"pacalis.net","fieldType":"TXT","id":1553659838,"subDomain":"random.fqdntest"}'}
     headers:
       Access-Control-Allow-Origin: ['*']
       Cache-Control: [no-cache]
@@ -356,7 +356,7 @@ interactions:
     method: GET
     uri: https://eu.api.ovh.com/1.0/domain/zone/pacalis.net/record/1553659860
   response:
-    body: {string: '{"target":"challengetoken","ttl":3600,"zone":"pacalis.net","fieldType":"TXT","id":1553659860,"subDomain":"random.fulltest"}'}
+    body: {string: '{"target":"\"challengetoken\"","ttl":3600,"zone":"pacalis.net","fieldType":"TXT","id":1553659860,"subDomain":"random.fulltest"}'}
     headers:
       Access-Control-Allow-Origin: ['*']
       Cache-Control: [no-cache]
@@ -383,7 +383,7 @@ interactions:
     method: GET
     uri: https://eu.api.ovh.com/1.0/domain/zone/pacalis.net/record/1553659867
   response:
-    body: {string: '{"target":"challengetoken","ttl":3600,"zone":"pacalis.net","fieldType":"TXT","id":1553659867,"subDomain":"random.test"}'}
+    body: {string: '{"target":"\"challengetoken\"","ttl":3600,"zone":"pacalis.net","fieldType":"TXT","id":1553659867,"subDomain":"random.test"}'}
     headers:
       Access-Control-Allow-Origin: ['*']
       Cache-Control: [no-cache]
@@ -491,7 +491,7 @@ interactions:
     method: GET
     uri: https://eu.api.ovh.com/1.0/domain/zone/pacalis.net/record/1553659750
   response:
-    body: {string: '{"target":"challengetoken1","ttl":3600,"zone":"pacalis.net","fieldType":"TXT","id":1553659750,"subDomain":"_acme-challenge.createrecordset"}'}
+    body: {string: '{"target":"\"challengetoken1\"","ttl":3600,"zone":"pacalis.net","fieldType":"TXT","id":1553659750,"subDomain":"_acme-challenge.createrecordset"}'}
     headers:
       Access-Control-Allow-Origin: ['*']
       Cache-Control: [no-cache]
@@ -518,7 +518,7 @@ interactions:
     method: GET
     uri: https://eu.api.ovh.com/1.0/domain/zone/pacalis.net/record/1553659751
   response:
-    body: {string: '{"target":"challengetoken2","ttl":3600,"zone":"pacalis.net","fieldType":"TXT","id":1553659751,"subDomain":"_acme-challenge.createrecordset"}'}
+    body: {string: '{"target":"\"challengetoken2\"","ttl":3600,"zone":"pacalis.net","fieldType":"TXT","id":1553659751,"subDomain":"_acme-challenge.createrecordset"}'}
     headers:
       Access-Control-Allow-Origin: ['*']
       Cache-Control: [no-cache]
@@ -545,7 +545,7 @@ interactions:
     method: GET
     uri: https://eu.api.ovh.com/1.0/domain/zone/pacalis.net/record/1553659771
   response:
-    body: {string: '{"target":"challengetoken2","ttl":3600,"zone":"pacalis.net","fieldType":"TXT","id":1553659771,"subDomain":"_acme-challenge.deleterecordinset"}'}
+    body: {string: '{"target":"\"challengetoken2\"","ttl":3600,"zone":"pacalis.net","fieldType":"TXT","id":1553659771,"subDomain":"_acme-challenge.deleterecordinset"}'}
     headers:
       Access-Control-Allow-Origin: ['*']
       Cache-Control: [no-cache]
@@ -572,7 +572,7 @@ interactions:
     method: GET
     uri: https://eu.api.ovh.com/1.0/domain/zone/pacalis.net/record/1553659742
   response:
-    body: {string: '{"target":"challengetoken","ttl":3600,"zone":"pacalis.net","fieldType":"TXT","id":1553659742,"subDomain":"_acme-challenge.fqdn"}'}
+    body: {string: '{"target":"\"challengetoken\"","ttl":3600,"zone":"pacalis.net","fieldType":"TXT","id":1553659742,"subDomain":"_acme-challenge.fqdn"}'}
     headers:
       Access-Control-Allow-Origin: ['*']
       Cache-Control: [no-cache]
@@ -599,7 +599,7 @@ interactions:
     method: GET
     uri: https://eu.api.ovh.com/1.0/domain/zone/pacalis.net/record/1553659743
   response:
-    body: {string: '{"target":"challengetoken","ttl":3600,"zone":"pacalis.net","fieldType":"TXT","id":1553659743,"subDomain":"_acme-challenge.full"}'}
+    body: {string: '{"target":"\"challengetoken\"","ttl":3600,"zone":"pacalis.net","fieldType":"TXT","id":1553659743,"subDomain":"_acme-challenge.full"}'}
     headers:
       Access-Control-Allow-Origin: ['*']
       Cache-Control: [no-cache]
@@ -626,7 +626,7 @@ interactions:
     method: GET
     uri: https://eu.api.ovh.com/1.0/domain/zone/pacalis.net/record/1553659826
   response:
-    body: {string: '{"target":"challengetoken1","ttl":3600,"zone":"pacalis.net","fieldType":"TXT","id":1553659826,"subDomain":"_acme-challenge.listrecordset"}'}
+    body: {string: '{"target":"\"challengetoken1\"","ttl":3600,"zone":"pacalis.net","fieldType":"TXT","id":1553659826,"subDomain":"_acme-challenge.listrecordset"}'}
     headers:
       Access-Control-Allow-Origin: ['*']
       Cache-Control: [no-cache]
@@ -653,7 +653,7 @@ interactions:
     method: GET
     uri: https://eu.api.ovh.com/1.0/domain/zone/pacalis.net/record/1553659832
   response:
-    body: {string: '{"target":"challengetoken2","ttl":3600,"zone":"pacalis.net","fieldType":"TXT","id":1553659832,"subDomain":"_acme-challenge.listrecordset"}'}
+    body: {string: '{"target":"\"challengetoken2\"","ttl":3600,"zone":"pacalis.net","fieldType":"TXT","id":1553659832,"subDomain":"_acme-challenge.listrecordset"}'}
     headers:
       Access-Control-Allow-Origin: ['*']
       Cache-Control: [no-cache]
@@ -680,7 +680,7 @@ interactions:
     method: GET
     uri: https://eu.api.ovh.com/1.0/domain/zone/pacalis.net/record/1553659752
   response:
-    body: {string: '{"target":"challengetoken","ttl":3600,"zone":"pacalis.net","fieldType":"TXT","id":1553659752,"subDomain":"_acme-challenge.noop"}'}
+    body: {string: '{"target":"\"challengetoken\"","ttl":3600,"zone":"pacalis.net","fieldType":"TXT","id":1553659752,"subDomain":"_acme-challenge.noop"}'}
     headers:
       Access-Control-Allow-Origin: ['*']
       Cache-Control: [no-cache]
@@ -707,7 +707,7 @@ interactions:
     method: GET
     uri: https://eu.api.ovh.com/1.0/domain/zone/pacalis.net/record/1553659745
   response:
-    body: {string: '{"target":"challengetoken","ttl":3600,"zone":"pacalis.net","fieldType":"TXT","id":1553659745,"subDomain":"_acme-challenge.test"}'}
+    body: {string: '{"target":"\"challengetoken\"","ttl":3600,"zone":"pacalis.net","fieldType":"TXT","id":1553659745,"subDomain":"_acme-challenge.test"}'}
     headers:
       Access-Control-Allow-Origin: ['*']
       Cache-Control: [no-cache]

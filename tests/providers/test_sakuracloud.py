@@ -1,7 +1,5 @@
 """Integration tests for SakuraCloud"""
 
-from unittest import TestCase
-
 import pytest
 from integration_tests import IntegrationTestsV1
 
@@ -10,7 +8,7 @@ from integration_tests import IntegrationTestsV1
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from define_tests.TheTests
 # TODO: migrate to IntegrationTestsV2 and its extended test suite
-class SakruaCloudProviderTests(TestCase, IntegrationTestsV1):
+class TestSakruaCloudProvider(IntegrationTestsV1):
     """TestCase for SakuraCloud"""
 
     provider_name = "sakuracloud"

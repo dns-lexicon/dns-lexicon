@@ -1,14 +1,12 @@
 """Integration tests for Gandi"""
 
-from unittest import TestCase
-
 from integration_tests import IntegrationTestsV2
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from define_tests.TheTests
-class GandiRPCProviderTests(TestCase, IntegrationTestsV2):
+class TestGandiRPCProvider(IntegrationTestsV2):
     """TestCase for Gandi on RPC"""
 
     provider_name = "gandi"
@@ -19,7 +17,7 @@ class GandiRPCProviderTests(TestCase, IntegrationTestsV2):
         return {"api_protocol": "rpc"}
 
 
-class GandiRESTProviderTests(TestCase, IntegrationTestsV2):
+class TestGandiRESTProvider(IntegrationTestsV2):
     """TestCase for Gandi on REST API"""
 
     provider_name = "gandi"

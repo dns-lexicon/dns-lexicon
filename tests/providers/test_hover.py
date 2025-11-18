@@ -2,7 +2,6 @@
 
 import json
 import re
-from unittest import TestCase
 
 import pyotp
 from integration_tests import IntegrationTestsV2
@@ -13,7 +12,7 @@ _FAKE_HOVER_SESSION = "0123456789abcdef0123456789abcdef"
 _FAKE_TOTP_SECRET = pyotp.random_base32()
 
 
-class HoverProviderTests(TestCase, IntegrationTestsV2):
+class TestHoverProvider(IntegrationTestsV2):
     """TestCase for Hover"""
 
     provider_name = "hover"

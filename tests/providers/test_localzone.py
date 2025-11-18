@@ -1,7 +1,6 @@
 """Integration tests for Localzone"""
 
 import os
-from unittest import TestCase
 
 import pytest
 from integration_tests import IntegrationTestsV2
@@ -42,7 +41,7 @@ def testfile():
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from define_tests.TheTests
-class LocalzoneProviderTests(TestCase, IntegrationTestsV2):
+class TestLocalzoneProvider(IntegrationTestsV2):
     """Integration tests for Localzone"""
 
     provider_name = "localzone"

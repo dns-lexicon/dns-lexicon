@@ -1,7 +1,5 @@
 """Integratoin tests for Zonomi"""
 
-from unittest import TestCase
-
 import pytest
 from integration_tests import IntegrationTestsV1
 
@@ -10,7 +8,7 @@ from integration_tests import IntegrationTestsV1
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
 # TODO: migrate to IntegrationTestsV2 and its extended test suite
-class ZonomiProviderTests(TestCase, IntegrationTestsV1):
+class TestZonomiProvider(IntegrationTestsV1):
     """TestCase for Zonomi"""
 
     provider_name = "zonomi"

@@ -1,12 +1,11 @@
 """Integration tests for Joker.com provider"""
 
 import re
-from unittest import TestCase
 
 from integration_tests import IntegrationTestsV2
 
 
-class JokerProviderTests(TestCase, IntegrationTestsV2):
+class TestJokerProvider(IntegrationTestsV2):
     """TestCase for Joker.com"""
 
     provider_name = "joker"
