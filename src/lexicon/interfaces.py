@@ -237,7 +237,7 @@ class Provider(ABC):
         return self.config.resolve(f"lexicon:{self.provider_name}:{option}")
 
     def _type_valid(self, types: list[str]=[]) -> bool:
-        if types.len() == 0:
+        if len(types) == 0:
             return True
         try:
             types.index(self._get_lexicon_option("type"))
