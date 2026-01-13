@@ -459,7 +459,7 @@ class HetznerCloud(BaseProvider):
             return self._get(f"/{domain}")["zone"]
         except requests.HTTPError as err:
             if err.response.status_code == 401:
-                raise AuthenticationError()
+                raise AuthenticationError() from err
             elif err.response.status_code == 404:
                 raise LexiconError(f"There is no zone for {domain}.")
             else:
