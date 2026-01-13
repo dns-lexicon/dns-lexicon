@@ -379,7 +379,6 @@ class HetznerCloud(BaseProvider):
         data: Optional[dict[str, Any]] = None,
         query_params: Optional[dict[str, Any]] = None,
     ):
-        data = data or {}
         query_params = query_params or {}
 
         headers = {
