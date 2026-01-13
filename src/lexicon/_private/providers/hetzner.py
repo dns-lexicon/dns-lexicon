@@ -9,7 +9,6 @@ from time import sleep
 from lexicon.config import ConfigResolver
 from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
-from requests import HTTPError
 
 LOGGER = logging.getLogger(__name__)
 
@@ -336,14 +335,29 @@ class HetznerCloud(BaseProvider):
         if identifier:
             raise LexiconError("Hetzner API does not provide ids per record")
 
-        if name is None or rtype is None or content is None:
-            return False
+        records = self.list_records(rtype, name)
+        if len(records) < 1:
+            raise Exception("No records found matching type and name - won't update")
+        elif len(records) > 1:
+            raise Exception("Multiple records found matching type and name - won't update")
 
         action = self._post(
             f"{self._rrset_url(name, rtype)}/actions/set_records",
             {'records': self._records_from(rtype, content)}
         )['action']
-        return self._wait_for_action(action)
+        if not self._wait_for_action(action):
+            return False
+
+        # verify the ttl is correctly set
+        ttl = self._get_ttl()
+        if ttl and records[0]["ttl"] is not ttl:
+            return self._wait_for_action(
+                self._post(
+                    f"{self._rrset_url(name, rtype)}/actions/change_ttl",
+                    {'ttl': ttl}
+                )['action']
+            )
+        return True
 
     def delete_record(
         self,
