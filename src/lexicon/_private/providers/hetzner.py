@@ -329,8 +329,8 @@ class HetznerCloud(BaseProvider):
         name: Optional[str] = None,
         content: Optional[str] = None,
     ) -> bool:
-        if rtype is None or name is None:
-            raise LexiconError("rtype and name need to be set in order to match a record.")
+        if rtype is None or name is None or content is None:
+            raise LexiconError("rtype, name and content need to be set in order to update a record.")
 
         if identifier:
             raise LexiconError("Hetzner API does not provide ids per record")
