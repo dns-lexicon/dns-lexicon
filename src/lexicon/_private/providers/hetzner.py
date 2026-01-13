@@ -396,7 +396,7 @@ class HetznerCloud(BaseProvider):
         query_params = query_params or {}
 
         headers = {
-            "Auth-API-Token": self._get_provider_option("auth_token"),
+            "Authorization": f"Bearer {self._get_provider_option('auth_token')}",
             "Accept": "application/json",
         }
         json_data = None
