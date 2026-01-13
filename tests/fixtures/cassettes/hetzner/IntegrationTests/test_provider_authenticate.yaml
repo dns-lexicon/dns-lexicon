@@ -1,17 +1,13 @@
 interactions:
 - request:
-    body: '{}'
+    body: null
     headers:
       Accept:
-      - '*/*'
+      - application/json
       Accept-Encoding:
       - gzip, deflate, zstd
       Connection:
       - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
       User-Agent:
       - python-requests/2.32.5
     method: GET
@@ -27,8 +23,8 @@ interactions:
         \               \"helium.ns.hetzner.de.\"\n            ],\n            \"delegated\":
         [\n                \"helium.ns.hetzner.de.\",\n                \"hydrogen.ns.hetzner.com.\",\n
         \               \"oxygen.ns.hetzner.com.\"\n            ],\n            \"delegation_last_check\":
-        \"2026-01-01T04:47:17Z\",\n            \"delegation_status\": \"valid\"\n
-        \       },\n        \"record_count\": 31,\n        \"registrar\": \"hetzner\"\n
+        \"2026-01-08T04:48:17Z\",\n            \"delegation_status\": \"valid\"\n
+        \       },\n        \"record_count\": 8,\n        \"registrar\": \"hetzner\"\n
         \   }\n}"
     headers:
       Access-Control-Allow-Headers:
@@ -46,27 +42,27 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 06 Jan 2026 15:42:33 GMT
+      - Tue, 13 Jan 2026 14:16:42 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Traceparent:
-      - 00-92daec3f11577fd86cc00908576cd7a5-83d90d6a3de2748f-01
+      - 00-7971bcf1b72d6891e1d3dbafc6d25473-c2c6aeababd27b52-01
       Transfer-Encoding:
       - chunked
       Uber-Trace-Id:
-      - 92daec3f11577fd86cc00908576cd7a5:83d90d6a3de2748f:0:1
+      - 7971bcf1b72d6891e1d3dbafc6d25473:c2c6aeababd27b52:0:1
       Vary:
       - Accept-Encoding
       X-Correlation-Id:
-      - 92daec3f11577fd86cc00908576cd7a5
+      - 7971bcf1b72d6891e1d3dbafc6d25473
       content-length:
-      - '856'
+      - '855'
       ratelimit-limit:
       - '3600'
       ratelimit-remaining:
       - '3599'
       ratelimit-reset:
-      - '1767714154'
+      - '1768313803'
     status:
       code: 200
       message: OK
