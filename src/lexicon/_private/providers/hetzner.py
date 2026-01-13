@@ -448,15 +448,15 @@ class HetznerCloud(BaseProvider):
                 raise LexiconError(err) from err
 
     def _get_ttl(self) -> Optional[int]:
-        try:
-            ttl = ttl if (ttl := int(self._get_lexicon_option("ttl"))) else None
-            if ttl < 60 or ttl > 2147483647:
-                raise LexiconError("TTL has to be between 60 and 2147483647")
-            if ttl == 0:
-                return None
-            return ttl
-        except TypeError:
+        ttl_str = self._get_lexicon_option("ttl")
+        if not ttl_str:
             return None
+        ttl = int(ttl_str)
+        if not ttl:
+            return None
+        if ttl < 60 or ttl > 2147483647:
+            raise LexiconError("TTL has to be between 60 and 2147483647")
+        return ttl
 
     def _zone_url(self) -> str:
         return f"/{self.domain_id}"
