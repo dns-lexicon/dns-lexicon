@@ -461,9 +461,9 @@ class HetznerCloud(BaseProvider):
             if err.response.status_code == 401:
                 raise AuthenticationError() from err
             elif err.response.status_code == 404:
-                raise LexiconError(f"There is no zone for {domain}.")
+                raise LexiconError(f"There is no zone for {domain}.") from err
             else:
-                raise LexiconError(err)
+                raise LexiconError(err) from err
 
     def _find_record(
         self, identifier: str, content: Optional[str] = None
