@@ -419,15 +419,21 @@ class HetznerCloud(BaseProvider):
     ):
         data = data or {}
         query_params = query_params or {}
+
+        headers = {
+            "Auth-API-Token": self._get_provider_option("auth_token"),
+            "Accept": "application/json",
+        }
+        if data:
+            headers["Content-Type"] = "application/json"
+            data = json.dumps(data)
+
         response = requests.request(
             action,
             self.API_ENDPOINT + url,
             params=query_params,
-            data=json.dumps(data),
-            headers={
-                "Authorization": f"Bearer {self._get_provider_option('auth_token')}",
-                "Content-Type": "application/json",
-            },
+            data=data,
+            headers=headers,
         )
         # if the request fails for any reason, throw an error.
         response.raise_for_status()
