@@ -256,7 +256,6 @@ Record = TypedDict("Record", {"value": str})
 RecordSet = TypedDict(
     "RecordSet",
     {
-        "id": str,
         "name": str,
         "type": str,
         "ttl": int,
@@ -331,22 +330,11 @@ class HetznerCloud(BaseProvider):
         name: Optional[str] = None,
         content: Optional[str] = None,
     ) -> bool:
-        if identifier is None and (rtype is None or name is None):
-            raise LexiconError(
-                "Either identifier or both rtype and name need to be set in order to match a record."
-            )
+        if rtype is None or name is None:
+            raise LexiconError("rtype and name need to be set in order to match a record.")
 
         if identifier:
-            record = self._find_record(identifier)
-            if record is None:
-                raise LexiconError(f"Record with the id {identifier} does not exist.")
-            if not rtype:
-                rtype = record['type']
-
-            if not name:
-                name = record['name']
-            elif name != record['name']:
-                self._move_record(identifier, record, rtype, name, content)
+            raise LexiconError("Hetzner API does not provide ids per record")
 
         if name is None or rtype is None or content is None:
             return False
@@ -357,21 +345,6 @@ class HetznerCloud(BaseProvider):
         )['action']
         return self._wait_for_action(action)
 
-    def _move_record(self, identifier, record, rtype, name, content):
-        record_sets = self._get_record_sets(rtype, record['name'])
-        records = [record for record_set in record_sets for record in record_set['records']]
-
-        try:
-            action = self._post(
-                f"{self._rrset_url(name, rtype)}/actions/add_records",
-                {'ttl': self._get_ttl(), 'records': records}
-            )['action']
-
-            return self._wait_for_action(action) and self.delete_record(identifier, rtype, name, content)
-        except HTTPError:
-            LOGGER.info("Entry you wanted to rename to already exists")
-            return False
-
     def delete_record(
         self,
         identifier: Optional[str] = None,
@@ -379,28 +352,17 @@ class HetznerCloud(BaseProvider):
         name: Optional[str] = None,
         content: Optional[str] = None,
     ) -> bool:
-        if identifier is None and (rtype is None or name is None):
-            raise LexiconError(
-                "Either identifier or both rtype and name need to be passed."
-            )
+        if rtype is None or name is None:
+            raise LexiconError("both rtype and name need to be passed.")
 
         if identifier:
-            record = self._find_record(identifier)
-            if record is None:
-                raise LexiconError(f"Record with the id {identifier} does not exist.")
-            rtype = record["type"]
-            name = record["name"]
-        if content is None:
-            if name is None or rtype is None:
-                return False
+            raise LexiconError("Hetzner API does not provide ids per record")
 
+        if content is None:
             # Entire record set should be deleted
             action = self._delete(self._rrset_url(name, rtype))['action']
             return self._wait_for_action(action)
         else:
-            if name is None or content is None or rtype is None:
-                return False
-
             # Record should be taken out of set
             action = self._post(
                 f"{self._rrset_url(name, rtype)}/actions/remove_records",
@@ -414,7 +376,7 @@ class HetznerCloud(BaseProvider):
         self,
         action: str = "GET",
         url: str = "/",
-        data: Optional[dict[str, Any]] = {},
+        data: Optional[dict[str, Any]] = None,
         query_params: Optional[dict[str, Any]] = None,
     ):
         data = data or {}
@@ -471,19 +433,6 @@ class HetznerCloud(BaseProvider):
             else:
                 raise LexiconError(err) from err
 
-    def _find_record(
-        self, identifier: str, content: Optional[str] = None
-    ) -> Optional[dict[str, Any]]:
-        return next(
-            iter(
-                [
-                    record
-                    for record in self.list_records(content=content)
-                    if record["id"] == identifier
-                ]
-            )
-        )
-
     def _get_ttl(self) -> Optional[int]:
         try:
             ttl = ttl if (ttl := int(self._get_lexicon_option("ttl"))) else None
@@ -505,7 +454,6 @@ class HetznerCloud(BaseProvider):
     def _rrset_to_records(self, rrset: RecordSet) -> list[dict[str, Any]]:
         return [
             {
-                "id": rrset["id"],
                 "name": self._full_name(rrset["name"]),
                 "content": self._get_content_from_record(rrset['type'], record['value']),
                 "type": rrset["type"],
