@@ -1,17 +1,13 @@
 interactions:
 - request:
-    body: '{}'
+    body: null
     headers:
       Accept:
-      - '*/*'
+      - application/json
       Accept-Encoding:
       - gzip, deflate, zstd
       Connection:
       - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
       User-Agent:
       - python-requests/2.32.5
     method: GET
@@ -27,8 +23,8 @@ interactions:
         \               \"helium.ns.hetzner.de.\"\n            ],\n            \"delegated\":
         [\n                \"helium.ns.hetzner.de.\",\n                \"hydrogen.ns.hetzner.com.\",\n
         \               \"oxygen.ns.hetzner.com.\"\n            ],\n            \"delegation_last_check\":
-        \"2026-01-01T04:47:17Z\",\n            \"delegation_status\": \"valid\"\n
-        \       },\n        \"record_count\": 30,\n        \"registrar\": \"hetzner\"\n
+        \"2026-01-08T04:48:17Z\",\n            \"delegation_status\": \"valid\"\n
+        \       },\n        \"record_count\": 23,\n        \"registrar\": \"hetzner\"\n
         \   }\n}"
     headers:
       Access-Control-Allow-Headers:
@@ -46,43 +42,39 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 06 Jan 2026 15:43:11 GMT
+      - Tue, 13 Jan 2026 14:19:03 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Traceparent:
-      - 00-8345e61c057cae93b4163a304d4587a3-785ec6100ffabfa8-01
+      - 00-fff19d7b9e4ce4fbeb5840361d87750c-18adcab8eb4a0881-01
       Transfer-Encoding:
       - chunked
       Uber-Trace-Id:
-      - 8345e61c057cae93b4163a304d4587a3:785ec6100ffabfa8:0:1
+      - fff19d7b9e4ce4fbeb5840361d87750c:18adcab8eb4a0881:0:1
       Vary:
       - Accept-Encoding
       X-Correlation-Id:
-      - 8345e61c057cae93b4163a304d4587a3
+      - fff19d7b9e4ce4fbeb5840361d87750c
       content-length:
       - '856'
       ratelimit-limit:
       - '3600'
       ratelimit-remaining:
-      - '3565'
+      - '3598'
       ratelimit-reset:
-      - '1767714226'
+      - '1768313945'
     status:
       code: 200
       message: OK
 - request:
-    body: '{}'
+    body: null
     headers:
       Accept:
-      - '*/*'
+      - application/json
       Accept-Encoding:
       - gzip, deflate, zstd
       Connection:
       - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
       User-Agent:
       - python-requests/2.32.5
     method: GET
@@ -92,7 +84,7 @@ interactions:
       string: "{\n    \"meta\": {\n        \"pagination\": {\n            \"last_page\":
         1,\n            \"next_page\": null,\n            \"page\": 1,\n            \"per_page\":
         25,\n            \"previous_page\": null,\n            \"total_entries\":
-        25\n        }\n    },\n    \"rrsets\": [\n        {\n            \"id\": \"localhost/A\",\n
+        19\n        }\n    },\n    \"rrsets\": [\n        {\n            \"id\": \"localhost/A\",\n
         \           \"name\": \"localhost\",\n            \"type\": \"A\",\n            \"ttl\":
         3600,\n            \"labels\": {},\n            \"protection\": {\n                \"change\":
         false\n            },\n            \"records\": [\n                {\n                    \"value\":
@@ -109,37 +101,25 @@ interactions:
         {\n                \"change\": false\n            },\n            \"records\":
         [\n                {\n                    \"value\": \"195.201.131.78\",\n
         \                   \"comment\": \"\"\n                }\n            ],\n
-        \           \"zone\": 53091\n        },\n        {\n            \"id\": \"qwer/A\",\n
-        \           \"name\": \"qwer\",\n            \"type\": \"A\",\n            \"ttl\":
+        \           \"zone\": 53091\n        },\n        {\n            \"id\": \"nominatim/AAAA\",\n
+        \           \"name\": \"nominatim\",\n            \"type\": \"AAAA\",\n            \"ttl\":
         3600,\n            \"labels\": {},\n            \"protection\": {\n                \"change\":
         false\n            },\n            \"records\": [\n                {\n                    \"value\":
-        \"127.0.0.1\",\n                    \"comment\": \"\"\n                }\n
+        \"2a01:4f8:c012:9603::1\",\n                    \"comment\": \"\"\n                }\n
         \           ],\n            \"zone\": 53091\n        },\n        {\n            \"id\":
-        \"qwer2/A\",\n            \"name\": \"qwer2\",\n            \"type\": \"A\",\n
+        \"osm.service.linke.projects/AAAA\",\n            \"name\": \"osm.service.linke.projects\",\n
+        \           \"type\": \"AAAA\",\n            \"ttl\": 1800,\n            \"labels\":
+        {},\n            \"protection\": {\n                \"change\": false\n            },\n
+        \           \"records\": [\n                {\n                    \"value\":
+        \"2a01:4f8:1c1c:4181::1\",\n                    \"comment\": \"\"\n                }\n
+        \           ],\n            \"zone\": 53091\n        },\n        {\n            \"id\":
+        \"docs/CNAME\",\n            \"name\": \"docs\",\n            \"type\": \"CNAME\",\n
         \           \"ttl\": 3600,\n            \"labels\": {},\n            \"protection\":
         {\n                \"change\": false\n            },\n            \"records\":
-        [\n                {\n                    \"value\": \"127.0.0.1\",\n                    \"comment\":
-        \"\"\n                },\n                {\n                    \"value\":
-        \"127.0.0.2\",\n                    \"comment\": \"\"\n                }\n
-        \           ],\n            \"zone\": 53091\n        },\n        {\n            \"id\":
-        \"nominatim/AAAA\",\n            \"name\": \"nominatim\",\n            \"type\":
-        \"AAAA\",\n            \"ttl\": 3600,\n            \"labels\": {},\n            \"protection\":
-        {\n                \"change\": false\n            },\n            \"records\":
-        [\n                {\n                    \"value\": \"2a01:4f8:c012:9603::1\",\n
+        [\n                {\n                    \"value\": \"docs.example.com\",\n
         \                   \"comment\": \"\"\n                }\n            ],\n
-        \           \"zone\": 53091\n        },\n        {\n            \"id\": \"osm.service.linke.projects/AAAA\",\n
-        \           \"name\": \"osm.service.linke.projects\",\n            \"type\":
-        \"AAAA\",\n            \"ttl\": 1800,\n            \"labels\": {},\n            \"protection\":
-        {\n                \"change\": false\n            },\n            \"records\":
-        [\n                {\n                    \"value\": \"2a01:4f8:1c1c:4181::1\",\n
-        \                   \"comment\": \"\"\n                }\n            ],\n
-        \           \"zone\": 53091\n        },\n        {\n            \"id\": \"docs/CNAME\",\n
-        \           \"name\": \"docs\",\n            \"type\": \"CNAME\",\n            \"ttl\":
-        3600,\n            \"labels\": {},\n            \"protection\": {\n                \"change\":
-        false\n            },\n            \"records\": [\n                {\n                    \"value\":
-        \"docs.example.com\",\n                    \"comment\": \"\"\n                }\n
-        \           ],\n            \"zone\": 53091\n        },\n        {\n            \"id\":
-        \"@/NS\",\n            \"name\": \"@\",\n            \"type\": \"NS\",\n            \"ttl\":
+        \           \"zone\": 53091\n        },\n        {\n            \"id\": \"@/NS\",\n
+        \           \"name\": \"@\",\n            \"type\": \"NS\",\n            \"ttl\":
         null,\n            \"labels\": {},\n            \"protection\": {\n                \"change\":
         false\n            },\n            \"records\": [\n                {\n                    \"value\":
         \"helium.ns.hetzner.de.\",\n                    \"comment\": \"\"\n                },\n
@@ -151,7 +131,7 @@ interactions:
         \           \"type\": \"SOA\",\n            \"ttl\": null,\n            \"labels\":
         {},\n            \"protection\": {\n                \"change\": false\n            },\n
         \           \"records\": [\n                {\n                    \"value\":
-        \"hydrogen.ns.hetzner.com. dns.hetzner.com. 2026010792 86400 10800 3600000
+        \"hydrogen.ns.hetzner.com. dns.hetzner.com. 2026011546 86400 10800 3600000
         3600\",\n                    \"comment\": \"\"\n                }\n            ],\n
         \           \"zone\": 53091\n        },\n        {\n            \"id\": \"_acme-challenge.createrecordset/TXT\",\n
         \           \"name\": \"_acme-challenge.createrecordset\",\n            \"type\":
@@ -199,32 +179,8 @@ interactions:
         \           \"records\": [\n                {\n                    \"value\":
         \"\\\"challengetoken\\\"\",\n                    \"comment\": \"\"\n                }\n
         \           ],\n            \"zone\": 53091\n        },\n        {\n            \"id\":
-        \"orig.nameonly.test/TXT\",\n            \"name\": \"orig.nameonly.test\",\n
-        \           \"type\": \"TXT\",\n            \"ttl\": 3600,\n            \"labels\":
-        {},\n            \"protection\": {\n                \"change\": false\n            },\n
-        \           \"records\": [\n                {\n                    \"value\":
-        \"\\\"updated\\\"\",\n                    \"comment\": \"\"\n                }\n
-        \           ],\n            \"zone\": 53091\n        },\n        {\n            \"id\":
-        \"orig.test/TXT\",\n            \"name\": \"orig.test\",\n            \"type\":
+        \"random.fqdntest/TXT\",\n            \"name\": \"random.fqdntest\",\n            \"type\":
         \"TXT\",\n            \"ttl\": 3600,\n            \"labels\": {},\n            \"protection\":
-        {\n                \"change\": false\n            },\n            \"records\":
-        [\n                {\n                    \"value\": \"\\\"challengetoken\\\"\",\n
-        \                   \"comment\": \"\"\n                }\n            ],\n
-        \           \"zone\": 53091\n        },\n        {\n            \"id\": \"orig.testfqdn/TXT\",\n
-        \           \"name\": \"orig.testfqdn\",\n            \"type\": \"TXT\",\n
-        \           \"ttl\": 3600,\n            \"labels\": {},\n            \"protection\":
-        {\n                \"change\": false\n            },\n            \"records\":
-        [\n                {\n                    \"value\": \"\\\"challengetoken\\\"\",\n
-        \                   \"comment\": \"\"\n                }\n            ],\n
-        \           \"zone\": 53091\n        },\n        {\n            \"id\": \"orig.testfull/TXT\",\n
-        \           \"name\": \"orig.testfull\",\n            \"type\": \"TXT\",\n
-        \           \"ttl\": 3600,\n            \"labels\": {},\n            \"protection\":
-        {\n                \"change\": false\n            },\n            \"records\":
-        [\n                {\n                    \"value\": \"\\\"challengetoken\\\"\",\n
-        \                   \"comment\": \"\"\n                }\n            ],\n
-        \           \"zone\": 53091\n        },\n        {\n            \"id\": \"random.fqdntest/TXT\",\n
-        \           \"name\": \"random.fqdntest\",\n            \"type\": \"TXT\",\n
-        \           \"ttl\": 3600,\n            \"labels\": {},\n            \"protection\":
         {\n                \"change\": false\n            },\n            \"records\":
         [\n                {\n                    \"value\": \"\\\"challengetoken\\\"\",\n
         \                   \"comment\": \"\"\n                }\n            ],\n
@@ -262,29 +218,29 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 06 Jan 2026 15:43:11 GMT
+      - Tue, 13 Jan 2026 14:19:03 GMT
       Link:
       - <https://api.hetzner.cloud/v1/zones/53091/rrsets?page=1&per_page=25>; rel="last"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Traceparent:
-      - 00-5b684e34ae43290d98736c08d5faa5a5-f1741185c4c9e430-01
+      - 00-aac03fbc8f0e486edc4e30ca566eb67b-d27b70a5312c4f5a-01
       Transfer-Encoding:
       - chunked
       Uber-Trace-Id:
-      - 5b684e34ae43290d98736c08d5faa5a5:f1741185c4c9e430:0:1
+      - aac03fbc8f0e486edc4e30ca566eb67b:d27b70a5312c4f5a:0:1
       Vary:
       - Accept-Encoding
       X-Correlation-Id:
-      - 5b684e34ae43290d98736c08d5faa5a5
+      - aac03fbc8f0e486edc4e30ca566eb67b
       content-length:
-      - '11896'
+      - '9226'
       ratelimit-limit:
       - '3600'
       ratelimit-remaining:
-      - '3564'
+      - '3597'
       ratelimit-reset:
-      - '1767714227'
+      - '1768313946'
     status:
       code: 200
       message: OK

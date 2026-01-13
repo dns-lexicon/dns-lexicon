@@ -9,7 +9,6 @@ from time import sleep
 from lexicon.config import ConfigResolver
 from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
-from requests import HTTPError
 
 LOGGER = logging.getLogger(__name__)
 
@@ -256,7 +255,6 @@ Record = TypedDict("Record", {"value": str})
 RecordSet = TypedDict(
     "RecordSet",
     {
-        "id": str,
         "name": str,
         "type": str,
         "ttl": int,
@@ -331,46 +329,35 @@ class HetznerCloud(BaseProvider):
         name: Optional[str] = None,
         content: Optional[str] = None,
     ) -> bool:
-        if identifier is None and (rtype is None or name is None):
-            raise LexiconError(
-                "Either identifier or both rtype and name need to be set in order to match a record."
-            )
+        if rtype is None or name is None or content is None:
+            raise LexiconError("rtype, name and content need to be set in order to update a record.")
 
         if identifier:
-            record = self._find_record(identifier)
-            if record is None:
-                raise LexiconError(f"Record with the id {identifier} does not exist.")
-            if not rtype:
-                rtype = record['type']
+            raise LexiconError("Hetzner API does not provide ids per record")
 
-            if not name:
-                name = record['name']
-            elif name != record['name']:
-                self._move_record(identifier, record, rtype, name, content)
-
-        if name is None or rtype is None or content is None:
-            return False
+        records = self.list_records(rtype, name)
+        if len(records) < 1:
+            raise Exception("No records found matching type and name - won't update")
+        elif len(records) > 1:
+            raise Exception("Multiple records found matching type and name - won't update")
 
         action = self._post(
             f"{self._rrset_url(name, rtype)}/actions/set_records",
             {'records': self._records_from(rtype, content)}
         )['action']
-        return self._wait_for_action(action)
-
-    def _move_record(self, identifier, record, rtype, name, content):
-        record_sets = self._get_record_sets(rtype, record['name'])
-        records = [record for record_set in record_sets for record in record_set['records']]
-
-        try:
-            action = self._post(
-                f"{self._rrset_url(name, rtype)}/actions/add_records",
-                {'ttl': self._get_ttl(), 'records': records}
-            )['action']
-
-            return self._wait_for_action(action) and self.delete_record(identifier, rtype, name, content)
-        except HTTPError:
-            LOGGER.info("Entry you wanted to rename to already exists")
+        if not self._wait_for_action(action):
             return False
+
+        # verify the ttl is correctly set
+        ttl = self._get_ttl()
+        if ttl and records[0]["ttl"] is not ttl:
+            return self._wait_for_action(
+                self._post(
+                    f"{self._rrset_url(name, rtype)}/actions/change_ttl",
+                    {'ttl': ttl}
+                )['action']
+            )
+        return True
 
     def delete_record(
         self,
@@ -379,28 +366,17 @@ class HetznerCloud(BaseProvider):
         name: Optional[str] = None,
         content: Optional[str] = None,
     ) -> bool:
-        if identifier is None and (rtype is None or name is None):
-            raise LexiconError(
-                "Either identifier or both rtype and name need to be passed."
-            )
+        if rtype is None or name is None:
+            raise LexiconError("both rtype and name need to be passed.")
 
         if identifier:
-            record = self._find_record(identifier)
-            if record is None:
-                raise LexiconError(f"Record with the id {identifier} does not exist.")
-            rtype = record["type"]
-            name = record["name"]
-        if content is None:
-            if name is None or rtype is None:
-                return False
+            raise LexiconError("Hetzner API does not provide ids per record")
 
+        if content is None:
             # Entire record set should be deleted
             action = self._delete(self._rrset_url(name, rtype))['action']
             return self._wait_for_action(action)
         else:
-            if name is None or content is None or rtype is None:
-                return False
-
             # Record should be taken out of set
             action = self._post(
                 f"{self._rrset_url(name, rtype)}/actions/remove_records",
@@ -414,20 +390,26 @@ class HetznerCloud(BaseProvider):
         self,
         action: str = "GET",
         url: str = "/",
-        data: Optional[dict[str, Any]] = {},
+        data: Optional[dict[str, Any]] = None,
         query_params: Optional[dict[str, Any]] = None,
     ):
-        data = data or {}
         query_params = query_params or {}
+
+        headers = {
+            "Authorization": f"Bearer {self._get_provider_option('auth_token')}",
+            "Accept": "application/json",
+        }
+        json_data = None
+        if data:
+            headers["Content-Type"] = "application/json"
+            json_data = json.dumps(data)
+
         response = requests.request(
             action,
             self.API_ENDPOINT + url,
             params=query_params,
-            data=json.dumps(data),
-            headers={
-                "Authorization": f"Bearer {self._get_provider_option('auth_token')}",
-                "Content-Type": "application/json",
-            },
+            data=json_data,
+            headers=headers,
         )
         # if the request fails for any reason, throw an error.
         response.raise_for_status()
@@ -459,27 +441,22 @@ class HetznerCloud(BaseProvider):
             return self._get(f"/{domain}")["zone"]
         except requests.HTTPError as err:
             if err.response.status_code == 401:
-                raise AuthenticationError()
+                raise AuthenticationError() from err
             elif err.response.status_code == 404:
-                raise LexiconError(f"There is no zone for {domain}.")
+                raise LexiconError(f"There is no zone for {domain}.") from err
             else:
-                raise LexiconError(err)
-
-    def _find_record(
-        self, identifier: str, content: Optional[str] = None
-    ) -> Optional[dict[str, Any]]:
-        return next(
-            iter(
-                [
-                    record
-                    for record in self.list_records(content=content)
-                    if record["id"] == identifier
-                ]
-            )
-        )
+                raise LexiconError(err) from err
 
     def _get_ttl(self) -> Optional[int]:
-        return int(ttl) if (ttl := self._get_lexicon_option("ttl")) else None
+        ttl_str = self._get_lexicon_option("ttl")
+        if not ttl_str:
+            return None
+        ttl = int(ttl_str)
+        if not ttl:
+            return None
+        if ttl < 60 or ttl > 2147483647:
+            raise LexiconError("TTL has to be between 60 and 2147483647")
+        return ttl
 
     def _zone_url(self) -> str:
         return f"/{self.domain_id}"
@@ -491,7 +468,7 @@ class HetznerCloud(BaseProvider):
     def _rrset_to_records(self, rrset: RecordSet) -> list[dict[str, Any]]:
         return [
             {
-                "id": rrset["id"],
+                "id": None,
                 "name": self._full_name(rrset["name"]),
                 "content": self._get_content_from_record(rrset['type'], record['value']),
                 "type": rrset["type"],

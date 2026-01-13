@@ -1,17 +1,13 @@
 interactions:
 - request:
-    body: '{}'
+    body: null
     headers:
       Accept:
-      - '*/*'
+      - application/json
       Accept-Encoding:
       - gzip, deflate, zstd
       Connection:
       - keep-alive
-      Content-Length:
-      - '2'
-      Content-Type:
-      - application/json
       User-Agent:
       - python-requests/2.32.5
     method: GET
@@ -38,23 +34,23 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 06 Jan 2026 15:42:33 GMT
+      - Tue, 13 Jan 2026 14:16:42 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Traceparent:
-      - 00-048362a0594e905500059b249d070ff3-776a469f1716b376-01
+      - 00-f271dd0e28c5c5e335d0a21d4e902b12-fecf9d0671e44e1f-01
       Uber-Trace-Id:
-      - 048362a0594e905500059b249d070ff3:776a469f1716b376:0:1
+      - f271dd0e28c5c5e335d0a21d4e902b12:fecf9d0671e44e1f:0:1
       Vary:
       - Accept-Encoding
       X-Correlation-Id:
-      - 048362a0594e905500059b249d070ff3
+      - f271dd0e28c5c5e335d0a21d4e902b12
       ratelimit-limit:
       - '3600'
       ratelimit-remaining:
       - '3598'
       ratelimit-reset:
-      - '1767714155'
+      - '1768313804'
     status:
       code: 404
       message: Not Found
