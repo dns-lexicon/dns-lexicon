@@ -190,21 +190,15 @@ class HetznerDns(BaseProvider):
             data = {}
         if query_params is None:
             query_params = {}
-
-        headers = {
-            "Auth-API-Token": self._get_provider_option("auth_token"),
-            "Accept": "application/json",
-        }
-        if data:
-            headers["Content-Type"] = "application/json"
-            data = json.dumps(data)
-
         response = requests.request(
             action,
             self.api_endpoint + url,
             params=query_params,
-            data=data,
-            headers=headers,
+            data=json.dumps(data),
+            headers={
+                "Auth-API-Token": self._get_provider_option("auth_token"),
+                "Content-Type": "application/json",
+            },
         )
         # if the request fails for any reason, throw an error.
         response.raise_for_status()
