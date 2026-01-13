@@ -468,6 +468,7 @@ class HetznerCloud(BaseProvider):
     def _rrset_to_records(self, rrset: RecordSet) -> list[dict[str, Any]]:
         return [
             {
+                "id": None,
                 "name": self._full_name(rrset["name"]),
                 "content": self._get_content_from_record(rrset['type'], record['value']),
                 "type": rrset["type"],
