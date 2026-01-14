@@ -274,16 +274,31 @@ class Provider(BaseProvider):
         headers = {"Authorization": f"Bearer {self._access_token}"}
         params = {"api-version": API_VERSION}
 
-        result = requests.get(url, headers=headers, params=params)
-        result.raise_for_status()
+        # Azure ARM list APIs are paginated via nextLink
+        domain_id = None
+        next_url = url
 
-        data = result.json()
+        while next_url:
+            if next_url == url:
+                result = requests.get(next_url, headers=headers, params=params)
+            else:
+                # nextLink already contains api-version and skip token
+                result = requests.get(next_url, headers=headers)
 
-        our_data = [
-            one_data for one_data in data["value"] if one_data["name"] == self.domain
-        ]
+            result.raise_for_status()
+            data = result.json()
 
-        if not our_data:
+            for one_data in data.get("value", []):
+                if one_data.get("name") == self.domain:
+                    domain_id = one_data.get("id")
+                    break
+
+            if domain_id:
+                break
+
+            next_url = data.get("nextLink")
+
+        if not domain_id:
             raise AuthenticationError(
                 "Resource group `{0}` in subscription `{1}` "
                 "does not contain the DNS zone `{2}`".format(
@@ -291,7 +306,7 @@ class Provider(BaseProvider):
                 )
             )
 
-        self.domain_id = our_data[0]["id"]
+        self.domain_id = domain_id
 
     def cleanup(self) -> None:
         pass
