@@ -77,7 +77,7 @@ class Provider(BaseProvider):
         self._access_token = None
 
     def list_records(self, rtype=None, name=None, content=None):
-        result = self._get(f"/{(rtype if rtype else 'recordsets')}")
+        result = self._get_paginated(f"/{(rtype if rtype else 'recordsets')}")
 
         records = []
         for raw_record in result["value"]:
@@ -193,7 +193,7 @@ class Provider(BaseProvider):
     def _delete_record_internal(
         self, identifier=None, rtype=None, name=None, content=None
     ):
-        result = self._get(f"/{(rtype if rtype else 'recordsets')}")
+        result = self._get_paginated(f"/{(rtype if rtype else 'recordsets')}")
 
         to_delete = []
         to_shrink = []
@@ -326,6 +326,29 @@ class Provider(BaseProvider):
         if request.content:
             return request.json()
         return None
+
+    def _get_paginated(self, url="/", query_params=None):
+        """GET with Azure ARM pagination support via nextLink."""
+        query_params = {} if not query_params else query_params.copy()
+        query_params["api-version"] = API_VERSION
+        headers = {"Authorization": f"Bearer {self._access_token}"}
+
+        all_values = []
+        next_url = MANAGEMENT_URL + self.domain_id + url
+
+        while next_url:
+            if len(all_values) == 0:
+                result = requests.get(next_url, headers=headers, params=query_params)
+            else:
+                result = requests.get(next_url, headers=headers)
+
+            result.raise_for_status()
+            data = result.json()
+
+            all_values.extend(data.get("value", []))
+            next_url = data.get("nextLink")
+
+        return {"value": all_values}
 
 
 def _get_values_from_recordset(rtype, record):
