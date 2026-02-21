@@ -261,16 +261,6 @@ RecordSet = TypedDict(
         "records": list[Record],
     },
 )
-CreateRecordSetRequest = TypedDict(
-    "CreateRecordSetRequest",
-    {
-        "name": str,
-        "type": str,
-        "ttl": Optional[int],
-        "records": list[Record],
-    },
-)
-SetTtlRequest = TypedDict("SetTtlRequest", {"ttl": int})
 
 
 class HetznerCloud(BaseProvider):
