@@ -355,25 +355,29 @@ def _get_values_from_recordset(rtype, record):
     properties = record["properties"]
     values = None
     if rtype == "A":
-        values = [entry["ipv4Address"] for entry in properties["ARecords"]]
+        values = [entry["ipv4Address"] for entry in properties.get("ARecords", [])]
     if rtype == "AAAA":
-        values = [entry["ipv6Address"] for entry in properties["AAAARecords"]]
+        values = [entry["ipv6Address"] for entry in properties.get("AAAARecords", [])]
     if rtype == "CNAME":
-        values = [properties["CNAMERecord"]["cname"]]
+        cname_record = properties.get("CNAMERecord")
+        values = [cname_record["cname"]] if cname_record else []
     if rtype == "MX":
-        values = [entry["exchange"] for entry in properties["MXRecords"]]
+        values = [entry["exchange"] for entry in properties.get("MXRecords", [])]
     if rtype == "NS":
-        values = [entry["nsdname"] for entry in properties["NSRecords"]]
+        values = [entry["nsdname"] for entry in properties.get("NSRecords", [])]
     if rtype == "SOA":
-        values = [properties["SOARecord"]["email"]]
+        soa_record = properties.get("SOARecord")
+        values = [soa_record["email"]] if soa_record else []
     if rtype == "TXT":
         values = [
-            value for entry in properties["TXTRecords"] for value in entry["value"]
+            value
+            for entry in properties.get("TXTRecords", [])
+            for value in entry["value"]
         ]
     if rtype == "SRV":
-        values = [entry["target"] for entry in properties["SRVRecords"]]
+        values = [entry["target"] for entry in properties.get("SRVRecords", [])]
 
-    if values:
+    if values is not None:
         return values
 
     raise Exception(f"Error, `{rtype}` entries are not supported by this provider.")
