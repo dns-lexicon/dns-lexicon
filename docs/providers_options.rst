@@ -126,6 +126,9 @@ List of options
 .. _hover:
 .. include:: providers/hover.rst
 
+.. _httpnet:
+.. include:: providers/httpnet.rst
+
 .. _infoblox:
 .. include:: providers/infoblox.rst
 
