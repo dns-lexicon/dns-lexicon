@@ -128,6 +128,12 @@ class Provider(BaseProvider):
             LOGGER.debug("create_record (ignored, duplicate): %s", identifier)
             return True
 
+        # CNAME and SOA record sets only allow one value. When replacing (e.g. ALIAS
+        # with regular record), delete existing first.
+        if rtype in ("CNAME", "SOA") and records:
+            self._delete_record_internal(rtype=rtype, name=name)
+            records = []
+
         values = [record["content"] for record in records]
         values.append(content)
 
@@ -351,16 +357,36 @@ class Provider(BaseProvider):
         return {"value": all_values}
 
 
+def _get_alias_content(properties):
+    """Extract content from Azure ALIAS record (targetResource or trafficManagementProfile)."""
+    target = properties.get("targetResource") or properties.get("trafficManagementProfile")
+    if target and target.get("id"):
+        return target["id"]
+    return None
+
+
 def _get_values_from_recordset(rtype, record):
     properties = record["properties"]
     values = None
     if rtype == "A":
         values = [entry["ipv4Address"] for entry in properties.get("ARecords", [])]
+        if not values:
+            alias = _get_alias_content(properties)
+            if alias:
+                values = [alias]
     if rtype == "AAAA":
         values = [entry["ipv6Address"] for entry in properties.get("AAAARecords", [])]
+        if not values:
+            alias = _get_alias_content(properties)
+            if alias:
+                values = [alias]
     if rtype == "CNAME":
         cname_record = properties.get("CNAMERecord")
         values = [cname_record["cname"]] if cname_record else []
+        if not values:
+            alias = _get_alias_content(properties)
+            if alias:
+                values = [alias]
     if rtype == "MX":
         values = [entry["exchange"] for entry in properties.get("MXRecords", [])]
     if rtype == "NS":
