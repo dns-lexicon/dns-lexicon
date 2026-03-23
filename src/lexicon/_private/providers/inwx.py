@@ -1,6 +1,7 @@
 """Module provider for INWX"""
 
 import logging
+import shlex
 from argparse import ArgumentParser
 from typing import List
 
@@ -159,11 +160,20 @@ class Provider(BaseProvider):
         records = []
         if "record" in response["resData"]:
             for record in response["resData"]["record"]:
+                # priority, weight, port, target = shlex.split(record['content'])
+                content = record["content"]
+                if record["type"] == "MX":
+                    content = shlex.join([str(record["prio"]), content])
+                if record["type"] == "SRV":
+                    # content needs to be in format priority, weight, port, target
+                    # content already has format weight, port, target
+                    content = shlex.join([str(record["prio"])] + shlex.split(content))
+
                 processed_record = {
                     "type": record["type"],
                     "name": record["name"],
                     "ttl": record["ttl"],
-                    "content": record["content"],
+                    "content": content,
                     "id": record["id"],
                 }
                 records.append(processed_record)
