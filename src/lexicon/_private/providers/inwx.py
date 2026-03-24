@@ -1,6 +1,7 @@
 """Module provider for INWX"""
 
 import logging
+import re
 import shlex
 from argparse import ArgumentParser
 from typing import List
@@ -122,10 +123,17 @@ class Provider(BaseProvider):
             "domain": self._domain,
             "type": rtype.upper(),
             "name": self._full_name(name),
-            "content": content,
+            "content": re.sub('\\\\;', ';', str(content)),
         }
         if self._get_lexicon_option("ttl"):
             opts["ttl"] = self._get_lexicon_option("ttl")
+        if opts["type"] in ["MX", "SRV"]:
+            vals = shlex.split(opts['content'])
+            if len(vals) < 2:
+                raise ValueError("prio missing")
+            opts["prio"] = vals[0]
+            opts["content"] = shlex.join(vals[1:])
+
         opts.update(self._auth)
 
         response = self._api.nameserver.createRecord(opts)
@@ -205,7 +213,13 @@ class Provider(BaseProvider):
             if name is not None:
                 opts["name"] = self._full_name(name)
             if content is not None:
-                opts["content"] = content
+                opts["content"] = re.sub('\\\\;', ';', str(content))
+            if opts["type"] in ["MX", "SRV"]:
+                vals = shlex.split(opts['content'])
+                if len(vals) < 2:
+                    raise ValueError("prio missing")
+                opts["prio"] = vals[0]
+                opts["content"] = shlex.join(vals[1:])
             opts.update(self._auth)
 
             response = self._api.nameserver.updateRecord(opts)
