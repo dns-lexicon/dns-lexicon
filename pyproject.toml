@@ -43,11 +43,7 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://dns-lexicon.github.io/dns-lexicon/introduction.html"
-Documentation = "https://dns-lexicon.github.io/dns-lexicon/user_guide.html"
-Repository = "https://github.com/dns-lexicon/dns-lexicon"
-Issues = "https://github.com/dns-lexicon/dns-lexicon/issues"
-Changelog = "https://dns-lexicon.github.io/dns-lexicon/changelog.html"
+Repository = "https://github.com/fupduck/dns-lexicon"
 
 [project.optional-dependencies]
 route53 = ["boto3 >= 1.28"]
