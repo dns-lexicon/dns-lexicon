@@ -505,7 +505,7 @@ wheels = [
 
 [[package]]
 name = "dns-lexicon-coop"
-version = "3.24.2"
+version = "3.24.3"
 source = { editable = "." }
 dependencies = [
     { name = "beautifulsoup4" },
