@@ -1,6 +1,12 @@
 # Changelog
 
 ## master - CURRENT
+### Added
+* Add the `httpnet` provider (#77)
+
+### Modified
+* The `azure` provider now supports the Azure API pagination (#74)
+* Fix `inwx` records handling (#79)
 
 ## 3.24.0 - 27/04/2026
 ### Added
