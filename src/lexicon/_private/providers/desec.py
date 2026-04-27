@@ -4,7 +4,6 @@ import hashlib
 import logging
 import re
 from argparse import ArgumentParser
-from typing import Optional, Tuple
 
 import requests
 from requests.adapters import HTTPAdapter
@@ -19,13 +18,13 @@ from lexicon.interfaces import Provider as BaseProvider
 LOGGER = logging.getLogger(__name__)
 
 # Type aliases
-RecordType = Tuple[dict, int]
+RecordType = tuple[dict, int]
 RecordList = dict[str, RecordType]
 StrDict = dict[str, str]
 StrDictList = list[StrDict]
-OptStr = Optional[str]
-OptStrDict = Optional[StrDict]
-SanitizedResponseType = Tuple[str, str, dict]
+OptStr = str | None
+OptStrDict = StrDict | None
+SanitizedResponseType = tuple[str, str, dict]
 
 
 class Provider(BaseProvider):
@@ -366,42 +365,47 @@ class Provider(BaseProvider):
         return sha256.hexdigest()[0:7]
 
     def _sanitize_request_content(self, content: str, rtype: str) -> str:
-        if rtype == "TXT":
-            content = content.strip('"')
-            return f'"{content}"' if content else ""
-        if rtype == "CNAME":
-            return self._fqdn_name(content)
-        if rtype in ("MX", "SRV"):
-            # The priority is only relevant for MX and SRV types.
-            # deSEC does not support this property, it is part of the record's content.
-            parsed = self._parse_priority_record(content, rtype)
-            priority = parsed.get("priority") or str(self._priority)
-            parsed["priority"] = priority  # Ensure fallback for join operation
-            if not priority:
-                raise ValueError("Priority value is not defined.")
-            if self._priority and self._priority != priority:
-                raise ValueError(
-                    f"The priority was specified as an argument ({self._priority}) "
-                    f"and in the content ({priority}), but it doesn't match."
-                )
-            return " ".join(parsed.values())
-        return content
+        if not content:
+            return ""
+        match rtype:
+            case "TXT":
+                content = content.strip('"')
+                return f'"{content}"' if content else ""
+            case "CNAME":
+                return self._fqdn_name(content)
+            case "MX" | "SRV":
+                # The priority is only relevant for MX and SRV types.
+                # deSEC does not support this property, it is part of the record's content.
+                parsed = self._parse_priority_record(content, rtype)
+                priority = parsed.get("priority") or str(self._priority)
+                parsed["priority"] = priority  # Ensure fallback for join operation
+                if not priority:
+                    raise ValueError("Priority value is not defined.")
+                if self._priority and self._priority != priority:
+                    raise ValueError(
+                        f"The priority was specified as an argument ({self._priority}) "
+                        f"and in the content ({priority}), but it doesn't match."
+                    )
+                return " ".join(parsed.values())
+            case _:
+                return content
 
     def _sanitize_response_content(
         self, rec_set: dict, index: int
     ) -> SanitizedResponseType:
-        rtype = rec_set["type"]
         content = rec_set["records"][index]
-        if rtype in ("MX", "SRV"):
-            parsed = self._parse_priority_record(content, rtype)
-            if not (priority := parsed.get("priority")) or not priority.isnumeric():
-                raise Exception("Priority value is not present in content.")
-            # Convert numeric options to int, see `technical_workbook.rst`
-            options: dict = {
-                k: (int(v) if v.isnumeric() else v) for k, v in parsed.items()
-            }
-            return " ".join(parsed.values()), content, {rtype.lower(): options}
-        return content.strip('"'), content, {}
+        match rtype := rec_set["type"]:
+            case "MX" | "SRV":
+                parsed = self._parse_priority_record(content, rtype)
+                if not (priority := parsed.get("priority")) or not priority.isnumeric():
+                    raise Exception("Priority value is not present in content.")
+                # Convert numeric options to int, see `technical_workbook.rst`
+                options: dict = {
+                    k: (int(v) if v.isnumeric() else v) for k, v in parsed.items()
+                }
+                return " ".join(parsed.values()), content, {rtype.lower(): options}
+            case _:
+                return content.strip('"'), content, {}
 
     def _parse_priority_record(self, content: str, rtype: str) -> StrDict:
         if not (match := self._re[rtype].match(content)):
