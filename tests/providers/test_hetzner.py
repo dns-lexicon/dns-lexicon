@@ -1,16 +1,30 @@
+from unittest import TestCase
 """Integration tests for Hetzner"""
 
+import pytest
 from integration_tests import IntegrationTestsV2
 
 
-# Hook into testing framework by inheriting unittest.TestCase and reuse
-# the tests which *each and every* implementation of the interface must
-# pass, by inheritance from integration_tests.IntegrationTests
-class TestHetznerProvider(IntegrationTestsV2):
+class HetznerProviderTests(TestCase, IntegrationTestsV2):
     """TestCase for Hetzner"""
-
     provider_name = "hetzner"
-    domain = "hetzner-api-test.de"
+    domain = "devcoop.de"
 
     def _filter_headers(self):
-        return ["Auth-API-Token"]
+        return ["Authorization"]
+
+    @pytest.mark.skip(reason="manipulating records by id is not supported")
+    def test_provider_when_calling_delete_record_by_identifier_should_remove_record(self):
+        return
+
+    @pytest.mark.skip(reason="manipulating records by id is not supported")
+    def test_provider_when_calling_update_record_should_modify_record(self):
+        return
+
+    @pytest.mark.skip(reason="manipulating records by id is not supported")
+    def test_provider_when_calling_update_record_with_fqdn_name_should_modify_record(self):
+        return
+
+    @pytest.mark.skip(reason="manipulating records by id is not supported")
+    def test_provider_when_calling_update_record_with_full_name_should_modify_record(self):
+        return

@@ -154,7 +154,7 @@ Lexicon currently supports 89 providers:
 .. _gransy: https://subreg.cz/manual/
 .. _gratisdns:
 .. _henet: https://dns.he.net/
-.. _hetzner: https://dns.hetzner.com/api-docs/
+.. _hetzner: https://docs.hetzner.cloud/reference/cloud#dns
 .. _hostingde: https://www.hosting.de/
 .. _hover: https://www.hover.com/
 .. _infoblox: https://docs.infoblox.com/display/ilp/infoblox+documentation+portal
