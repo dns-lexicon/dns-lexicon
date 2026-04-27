@@ -18,6 +18,9 @@ class TestDreamhostProvider(IntegrationTestsV2):
     def _filter_query_parameters(self):
         return ["key"]
 
+    def _test_parameters_overrides(self):
+        return {"retry_wait_time": 1}
+
     @pytest.mark.skip(reason="can not set ttl when creating/updating records")
     def test_provider_when_calling_list_records_after_setting_ttl(self):
         return

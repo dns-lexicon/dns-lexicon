@@ -12,6 +12,9 @@ class TestFooProvider(IntegrationTestsV2):
     provider_name = "hostingde"
     domain = "eruza.de"
 
+    def _test_parameters_overrides(self):
+        return {"retry_wait_time": 1}
+
     def _filter_post_data_parameters(self):
         return ["authToken"]
 

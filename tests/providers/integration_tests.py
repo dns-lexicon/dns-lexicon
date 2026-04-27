@@ -350,7 +350,7 @@ class IntegrationTestsV1:
         This will resolve any parameters required by Lexicon or the provider in the following order:
             * parameters that matches the ones provided by _test_parameters_overrides
             * parameters that matches existing environment variables at the time of test execution
-            * parameters processed throught the lambda provided by _test_fallback_fn.
+            * parameters processed through the lambda provided by _test_fallback_fn.
 
         See lexicon/providers/interfaces.py for a full list of parameters available.
         You should not override this method. Just override `self.domain`,

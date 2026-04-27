@@ -212,8 +212,9 @@ class Provider(BaseProvider):
             except Exception as exception:
                 err = exception
 
-            # Sleeping for 1-second to avoid trigerring ddos protecting in case of looped requests
-            time.sleep(1)
+            # Sleeping for a bit to avoid triggering ddos protecting in case of looped requests
+            wait_time = int(self._get_provider_option("retry_wait_time") or 1000)
+            time.sleep(wait_time / 1000)
 
         if err is not None:
             raise err
