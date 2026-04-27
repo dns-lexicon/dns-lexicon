@@ -4,6 +4,7 @@
 ### Modified
 * Fix creation of records using `wedos` provider
 * Use BASIC authentication for `easydns` provider instead of request parameters
+* The `googleclouddns` provider now supports API pagination to fetch the rrsets
 
 ## 3.25.0 - 27/04/2026
 ### Added
