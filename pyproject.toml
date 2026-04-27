@@ -82,7 +82,6 @@ dev = [
     "toml",
     "types-PyYAML",
     "types-requests",
-    "types-requests-unixsocket",
     "types-toml",
 ]
 doc = ["sphinx", "sphinx-mdinclude", "piccolo-theme"]
