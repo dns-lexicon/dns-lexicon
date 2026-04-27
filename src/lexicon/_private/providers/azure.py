@@ -77,7 +77,7 @@ class Provider(BaseProvider):
         self._access_token = None
 
     def list_records(self, rtype=None, name=None, content=None):
-        result = self._get(f"/{(rtype if rtype else 'recordsets')}")
+        result = self._get_paginated(f"/{(rtype if rtype else 'recordsets')}")
 
         records = []
         for raw_record in result["value"]:
@@ -127,6 +127,12 @@ class Provider(BaseProvider):
         if [record for record in records if record["id"] == identifier]:
             LOGGER.debug("create_record (ignored, duplicate): %s", identifier)
             return True
+
+        # CNAME and SOA record sets only allow one value. When replacing (e.g. ALIAS
+        # with regular record), delete existing first.
+        if rtype in ("CNAME", "SOA") and records:
+            self._delete_record_internal(rtype=rtype, name=name)
+            records = []
 
         values = [record["content"] for record in records]
         values.append(content)
@@ -193,7 +199,7 @@ class Provider(BaseProvider):
     def _delete_record_internal(
         self, identifier=None, rtype=None, name=None, content=None
     ):
-        result = self._get(f"/{(rtype if rtype else 'recordsets')}")
+        result = self._get_paginated(f"/{(rtype if rtype else 'recordsets')}")
 
         to_delete = []
         to_shrink = []
@@ -274,16 +280,31 @@ class Provider(BaseProvider):
         headers = {"Authorization": f"Bearer {self._access_token}"}
         params = {"api-version": API_VERSION}
 
-        result = requests.get(url, headers=headers, params=params)
-        result.raise_for_status()
+        # Azure ARM list APIs are paginated via nextLink
+        domain_id = None
+        next_url = url
 
-        data = result.json()
+        while next_url:
+            if next_url == url:
+                result = requests.get(next_url, headers=headers, params=params)
+            else:
+                # nextLink already contains api-version and skip token
+                result = requests.get(next_url, headers=headers)
 
-        our_data = [
-            one_data for one_data in data["value"] if one_data["name"] == self.domain
-        ]
+            result.raise_for_status()
+            data = result.json()
 
-        if not our_data:
+            for one_data in data.get("value", []):
+                if one_data.get("name") == self.domain:
+                    domain_id = one_data.get("id")
+                    break
+
+            if domain_id:
+                break
+
+            next_url = data.get("nextLink")
+
+        if not domain_id:
             raise AuthenticationError(
                 "Resource group `{0}` in subscription `{1}` "
                 "does not contain the DNS zone `{2}`".format(
@@ -291,7 +312,7 @@ class Provider(BaseProvider):
                 )
             )
 
-        self.domain_id = our_data[0]["id"]
+        self.domain_id = domain_id
 
     def cleanup(self) -> None:
         pass
@@ -312,30 +333,77 @@ class Provider(BaseProvider):
             return request.json()
         return None
 
+    def _get_paginated(self, url="/", query_params=None):
+        """GET with Azure ARM pagination support via nextLink."""
+        query_params = {} if not query_params else query_params.copy()
+        query_params["api-version"] = API_VERSION
+        headers = {"Authorization": f"Bearer {self._access_token}"}
+
+        all_values = []
+        next_url = MANAGEMENT_URL + self.domain_id + url
+
+        while next_url:
+            if len(all_values) == 0:
+                result = requests.get(next_url, headers=headers, params=query_params)
+            else:
+                result = requests.get(next_url, headers=headers)
+
+            result.raise_for_status()
+            data = result.json()
+
+            all_values.extend(data.get("value", []))
+            next_url = data.get("nextLink")
+
+        return {"value": all_values}
+
+
+def _get_alias_content(properties):
+    """Extract content from Azure ALIAS record (targetResource or trafficManagementProfile)."""
+    target = properties.get("targetResource") or properties.get("trafficManagementProfile")
+    if target and target.get("id"):
+        return target["id"]
+    return None
+
 
 def _get_values_from_recordset(rtype, record):
     properties = record["properties"]
     values = None
     if rtype == "A":
-        values = [entry["ipv4Address"] for entry in properties["ARecords"]]
+        values = [entry["ipv4Address"] for entry in properties.get("ARecords", [])]
+        if not values:
+            alias = _get_alias_content(properties)
+            if alias:
+                values = [alias]
     if rtype == "AAAA":
-        values = [entry["ipv6Address"] for entry in properties["AAAARecords"]]
+        values = [entry["ipv6Address"] for entry in properties.get("AAAARecords", [])]
+        if not values:
+            alias = _get_alias_content(properties)
+            if alias:
+                values = [alias]
     if rtype == "CNAME":
-        values = [properties["CNAMERecord"]["cname"]]
+        cname_record = properties.get("CNAMERecord")
+        values = [cname_record["cname"]] if cname_record else []
+        if not values:
+            alias = _get_alias_content(properties)
+            if alias:
+                values = [alias]
     if rtype == "MX":
-        values = [entry["exchange"] for entry in properties["MXRecords"]]
+        values = [entry["exchange"] for entry in properties.get("MXRecords", [])]
     if rtype == "NS":
-        values = [entry["nsdname"] for entry in properties["NSRecords"]]
+        values = [entry["nsdname"] for entry in properties.get("NSRecords", [])]
     if rtype == "SOA":
-        values = [properties["SOARecord"]["email"]]
+        soa_record = properties.get("SOARecord")
+        values = [soa_record["email"]] if soa_record else []
     if rtype == "TXT":
         values = [
-            value for entry in properties["TXTRecords"] for value in entry["value"]
+            value
+            for entry in properties.get("TXTRecords", [])
+            for value in entry["value"]
         ]
     if rtype == "SRV":
-        values = [entry["target"] for entry in properties["SRVRecords"]]
+        values = [entry["target"] for entry in properties.get("SRVRecords", [])]
 
-    if values:
+    if values is not None:
         return values
 
     raise Exception(f"Error, `{rtype}` entries are not supported by this provider.")
