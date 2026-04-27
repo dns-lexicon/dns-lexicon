@@ -90,7 +90,7 @@ class Provider(BaseProvider):
             return True
         data = {
             "type": rtype,
-            "name": self._full_name(name),
+            "name": self._relative_name(name),
             "rdata": content,
             "domain": self.domain_id,
         }
