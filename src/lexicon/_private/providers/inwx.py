@@ -1,6 +1,8 @@
 """Module provider for INWX"""
 
 import logging
+import re
+import shlex
 from argparse import ArgumentParser
 from typing import List
 
@@ -121,10 +123,17 @@ class Provider(BaseProvider):
             "domain": self._domain,
             "type": rtype.upper(),
             "name": self._full_name(name),
-            "content": content,
+            "content": re.sub('\\\\;', ';', str(content)),
         }
         if self._get_lexicon_option("ttl"):
             opts["ttl"] = self._get_lexicon_option("ttl")
+        if opts["type"] in ["MX", "SRV"]:
+            vals = shlex.split(opts['content'])
+            if len(vals) < 2:
+                raise ValueError("prio missing")
+            opts["prio"] = vals[0]
+            opts["content"] = shlex.join(vals[1:])
+
         opts.update(self._auth)
 
         response = self._api.nameserver.createRecord(opts)
@@ -159,11 +168,20 @@ class Provider(BaseProvider):
         records = []
         if "record" in response["resData"]:
             for record in response["resData"]["record"]:
+                # priority, weight, port, target = shlex.split(record['content'])
+                content = record["content"]
+                if record["type"] == "MX":
+                    content = shlex.join([str(record["prio"]), content])
+                if record["type"] == "SRV":
+                    # content needs to be in format priority, weight, port, target
+                    # content already has format weight, port, target
+                    content = shlex.join([str(record["prio"])] + shlex.split(content))
+
                 processed_record = {
                     "type": record["type"],
                     "name": record["name"],
                     "ttl": record["ttl"],
-                    "content": record["content"],
+                    "content": content,
                     "id": record["id"],
                 }
                 records.append(processed_record)
@@ -195,7 +213,13 @@ class Provider(BaseProvider):
             if name is not None:
                 opts["name"] = self._full_name(name)
             if content is not None:
-                opts["content"] = content
+                opts["content"] = re.sub('\\\\;', ';', str(content))
+            if opts["type"] in ["MX", "SRV"]:
+                vals = shlex.split(opts['content'])
+                if len(vals) < 2:
+                    raise ValueError("prio missing")
+                opts["prio"] = vals[0]
+                opts["content"] = shlex.join(vals[1:])
             opts.update(self._auth)
 
             response = self._api.nameserver.updateRecord(opts)
