@@ -142,8 +142,8 @@ analysis must pass. You can run them with the following command:
 
 .. code-block:: bash
 
-    tox -e lint
-    tox -e mypy
+    uvx --with tox-uv tox -e lint
+    uvx --with tox-uv tox -e mypy
 
 Test against the live API
 -------------------------
