@@ -28,7 +28,6 @@ def generate_base_provider_parser() -> argparse.ArgumentParser:
         "type",
         help="specify the entry type",
         default="TXT",
-        choices=["A", "AAAA", "CNAME", "MX", "NS", "SOA", "TXT", "SRV", "LOC"],
     )
 
     parser.add_argument("--name", help="specify the record name")
