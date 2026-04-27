@@ -125,6 +125,7 @@ class Provider(BaseProvider):
 
         if "nextPageToken" in results:
             return self._get_managed_zone_ids(zone_ids, results["nextPageToken"])
+
         return zone_ids
 
     # We have a real authentication here, that uses the OAuth protocol:
@@ -204,6 +205,20 @@ class Provider(BaseProvider):
     def cleanup(self) -> None:
         pass
 
+    def _get_rrsets(self, rrsets, page_token=None, query_params=None):
+        params = {}
+        if query_params:
+            params.update(query_params)
+        if page_token:
+            params["pageToken"] = page_token
+        result = self._get(f"/managedZones/{self.domain_id}/rrsets", params)
+        rrsets += result["rrsets"]
+
+        if "nextPageToken" in result:
+            self._get_rrsets(rrsets, result["nextPageToken"])
+
+        return rrsets
+
     # List all records for the given type/name/content.
     # It is quite straight forward to request data, the biggest operation is to convert
     # the stacked multivalued RecordSets into Lexicon monovalued entries.
@@ -213,11 +228,11 @@ class Provider(BaseProvider):
     # the most general case, its preferable to always get all records and be free to filter
     # the way we want afterwards.
     def list_records(self, rtype=None, name=None, content=None):
-        results = self._get(f"/managedZones/{self.domain_id}/rrsets")
+        rrsets = self._get_rrsets([])
 
         records = []
 
-        for rrset in results["rrsets"]:
+        for rrset in rrsets:
             for rrdata in rrset["rrdatas"]:
                 record = {
                     "type": rrset["type"],
@@ -259,14 +274,12 @@ class Provider(BaseProvider):
 
         query_params = {"type": rtype, "name": self._fqdn_name(name)}
 
-        results = self._get(
-            f"/managedZones/{self.domain_id}/rrsets", query_params=query_params
-        )
+        rrsets = self._get_rrsets([], query_params=query_params)
 
         rrdatas = []
         changes = {}
-        if results["rrsets"]:
-            rrset = results["rrsets"][0]
+        if rrsets:
+            rrset = rrsets[0]
             for rrdata in rrset["rrdatas"]:
                 if rrdata == Provider._normalize_content(rrset["type"], content):
                     LOGGER.debug("create_record (ignored, duplicate): %s", identifier)
@@ -373,13 +386,13 @@ class Provider(BaseProvider):
     #   - do not mark as additions RecordSets whose rrdatas subset become empty:
     #     for this type/name pair, all RecordSet needs to go away.
     def delete_record(self, identifier=None, rtype=None, name=None, content=None):
-        results = self._get(f"/managedZones/{self.domain_id}/rrsets")
+        rrsets = self._get_rrsets([])
 
         if identifier:
-            changes = self._process_records_to_delete_by_identifier(results, identifier)
+            changes = self._process_records_to_delete_by_identifier(rrsets, identifier)
         else:
             changes = self._process_records_to_delete_by_parameters(
-                results, rtype, name, content
+                rrsets, rtype, name, content
             )
 
         if not changes:
@@ -396,8 +409,8 @@ class Provider(BaseProvider):
     # Calculate the changes to do based on the record to remove identified by its identifier.
     # This implementation find the corresponding record, and use its type + name + value to
     # delegate the processing to _process_records_to_delete_by_parameters.
-    def _process_records_to_delete_by_identifier(self, results, identifier):
-        for rrset in results["rrsets"]:
+    def _process_records_to_delete_by_identifier(self, rrsets, identifier):
+        for rrset in rrsets:
             for rrdata in rrset["rrdatas"]:
                 record = {
                     "type": rrset["type"],
@@ -410,7 +423,7 @@ class Provider(BaseProvider):
 
                 if identifier == record_identifier:
                     return self._process_records_to_delete_by_parameters(
-                        results, record["type"], record["name"], record["content"]
+                        rrsets, record["type"], record["name"], record["content"]
                     )
 
         return None
@@ -420,10 +433,9 @@ class Provider(BaseProvider):
     # rrdatas after its subset are not marked in additions to be completely removed
     # from the DNS zone.
     def _process_records_to_delete_by_parameters(
-        self, results, rtype=None, name=None, content=None
+        self, rrsets, rtype=None, name=None, content=None
     ):
-        rrsets_to_modify = results["rrsets"]
-
+        rrsets_to_modify = rrsets
         if rtype:
             rrsets_to_modify = [
                 rrset for rrset in rrsets_to_modify if rrset["type"] == rtype
