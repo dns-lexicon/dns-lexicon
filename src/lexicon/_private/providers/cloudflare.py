@@ -16,8 +16,21 @@ LOGGER = logging.getLogger(__name__)
 class Provider(BaseProvider):
     """Provider class for Cloudflare"""
 
-    SPECIAL_TYPES = {"SSHFP", "CAA", "CERT", "DNSKEY", "DS", "HTTPS", "LOC", "NAPTR", "SMIMEA", "SRV",
-                     "SVCB", "TLSA", "URI"}
+    SPECIAL_TYPES = {
+        "SSHFP",
+        "CAA",
+        "CERT",
+        "DNSKEY",
+        "DS",
+        "HTTPS",
+        "LOC",
+        "NAPTR",
+        "SMIMEA",
+        "SRV",
+        "SVCB",
+        "TLSA",
+        "URI",
+    }
 
     @staticmethod
     def get_nameservers() -> List[str]:
@@ -257,11 +270,26 @@ class Provider(BaseProvider):
         elif rtype == "CAA":
             data = {"flags": _fp[0], "tag": _fp[1], "value": _fp[2]}
         elif rtype == "CERT":
-            data = {"type": _fp[0], "key_tag": _fp[1], "algorithm": _fp[2], "certificate": _fp[3]}
+            data = {
+                "type": _fp[0],
+                "key_tag": _fp[1],
+                "algorithm": _fp[2],
+                "certificate": _fp[3],
+            }
         elif rtype == "DNSKEY":
-            data = {"flags": _fp[0], "protocol": _fp[1], "algorithm": _fp[2], "public_key": _fp[3]}
+            data = {
+                "flags": _fp[0],
+                "protocol": _fp[1],
+                "algorithm": _fp[2],
+                "public_key": _fp[3],
+            }
         elif rtype == "DS":
-            data = {"key_tag": _fp[0], "algorithm": _fp[1], "digest_type": _fp[2], "digest": _fp[3]}
+            data = {
+                "key_tag": _fp[0],
+                "algorithm": _fp[1],
+                "digest_type": _fp[2],
+                "digest": _fp[3],
+            }
         elif rtype == "HTTPS":
             data = {"priority": _fp[0], "target": _fp[1], "value": _fp[2]}
         elif rtype == "LOC":
@@ -286,16 +314,31 @@ class Provider(BaseProvider):
                 "flags": _fp[2],
                 "service": _fp[3],
                 "regex": _fp[4],
-                "replacement": _fp[5]
+                "replacement": _fp[5],
             }
         elif rtype == "SMIMEA":
-            data = {"usage": _fp[0], "selector": _fp[1], "matching_type": _fp[2], "certificate": _fp[3]}
+            data = {
+                "usage": _fp[0],
+                "selector": _fp[1],
+                "matching_type": _fp[2],
+                "certificate": _fp[3],
+            }
         elif rtype == "SRV":
-            data = {"priority": _fp[0], "weight": _fp[1], "port": _fp[2], "target": _fp[3]}
+            data = {
+                "priority": _fp[0],
+                "weight": _fp[1],
+                "port": _fp[2],
+                "target": _fp[3],
+            }
         elif rtype == "SVCB":
             data = {"priority": _fp[0], "target": _fp[1], "value": _fp[2]}
         elif rtype == "TLSA":
-            data = {"usage": _fp[0], "selector": _fp[1], "matching_type": _fp[2], "certificate": _fp[3]}
+            data = {
+                "usage": _fp[0],
+                "selector": _fp[1],
+                "matching_type": _fp[2],
+                "certificate": _fp[3],
+            }
         elif rtype == "URI":
             data = {"weight": _fp[0], "target": _fp[1]}
 

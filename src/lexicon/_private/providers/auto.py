@@ -208,11 +208,9 @@ class Provider(object):
                 self.domain,
                 provider[0],
             )
-            (provider_name, provider_module) = provider
+            provider_name, provider_module = provider
         else:
-            (provider_name, provider_module) = _relevant_provider_for_domain(
-                self.domain
-            )
+            provider_name, provider_module = _relevant_provider_for_domain(self.domain)
             LOGGER.info(
                 "Provider discovered for domain %s: %s.", self.domain, provider_name
             )

@@ -124,10 +124,8 @@ class Provider(BaseProvider):
             raise ValueError(f"updating {identifier} identifier not exists")
 
         if len(resources) > 1:
-            LOGGER.warning(
-                """There's more than one records match the given critiaria,
-             only the first one would be updated"""
-            )
+            LOGGER.warning("""There's more than one records match the given critiaria,
+             only the first one would be updated""")
 
         LOGGER.debug("update_record: %s", identifier)
 

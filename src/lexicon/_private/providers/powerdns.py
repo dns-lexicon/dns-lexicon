@@ -23,14 +23,15 @@ back and forth between the format PowerDNS expects, and the format Lexicon uses
 
 import json
 import logging
+
+# Support AF_UNIX pdns server sockets, supported since 5.0
+import os
 from argparse import ArgumentParser
+from contextlib import contextmanager
 from typing import List
 
 import requests
-# Support AF_UNIX pdns server sockets, supported since 5.0
-import os
 import requests_unixsocket
-requests_unixsocket.monkeypatch();
 
 from lexicon.interfaces import Provider as BaseProvider
 
@@ -51,7 +52,10 @@ class Provider(BaseProvider):
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument("--auth-token", help="specify token for authentication")
-        parser.add_argument("--pdns-server", help="URI for PowerDNS server (provide a filename when communicating with AF_UNIX sockets)")
+        parser.add_argument(
+            "--pdns-server",
+            help="URI for PowerDNS server (provide a filename when communicating with AF_UNIX sockets)",
+        )
         parser.add_argument("--pdns-server-id", help="Server ID to interact with")
         parser.add_argument(
             "--pdns-disable-notify", help="Disable slave notifications from master"
@@ -68,9 +72,12 @@ class Provider(BaseProvider):
 
         self.disable_slave_notify = self._get_provider_option("pdns-disable-notify")
 
-        # Mongle the api endpoint if it looks like an AF_UNIX socket
+        # Mangle the api endpoint if it looks like an AF_UNIX socket
         if os.path.exists(self.api_endpoint):
-            self.api_endpoint = 'http+unix://' + self.api_endpoint.replace('/','%2F');
+            self.unix_socket = True
+            self.api_endpoint = "http+unix://" + self.api_endpoint.replace("/", "%2F")
+        else:
+            self.unix_socket = False
 
         if self.api_endpoint.endswith("/"):
             self.api_endpoint = self.api_endpoint[:-1]
@@ -262,18 +269,27 @@ class Provider(BaseProvider):
     def _patch(self, url="/", data=None, query_params=None):
         return self._request("PATCH", url, data=data, query_params=query_params)
 
+    @contextmanager
+    def _may_monkeypatch_request(self):
+        if self.unix_socket:
+            with requests_unixsocket.monkeypatch():
+                yield
+        else:
+            yield
+
     def _request(self, action="GET", url="/", data=None, query_params=None):
         if data is None:
             data = {}
         if query_params is None:
             query_params = {}
-        response = requests.request(
-            action,
-            self.api_endpoint + url,
-            params=query_params,
-            data=json.dumps(data),
-            headers={"X-API-Key": self.api_key, "Content-Type": "application/json"},
-        )
+        with self._may_monkeypatch_request():
+            response = requests.request(
+                action,
+                self.api_endpoint + url,
+                params=query_params,
+                data=json.dumps(data),
+                headers={"X-API-Key": self.api_key, "Content-Type": "application/json"},
+            )
         LOGGER.debug("response: %s", response.text)
         response.raise_for_status()
         return response
