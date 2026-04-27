@@ -2,10 +2,12 @@
 
 import json
 import logging
-import requests
 from argparse import ArgumentParser
-from typing import List, Any, TypedDict, Union, Optional
 from time import sleep
+from typing import Any, List, Optional, TypedDict, Union
+
+import requests
+
 from lexicon.config import ConfigResolver
 from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
@@ -268,7 +270,11 @@ class HetznerCloud(BaseProvider):
 
     @staticmethod
     def get_nameservers() -> list[str]:
-        return ["hydrogen.ns.hetzner.com", "oxygen.ns.hetzner.com", "helium.ns.hetzner.de"]
+        return [
+            "hydrogen.ns.hetzner.com",
+            "oxygen.ns.hetzner.com",
+            "helium.ns.hetzner.de",
+        ]
 
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
@@ -289,8 +295,8 @@ class HetznerCloud(BaseProvider):
 
         action = self._post(
             f"{self._rrset_url(name, rtype)}/actions/add_records",
-            {'ttl': self._get_ttl(), 'records': self._records_from(rtype, content)}
-        )['action']
+            {"ttl": self._get_ttl(), "records": self._records_from(rtype, content)},
+        )["action"]
 
         return self._wait_for_action(action)
 
@@ -320,7 +326,9 @@ class HetznerCloud(BaseProvider):
         content: Optional[str] = None,
     ) -> bool:
         if rtype is None or name is None or content is None:
-            raise LexiconError("rtype, name and content need to be set in order to update a record.")
+            raise LexiconError(
+                "rtype, name and content need to be set in order to update a record."
+            )
 
         if identifier:
             raise LexiconError("Hetzner API does not provide ids per record")
@@ -329,12 +337,14 @@ class HetznerCloud(BaseProvider):
         if len(records) < 1:
             raise Exception("No records found matching type and name - won't update")
         elif len(records) > 1:
-            raise Exception("Multiple records found matching type and name - won't update")
+            raise Exception(
+                "Multiple records found matching type and name - won't update"
+            )
 
         action = self._post(
             f"{self._rrset_url(name, rtype)}/actions/set_records",
-            {'records': self._records_from(rtype, content)}
-        )['action']
+            {"records": self._records_from(rtype, content)},
+        )["action"]
         if not self._wait_for_action(action):
             return False
 
@@ -343,9 +353,8 @@ class HetznerCloud(BaseProvider):
         if ttl and records[0]["ttl"] is not ttl:
             return self._wait_for_action(
                 self._post(
-                    f"{self._rrset_url(name, rtype)}/actions/change_ttl",
-                    {'ttl': ttl}
-                )['action']
+                    f"{self._rrset_url(name, rtype)}/actions/change_ttl", {"ttl": ttl}
+                )["action"]
             )
         return True
 
@@ -364,14 +373,14 @@ class HetznerCloud(BaseProvider):
 
         if content is None:
             # Entire record set should be deleted
-            action = self._delete(self._rrset_url(name, rtype))['action']
+            action = self._delete(self._rrset_url(name, rtype))["action"]
             return self._wait_for_action(action)
         else:
             # Record should be taken out of set
             action = self._post(
                 f"{self._rrset_url(name, rtype)}/actions/remove_records",
-                {"records": self._records_from(rtype, content)}
-            )['action']
+                {"records": self._records_from(rtype, content)},
+            )["action"]
 
             return self._wait_for_action(action)
 
@@ -406,15 +415,13 @@ class HetznerCloud(BaseProvider):
         return response.json()
 
     def _get_action(self, action_id):
-        return self._get(
-            f"/actions/{action_id}"
-        )['action']
+        return self._get(f"/actions/{action_id}")["action"]
 
     def _is_action_running(self, action):
-        return action['status'] == "running"
+        return action["status"] == "running"
 
     def _was_action_successful(self, action):
-        return action['status'] == "success"
+        return action["status"] == "success"
 
     def _wait_for_action(self, action):
         if not self._is_action_running(action):
@@ -422,7 +429,7 @@ class HetznerCloud(BaseProvider):
 
         while self._is_action_running(action):
             sleep(0.5)
-            action = self._get_action(action['id'])
+            action = self._get_action(action["id"])
 
         return self._was_action_successful(action)
 
@@ -460,7 +467,9 @@ class HetznerCloud(BaseProvider):
             {
                 "id": None,
                 "name": self._full_name(rrset["name"]),
-                "content": self._get_content_from_record(rrset['type'], record['value']),
+                "content": self._get_content_from_record(
+                    rrset["type"], record["value"]
+                ),
                 "type": rrset["type"],
                 "ttl": rrset["ttl"],
             }
@@ -469,15 +478,17 @@ class HetznerCloud(BaseProvider):
 
     def _get_content_from_record(self, rtype: str, content: str):
         if rtype == "TXT":
-            return content.removeprefix('"')\
-                .removesuffix('"')\
-                .replace('" "', '')\
+            return (
+                content.removeprefix('"')
+                .removesuffix('"')
+                .replace('" "', "")
                 .replace('\\"', '"')
+            )
         return content
 
     def _records_from(self, rtype: str, content: str) -> list[Record]:
-        if rtype == 'TXT':
-            escaped_content = content.replace("\"", "\\\"")
+        if rtype == "TXT":
+            escaped_content = content.replace('"', '\\"')
 
             parts = []
             for start in range(0, len(escaped_content), 255):
@@ -488,12 +499,25 @@ class HetznerCloud(BaseProvider):
         return [{"value": content}]
 
     def _get_record_sets(self, rtype, name):
-        response = self._get(f"{self._zone_url()}/rrsets", {'type': rtype, 'name': self._relative_name(name) if name else None})
+        response = self._get(
+            f"{self._zone_url()}/rrsets",
+            {"type": rtype, "name": self._relative_name(name) if name else None},
+        )
         record_sets: list[RecordSet] = response["rrsets"]
 
         # get paged rrsets
-        while response['meta']['pagination']['page'] < response['meta']['pagination']['last_page']:
-            response = self._get(f"{self._zone_url()}/rrsets", {'type': rtype , 'name': name,  'page': response['meta']['pagination']['next_page']})
+        while (
+            response["meta"]["pagination"]["page"]
+            < response["meta"]["pagination"]["last_page"]
+        ):
+            response = self._get(
+                f"{self._zone_url()}/rrsets",
+                {
+                    "type": rtype,
+                    "name": name,
+                    "page": response["meta"]["pagination"]["next_page"],
+                },
+            )
             record_sets += response["rrsets"]
 
         return record_sets

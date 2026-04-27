@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.24.0 - 27/04/2026
 ### Added
 * The `hetzner` provider supports automatically the new Hetzner API (#73)
 ### Modified

@@ -549,7 +549,7 @@ wheels = [
 
 [[package]]
 name = "dns-lexicon"
-version = "3.23.2"
+version = "3.24.0"
 source = { editable = "." }
 dependencies = [
     { name = "beautifulsoup4" },
