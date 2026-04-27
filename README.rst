@@ -76,7 +76,7 @@ Only DNS providers who have an API can be supported by `lexicon`.
 
 .. tag: providers-table-begin
 
-Lexicon currently supports 89 providers:
+Lexicon currently supports 90 providers:
 
 +-----------------+-----------------+-----------------+-----------------+-----------------+
 | aliyun_         | arvancloud_     | aurora_         | azure_          | cloudflare_     |
@@ -93,27 +93,27 @@ Lexicon currently supports 89 providers:
 +-----------------+-----------------+-----------------+-----------------+-----------------+
 | glesys_         | godaddy_        | googleclouddns_ | gransy_         | gratisdns_      |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| henet_          | hetzner_        | hostingde_      | hover_          | infoblox_       |
+| henet_          | hetzner_        | hostingde_      | hover_          | httpnet_        |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| infomaniak_     | internetbs_     | inwx_           | ionos_          | joker_          |
+| infoblox_       | infomaniak_     | internetbs_     | inwx_           | ionos_          |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| linode_         | linode4_        | localzone_      | luadns_         | memset_         |
+| joker_          | linode_         | linode4_        | localzone_      | luadns_         |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| misaka_         | mythicbeasts_   | namecheap_      | namecom_        | namesilo_       |
+| memset_         | misaka_         | mythicbeasts_   | namecheap_      | namecom_        |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| netcup_         | nfsn_           | njalla_         | nsone_          | oci_            |
+| namesilo_       | netcup_         | nfsn_           | njalla_         | nsone_          |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| onapp_          | online_         | ovh_            | plesk_          | pointhq_        |
+| oci_            | onapp_          | online_         | ovh_            | plesk_          |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| porkbun_        | powerdns_       | qcloud_         | rackspace_      | rage4_          |
+| pointhq_        | porkbun_        | powerdns_       | qcloud_         | rackspace_      |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| rcodezero_      | regfish_        | route53_        | safedns_        | sakuracloud_    |
+| rage4_          | rcodezero_      | regfish_        | route53_        | safedns_        |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| scaleway_       | softlayer_      | timeweb_        | transip_        | ultradns_       |
+| sakuracloud_    | scaleway_       | softlayer_      | timeweb_        | transip_        |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| valuedomain_    | vercel_         | vultr_          | wedos_          | yandex_         |
+| ultradns_       | valuedomain_    | vercel_         | vultr_          | wedos_          |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
-| yandexcloud_    | zeit_           | zilore_         | zonomi_         |                 |
+| yandex_         | yandexcloud_    | zeit_           | zilore_         | zonomi_         |
 +-----------------+-----------------+-----------------+-----------------+-----------------+
 
 .. tag: providers-table-end
