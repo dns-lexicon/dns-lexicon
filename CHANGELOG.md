@@ -1,6 +1,13 @@
 # Changelog
 
 ## master - CURRENT
+### Added
+* The `hetzner` provider supports automatically the new Hetzner API (#73)
+### Modified
+* Allow preservation of TTL in `desec` provider (#66)
+* Fix req with empty content in `desec` provider (#67)
+* Support connection to AF_UNIX sockets for `pdns` APIs (#53)
+* Fix TXT challenge records not being deleted for `ovh` provider (#65)
 
 ## 3.23.2 - 14/11/2025
 ### Added
