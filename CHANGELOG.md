@@ -3,6 +3,7 @@
 ## master - CURRENT
 ### Modified
 * Fix creation of records using `wedos` provider
+* Use BASIC authentication for `easydns` provider instead of request parameters
 
 ## 3.25.0 - 27/04/2026
 ### Added
