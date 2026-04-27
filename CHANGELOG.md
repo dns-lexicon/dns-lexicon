@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+### Modified
+* Fix creation of records using `wedos` provider
 
 ## 3.25.0 - 27/04/2026
 ### Added
