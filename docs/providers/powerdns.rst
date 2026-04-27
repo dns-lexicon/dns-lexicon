@@ -1,7 +1,7 @@
 powerdns
     * ``auth_token`` Specify token for authentication
 
-    * ``pdns_server`` Uri for powerdns server
+    * ``pdns_server`` Uri for powerdns server (provide a filename when communicating with af_unix sockets)
 
     * ``pdns_server_id`` Server id to interact with
 
