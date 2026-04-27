@@ -1,0 +1,1125 @@
+interactions:
+- request:
+    body: '{"filter": {"field": "ZoneName", "value": "lexicon-example-domain.de"},
+      "page": 1}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '147'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.5
+    method: POST
+    uri: https://partner.http.net/api/dns/v1/json/zoneConfigsFind
+  response:
+    body:
+      string: "{\n    \"errors\": [\n    ],\n    \"metadata\": {\n        \"clientTransactionId\":
+        \"\",\n        \"serverTransactionId\": \"20260310085741127-dnsrobot-robots1-3007277-0\"\n
+        \   },\n    \"response\": {\n        \"data\": [\n            {\n                \"accountId\":
+        \"181217txillqrawg3w2\",\n                \"addDate\": \"2026-03-10T08:42:38Z\",\n
+        \               \"dnsSecMode\": \"off\",\n                \"dnsServerGroupId\":
+        null,\n                \"emailAddress\": \"hostmaster@lexicon-example-domain.de\",\n
+        \               \"id\": \"260310i7fx2xtjv6kse\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:57:37Z\",\n                \"masterIp\": \"\",\n                \"name\":
+        \"lexicon-example-domain.de\",\n                \"nameUnicode\": \"lexicon-example-domain.de\",\n
+        \               \"restorableUntil\": null,\n                \"soaValues\":
+        {\n                    \"expire\": 3600000,\n                    \"negativeTtl\":
+        900,\n                    \"refresh\": 86400,\n                    \"retry\":
+        7200,\n                    \"ttl\": 86400\n                },\n                \"status\":
+        \"active\",\n                \"templateValues\": null,\n                \"type\":
+        \"NATIVE\",\n                \"zoneTransferWhitelist\": [\n                ]\n
+        \           }\n        ],\n        \"limit\": 25,\n        \"page\": 1,\n
+        \       \"totalEntries\": 1,\n        \"totalPages\": 1,\n        \"type\":
+        \"FindZoneConfigsResult\"\n    },\n    \"status\": \"success\",\n    \"warnings\":
+        [\n    ]\n}\n"
+    headers:
+      content-length:
+      - '1377'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 10 Mar 2026 08:57:41 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      - nosniff
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"filter": {"subFilterConnective": "AND", "subFilter": [{"field": "zoneConfigId",
+      "value": "260310i7fx2xtjv6kse"}, {"field": "RecordType", "value": "TXT"}, {"field":
+      "RecordName", "value": "_acme-challenge.listrecordset.lexicon-example-domain.de"}]},
+      "page": 1}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '326'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.5
+    method: POST
+    uri: https://partner.http.net/api/dns/v1/json/recordsFind
+  response:
+    body:
+      string: "{\n    \"errors\": [\n    ],\n    \"metadata\": {\n        \"clientTransactionId\":
+        \"\",\n        \"serverTransactionId\": \"20260310085741253-dnsrobot-robots1-3007277-0\"\n
+        \   },\n    \"response\": {\n        \"data\": [\n        ],\n        \"limit\":
+        25,\n        \"page\": 1,\n        \"totalEntries\": 0,\n        \"totalPages\":
+        0,\n        \"type\": \"FindRecordsResult\"\n    },\n    \"status\": \"success\",\n
+        \   \"warnings\": [\n    ]\n}\n"
+    headers:
+      content-length:
+      - '396'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 10 Mar 2026 08:57:44 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000
+      x-content-type-options:
+      - nosniff
+      - nosniff
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"filter": {"field": "ZoneName", "value": "lexicon-example-domain.de"},
+      "page": 1}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '147'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.5
+    method: POST
+    uri: https://partner.http.net/api/dns/v1/json/zoneConfigsFind
+  response:
+    body:
+      string: "{\n    \"errors\": [\n    ],\n    \"metadata\": {\n        \"clientTransactionId\":
+        \"\",\n        \"serverTransactionId\": \"20260310085744848-dnsrobot-robots1-3007277-0\"\n
+        \   },\n    \"response\": {\n        \"data\": [\n            {\n                \"accountId\":
+        \"181217txillqrawg3w2\",\n                \"addDate\": \"2026-03-10T08:42:38Z\",\n
+        \               \"dnsSecMode\": \"off\",\n                \"dnsServerGroupId\":
+        null,\n                \"emailAddress\": \"hostmaster@lexicon-example-domain.de\",\n
+        \               \"id\": \"260310i7fx2xtjv6kse\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:57:37Z\",\n                \"masterIp\": \"\",\n                \"name\":
+        \"lexicon-example-domain.de\",\n                \"nameUnicode\": \"lexicon-example-domain.de\",\n
+        \               \"restorableUntil\": null,\n                \"soaValues\":
+        {\n                    \"expire\": 3600000,\n                    \"negativeTtl\":
+        900,\n                    \"refresh\": 86400,\n                    \"retry\":
+        7200,\n                    \"ttl\": 86400\n                },\n                \"status\":
+        \"active\",\n                \"templateValues\": null,\n                \"type\":
+        \"NATIVE\",\n                \"zoneTransferWhitelist\": [\n                ]\n
+        \           }\n        ],\n        \"limit\": 25,\n        \"page\": 1,\n
+        \       \"totalEntries\": 1,\n        \"totalPages\": 1,\n        \"type\":
+        \"FindZoneConfigsResult\"\n    },\n    \"status\": \"success\",\n    \"warnings\":
+        [\n    ]\n}\n"
+    headers:
+      content-length:
+      - '1377'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 10 Mar 2026 08:57:44 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      - nosniff
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"zoneConfig": {"accountId": "181217txillqrawg3w2", "addDate": "2026-03-10T08:42:38Z",
+      "dnsSecMode": "off", "dnsServerGroupId": null, "emailAddress": "hostmaster@lexicon-example-domain.de",
+      "id": "260310i7fx2xtjv6kse", "lastChangeDate": "2026-03-10T08:57:37Z", "masterIp":
+      "", "name": "lexicon-example-domain.de", "nameUnicode": "lexicon-example-domain.de",
+      "restorableUntil": null, "soaValues": {"expire": 3600000, "negativeTtl": 900,
+      "refresh": 86400, "retry": 7200, "ttl": 86400}, "status": "active", "templateValues":
+      null, "type": "NATIVE", "zoneTransferWhitelist": []}, "recordsToAdd": [{"name":
+      "_acme-challenge.listrecordset.lexicon-example-domain.de", "type": "TXT", "content":
+      "challengetoken1", "ttl": 3600}], "page": 1}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '796'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.5
+    method: POST
+    uri: https://partner.http.net/api/dns/v1/json/zoneUpdate
+  response:
+    body:
+      string: "{\n    \"errors\": [\n    ],\n    \"metadata\": {\n        \"clientTransactionId\":
+        \"\",\n        \"serverTransactionId\": \"20260310085744993-dnsrobot-robots1-3007277-0\"\n
+        \   },\n    \"response\": {\n        \"records\": [\n            {\n                \"accountId\":
+        \"181217txillqrawg3w2\",\n                \"addDate\": \"2026-03-10T08:42:38Z\",\n
+        \               \"comments\": \"\",\n                \"content\": \"aspmx.l.google.com\",\n
+        \               \"id\": \"260310d4f3kjett463e\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"name\": \"lexicon-example-domain.de\",\n
+        \               \"priority\": 1,\n                \"recordTemplateId\": null,\n
+        \               \"ttl\": 3600,\n                \"type\": \"MX\",\n                \"zoneConfigId\":
+        \"260310i7fx2xtjv6kse\"\n            },\n            {\n                \"accountId\":
+        \"181217txillqrawg3w2\",\n                \"addDate\": \"2026-03-10T08:42:38Z\",\n
+        \               \"comments\": \"\",\n                \"content\": \"alt1.aspmx.l.google.com\",\n
+        \               \"id\": \"260310zqr447bhbbflq\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"name\": \"lexicon-example-domain.de\",\n
+        \               \"priority\": 5,\n                \"recordTemplateId\": null,\n
+        \               \"ttl\": 3600,\n                \"type\": \"MX\",\n                \"zoneConfigId\":
+        \"260310i7fx2xtjv6kse\"\n            },\n            {\n                \"accountId\":
+        \"181217txillqrawg3w2\",\n                \"addDate\": \"2026-03-10T08:42:38Z\",\n
+        \               \"comments\": \"\",\n                \"content\": \"ns1.routing.net\",\n
+        \               \"id\": \"260310y6yrc6lfizst6\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"name\": \"lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 86400,\n                \"type\": \"NS\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"alt2.aspmx.l.google.com\",\n                \"id\": \"26031052ho23dhn7tqg\",\n
+        \               \"lastChangeDate\": \"2026-03-10T08:42:38Z\",\n                \"name\":
+        \"lexicon-example-domain.de\",\n                \"priority\": 5,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"MX\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"116.202.71.47\",\n                \"id\": \"260310fmhjrnofkuh52\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"name\": \"www.lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"A\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"alt3.aspmx.l.google.com\",\n                \"id\": \"2603102wpc43wwli3ly\",\n
+        \               \"lastChangeDate\": \"2026-03-10T08:42:38Z\",\n                \"name\":
+        \"lexicon-example-domain.de\",\n                \"priority\": 10,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"MX\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"alt4.aspmx.l.google.com\",\n                \"id\": \"260310vdjezh7aidgr6\",\n
+        \               \"lastChangeDate\": \"2026-03-10T08:42:38Z\",\n                \"name\":
+        \"lexicon-example-domain.de\",\n                \"priority\": 10,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"MX\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"116.202.71.47\",\n                \"id\": \"260310vwzewyujm7bkw\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"name\": \"lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"A\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"ns3.routing.net\",\n                \"id\": \"260310gey6cl5xahv5s\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"name\": \"lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 86400,\n                \"type\": \"NS\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"ns2.routing.net\",\n                \"id\": \"260310gguslo4ftfrju\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"name\": \"lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 86400,\n                \"type\": \"NS\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"116.202.71.49\",\n                \"id\": \"260310woym7rikjqh6u\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"name\": \"kundencenter.lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"A\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"ns1.routing.net. hostmaster.lexicon-example-domain.de. 2026031032 86400
+        7200 3600000 900\",\n                \"id\": \"260310mnwsbe5z4pxak\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:57:37Z\",\n                \"name\": \"lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 86400,\n                \"type\": \"SOA\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"116.202.71.49\",\n                \"id\": \"2603102gyj57qrmqzxy\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"name\": \"kundenbereich.lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"A\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:54:56Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"127.0.0.1\",\n                \"id\": \"2603102hs7qio3yr376\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:54:56Z\",\n                \"name\": \"localhost.lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"A\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:55:00Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"docs.example.com\",\n                \"id\": \"2603103oypva3uudxc4\",\n
+        \               \"lastChangeDate\": \"2026-03-10T08:55:00Z\",\n                \"name\":
+        \"docs.lexicon-example-domain.de\",\n                \"priority\": null,\n
+        \               \"recordTemplateId\": null,\n                \"ttl\": 3600,\n
+        \               \"type\": \"CNAME\",\n                \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n
+        \           },\n            {\n                \"accountId\": \"181217txillqrawg3w2\",\n
+        \               \"addDate\": \"2026-03-10T08:55:06Z\",\n                \"comments\":
+        \"\",\n                \"content\": \"\\\"challengetoken\\\"\",\n                \"id\":
+        \"260310ghudtxqxl65is\",\n                \"lastChangeDate\": \"2026-03-10T08:55:06Z\",\n
+        \               \"name\": \"_acme-challenge.test.lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:55:10Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"\\\"challengetoken\\\"\",\n                \"id\": \"260310rtaodfxft6waa\",\n
+        \               \"lastChangeDate\": \"2026-03-10T08:55:10Z\",\n                \"name\":
+        \"_acme-challenge.full.lexicon-example-domain.de\",\n                \"priority\":
+        null,\n                \"recordTemplateId\": null,\n                \"ttl\":
+        3600,\n                \"type\": \"TXT\",\n                \"zoneConfigId\":
+        \"260310i7fx2xtjv6kse\"\n            },\n            {\n                \"accountId\":
+        \"181217txillqrawg3w2\",\n                \"addDate\": \"2026-03-10T08:55:14Z\",\n
+        \               \"comments\": \"\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"260310wnahwse42lh4i\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:55:14Z\",\n                \"name\": \"_acme-challenge.fqdn.lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:55:18Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"\\\"challengetoken\\\"\",\n                \"id\": \"260310b6w2tgdbbygic\",\n
+        \               \"lastChangeDate\": \"2026-03-10T08:55:18Z\",\n                \"name\":
+        \"random.test.lexicon-example-domain.de\",\n                \"priority\":
+        null,\n                \"recordTemplateId\": null,\n                \"ttl\":
+        3600,\n                \"type\": \"TXT\",\n                \"zoneConfigId\":
+        \"260310i7fx2xtjv6kse\"\n            },\n            {\n                \"accountId\":
+        \"181217txillqrawg3w2\",\n                \"addDate\": \"2026-03-10T08:55:22Z\",\n
+        \               \"comments\": \"\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"260310lf2pyqdciie7c\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:55:22Z\",\n                \"name\": \"random.fulltest.lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:55:26Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"\\\"challengetoken\\\"\",\n                \"id\": \"260310w4ofrsc56uuke\",\n
+        \               \"lastChangeDate\": \"2026-03-10T08:55:26Z\",\n                \"name\":
+        \"random.fqdntest.lexicon-example-domain.de\",\n                \"priority\":
+        null,\n                \"recordTemplateId\": null,\n                \"ttl\":
+        3600,\n                \"type\": \"TXT\",\n                \"zoneConfigId\":
+        \"260310i7fx2xtjv6kse\"\n            },\n            {\n                \"accountId\":
+        \"181217txillqrawg3w2\",\n                \"addDate\": \"2026-03-10T08:55:30Z\",\n
+        \               \"comments\": \"\",\n                \"content\": \"\\\"ttlshouldbe3600\\\"\",\n
+        \               \"id\": \"260310ehfwz3wivi7vi\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:55:30Z\",\n                \"name\": \"ttl.fqdn.lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:55:45Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"\\\"challengetoken\\\"\",\n                \"id\": \"2603107n5pllotdqkbc\",\n
+        \               \"lastChangeDate\": \"2026-03-10T08:55:45Z\",\n                \"name\":
+        \"updated.test.lexicon-example-domain.de\",\n                \"priority\":
+        null,\n                \"recordTemplateId\": null,\n                \"ttl\":
+        3600,\n                \"type\": \"TXT\",\n                \"zoneConfigId\":
+        \"260310i7fx2xtjv6kse\"\n            },\n            {\n                \"accountId\":
+        \"181217txillqrawg3w2\",\n                \"addDate\": \"2026-03-10T08:56:00Z\",\n
+        \               \"comments\": \"\",\n                \"content\": \"\\\"updated\\\"\",\n
+        \               \"id\": \"2603105b2cqnlezcdpi\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:56:00Z\",\n                \"name\": \"orig.nameonly.test.lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:56:14Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"\\\"challengetoken\\\"\",\n                \"id\": \"260310f4gsob7y5ftpe\",\n
+        \               \"lastChangeDate\": \"2026-03-10T08:56:14Z\",\n                \"name\":
+        \"updated.testfull.lexicon-example-domain.de\",\n                \"priority\":
+        null,\n                \"recordTemplateId\": null,\n                \"ttl\":
+        3600,\n                \"type\": \"TXT\",\n                \"zoneConfigId\":
+        \"260310i7fx2xtjv6kse\"\n            },\n            {\n                \"accountId\":
+        \"181217txillqrawg3w2\",\n                \"addDate\": \"2026-03-10T08:56:28Z\",\n
+        \               \"comments\": \"\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"260310wx6fnvjonidpw\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:56:28Z\",\n                \"name\": \"updated.testfqdn.lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:57:29Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"\\\"challengetoken\\\"\",\n                \"id\": \"260310nv53yqa5tykse\",\n
+        \               \"lastChangeDate\": \"2026-03-10T08:57:29Z\",\n                \"name\":
+        \"_acme-challenge.noop.lexicon-example-domain.de\",\n                \"priority\":
+        null,\n                \"recordTemplateId\": null,\n                \"ttl\":
+        3600,\n                \"type\": \"TXT\",\n                \"zoneConfigId\":
+        \"260310i7fx2xtjv6kse\"\n            },\n            {\n                \"accountId\":
+        \"181217txillqrawg3w2\",\n                \"addDate\": \"2026-03-10T08:57:33Z\",\n
+        \               \"comments\": \"\",\n                \"content\": \"\\\"challengetoken1\\\"\",\n
+        \               \"id\": \"26031064622btn3uwsy\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:57:33Z\",\n                \"name\": \"_acme-challenge.createrecordset.lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:57:37Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"\\\"challengetoken2\\\"\",\n                \"id\": \"260310lnfgyfz2so2as\",\n
+        \               \"lastChangeDate\": \"2026-03-10T08:57:37Z\",\n                \"name\":
+        \"_acme-challenge.createrecordset.lexicon-example-domain.de\",\n                \"priority\":
+        null,\n                \"recordTemplateId\": null,\n                \"ttl\":
+        3600,\n                \"type\": \"TXT\",\n                \"zoneConfigId\":
+        \"260310i7fx2xtjv6kse\"\n            },\n            {\n                \"accountId\":
+        \"181217txillqrawg3w2\",\n                \"addDate\": \"2026-03-10T08:57:45Z\",\n
+        \               \"comments\": \"\",\n                \"content\": \"\\\"challengetoken1\\\"\",\n
+        \               \"id\": \"260310ohpqatpbmhim4\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:57:45Z\",\n                \"name\": \"_acme-challenge.listrecordset.lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            }\n
+        \       ],\n        \"zoneConfig\": {\n            \"accountId\": \"181217txillqrawg3w2\",\n
+        \           \"addDate\": \"2026-03-10T08:42:38Z\",\n            \"dnsSecMode\":
+        \"off\",\n            \"dnsServerGroupId\": null,\n            \"emailAddress\":
+        \"hostmaster@lexicon-example-domain.de\",\n            \"id\": \"260310i7fx2xtjv6kse\",\n
+        \           \"lastChangeDate\": \"2026-03-10T08:57:45Z\",\n            \"masterIp\":
+        \"\",\n            \"name\": \"lexicon-example-domain.de\",\n            \"nameUnicode\":
+        \"lexicon-example-domain.de\",\n            \"restorableUntil\": null,\n            \"soaValues\":
+        {\n                \"expire\": 3600000,\n                \"negativeTtl\":
+        900,\n                \"refresh\": 86400,\n                \"retry\": 7200,\n
+        \               \"ttl\": 86400\n            },\n            \"status\": \"blocked\",\n
+        \           \"templateValues\": null,\n            \"type\": \"NATIVE\",\n
+        \           \"zoneTransferWhitelist\": [\n            ]\n        }\n    },\n
+        \   \"status\": \"pending\",\n    \"warnings\": [\n    ]\n}\n"
+    headers:
+      content-length:
+      - '18297'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 10 Mar 2026 08:57:45 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      - nosniff
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"filter": {"subFilterConnective": "AND", "subFilter": [{"field": "zoneConfigId",
+      "value": "260310i7fx2xtjv6kse"}, {"field": "RecordType", "value": "TXT"}, {"field":
+      "RecordName", "value": "_acme-challenge.listrecordset.lexicon-example-domain.de"}]},
+      "page": 1}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '326'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.5
+    method: POST
+    uri: https://partner.http.net/api/dns/v1/json/recordsFind
+  response:
+    body:
+      string: "{\n    \"errors\": [\n    ],\n    \"metadata\": {\n        \"clientTransactionId\":
+        \"\",\n        \"serverTransactionId\": \"20260310085745333-dnsrobot-robots1-3007277-0\"\n
+        \   },\n    \"response\": {\n        \"data\": [\n            {\n                \"accountId\":
+        \"181217txillqrawg3w2\",\n                \"addDate\": \"2026-03-10T08:57:45Z\",\n
+        \               \"comments\": \"\",\n                \"content\": \"\\\"challengetoken1\\\"\",\n
+        \               \"id\": \"260310ohpqatpbmhim4\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:57:45Z\",\n                \"name\": \"_acme-challenge.listrecordset.lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            }\n
+        \       ],\n        \"limit\": 25,\n        \"page\": 1,\n        \"totalEntries\":
+        1,\n        \"totalPages\": 1,\n        \"type\": \"FindRecordsResult\"\n
+        \   },\n    \"status\": \"success\",\n    \"warnings\": [\n    ]\n}\n"
+    headers:
+      content-length:
+      - '985'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 10 Mar 2026 08:57:45 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      - nosniff
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"filter": {"field": "ZoneName", "value": "lexicon-example-domain.de"},
+      "page": 1}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '147'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.5
+    method: POST
+    uri: https://partner.http.net/api/dns/v1/json/zoneConfigsFind
+  response:
+    body:
+      string: "{\n    \"errors\": [\n    ],\n    \"metadata\": {\n        \"clientTransactionId\":
+        \"\",\n        \"serverTransactionId\": \"20260310085745474-dnsrobot-robots1-3007277-0\"\n
+        \   },\n    \"response\": {\n        \"data\": [\n            {\n                \"accountId\":
+        \"181217txillqrawg3w2\",\n                \"addDate\": \"2026-03-10T08:42:38Z\",\n
+        \               \"dnsSecMode\": \"off\",\n                \"dnsServerGroupId\":
+        null,\n                \"emailAddress\": \"hostmaster@lexicon-example-domain.de\",\n
+        \               \"id\": \"260310i7fx2xtjv6kse\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:57:45Z\",\n                \"masterIp\": \"\",\n                \"name\":
+        \"lexicon-example-domain.de\",\n                \"nameUnicode\": \"lexicon-example-domain.de\",\n
+        \               \"restorableUntil\": null,\n                \"soaValues\":
+        {\n                    \"expire\": 3600000,\n                    \"negativeTtl\":
+        900,\n                    \"refresh\": 86400,\n                    \"retry\":
+        7200,\n                    \"ttl\": 86400\n                },\n                \"status\":
+        \"blocked\",\n                \"templateValues\": null,\n                \"type\":
+        \"NATIVE\",\n                \"zoneTransferWhitelist\": [\n                ]\n
+        \           }\n        ],\n        \"limit\": 25,\n        \"page\": 1,\n
+        \       \"totalEntries\": 1,\n        \"totalPages\": 1,\n        \"type\":
+        \"FindZoneConfigsResult\"\n    },\n    \"status\": \"success\",\n    \"warnings\":
+        [\n    ]\n}\n"
+    headers:
+      content-length:
+      - '1378'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 10 Mar 2026 08:57:45 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      - nosniff
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"zoneConfig": {"accountId": "181217txillqrawg3w2", "addDate": "2026-03-10T08:42:38Z",
+      "dnsSecMode": "off", "dnsServerGroupId": null, "emailAddress": "hostmaster@lexicon-example-domain.de",
+      "id": "260310i7fx2xtjv6kse", "lastChangeDate": "2026-03-10T08:57:45Z", "masterIp":
+      "", "name": "lexicon-example-domain.de", "nameUnicode": "lexicon-example-domain.de",
+      "restorableUntil": null, "soaValues": {"expire": 3600000, "negativeTtl": 900,
+      "refresh": 86400, "retry": 7200, "ttl": 86400}, "status": "blocked", "templateValues":
+      null, "type": "NATIVE", "zoneTransferWhitelist": []}, "recordsToAdd": [{"name":
+      "_acme-challenge.listrecordset.lexicon-example-domain.de", "type": "TXT", "content":
+      "challengetoken2", "ttl": 3600}], "page": 1}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '797'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.5
+    method: POST
+    uri: https://partner.http.net/api/dns/v1/json/zoneUpdate
+  response:
+    body:
+      string: "{\n    \"errors\": [\n        {\n            \"code\": 10205,\n            \"contextObject\":
+        \"\",\n            \"contextPath\": \"\",\n            \"details\": [\n            ],\n
+        \           \"text\": \"The current status of an object you are trying to
+        use does not allow that operation.\",\n            \"value\": \"blocked\"\n
+        \       }\n    ],\n    \"metadata\": {\n        \"clientTransactionId\": \"\",\n
+        \       \"serverTransactionId\": \"20260310085745628-dnsrobot-robots1-3007277-0\"\n
+        \   },\n    \"status\": \"error\",\n    \"warnings\": [\n    ]\n}\n"
+    headers:
+      content-length:
+      - '502'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 10 Mar 2026 08:57:45 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000
+      x-content-type-options:
+      - nosniff
+      - nosniff
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"zoneConfig": {"accountId": "181217txillqrawg3w2", "addDate": "2026-03-10T08:42:38Z",
+      "dnsSecMode": "off", "dnsServerGroupId": null, "emailAddress": "hostmaster@lexicon-example-domain.de",
+      "id": "260310i7fx2xtjv6kse", "lastChangeDate": "2026-03-10T08:57:45Z", "masterIp":
+      "", "name": "lexicon-example-domain.de", "nameUnicode": "lexicon-example-domain.de",
+      "restorableUntil": null, "soaValues": {"expire": 3600000, "negativeTtl": 900,
+      "refresh": 86400, "retry": 7200, "ttl": 86400}, "status": "blocked", "templateValues":
+      null, "type": "NATIVE", "zoneTransferWhitelist": []}, "recordsToAdd": [{"name":
+      "_acme-challenge.listrecordset.lexicon-example-domain.de", "type": "TXT", "content":
+      "challengetoken2", "ttl": 3600}], "page": 1}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '797'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.5
+    method: POST
+    uri: https://partner.http.net/api/dns/v1/json/zoneUpdate
+  response:
+    body:
+      string: "{\n    \"errors\": [\n        {\n            \"code\": 10205,\n            \"contextObject\":
+        \"\",\n            \"contextPath\": \"\",\n            \"details\": [\n            ],\n
+        \           \"text\": \"The current status of an object you are trying to
+        use does not allow that operation.\",\n            \"value\": \"blocked\"\n
+        \       }\n    ],\n    \"metadata\": {\n        \"clientTransactionId\": \"\",\n
+        \       \"serverTransactionId\": \"20260310085746860-dnsrobot-robots1-3007277-0\"\n
+        \   },\n    \"status\": \"error\",\n    \"warnings\": [\n    ]\n}\n"
+    headers:
+      content-length:
+      - '502'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 10 Mar 2026 08:57:46 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000
+      x-content-type-options:
+      - nosniff
+      - nosniff
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"zoneConfig": {"accountId": "181217txillqrawg3w2", "addDate": "2026-03-10T08:42:38Z",
+      "dnsSecMode": "off", "dnsServerGroupId": null, "emailAddress": "hostmaster@lexicon-example-domain.de",
+      "id": "260310i7fx2xtjv6kse", "lastChangeDate": "2026-03-10T08:57:45Z", "masterIp":
+      "", "name": "lexicon-example-domain.de", "nameUnicode": "lexicon-example-domain.de",
+      "restorableUntil": null, "soaValues": {"expire": 3600000, "negativeTtl": 900,
+      "refresh": 86400, "retry": 7200, "ttl": 86400}, "status": "blocked", "templateValues":
+      null, "type": "NATIVE", "zoneTransferWhitelist": []}, "recordsToAdd": [{"name":
+      "_acme-challenge.listrecordset.lexicon-example-domain.de", "type": "TXT", "content":
+      "challengetoken2", "ttl": 3600}], "page": 1}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '797'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.5
+    method: POST
+    uri: https://partner.http.net/api/dns/v1/json/zoneUpdate
+  response:
+    body:
+      string: "{\n    \"errors\": [\n        {\n            \"code\": 10205,\n            \"contextObject\":
+        \"\",\n            \"contextPath\": \"\",\n            \"details\": [\n            ],\n
+        \           \"text\": \"The current status of an object you are trying to
+        use does not allow that operation.\",\n            \"value\": \"blocked\"\n
+        \       }\n    ],\n    \"metadata\": {\n        \"clientTransactionId\": \"\",\n
+        \       \"serverTransactionId\": \"20260310085748111-dnsrobot-robots1-3007277-0\"\n
+        \   },\n    \"status\": \"error\",\n    \"warnings\": [\n    ]\n}\n"
+    headers:
+      content-length:
+      - '502'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 10 Mar 2026 08:57:48 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000
+      x-content-type-options:
+      - nosniff
+      - nosniff
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"zoneConfig": {"accountId": "181217txillqrawg3w2", "addDate": "2026-03-10T08:42:38Z",
+      "dnsSecMode": "off", "dnsServerGroupId": null, "emailAddress": "hostmaster@lexicon-example-domain.de",
+      "id": "260310i7fx2xtjv6kse", "lastChangeDate": "2026-03-10T08:57:45Z", "masterIp":
+      "", "name": "lexicon-example-domain.de", "nameUnicode": "lexicon-example-domain.de",
+      "restorableUntil": null, "soaValues": {"expire": 3600000, "negativeTtl": 900,
+      "refresh": 86400, "retry": 7200, "ttl": 86400}, "status": "blocked", "templateValues":
+      null, "type": "NATIVE", "zoneTransferWhitelist": []}, "recordsToAdd": [{"name":
+      "_acme-challenge.listrecordset.lexicon-example-domain.de", "type": "TXT", "content":
+      "challengetoken2", "ttl": 3600}], "page": 1}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '797'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.5
+    method: POST
+    uri: https://partner.http.net/api/dns/v1/json/zoneUpdate
+  response:
+    body:
+      string: "{\n    \"errors\": [\n        {\n            \"code\": 10205,\n            \"contextObject\":
+        \"\",\n            \"contextPath\": \"\",\n            \"details\": [\n            ],\n
+        \           \"text\": \"The current status of an object you are trying to
+        use does not allow that operation.\",\n            \"value\": \"blocked\"\n
+        \       }\n    ],\n    \"metadata\": {\n        \"clientTransactionId\": \"\",\n
+        \       \"serverTransactionId\": \"20260310085749357-dnsrobot-robots1-3007277-0\"\n
+        \   },\n    \"status\": \"error\",\n    \"warnings\": [\n    ]\n}\n"
+    headers:
+      content-length:
+      - '502'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 10 Mar 2026 08:57:49 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000
+      x-content-type-options:
+      - nosniff
+      - nosniff
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"zoneConfig": {"accountId": "181217txillqrawg3w2", "addDate": "2026-03-10T08:42:38Z",
+      "dnsSecMode": "off", "dnsServerGroupId": null, "emailAddress": "hostmaster@lexicon-example-domain.de",
+      "id": "260310i7fx2xtjv6kse", "lastChangeDate": "2026-03-10T08:57:45Z", "masterIp":
+      "", "name": "lexicon-example-domain.de", "nameUnicode": "lexicon-example-domain.de",
+      "restorableUntil": null, "soaValues": {"expire": 3600000, "negativeTtl": 900,
+      "refresh": 86400, "retry": 7200, "ttl": 86400}, "status": "blocked", "templateValues":
+      null, "type": "NATIVE", "zoneTransferWhitelist": []}, "recordsToAdd": [{"name":
+      "_acme-challenge.listrecordset.lexicon-example-domain.de", "type": "TXT", "content":
+      "challengetoken2", "ttl": 3600}], "page": 1}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '797'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.5
+    method: POST
+    uri: https://partner.http.net/api/dns/v1/json/zoneUpdate
+  response:
+    body:
+      string: "{\n    \"errors\": [\n    ],\n    \"metadata\": {\n        \"clientTransactionId\":
+        \"\",\n        \"serverTransactionId\": \"20260310085750584-dnsrobot-robots1-3007277-0\"\n
+        \   },\n    \"response\": {\n        \"records\": [\n            {\n                \"accountId\":
+        \"181217txillqrawg3w2\",\n                \"addDate\": \"2026-03-10T08:42:38Z\",\n
+        \               \"comments\": \"\",\n                \"content\": \"aspmx.l.google.com\",\n
+        \               \"id\": \"260310d4f3kjett463e\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"name\": \"lexicon-example-domain.de\",\n
+        \               \"priority\": 1,\n                \"recordTemplateId\": null,\n
+        \               \"ttl\": 3600,\n                \"type\": \"MX\",\n                \"zoneConfigId\":
+        \"260310i7fx2xtjv6kse\"\n            },\n            {\n                \"accountId\":
+        \"181217txillqrawg3w2\",\n                \"addDate\": \"2026-03-10T08:42:38Z\",\n
+        \               \"comments\": \"\",\n                \"content\": \"alt1.aspmx.l.google.com\",\n
+        \               \"id\": \"260310zqr447bhbbflq\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"name\": \"lexicon-example-domain.de\",\n
+        \               \"priority\": 5,\n                \"recordTemplateId\": null,\n
+        \               \"ttl\": 3600,\n                \"type\": \"MX\",\n                \"zoneConfigId\":
+        \"260310i7fx2xtjv6kse\"\n            },\n            {\n                \"accountId\":
+        \"181217txillqrawg3w2\",\n                \"addDate\": \"2026-03-10T08:42:38Z\",\n
+        \               \"comments\": \"\",\n                \"content\": \"ns1.routing.net\",\n
+        \               \"id\": \"260310y6yrc6lfizst6\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"name\": \"lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 86400,\n                \"type\": \"NS\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"alt2.aspmx.l.google.com\",\n                \"id\": \"26031052ho23dhn7tqg\",\n
+        \               \"lastChangeDate\": \"2026-03-10T08:42:38Z\",\n                \"name\":
+        \"lexicon-example-domain.de\",\n                \"priority\": 5,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"MX\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"116.202.71.47\",\n                \"id\": \"260310fmhjrnofkuh52\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"name\": \"www.lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"A\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"alt3.aspmx.l.google.com\",\n                \"id\": \"2603102wpc43wwli3ly\",\n
+        \               \"lastChangeDate\": \"2026-03-10T08:42:38Z\",\n                \"name\":
+        \"lexicon-example-domain.de\",\n                \"priority\": 10,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"MX\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"alt4.aspmx.l.google.com\",\n                \"id\": \"260310vdjezh7aidgr6\",\n
+        \               \"lastChangeDate\": \"2026-03-10T08:42:38Z\",\n                \"name\":
+        \"lexicon-example-domain.de\",\n                \"priority\": 10,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"MX\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"116.202.71.47\",\n                \"id\": \"260310vwzewyujm7bkw\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"name\": \"lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"A\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"ns3.routing.net\",\n                \"id\": \"260310gey6cl5xahv5s\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"name\": \"lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 86400,\n                \"type\": \"NS\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"ns2.routing.net\",\n                \"id\": \"260310gguslo4ftfrju\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"name\": \"lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 86400,\n                \"type\": \"NS\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"116.202.71.49\",\n                \"id\": \"260310woym7rikjqh6u\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"name\": \"kundencenter.lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"A\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"ns1.routing.net. hostmaster.lexicon-example-domain.de. 2026031033 86400
+        7200 3600000 900\",\n                \"id\": \"260310mnwsbe5z4pxak\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:57:45Z\",\n                \"name\": \"lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 86400,\n                \"type\": \"SOA\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"116.202.71.49\",\n                \"id\": \"2603102gyj57qrmqzxy\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"name\": \"kundenbereich.lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"A\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:54:56Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"127.0.0.1\",\n                \"id\": \"2603102hs7qio3yr376\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:54:56Z\",\n                \"name\": \"localhost.lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"A\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:55:00Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"docs.example.com\",\n                \"id\": \"2603103oypva3uudxc4\",\n
+        \               \"lastChangeDate\": \"2026-03-10T08:55:00Z\",\n                \"name\":
+        \"docs.lexicon-example-domain.de\",\n                \"priority\": null,\n
+        \               \"recordTemplateId\": null,\n                \"ttl\": 3600,\n
+        \               \"type\": \"CNAME\",\n                \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n
+        \           },\n            {\n                \"accountId\": \"181217txillqrawg3w2\",\n
+        \               \"addDate\": \"2026-03-10T08:55:06Z\",\n                \"comments\":
+        \"\",\n                \"content\": \"\\\"challengetoken\\\"\",\n                \"id\":
+        \"260310ghudtxqxl65is\",\n                \"lastChangeDate\": \"2026-03-10T08:55:06Z\",\n
+        \               \"name\": \"_acme-challenge.test.lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:55:10Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"\\\"challengetoken\\\"\",\n                \"id\": \"260310rtaodfxft6waa\",\n
+        \               \"lastChangeDate\": \"2026-03-10T08:55:10Z\",\n                \"name\":
+        \"_acme-challenge.full.lexicon-example-domain.de\",\n                \"priority\":
+        null,\n                \"recordTemplateId\": null,\n                \"ttl\":
+        3600,\n                \"type\": \"TXT\",\n                \"zoneConfigId\":
+        \"260310i7fx2xtjv6kse\"\n            },\n            {\n                \"accountId\":
+        \"181217txillqrawg3w2\",\n                \"addDate\": \"2026-03-10T08:55:14Z\",\n
+        \               \"comments\": \"\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"260310wnahwse42lh4i\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:55:14Z\",\n                \"name\": \"_acme-challenge.fqdn.lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:55:18Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"\\\"challengetoken\\\"\",\n                \"id\": \"260310b6w2tgdbbygic\",\n
+        \               \"lastChangeDate\": \"2026-03-10T08:55:18Z\",\n                \"name\":
+        \"random.test.lexicon-example-domain.de\",\n                \"priority\":
+        null,\n                \"recordTemplateId\": null,\n                \"ttl\":
+        3600,\n                \"type\": \"TXT\",\n                \"zoneConfigId\":
+        \"260310i7fx2xtjv6kse\"\n            },\n            {\n                \"accountId\":
+        \"181217txillqrawg3w2\",\n                \"addDate\": \"2026-03-10T08:55:22Z\",\n
+        \               \"comments\": \"\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"260310lf2pyqdciie7c\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:55:22Z\",\n                \"name\": \"random.fulltest.lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:55:26Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"\\\"challengetoken\\\"\",\n                \"id\": \"260310w4ofrsc56uuke\",\n
+        \               \"lastChangeDate\": \"2026-03-10T08:55:26Z\",\n                \"name\":
+        \"random.fqdntest.lexicon-example-domain.de\",\n                \"priority\":
+        null,\n                \"recordTemplateId\": null,\n                \"ttl\":
+        3600,\n                \"type\": \"TXT\",\n                \"zoneConfigId\":
+        \"260310i7fx2xtjv6kse\"\n            },\n            {\n                \"accountId\":
+        \"181217txillqrawg3w2\",\n                \"addDate\": \"2026-03-10T08:55:30Z\",\n
+        \               \"comments\": \"\",\n                \"content\": \"\\\"ttlshouldbe3600\\\"\",\n
+        \               \"id\": \"260310ehfwz3wivi7vi\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:55:30Z\",\n                \"name\": \"ttl.fqdn.lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:55:45Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"\\\"challengetoken\\\"\",\n                \"id\": \"2603107n5pllotdqkbc\",\n
+        \               \"lastChangeDate\": \"2026-03-10T08:55:45Z\",\n                \"name\":
+        \"updated.test.lexicon-example-domain.de\",\n                \"priority\":
+        null,\n                \"recordTemplateId\": null,\n                \"ttl\":
+        3600,\n                \"type\": \"TXT\",\n                \"zoneConfigId\":
+        \"260310i7fx2xtjv6kse\"\n            },\n            {\n                \"accountId\":
+        \"181217txillqrawg3w2\",\n                \"addDate\": \"2026-03-10T08:56:00Z\",\n
+        \               \"comments\": \"\",\n                \"content\": \"\\\"updated\\\"\",\n
+        \               \"id\": \"2603105b2cqnlezcdpi\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:56:00Z\",\n                \"name\": \"orig.nameonly.test.lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:56:14Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"\\\"challengetoken\\\"\",\n                \"id\": \"260310f4gsob7y5ftpe\",\n
+        \               \"lastChangeDate\": \"2026-03-10T08:56:14Z\",\n                \"name\":
+        \"updated.testfull.lexicon-example-domain.de\",\n                \"priority\":
+        null,\n                \"recordTemplateId\": null,\n                \"ttl\":
+        3600,\n                \"type\": \"TXT\",\n                \"zoneConfigId\":
+        \"260310i7fx2xtjv6kse\"\n            },\n            {\n                \"accountId\":
+        \"181217txillqrawg3w2\",\n                \"addDate\": \"2026-03-10T08:56:28Z\",\n
+        \               \"comments\": \"\",\n                \"content\": \"\\\"challengetoken\\\"\",\n
+        \               \"id\": \"260310wx6fnvjonidpw\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:56:28Z\",\n                \"name\": \"updated.testfqdn.lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:57:29Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"\\\"challengetoken\\\"\",\n                \"id\": \"260310nv53yqa5tykse\",\n
+        \               \"lastChangeDate\": \"2026-03-10T08:57:29Z\",\n                \"name\":
+        \"_acme-challenge.noop.lexicon-example-domain.de\",\n                \"priority\":
+        null,\n                \"recordTemplateId\": null,\n                \"ttl\":
+        3600,\n                \"type\": \"TXT\",\n                \"zoneConfigId\":
+        \"260310i7fx2xtjv6kse\"\n            },\n            {\n                \"accountId\":
+        \"181217txillqrawg3w2\",\n                \"addDate\": \"2026-03-10T08:57:33Z\",\n
+        \               \"comments\": \"\",\n                \"content\": \"\\\"challengetoken1\\\"\",\n
+        \               \"id\": \"26031064622btn3uwsy\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:57:33Z\",\n                \"name\": \"_acme-challenge.createrecordset.lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:57:37Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"\\\"challengetoken2\\\"\",\n                \"id\": \"260310lnfgyfz2so2as\",\n
+        \               \"lastChangeDate\": \"2026-03-10T08:57:37Z\",\n                \"name\":
+        \"_acme-challenge.createrecordset.lexicon-example-domain.de\",\n                \"priority\":
+        null,\n                \"recordTemplateId\": null,\n                \"ttl\":
+        3600,\n                \"type\": \"TXT\",\n                \"zoneConfigId\":
+        \"260310i7fx2xtjv6kse\"\n            },\n            {\n                \"accountId\":
+        \"181217txillqrawg3w2\",\n                \"addDate\": \"2026-03-10T08:57:45Z\",\n
+        \               \"comments\": \"\",\n                \"content\": \"\\\"challengetoken1\\\"\",\n
+        \               \"id\": \"260310ohpqatpbmhim4\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:57:45Z\",\n                \"name\": \"_acme-challenge.listrecordset.lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:57:50Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"\\\"challengetoken2\\\"\",\n                \"id\": \"2603106cfhjb32rnkgo\",\n
+        \               \"lastChangeDate\": \"2026-03-10T08:57:50Z\",\n                \"name\":
+        \"_acme-challenge.listrecordset.lexicon-example-domain.de\",\n                \"priority\":
+        null,\n                \"recordTemplateId\": null,\n                \"ttl\":
+        3600,\n                \"type\": \"TXT\",\n                \"zoneConfigId\":
+        \"260310i7fx2xtjv6kse\"\n            }\n        ],\n        \"zoneConfig\":
+        {\n            \"accountId\": \"181217txillqrawg3w2\",\n            \"addDate\":
+        \"2026-03-10T08:42:38Z\",\n            \"dnsSecMode\": \"off\",\n            \"dnsServerGroupId\":
+        null,\n            \"emailAddress\": \"hostmaster@lexicon-example-domain.de\",\n
+        \           \"id\": \"260310i7fx2xtjv6kse\",\n            \"lastChangeDate\":
+        \"2026-03-10T08:57:50Z\",\n            \"masterIp\": \"\",\n            \"name\":
+        \"lexicon-example-domain.de\",\n            \"nameUnicode\": \"lexicon-example-domain.de\",\n
+        \           \"restorableUntil\": null,\n            \"soaValues\": {\n                \"expire\":
+        3600000,\n                \"negativeTtl\": 900,\n                \"refresh\":
+        86400,\n                \"retry\": 7200,\n                \"ttl\": 86400\n
+        \           },\n            \"status\": \"blocked\",\n            \"templateValues\":
+        null,\n            \"type\": \"NATIVE\",\n            \"zoneTransferWhitelist\":
+        [\n            ]\n        }\n    },\n    \"status\": \"pending\",\n    \"warnings\":
+        [\n    ]\n}\n"
+    headers:
+      content-length:
+      - '18887'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 10 Mar 2026 08:57:50 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      - nosniff
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"filter": {"subFilterConnective": "AND", "subFilter": [{"field": "zoneConfigId",
+      "value": "260310i7fx2xtjv6kse"}, {"field": "RecordType", "value": "TXT"}, {"field":
+      "RecordName", "value": "_acme-challenge.listrecordset.lexicon-example-domain.de"}]},
+      "page": 1}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '326'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.5
+    method: POST
+    uri: https://partner.http.net/api/dns/v1/json/recordsFind
+  response:
+    body:
+      string: "{\n    \"errors\": [\n    ],\n    \"metadata\": {\n        \"clientTransactionId\":
+        \"\",\n        \"serverTransactionId\": \"20260310085750897-dnsrobot-robots1-3007277-0\"\n
+        \   },\n    \"response\": {\n        \"data\": [\n            {\n                \"accountId\":
+        \"181217txillqrawg3w2\",\n                \"addDate\": \"2026-03-10T08:57:45Z\",\n
+        \               \"comments\": \"\",\n                \"content\": \"\\\"challengetoken1\\\"\",\n
+        \               \"id\": \"260310ohpqatpbmhim4\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:57:45Z\",\n                \"name\": \"_acme-challenge.listrecordset.lexicon-example-domain.de\",\n
+        \               \"priority\": null,\n                \"recordTemplateId\":
+        null,\n                \"ttl\": 3600,\n                \"type\": \"TXT\",\n
+        \               \"zoneConfigId\": \"260310i7fx2xtjv6kse\"\n            },\n
+        \           {\n                \"accountId\": \"181217txillqrawg3w2\",\n                \"addDate\":
+        \"2026-03-10T08:57:50Z\",\n                \"comments\": \"\",\n                \"content\":
+        \"\\\"challengetoken2\\\"\",\n                \"id\": \"2603106cfhjb32rnkgo\",\n
+        \               \"lastChangeDate\": \"2026-03-10T08:57:50Z\",\n                \"name\":
+        \"_acme-challenge.listrecordset.lexicon-example-domain.de\",\n                \"priority\":
+        null,\n                \"recordTemplateId\": null,\n                \"ttl\":
+        3600,\n                \"type\": \"TXT\",\n                \"zoneConfigId\":
+        \"260310i7fx2xtjv6kse\"\n            }\n        ],\n        \"limit\": 25,\n
+        \       \"page\": 1,\n        \"totalEntries\": 2,\n        \"totalPages\":
+        1,\n        \"type\": \"FindRecordsResult\"\n    },\n    \"status\": \"success\",\n
+        \   \"warnings\": [\n    ]\n}\n"
+    headers:
+      content-length:
+      - '1575'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 10 Mar 2026 08:57:50 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      - nosniff
+    status:
+      code: 200
+      message: OK
+version: 1

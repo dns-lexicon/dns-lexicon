@@ -1,0 +1,62 @@
+interactions:
+- request:
+    body: '{"filter": {"field": "ZoneName", "value": "lexicon-example-domain.de"},
+      "page": 1}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '147'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.5
+    method: POST
+    uri: https://partner.http.net/api/dns/v1/json/zoneConfigsFind
+  response:
+    body:
+      string: "{\n    \"errors\": [\n    ],\n    \"metadata\": {\n        \"clientTransactionId\":
+        \"\",\n        \"serverTransactionId\": \"20260310085449983-dnsrobot-robots1-3007277-0\"\n
+        \   },\n    \"response\": {\n        \"data\": [\n            {\n                \"accountId\":
+        \"181217txillqrawg3w2\",\n                \"addDate\": \"2026-03-10T08:42:38Z\",\n
+        \               \"dnsSecMode\": \"off\",\n                \"dnsServerGroupId\":
+        null,\n                \"emailAddress\": \"hostmaster@lexicon-example-domain.de\",\n
+        \               \"id\": \"260310i7fx2xtjv6kse\",\n                \"lastChangeDate\":
+        \"2026-03-10T08:42:38Z\",\n                \"masterIp\": \"\",\n                \"name\":
+        \"lexicon-example-domain.de\",\n                \"nameUnicode\": \"lexicon-example-domain.de\",\n
+        \               \"restorableUntil\": null,\n                \"soaValues\":
+        {\n                    \"expire\": 3600000,\n                    \"negativeTtl\":
+        900,\n                    \"refresh\": 86400,\n                    \"retry\":
+        7200,\n                    \"ttl\": 86400\n                },\n                \"status\":
+        \"active\",\n                \"templateValues\": null,\n                \"type\":
+        \"NATIVE\",\n                \"zoneTransferWhitelist\": [\n                ]\n
+        \           }\n        ],\n        \"limit\": 25,\n        \"page\": 1,\n
+        \       \"totalEntries\": 1,\n        \"totalPages\": 1,\n        \"type\":
+        \"FindZoneConfigsResult\"\n    },\n    \"status\": \"success\",\n    \"warnings\":
+        [\n    ]\n}\n"
+    headers:
+      content-length:
+      - '1377'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 10 Mar 2026 08:54:50 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=15768000
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      - nosniff
+    status:
+      code: 200
+      message: OK
+version: 1
