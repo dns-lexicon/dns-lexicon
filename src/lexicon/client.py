@@ -83,7 +83,9 @@ class Client(AbstractContextManager):
     ):
         if not config:
             # If there is no config specified, we load a non-interactive configuration.
-            self.config = helper_config.ConfigResolver().with_env().with_config_dir(os.getcwd())
+            self.config = (
+                helper_config.ConfigResolver().with_env().with_config_dir(os.getcwd())
+            )
         elif not isinstance(config, helper_config.ConfigResolver):
             # If config is not a ConfigResolver, we are in a legacy situation.
             # We protect this part of the Client API.

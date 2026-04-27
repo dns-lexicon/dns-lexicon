@@ -126,7 +126,7 @@ class Provider(BaseProvider):
 
     # Create record. If record already exists with the same content, do nothing
     def create_record(self, rtype: str, name: str, content: str) -> bool:
-        (desec_rec, index) = self._get_record_set(rtype, name)
+        desec_rec, index = self._get_record_set(rtype, name)
         desec_content = self._sanitize_request_content(content, rtype)
         subname = self._relative_name(name) if name else ""
         if not desec_rec or index == -1:
@@ -169,10 +169,10 @@ class Provider(BaseProvider):
                     f"update_record: No match for identifier '{identifier}'. Abort."
                 )
                 return False
-            (desec_rec, index) = rec_sets[identifier]
+            desec_rec, index = rec_sets[identifier]
         else:
             # We can't filter for content, as it likely changed
-            (desec_rec, index) = self._get_record_set(rtype, name, None, identifier)
+            desec_rec, index = self._get_record_set(rtype, name, None, identifier)
 
         if not desec_rec or index == -1:
             LOGGER.warning("update_record: No matching record found. Abort.")
@@ -210,7 +210,7 @@ class Provider(BaseProvider):
         content: OptStr = None,
     ) -> bool:
         # Get first item
-        (desec_rec, index) = self._get_record_set(rtype, name, content, identifier)
+        desec_rec, index = self._get_record_set(rtype, name, content, identifier)
         if not desec_rec or index == -1:
             LOGGER.debug("delete_record: Record not found. Ignore.")
             return True

@@ -36,6 +36,7 @@ dependencies = [
     "cryptography >= 2",
     "pyyaml >= 3",
     "requests >= 2",
+    "requests_unixsocket >= 0.4",
     "beautifulsoup4 >= 4",
     "pyotp >= 2",
     "dnspython >= 2",
@@ -119,6 +120,10 @@ filterwarnings = [
 show_error_codes = true
 warn_redundant_casts = true
 warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+module = ["requests_unixsocket.*"]
+follow_untyped_imports = true
 
 [tool.isort]
 profile = "black"
