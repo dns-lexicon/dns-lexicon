@@ -121,6 +121,10 @@ show_error_codes = true
 warn_redundant_casts = true
 warn_unused_ignores = true
 
+[[tool.mypy.overrides]]
+module = ["requests_unixsocket.*"]
+follow_untyped_imports = true
+
 [tool.isort]
 profile = "black"
 
