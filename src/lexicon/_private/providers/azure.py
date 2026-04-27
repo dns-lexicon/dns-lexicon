@@ -359,7 +359,9 @@ class Provider(BaseProvider):
 
 def _get_alias_content(properties):
     """Extract content from Azure ALIAS record (targetResource or trafficManagementProfile)."""
-    target = properties.get("targetResource") or properties.get("trafficManagementProfile")
+    target = properties.get("targetResource") or properties.get(
+        "trafficManagementProfile"
+    )
     if target and target.get("id"):
         return target["id"]
     return None

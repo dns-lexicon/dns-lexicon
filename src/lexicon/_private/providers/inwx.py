@@ -123,12 +123,12 @@ class Provider(BaseProvider):
             "domain": self._domain,
             "type": rtype.upper(),
             "name": self._full_name(name),
-            "content": re.sub('\\\\;', ';', str(content)),
+            "content": re.sub("\\\\;", ";", str(content)),
         }
         if self._get_lexicon_option("ttl"):
             opts["ttl"] = self._get_lexicon_option("ttl")
         if opts["type"] in ["MX", "SRV"]:
-            vals = shlex.split(opts['content'])
+            vals = shlex.split(opts["content"])
             if len(vals) < 2:
                 raise ValueError("prio missing")
             opts["prio"] = vals[0]
@@ -213,9 +213,9 @@ class Provider(BaseProvider):
             if name is not None:
                 opts["name"] = self._full_name(name)
             if content is not None:
-                opts["content"] = re.sub('\\\\;', ';', str(content))
+                opts["content"] = re.sub("\\\\;", ";", str(content))
             if opts["type"] in ["MX", "SRV"]:
-                vals = shlex.split(opts['content'])
+                vals = shlex.split(opts["content"])
                 if len(vals) < 2:
                     raise ValueError("prio missing")
                 opts["prio"] = vals[0]

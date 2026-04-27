@@ -427,8 +427,9 @@ class HetznerCloud(BaseProvider):
         if not self._is_action_running(action):
             return self._was_action_successful(action)
 
+        wait_time = int(self._get_provider_option("retry_wait_time") or 500)
         while self._is_action_running(action):
-            sleep(0.5)
+            sleep(wait_time / 1000)
             action = self._get_action(action["id"])
 
         return self._was_action_successful(action)
