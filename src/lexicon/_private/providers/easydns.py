@@ -144,8 +144,6 @@ class Provider(BaseProvider):
         if query_params is None:
             query_params = {}
         query_params["format"] = "json"
-        query_params["_user"] = self._get_provider_option("auth_username")
-        query_params["_key"] = self._get_provider_option("auth_token")
         default_headers = {
             "Accept": "application/json",
             "Content-Type": "application/json",
@@ -157,6 +155,10 @@ class Provider(BaseProvider):
             params=query_params,
             data=json.dumps(data),
             headers=default_headers,
+            auth=(
+                self._get_provider_option("auth_username"),
+                self._get_provider_option("auth_token"),
+            ),
         )
         # if the request fails for any reason, throw an error.
         response.raise_for_status()
