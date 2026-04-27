@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+
+## 3.25.0 - 27/04/2026
 ### Added
 * Add the `httpnet` provider (#77)
 
