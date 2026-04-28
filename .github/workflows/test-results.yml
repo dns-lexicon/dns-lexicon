@@ -48,7 +48,7 @@ jobs:
               ;;
           esac
       - name: Create badge
-        uses: schneegans/dynamic-badges-action@v1.7.0
+        uses: schneegans/dynamic-badges-action@v1.8.0
         # Upload only for main branch
         if: >
           github.event_name == 'workflow_run' && github.event.workflow_run.head_branch == 'main' ||
