@@ -11,7 +11,6 @@ import pkgutil
 import re
 import sys
 from types import ModuleType
-from typing import Dict
 
 from lexicon._private import providers as _providers
 
@@ -21,9 +20,9 @@ else:
     from importlib_metadata import Distribution, PackageNotFoundError
 
 
-def find_providers() -> Dict[str, bool]:
-    """Find all providers registered in Lexicon, and their availability"""
-    providers_list = sorted(
+def find_providers() -> list[str]:
+    """Return the sorted names of all providers registered in Lexicon."""
+    return sorted(
         {
             modname
             for (_, modname, _) in pkgutil.iter_modules(_providers.__path__)
@@ -31,15 +30,44 @@ def find_providers() -> Dict[str, bool]:
         }
     )
 
+
+def list_extras(provider: str) -> list[str]:
+    """Return the PyPI package names declared for ``provider`` in the
+    package's optional-dependencies. Empty list when no metadata is
+    available."""
     try:
         distribution = Distribution.from_name("dns-lexicon")
     except PackageNotFoundError:
-        return {provider: True for provider in providers_list}
-    else:
-        return {
-            provider: _resolve_requirements(provider, distribution)
-            for provider in providers_list
-        }
+        return []
+
+    requires = distribution.requires
+    if requires is None:
+        raise ValueError("Error while trying finding requirements.")
+
+    extras: list[str] = []
+    for require in requires:
+        match = re.match(
+            rf"^([\w-]+)\s*[<>=]+\s*[\d\.-]+\s*;\s*extra\s*==\s*(?:\"|'){provider}(?:\"|')$",
+            require,
+        )
+        if match is not None:
+            extras.append(match.group(1))
+    return extras
+
+
+def is_installed(package: str) -> bool:
+    """Return True when ``package`` is installed."""
+    try:
+        Distribution.from_name(package)
+    except PackageNotFoundError:
+        return False
+    return True
+
+
+def find_missing_extras(provider: str) -> list[str]:
+    """Return the entries of ``list_extras(provider)`` that are not
+    installed. Empty list when no metadata is available."""
+    return [extra for extra in list_extras(provider) if not is_installed(extra)]
 
 
 def load_provider_module(provider_name: str) -> ModuleType:
@@ -52,33 +80,3 @@ def lexicon_version() -> str:
         return Distribution.from_name("dns-lexicon").version
     except PackageNotFoundError:
         return "unknown"
-
-
-def _resolve_requirements(provider: str, distribution: Distribution) -> bool:
-    requires = distribution.requires
-    if requires is None:
-        raise ValueError("Error while trying finding requirements.")
-
-    requirements: list[str] = []
-    for require in requires:
-        match = re.match(
-            rf"^([\w-]+)\s*[<>=]+\s*[\d\.-]+\s*;\s*extra\s*==\s*(?:\"|'){provider}(?:\"|')$",
-            require,
-        )
-
-        if match is not None:
-            requirements.append(match.group(1))
-
-    if not requirements:
-        # No extra for this provider
-        return True
-
-    for requirement in requirements:
-        try:
-            Distribution.from_name(requirement)
-        except PackageNotFoundError:
-            # At least one extra requirement is not fulfilled
-            return False
-
-    # All extra requirements are fulfilled
-    return True

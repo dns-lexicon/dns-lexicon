@@ -14,4 +14,6 @@ gransy
 
    Authentication can be provided either as username/password (SOAP API at ``https://subreg.cz/wsdl``) or as a Bearer token (REST API at ``https://api.subreg.cz``). When ``auth_token`` is set, the REST API is used.
 
+   The SOAP API requires the optional ``zeep`` dependency (``pip install dns-lexicon[gransy]``); the REST API needs no extra dependency.
+
    The SOAP API definition is bundled; if Gransy changes the API, ``--remote-api-definition`` uses the one served by subreg.cz instead, on every run, until the bundled copy is refreshed.

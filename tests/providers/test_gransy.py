@@ -8,7 +8,9 @@ import pytest
 import requests
 from integration_tests import IntegrationTestsV2, vcr_integration_test
 
+import lexicon.client
 from lexicon._private.providers.gransy import SOAP_WSDL, SOAP_WSDL_URL
+from lexicon.config import ConfigResolver
 
 
 class GransyApexTests:
@@ -187,6 +189,36 @@ class TestGransyRESTProvider(GransyApexTests, IntegrationTestsV2):
             "LEXICON_GRANSY_PASSWORD",
         ):
             monkeypatch.delenv(var, raising=False)
+
+
+def test_client_init_without_zeep_and_without_token_raises(monkeypatch):
+    from lexicon import client as client_module
+    from lexicon.exceptions import ProviderNotAvailableError
+
+    monkeypatch.setattr(client_module, "_is_installed", lambda pkg: pkg != "zeep")
+    options = {
+        "provider_name": "gransy",
+        "action": "list",
+        "domain": "example.com",
+        "type": "TXT",
+    }
+    with pytest.raises(ProviderNotAvailableError) as exc_info:
+        lexicon.client.Client(ConfigResolver().with_dict(options))
+    assert "--auth-token" in str(exc_info.value)
+
+
+def test_client_init_without_zeep_with_token_does_not_raise(monkeypatch):
+    from lexicon import client as client_module
+
+    monkeypatch.setattr(client_module, "_is_installed", lambda pkg: pkg != "zeep")
+    options = {
+        "provider_name": "gransy",
+        "action": "list",
+        "domain": "example.com",
+        "type": "TXT",
+        "gransy": {"auth_token": "fake-token"},
+    }
+    lexicon.client.Client(ConfigResolver().with_dict(options))
 
 
 @pytest.mark.skipif(

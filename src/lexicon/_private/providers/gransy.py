@@ -95,6 +95,31 @@ class Provider(BaseProvider):
     def get_nameservers() -> list[str]:
         return ["gransy.com"]
 
+    @classmethod
+    def filter_required_extras(
+        cls, extras: list[str], config: ConfigResolver
+    ) -> list[str]:
+        if config.resolve("lexicon:gransy:auth_token"):
+            return [extra for extra in extras if extra != "zeep"]
+        return extras
+
+    @classmethod
+    def missing_extras_warning(cls, provider_name: str, missing: list[str]) -> str:
+        return (
+            "WARNING: `zeep` is required only for the SOAP backend "
+            "(--auth-username and --auth-password). The REST backend "
+            "selected by --auth-token needs no extra dependency. "
+            f"To install zeep, run `pip install dns-lexicon[{provider_name}]`."
+        )
+
+    @classmethod
+    def missing_extras_error(cls, provider_name: str, missing: list[str]) -> str:
+        return (
+            "Cannot use the gransy SOAP backend: `zeep` is not installed. "
+            f"Either run `pip install dns-lexicon[{provider_name}]` to "
+            "enable SOAP, or pass --auth-token to use the REST backend."
+        )
+
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.description = (
