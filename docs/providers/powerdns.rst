@@ -1,8 +1,8 @@
 powerdns
-    * ``auth_token`` Specify token for authentication
+    * `auth_token` specify token for authentication
 
-    * ``pdns_server`` Uri for powerdns server (provide a filename when communicating with af_unix sockets)
+    * `pdns_server` URI for PowerDNS server (provide a filename when communicating with AF_UNIX sockets)
 
-    * ``pdns_server_id`` Server id to interact with
+    * `pdns_server_id` Server ID to interact with
 
-    * ``pdns_disable_notify`` Disable slave notifications from master
+    * `pdns_disable_notify` Disable slave notifications from master

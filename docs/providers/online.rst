@@ -1,2 +1,2 @@
 online
-    * ``auth_token`` Specify private api token
+    * `auth_token` specify private api token

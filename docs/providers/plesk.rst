@@ -1,6 +1,6 @@
 plesk
-    * ``auth_username`` Specify username for authentication
+    * `auth_username` specify username for authentication
 
-    * ``auth_password`` Specify password for authentication
+    * `auth_password` specify password for authentication
 
-    * ``plesk_server`` Specify url to the plesk web ui, including the port
+    * `plesk_server` specify URL to the Plesk Web UI, including the port

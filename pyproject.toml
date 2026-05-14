@@ -84,7 +84,7 @@ dev = [
     "types-requests",
     "types-toml",
 ]
-doc = ["sphinx", "sphinx-mdinclude", "piccolo-theme"]
+doc = ["sphinx", "sphinx-mdinclude", "piccolo-theme", "myst-parser"]
 
 [project.scripts]
 lexicon = "lexicon._private.cli:main"

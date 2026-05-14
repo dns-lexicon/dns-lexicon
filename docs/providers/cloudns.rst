@@ -1,12 +1,12 @@
 cloudns
-    * ``auth_id`` Specify user id for authentication
+    * `auth_id` specify user id for authentication
 
-    * ``auth_subid`` Specify subuser id for authentication
+    * `auth_subid` specify subuser id for authentication
 
-    * ``auth_subuser`` Specify subuser name for authentication
+    * `auth_subuser` specify subuser name for authentication
 
-    * ``auth_password`` Specify password for authentication
+    * `auth_password` specify password for authentication
 
-    * ``weight`` Specify the srv record weight
+    * `weight` specify the SRV record weight
 
-    * ``port`` Specify the srv record port
+    * `port` specify the SRV record port

@@ -1,4 +1,4 @@
 nfsn
-    * ``auth_username`` Specify username used to authenticate
+    * `auth_username` specify username used to authenticate
 
-    * ``auth_token`` Specify token used to authenticate
+    * `auth_token` specify token used to authenticate

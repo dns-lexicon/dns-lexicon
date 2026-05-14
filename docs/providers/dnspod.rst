@@ -1,4 +1,4 @@
 dnspod
-    * ``auth_username`` Specify api id for authentication
+    * `auth_username` specify api id for authentication
 
-    * ``auth_token`` Specify token for authentication
+    * `auth_token` specify token for authentication

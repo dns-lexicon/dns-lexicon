@@ -1,2 +1,2 @@
 devnomads
-    * ``auth_token`` Specify token for authentication.
+    * `auth_token` Specify token for authentication.

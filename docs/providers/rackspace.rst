@@ -1,10 +1,10 @@
 rackspace
-    * ``auth_account`` Specify account number for authentication
+    * `auth_account` specify account number for authentication
 
-    * ``auth_username`` Specify username for authentication. only used if --auth-token is empty.
+    * `auth_username` specify username for authentication. Only used if --auth-token is empty.
 
-    * ``auth_api_key`` Specify api key for authentication. only used if --auth-token is empty.
+    * `auth_api_key` specify api key for authentication. Only used if --auth-token is empty.
 
-    * ``auth_token`` Specify token for authentication. if empty, the username and api key will be used to create a token.
+    * `auth_token` specify token for authentication. If empty, the username and api key will be used to create a token.
 
-    * ``sleep_time`` Number of seconds to wait between update requests.
+    * `sleep_time` number of seconds to wait between update requests.

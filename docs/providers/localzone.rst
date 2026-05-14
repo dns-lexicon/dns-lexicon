@@ -1,2 +1,2 @@
 localzone
-    * ``filename`` Specify location of zone master file
+    * `filename` specify location of zone master file

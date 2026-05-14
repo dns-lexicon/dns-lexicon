@@ -1,4 +1,4 @@
 exoscale
-    * ``auth_key`` Specify api key for authentication
+    * `auth_key` specify API key for authentication
 
-    * ``auth_secret`` Specify api secret for authentication
+    * `auth_secret` specify API secret for authentication

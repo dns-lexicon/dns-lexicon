@@ -1,4 +1,4 @@
 godaddy
-    * ``auth_key`` Specify the key to access the api
+    * `auth_key` specify the key to access the API
 
-    * ``auth_secret`` Specify the secret to access the api
+    * `auth_secret` specify the secret to access the API

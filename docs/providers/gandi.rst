@@ -1,4 +1,4 @@
 gandi
-    * ``auth_token`` Specify gandi api key or personal access token
+    * `auth_token` specify Gandi API key or Personal Access Token
 
-    * ``api_protocol`` (optional) specify gandi api protocol to use: rpc (default) or rest
+    * `api_protocol` (optional) specify Gandi API protocol to use: rpc (default) or rest

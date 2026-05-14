@@ -1,6 +1,6 @@
 directadmin
-    * ``auth_password`` Specify password for authentication (or login key for two-factor authentication)
+    * `auth_password` specify password for authentication (or login key for two-factor authentication)
 
-    * ``auth_username`` Specify username for authentication
+    * `auth_username` specify username for authentication
 
-    * ``endpoint`` Specify the directadmin endpoint
+    * `endpoint` specify the DirectAdmin endpoint

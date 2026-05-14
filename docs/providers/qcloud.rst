@@ -1,4 +1,4 @@
 qcloud
-    * ``secret_id`` Specify secret_id for authentication
+    * `secret_id` specify secret_id for authentication
 
-    * ``secret_key`` Specify secret_key for authentication
+    * `secret_key` specify secret_key for authentication

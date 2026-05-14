@@ -15,9 +15,15 @@ project = "DNS-Lexicon"
 version = release = metadata["version"]
 
 extensions = [
-    "sphinx_mdinclude",
-    "sphinx.ext.autodoc",
+    "myst_parser",
 ]
+
+# myst_enable_extensions = [
+#     "deflist",      # definition lists
+#     "colon_fence",  # nicer ::: blocks
+#     "substitution", # |var| equivalents
+#     "linkify",      # auto-link URLs
+# ]
 
 html_theme = "piccolo_theme"
 html_theme_options = {

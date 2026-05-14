@@ -1,8 +1,8 @@
 infoblox
-    * ``auth_user`` Specify the user to access the infoblox wapi
+    * `auth_user` specify the user to access the Infoblox WAPI
 
-    * ``auth_psw`` Specify the password to access the infoblox wapi
+    * `auth_psw` specify the password to access the Infoblox WAPI
 
-    * ``ib_view`` Specify dns view to manage at the infoblox
+    * `ib_view` specify DNS View to manage at the Infoblox
 
-    * ``ib_host`` Specify infoblox host exposing the wapi
+    * `ib_host` specify Infoblox Host exposing the WAPI

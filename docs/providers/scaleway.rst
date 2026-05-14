@@ -1,2 +1,2 @@
 scaleway
-    * ``auth_secret_key`` Specify scaleway api key
+    * `auth_secret_key` specify Scaleway API key

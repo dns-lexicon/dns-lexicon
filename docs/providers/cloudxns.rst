@@ -1,4 +1,4 @@
 cloudxns
-    * ``auth_username`` Specify api-key for authentication
+    * `auth_username` specify API-KEY for authentication
 
-    * ``auth_token`` Specify secret-key for authentication
+    * `auth_token` specify SECRET-KEY for authentication

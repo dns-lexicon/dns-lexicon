@@ -1,12 +1,12 @@
 route53
-    * ``auth_access_key`` Specify access_key for authentication
+    * `auth_access_key` specify ACCESS_KEY for authentication
 
-    * ``auth_access_secret`` Specify access_secret for authentication
+    * `auth_access_secret` specify ACCESS_SECRET for authentication
 
-    * ``private_zone`` Indicates what kind of hosted zone to use. if true, use only private zones. if false, use only public zones
+    * `private_zone` indicates what kind of hosted zone to use. If true, use only private zones. If false, use only public zones
 
-    * ``zone_id`` The aws hostedzone id to use; e.g. 'a1b2zabcdefghi'
+    * `zone_id` the AWS HostedZone ID to use; e.g. 'A1B2ZABCDEFGHI'
 
-    * ``auth_username`` Alternative way to specify the access_key for authentication
+    * `auth_username` alternative way to specify the ACCESS_KEY for authentication
 
-    * ``auth_token`` Alternative way to specify the access_secret for authentication
+    * `auth_token` alternative way to specify the ACCESS_SECRET for authentication

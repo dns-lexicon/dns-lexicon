@@ -1,4 +1,4 @@
 glesys
-    * ``auth_username`` Specify username (cl12345)
+    * `auth_username` specify username (CL12345)
 
-    * ``auth_token`` Specify api key
+    * `auth_token` specify API key

@@ -1,2 +1,2 @@
 ionos
-    * ``api_key`` Ionos api key: public prefix + period + key proper
+    * `api_key` IONOS api key: public prefix + period + key proper

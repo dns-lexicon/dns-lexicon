@@ -1,8 +1,8 @@
 yandexcloud
-    * ``auth_token`` Specify the iam token (https://cloud.yandex.com/en/docs/dns/api-ref/authentication)
+    * `auth_token` specify the IAM token (https://cloud.yandex.com/en/docs/dns/api-ref/authentication)
 
-    * ``dns_zone_id`` Specify the dns zone id (can be obtained from web interface)
+    * `dns_zone_id` specify the DNS Zone ID (can be obtained from web interface)
 
-    * ``cloud_id`` Specify the cloud id (visible in the cloud selector in the web interface), might be needed if dns zone id is not set
+    * `cloud_id` specify the Cloud ID (visible in the cloud selector in the web interface), might be needed if DNS zone ID is not set
 
-    * ``folder_id`` Specify the folder id (https://cloud.yandex.com/en/docs/resource-manager/operations/folder/get-id) might be needed if dns zone id is not set
+    * `folder_id` specify the Folder ID (https://cloud.yandex.com/en/docs/resource-manager/operations/folder/get-id) might be needed if DNS zone ID is not set

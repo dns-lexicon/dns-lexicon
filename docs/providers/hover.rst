@@ -1,6 +1,6 @@
 hover
-    * ``auth_username`` Specify username for authentication
+    * `auth_username` specify username for authentication
 
-    * ``auth_password`` Specify password for authentication
+    * `auth_password` specify password for authentication
 
-    * ``auth_totp_secret`` Specify base32-encoded shared secret to generate an otp for authentication
+    * `auth_totp_secret` specify base32-encoded shared secret to generate an OTP for authentication

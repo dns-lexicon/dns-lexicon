@@ -1,4 +1,4 @@
 dnsmadeeasy
-    * ``auth_username`` Specify username for authentication
+    * `auth_username` specify username for authentication
 
-    * ``auth_token`` Specify token for authentication
+    * `auth_token` specify token for authentication

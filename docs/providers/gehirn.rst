@@ -1,4 +1,4 @@
 gehirn
-    * ``auth_token`` Specify access token for authentication
+    * `auth_token` specify access token for authentication
 
-    * ``auth_secret`` Specify access secret for authentication
+    * `auth_secret` specify access secret for authentication

@@ -1,2 +1,2 @@
 memset
-    * ``auth_token`` Specify api key for authentication
+    * `auth_token` specify API key for authentication

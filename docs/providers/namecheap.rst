@@ -1,8 +1,8 @@
 namecheap
-    * ``auth_token`` Specify api token for authentication
+    * `auth_token` specify api token for authentication
 
-    * ``auth_username`` Specify username for authentication
+    * `auth_username` specify username for authentication
 
-    * ``auth_client_ip`` Client ip address to send to namecheap api calls
+    * `auth_client_ip` Client IP address to send to Namecheap API calls
 
-    * ``auth_sandbox`` Whether to use the sandbox server
+    * `auth_sandbox` Whether to use the sandbox server

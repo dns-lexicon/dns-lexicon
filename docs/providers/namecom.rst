@@ -1,4 +1,4 @@
 namecom
-    * ``auth_username`` Specify a username
+    * `auth_username` specify a username
 
-    * ``auth_token`` Specify an api token
+    * `auth_token` specify an API token

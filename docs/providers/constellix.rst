@@ -1,4 +1,4 @@
 constellix
-    * ``auth_username`` Specify the api key username for authentication
+    * `auth_username` specify the API key username for authentication
 
-    * ``auth_token`` Specify secret key for authenticate=
+    * `auth_token` specify secret key for authenticate=

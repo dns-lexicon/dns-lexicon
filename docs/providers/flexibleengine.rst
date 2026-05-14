@@ -1,4 +1,4 @@
 flexibleengine
-    * ``auth_token`` Specify token for authentication
+    * `auth_token` specify token for authentication
 
-    * ``zone_id`` Specify the zone id
+    * `zone_id` specify the zone id

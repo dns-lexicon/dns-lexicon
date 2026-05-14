@@ -1,2 +1,2 @@
 namesilo
-    * ``auth_token`` Specify key for authentication
+    * `auth_token` specify key for authentication

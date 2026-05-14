@@ -30,9 +30,10 @@ def main() -> None:
 Providers available
 -------------------
 
-.. include:: ../README.rst
-    :start-after: tag: providers-table-begin
-    :end-before: tag: providers-table-end
+```{include} ../README.md
+:start-after: providers-table-begin
+:end-before: providers-table-end
+```
 
 List of options
 ---------------
@@ -43,24 +44,29 @@ List of options
         _generate_provider_details(provider)
         output.append(
             f"""\
-.. _{provider}:
-.. include:: providers/{provider}.rst
+({provider})=
+```{{include}} providers/{provider}.md
+```
 """
         )
 
-    with open(join(_DOCS, "providers_options.rst"), "w") as f:
+    with open(join(_DOCS, "providers_options.md"), "w") as f:
         f.write("\n".join(output))
         
-    _refresh_pypi_readme()
+    #_refresh_pypi_readme()
 
 
 def _generate_table(providers: List[str]) -> None:
-    items = [f"{provider}_" for provider in providers]
+    items = [f"[{provider}]({provider})" for provider in providers]
     nb_columns = 5
     max_width = max(len(item) for item in items) + 1
-    delimiter = f"+{'-' * (max_width + 1)}" * nb_columns + "+"
 
-    table = [delimiter]
+    header = [
+        f"|{' ' * (max_width + 1)}" * nb_columns + "|",
+        f"|{' ' + '-' * (max_width - 1) + ' '}" * nb_columns + "|",
+    ]
+
+    table = [*header]
 
     divided = [items[n : n + nb_columns] for n in range(0, len(items), nb_columns)]
     divided[-1] = [
@@ -69,13 +75,13 @@ def _generate_table(providers: List[str]) -> None:
 
     for data in divided:
         line = "".join(f"| {item:<{max_width}}" for item in data) + "|"
-        table = [*table, line, delimiter]
+        table = [*table, line]
 
-    with open(join(_ROOT, "README.rst")) as f:
+    with open(join(_ROOT, "README.md")) as f:
         readme_lines = f.readlines()
 
-    begin_idx = readme_lines.index(".. tag: providers-table-begin\n")
-    end_idx = readme_lines.index(".. tag: providers-table-end\n")
+    begin_idx = readme_lines.index("<!-- providers-table-begin -->\n")
+    end_idx = readme_lines.index("<!-- providers-table-end -->\n")
 
     readme_lines = (
         readme_lines[: begin_idx + 1]
@@ -87,7 +93,7 @@ def _generate_table(providers: List[str]) -> None:
         + readme_lines[end_idx:]
     )
 
-    with open(join(_ROOT, "README.rst"), "w") as f:
+    with open(join(_ROOT, "README.md"), "w") as f:
         f.writelines(readme_lines)
 
 
@@ -105,16 +111,16 @@ def _generate_provider_details(provider: str) -> None:
 
         output.append(
             f"""\
-    * ``{action.dest}`` {action.help.capitalize().replace("`", "'")}
+    * `{action.dest}` {action.help}
 """
         )
 
     if parser.description:
         output.append(
             f"""
-.. note::
-   
+```{{note}}
 {_cleanup_description(parser.description)}
+```
 
 """
         )
@@ -133,7 +139,7 @@ def _cleanup_description(description: str):
         return ""
     match = re.match(r"^(\s*)\S.*$", lines[0])
     first_ident = len(match.group(1)) if match else 0
-    lines = [f"   {line[first_ident:]}" for line in lines]
+    lines = [f"{line[first_ident:]}" for line in lines]
     return os.linesep.join(lines)
 
 

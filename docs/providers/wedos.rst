@@ -1,4 +1,4 @@
 wedos
-    * ``auth_username`` Specify email address for authentication
+    * `auth_username` specify email address for authentication
 
-    * ``auth_pass`` Specify password for wapi
+    * `auth_pass` specify password for WAPI

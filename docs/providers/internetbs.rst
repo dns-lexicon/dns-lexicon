@@ -1,4 +1,4 @@
 internetbs
-    * ``auth_key`` Specify api key for authentication
+    * `auth_key` specify API key for authentication
 
-    * ``auth_password`` Specify password for authentication
+    * `auth_password` specify password for authentication
