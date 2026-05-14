@@ -1,32 +1,3 @@
----
-substitutions:
-  build_status: |-
-    ```{image} https://img.shields.io/github/actions/workflow/status/dns-lexicon/dns-lexicon/main.yml?style=flat-square
-    :target: https://github.com/dns-lexicon/dns-lexicon/actions/workflows/main.yml
-    ```
-  coverage_status: |-
-    ```{image} https://img.shields.io/coverallsCoverage/github/dns-lexicon/dns-lexicon?branch=main&style=flat-square
-    :target: https://coveralls.io/github/dns-lexicon/dns-lexicon?branch=main
-    ```
-  docker_pulls: |-
-    ```{image} https://img.shields.io/docker/pulls/analogj/lexicon?style=flat-square
-    :target: https://hub.docker.com/r/analogj/lexicon
-    ```
-  github_license: |-
-    ```{image} https://img.shields.io/github/license/dns-lexicon/dns-lexicon?style=flat-square&color=blueviolet
-    :target: https://github.com/dns-lexicon/dns-lexicon/blob/master/LICENSE
-    ```
-  pypy_version: |-
-    ```{image} https://img.shields.io/pypi/v/dns-lexicon?style=flat-square
-    :target: https://pypi.python.org/pypi/dns-lexicon
-    ```
-  tests_status: |-
-    ```{image} https://img.shields.io/endpoint?url=https%3A%2F%2Fgist.githubusercontent.com%2Fadferrand%2F5985ab4d62747586f12b0700a0107640%2Fraw%2Ftest_badge.json&style=flat-square
-    :target: https://github.com/dns-lexicon/dns-lexicon/actions/workflows/test-results.yml
-    ```
----
-
-```{raw} html
 <h1>
     <picture>
         <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/dns-lexicon/dns-lexicon/main/docs/images/logo_named_white.svg">
@@ -34,19 +5,19 @@ substitutions:
         <img alt="Lexicon" src="">
     </picture>
 </h1>
-```
 
 Manipulate DNS records on various DNS providers in a standardized/agnostic way.
 
-{{ build_status }} {{ tests_status }} {{ coverage_status }} {{ docker_pulls }} {{ pypy_version }} {{ github_license }}
-
-```{contents} Table of Contents
-:local: true
-```
+![](https://img.shields.io/github/actions/workflow/status/dns-lexicon/dns-lexicon/main.yml?style=flat-square)
+![](https://img.shields.io/coverallsCoverage/github/dns-lexicon/dns-lexicon?branch=main&style=flat-square)
+![](https://img.shields.io/docker/pulls/analogj/lexicon?style=flat-square)
+![](https://img.shields.io/github/license/dns-lexicon/dns-lexicon?style=flat-square&color=blueviolet)
+![](https://img.shields.io/pypi/v/dns-lexicon?style=flat-square)
+![](https://img.shields.io/endpoint?url=https%3A%2F%2Fgist.githubusercontent.com%2Fadferrand%2F5985ab4d62747586f12b0700a0107640%2Fraw%2Ftest_badge.json&style=flat-square)
 
 <!-- intro-begin -->
 
-# Why using Lexicon?
+## Why using Lexicon?
 
 Lexicon provides a way to manipulate DNS records on multiple DNS providers in a standardized way.
 
@@ -79,7 +50,7 @@ Lexicon was designed to be used in automation, specifically letsencrypt.
 
 - [Generating Intranet & Private Network SSL Certificates using Lets Encrypt & Lexicon](http://blog.thesparktree.com/post/138999997429/generating-intranet-and-private-network-ssl)
 
-# Supported providers
+## Supported providers
 
 Only DNS providers who have an API can be supported by `lexicon`.
 
@@ -95,42 +66,42 @@ Lexicon currently supports 90 providers:
 
 |                                  |                                  |                                  |                                  |                                  |
 | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- |
-| [aliyun](aliyun)                 | [arvancloud](arvancloud)         | [aurora](aurora)                 | [azure](azure)                   | [cloudflare](cloudflare)         |
-| [cloudns](cloudns)               | [cloudxns](cloudxns)             | [conoha](conoha)                 | [constellix](constellix)         | [ddns](ddns)                     |
-| [desec](desec)                   | [devnomads](devnomads)           | [digitalocean](digitalocean)     | [dinahosting](dinahosting)       | [directadmin](directadmin)       |
-| [dnsimple](dnsimple)             | [dnsmadeeasy](dnsmadeeasy)       | [dnspark](dnspark)               | [dnspod](dnspod)                 | [dnsservices](dnsservices)       |
-| [dreamhost](dreamhost)           | [duckdns](duckdns)               | [dynu](dynu)                     | [easydns](easydns)               | [easyname](easyname)             |
-| [euserv](euserv)                 | [exoscale](exoscale)             | [flexibleengine](flexibleengine) | [gandi](gandi)                   | [gehirn](gehirn)                 |
-| [glesys](glesys)                 | [godaddy](godaddy)               | [googleclouddns](googleclouddns) | [gransy](gransy)                 | [gratisdns](gratisdns)           |
-| [henet](henet)                   | [hetzner](hetzner)               | [hostingde](hostingde)           | [hover](hover)                   | [httpnet](httpnet)               |
-| [infoblox](infoblox)             | [infomaniak](infomaniak)         | [internetbs](internetbs)         | [inwx](inwx)                     | [ionos](ionos)                   |
-| [joker](joker)                   | [linode](linode)                 | [linode4](linode4)               | [localzone](localzone)           | [luadns](luadns)                 |
-| [memset](memset)                 | [misaka](misaka)                 | [mythicbeasts](mythicbeasts)     | [namecheap](namecheap)           | [namecom](namecom)               |
-| [namesilo](namesilo)             | [netcup](netcup)                 | [nfsn](nfsn)                     | [njalla](njalla)                 | [nsone](nsone)                   |
-| [oci](oci)                       | [onapp](onapp)                   | [online](online)                 | [ovh](ovh)                       | [plesk](plesk)                   |
-| [pointhq](pointhq)               | [porkbun](porkbun)               | [powerdns](powerdns)             | [qcloud](qcloud)                 | [rackspace](rackspace)           |
-| [rage4](rage4)                   | [rcodezero](rcodezero)           | [regfish](regfish)               | [route53](route53)               | [safedns](safedns)               |
-| [sakuracloud](sakuracloud)       | [scaleway](scaleway)             | [softlayer](softlayer)           | [timeweb](timeweb)               | [transip](transip)               |
-| [ultradns](ultradns)             | [valuedomain](valuedomain)       | [vercel](vercel)                 | [vultr](vultr)                   | [wedos](wedos)                   |
-| [yandex](yandex)                 | [yandexcloud](yandexcloud)       | [zeit](zeit)                     | [zilore](zilore)                 | [zonomi](zonomi)                 |
+| [aliyun][aliyun]                 | [arvancloud][arvancloud]         | [aurora][aurora]                 | [azure][azure]                   | [cloudflare][cloudflare]         |
+| [cloudns][cloudns]               | [cloudxns][cloudxns]             | [conoha][conoha]                 | [constellix][constellix]         | [ddns][ddns]                     |
+| [desec][desec]                   | [devnomads][devnomads]           | [digitalocean][digitalocean]     | [dinahosting][dinahosting]       | [directadmin][directadmin]       |
+| [dnsimple][dnsimple]             | [dnsmadeeasy][dnsmadeeasy]       | [dnspark][dnspark]               | [dnspod][dnspod]                 | [dnsservices][dnsservices]       |
+| [dreamhost][dreamhost]           | [duckdns][duckdns]               | [dynu][dynu]                     | [easydns][easydns]               | [easyname][easyname]             |
+| [euserv][euserv]                 | [exoscale][exoscale]             | [flexibleengine][flexibleengine] | [gandi][gandi]                   | [gehirn][gehirn]                 |
+| [glesys][glesys]                 | [godaddy][godaddy]               | [googleclouddns][googleclouddns] | [gransy][gransy]                 | [gratisdns][gratisdns]           |
+| [henet][henet]                   | [hetzner][hetzner]               | [hostingde][hostingde]           | [hover][hover]                   | [httpnet][httpnet]               |
+| [infoblox][infoblox]             | [infomaniak][infomaniak]         | [internetbs][internetbs]         | [inwx][inwx]                     | [ionos][ionos]                   |
+| [joker][joker]                   | [linode][linode]                 | [linode4][linode4]               | [localzone][localzone]           | [luadns][luadns]                 |
+| [memset][memset]                 | [misaka][misaka]                 | [mythicbeasts][mythicbeasts]     | [namecheap][namecheap]           | [namecom][namecom]               |
+| [namesilo][namesilo]             | [netcup][netcup]                 | [nfsn][nfsn]                     | [njalla][njalla]                 | [nsone][nsone]                   |
+| [oci][oci]                       | [onapp][onapp]                   | [online][online]                 | [ovh][ovh]                       | [plesk][plesk]                   |
+| [pointhq][pointhq]               | [porkbun][porkbun]               | [powerdns][powerdns]             | [qcloud][qcloud]                 | [rackspace][rackspace]           |
+| [rage4][rage4]                   | [rcodezero][rcodezero]           | [regfish][regfish]               | [route53][route53]               | [safedns][safedns]               |
+| [sakuracloud][sakuracloud]       | [scaleway][scaleway]             | [softlayer][softlayer]           | [timeweb][timeweb]               | [transip][transip]               |
+| [ultradns][ultradns]             | [valuedomain][valuedomain]       | [vercel][vercel]                 | [vultr][vultr]                   | [wedos][wedos]                   |
+| [yandex][yandex]                 | [yandexcloud][yandexcloud]       | [zeit][zeit]                     | [zilore][zilore]                 | [zonomi][zonomi]                 |
 
 <!-- providers-table-end -->
 
 <!-- intro-end -->
 
-# Documentation
+## Documentation
 
 Online documentation (user guide, configuration reference) is available in the [Lexicon documentation].
 
 For a quick start, please have a look in particular at the [User guide].
 
-# Contributing
+## Contributing
 
 If you want to help in the Lexicon development, you are welcome!
 
 Please have a look at the [Developer guide] page to know how to start.
 
-# Licensing
+## Licensing
 
 - MIT
 - [Logo]: transform by Mike Rowe from the Noun Project

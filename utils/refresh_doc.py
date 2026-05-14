@@ -31,8 +31,8 @@ Providers available
 -------------------
 
 ```{include} ../README.md
-:start-after: providers-table-begin
-:end-before: providers-table-end
+:start-after: <!-- providers-table-begin -->
+:end-before: <!-- providers-table-end -->
 ```
 
 List of options
@@ -45,6 +45,7 @@ List of options
         output.append(
             f"""\
 ({provider})=
+
 ```{{include}} providers/{provider}.md
 ```
 """
@@ -57,7 +58,7 @@ List of options
 
 
 def _generate_table(providers: List[str]) -> None:
-    items = [f"[{provider}]({provider})" for provider in providers]
+    items = [f"[{provider}][{provider}]" for provider in providers]
     nb_columns = 5
     max_width = max(len(item) for item in items) + 1
 
@@ -103,17 +104,13 @@ def _generate_provider_details(provider: str) -> None:
     parser = argparse.ArgumentParser()
     provider_class.configure_parser(parser)
 
-    output = [provider]
+    output = [provider, ""]
 
     for action in parser._actions:
         if action.dest == "help":
             continue
 
-        output.append(
-            f"""\
-    * `{action.dest}` {action.help}
-"""
-        )
+        output.append(f"* `{action.dest}` {action.help}")
 
     if parser.description:
         output.append(
@@ -121,11 +118,10 @@ def _generate_provider_details(provider: str) -> None:
 ```{{note}}
 {_cleanup_description(parser.description)}
 ```
-
 """
         )
 
-    with open(join(_PROVIDERS, f"{provider}.rst"), "w") as f:
+    with open(join(_PROVIDERS, f"{provider}.md"), "w") as f:
         f.write("\n".join(output))
 
 

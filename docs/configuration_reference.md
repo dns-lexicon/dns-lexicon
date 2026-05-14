@@ -2,8 +2,7 @@
 
 ## Providers options
 
-```{eval-rst}
-.. include:: providers_options.rst
+```{include} providers_options.md
 ```
 
 ## Passing provider options to Lexicon

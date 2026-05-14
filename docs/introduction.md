@@ -1,7 +1,6 @@
 # Introduction
 
-```{eval-rst}
-.. include:: ../README.rst
-    :start-after: tag: intro-begin
-    :end-before: tag: intro-end
+```{include} ../README.md
+:start-after: <!-- intro-begin -->
+:end-before: <!-- intro-end -->
 ```
