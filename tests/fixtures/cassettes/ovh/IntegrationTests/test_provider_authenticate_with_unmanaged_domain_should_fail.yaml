@@ -30,9 +30,9 @@ interactions:
       User-Agent: [python-requests/2.18.4]
       X-Ovh-Timestamp: ['1528723172']
     method: GET
-    uri: https://eu.api.ovh.com/1.0/domain/zone/
+    uri: https://eu.api.ovh.com/1.0/domain/zone/thisisadomainidonotown.com/status
   response:
-    body: {string: '["pacalis.net"]'}
+    body: null
     headers:
       Access-Control-Allow-Origin: ['*']
       Cache-Control: [no-cache]
@@ -47,5 +47,5 @@ interactions:
           be enough! We are looking for engineers who LOVE coding. Programming enthusiasts,
           code aesthetes, CTF winners, ... In short, geeks eager to learn, obstinate,
           involved. You want to challenge yourself? Join us! http://ovh.jobs']
-    status: {code: 200, message: OK}
+    status: {code: 404, message: Not Found}
 version: 1

@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+### Modified
+* The `ovh` provider now only requires a token scoped to the managed zone (`/domain/zone/example.com/*`) instead of the whole `/domain/zone/*` scope
 
 ## 3.25.2 - 10/05/2026
 ### Added
