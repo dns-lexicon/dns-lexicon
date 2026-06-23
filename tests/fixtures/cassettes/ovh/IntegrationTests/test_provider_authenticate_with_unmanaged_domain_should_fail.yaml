@@ -2,50 +2,99 @@ interactions:
 - request:
     body: null
     headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: [python-requests/2.18.4]
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.34.2
     method: GET
     uri: https://eu.api.ovh.com/1.0/auth/time
   response:
-    body: {string: '1528723172'}
+    body:
+      string: '1782251799'
     headers:
-      Access-Control-Allow-Origin: ['*']
-      Cache-Control: [no-cache]
-      Connection: [Keep-Alive]
-      Content-Type: [application/json; charset=utf-8]
-      Date: ['Mon, 11 Jun 2018 13:19:32 GMT']
-      Keep-Alive: ['timeout=15, max=100']
-      Server: [Apache]
-      Transfer-Encoding: [chunked]
-      X-OVH-QUERYID: [FR.ws-1.5b1e76e4.8609.3821]
-    status: {code: 200, message: OK}
+      access-control-allow-headers:
+      - X-Ovh-Timestamp, X-Ovh-Consumer, X-Ovh-Application, X-Ovh-Signature, X-Ovh-Session, Authorization, Content-Type, X-Challenge-Response, X-Challenge-Payload, User-Agent
+      access-control-allow-methods:
+      - GET
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - X-Pagination-Cursor-Next, X-Ovh-Queryid
+      access-control-max-age:
+      - '60'
+      cache-control:
+      - no-cache, no-store
+      content-length:
+      - '10'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 23 Jun 2026 21:56:39 GMT
+      server:
+      - nginx
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
 - request:
     body: null
     headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: [python-requests/2.18.4]
-      X-Ovh-Timestamp: ['1528723172']
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.34.2
+      X-Ovh-Timestamp:
+      - '1782251799'
     method: GET
     uri: https://eu.api.ovh.com/1.0/domain/zone/thisisadomainidonotown.com/status
   response:
-    body: null
+    body:
+      string: '{"class":"Client::Forbidden","message":"This call has not been granted"}'
     headers:
-      Access-Control-Allow-Origin: ['*']
-      Cache-Control: [no-cache]
-      Connection: [Keep-Alive]
-      Content-Type: [application/json; charset=utf-8]
-      Date: ['Mon, 11 Jun 2018 13:19:32 GMT']
-      Keep-Alive: ['timeout=15, max=99']
-      Server: [Apache]
-      Transfer-Encoding: [chunked]
-      X-OVH-QUERYID: [FR.ws-1.5b1e76e4.11854.4565]
-      X-RECRUITMENT: ['You know how to code? This is a good start, but it may not
-          be enough! We are looking for engineers who LOVE coding. Programming enthusiasts,
-          code aesthetes, CTF winners, ... In short, geeks eager to learn, obstinate,
-          involved. You want to challenge yourself? Join us! http://ovh.jobs']
-    status: {code: 404, message: Not Found}
+      access-control-allow-headers:
+      - X-Ovh-Timestamp, X-Ovh-Consumer, X-Ovh-Application, X-Ovh-Signature, X-Ovh-Session, Authorization, Content-Type, X-Challenge-Response, X-Challenge-Payload, User-Agent
+      access-control-allow-methods:
+      - GET
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - X-Pagination-Cursor-Next, X-Ovh-Queryid
+      access-control-max-age:
+      - '60'
+      cache-control:
+      - no-cache, no-store
+      content-length:
+      - '72'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 23 Jun 2026 21:56:39 GMT
+      server:
+      - nginx
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 403
+      message: Forbidden
 version: 1

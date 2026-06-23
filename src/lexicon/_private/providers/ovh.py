@@ -157,12 +157,23 @@ class Provider(BaseProvider):
 
         for record_id in record_ids:
             raw = self._get(f"/domain/zone/{domain}/record/{record_id}")
+            target = raw["target"]
+            # OVH returns TXT targets wrapped in double quotes; strip them so
+            # the content is comparable to what callers provide and consistent
+            # with the other Lexicon providers.
+            if (
+                raw["fieldType"] == "TXT"
+                and len(target) >= 2
+                and target.startswith('"')
+                and target.endswith('"')
+            ):
+                target = target[1:-1]
             records.append(
                 {
                     "type": raw["fieldType"],
                     "name": self._full_name(raw["subDomain"]),
                     "ttl": raw["ttl"],
-                    "content": raw["target"],
+                    "content": target,
                     "id": raw["id"],
                 }
             )
