@@ -10,7 +10,8 @@ ovh
 
 .. note::
    
-   OVH Provider requires a token with full rights on /domain/*.
-   It can be generated for your OVH account on the following URL:
-   https://api.ovh.com/createToken/index.cgi?GET=/domain/*&PUT=/domain/*&POST=/domain/*&DELETE=/domain/*
+   OVH Provider requires a token with rights on the zone to manage,
+   scoped to /domain/zone/example.com/* (replace example.com with your
+   domain). It can be generated for your OVH account on the following URL:
+   https://api.ovh.com/createToken/index.cgi?GET=/domain/zone/example.com/*&PUT=/domain/zone/example.com/*&POST=/domain/zone/example.com/*&DELETE=/domain/zone/example.com/*
 

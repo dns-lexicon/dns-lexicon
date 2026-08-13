@@ -40,9 +40,10 @@ class Provider(BaseProvider):
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
         parser.description = """
-            OVH Provider requires a token with full rights on /domain/*.
-            It can be generated for your OVH account on the following URL:
-            https://api.ovh.com/createToken/index.cgi?GET=/domain/*&PUT=/domain/*&POST=/domain/*&DELETE=/domain/*"""
+            OVH Provider requires a token with rights on the zone to manage,
+            scoped to /domain/zone/example.com/* (replace example.com with your
+            domain). It can be generated for your OVH account on the following URL:
+            https://api.ovh.com/createToken/index.cgi?GET=/domain/zone/example.com/*&PUT=/domain/zone/example.com/*&POST=/domain/zone/example.com/*&DELETE=/domain/zone/example.com/*"""
         parser.add_argument(
             "--auth-entrypoint",
             help="specify the OVH entrypoint",
@@ -90,14 +91,18 @@ class Provider(BaseProvider):
         server_time = self.session.get(f"{self.endpoint_api}/auth/time").json()
         self.time_delta = server_time - int(time.time())
 
-        # Get domain and status
+        # Get domain and status. We query the zone directly instead of listing
+        # all zones, so the token only needs to be granted access to
+        # /domain/zone/{domain}/* rather than the whole /domain/zone/* scope.
         domain = self.domain
 
-        domains = self._get("/domain/zone/")
-        if domain not in domains:
-            raise AuthenticationError(f"Domain {domain} not found")
+        try:
+            status = self._get(f"/domain/zone/{domain}/status")
+        except requests.exceptions.HTTPError as error:
+            if error.response is not None and error.response.status_code == 404:
+                raise AuthenticationError(f"Domain {domain} not found")
+            raise
 
-        status = self._get(f"/domain/zone/{domain}/status")
         if not status["isDeployed"]:
             raise AuthenticationError(f"Zone {domain} is not deployed")
 
@@ -152,12 +157,23 @@ class Provider(BaseProvider):
 
         for record_id in record_ids:
             raw = self._get(f"/domain/zone/{domain}/record/{record_id}")
+            target = raw["target"]
+            # OVH returns TXT targets wrapped in double quotes; strip them so
+            # the content is comparable to what callers provide and consistent
+            # with the other Lexicon providers.
+            if (
+                raw["fieldType"] == "TXT"
+                and len(target) >= 2
+                and target.startswith('"')
+                and target.endswith('"')
+            ):
+                target = target[1:-1]
             records.append(
                 {
                     "type": raw["fieldType"],
                     "name": self._full_name(raw["subDomain"]),
                     "ttl": raw["ttl"],
-                    "content": raw["target"],
+                    "content": target,
                     "id": raw["id"],
                 }
             )
