@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+### Modified
+* Fix `porkbun` provider rejecting MX and SRV records with HTTP 400 Bad Request, by splitting the inline priority out of the record content into Porkbun's dedicated `prio` field
 
 ## 3.25.2 - 10/05/2026
 ### Added
