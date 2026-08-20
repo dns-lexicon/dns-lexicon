@@ -27,7 +27,8 @@ def generate_base_provider_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "type",
         help="specify the entry type",
-        default="TXT",
+        nargs="?",
+        default=None,
         choices=["A", "AAAA", "CNAME", "MX", "NS", "SOA", "TXT", "SRV", "LOC"],
     )
 
