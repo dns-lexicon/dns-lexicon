@@ -5,15 +5,86 @@ import re
 
 import pytest
 import requests
-from integration_tests import IntegrationTestsV2
+from integration_tests import IntegrationTestsV2, vcr_integration_test
 
 from lexicon._private.providers.gransy import SOAP_WSDL, SOAP_WSDL_URL
+
+
+class GransyApexTests:
+    """Apex records: the SOAP API names them None, the REST API ""."""
+
+    @vcr_integration_test
+    def test_provider_when_calling_create_record_for_TXT_with_apex_name_and_content(
+        self,
+    ):
+        provider = self._construct_authenticated_provider()
+        assert provider.create_record("TXT", self.domain, "apexchallengetoken")
+
+    @vcr_integration_test
+    def test_provider_when_calling_list_records_with_apex_name_filter_should_return_record(
+        self,
+    ):
+        provider = self._construct_authenticated_provider()
+        provider.create_record("TXT", self.domain, "apexlisttoken")
+        records = provider.list_records("TXT", self.domain, "apexlisttoken")
+        assert len(records) == 1
+        assert records[0]["name"] == self.domain
+        assert records[0]["content"] == "apexlisttoken"
+        assert records[0]["type"] == "TXT"
+
+    @vcr_integration_test
+    def test_provider_when_calling_list_records_with_apex_fqdn_name_filter_should_return_record(
+        self,
+    ):
+        provider = self._construct_authenticated_provider()
+        provider.create_record("TXT", f"{self.domain}.", "apexfqdntoken")
+        records = provider.list_records("TXT", f"{self.domain}.", "apexfqdntoken")
+        assert len(records) == 1
+        assert records[0]["name"] == self.domain
+
+    @vcr_integration_test
+    def test_provider_when_calling_update_record_to_apex_name_should_modify_record(
+        self,
+    ):
+        provider = self._construct_authenticated_provider()
+        assert provider.create_record("TXT", "orig.apextest", "apexrenametoken")
+        records = provider.list_records("TXT", "orig.apextest", "apexrenametoken")
+        assert provider.update_record(
+            records[0].get("id", None), "TXT", self.domain, "apexrenametoken"
+        )
+        records = provider.list_records("TXT", self.domain, "apexrenametoken")
+        assert len(records) == 1
+        assert not provider.list_records("TXT", "orig.apextest", "apexrenametoken")
+
+    @vcr_integration_test
+    def test_provider_when_calling_update_record_with_apex_name_should_modify_record(
+        self,
+    ):
+        provider = self._construct_authenticated_provider()
+        assert provider.create_record("TXT", self.domain, "apexorigtoken")
+        records = provider.list_records("TXT", self.domain, "apexorigtoken")
+        assert provider.update_record(
+            records[0].get("id", None), "TXT", self.domain, "apexupdatedtoken"
+        )
+        records = provider.list_records("TXT", self.domain, "apexupdatedtoken")
+        assert len(records) == 1
+        assert not provider.list_records("TXT", self.domain, "apexorigtoken")
+
+    @vcr_integration_test
+    def test_provider_when_calling_delete_record_by_filter_with_apex_name_should_remove_record(
+        self,
+    ):
+        provider = self._construct_authenticated_provider()
+        assert provider.create_record("TXT", self.domain, "apexdeletetoken")
+        assert provider.delete_record(None, "TXT", self.domain, "apexdeletetoken")
+        records = provider.list_records("TXT", self.domain, "apexdeletetoken")
+        assert not records
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
 # pass, by inheritance from integration_tests.IntegrationTests
-class TestGransySOAPProvider(IntegrationTestsV2):
+class TestGransySOAPProvider(GransyApexTests, IntegrationTestsV2):
     """TestCase for Gransy on SOAP API at subreg.cz"""
 
     provider_name = "gransy"

@@ -243,8 +243,8 @@ class Provider(BaseProvider):
         """Creates record for Subreg API calls"""
         return GransyRequest(
             type=rtype,
-            # `name` only on creation, not on update
-            name=self._relative_name(name) if name is not None else None,
+            # `name` only on creation, where both APIs require it; apex is ""
+            name=(self._relative_name(name) or "") if name is not None else None,
             content=content,
             ttl=int(ttl) if ttl is not None else None,
             prio=int(priority) if priority is not None else None,
