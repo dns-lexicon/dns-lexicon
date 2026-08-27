@@ -1,0 +1,40 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.34.2
+    method: GET
+    uri: https://api.subreg.cz/domains
+  response:
+    body:
+      string: '{"domains":[{"name":"oldium.top","expire":"2199-12-31","autorenew":"0"}],"count":1}'
+    headers:
+      CF-RAY:
+      - a3263ad9787df96e-PRG
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 28 Aug 2026 20:57:42 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - PHP/7.4.33
+      cf-cache-status:
+      - DYNAMIC
+      content-length:
+      - '270'
+    status:
+      code: 200
+      message: OK
+version: 1

@@ -1,5 +1,6 @@
 """Integration tests for Gransy"""
 
+import json
 import os
 import re
 
@@ -92,8 +93,16 @@ class TestGransySOAPProvider(GransyApexTests, IntegrationTestsV2):
     provider_variant = "SOAP"
 
     def _test_fallback_fn(self):
-        # A placeholder remote_api_definition would be truthy and go online
-        return lambda x: None if x == "remote_api_definition" else f"placeholder_{x}"
+        # Placeholders would route to REST (auth_token) or go online
+        return lambda x: (
+            None if x in ("auth_token", "remote_api_definition") else f"placeholder_{x}"
+        )
+
+    @pytest.fixture(autouse=True)
+    def _drop_rest_env(self, monkeypatch):
+        # A REST token in the environment would select the REST backend
+        for var in ("LEXICON_GRANSY_AUTH_TOKEN", "LEXICON_GRANSY_TOKEN"):
+            monkeypatch.delenv(var, raising=False)
 
     @staticmethod
     def _redact_soap(body: str) -> str:
@@ -132,6 +141,52 @@ class TestGransySOAPProvider(GransyApexTests, IntegrationTestsV2):
             )
         response["body"]["string"] = body.encode()
         return response
+
+
+class TestGransyRESTProvider(GransyApexTests, IntegrationTestsV2):
+    """TestCase for Gransy on REST API at api.subreg.cz"""
+
+    provider_name = "gransy"
+    domain = "oldium.top"
+    provider_variant = "REST"
+
+    def _filter_headers(self):
+        return ["Authorization"]
+
+    def _filter_response(self, response):
+        # GET /domains lists the whole account
+        try:
+            data = json.loads(response["body"]["string"])
+        except ValueError:
+            return response
+        if isinstance(data, dict) and "domains" in data:
+            data["domains"] = [
+                {**d, "expire": "2199-12-31"}
+                for d in data["domains"]
+                if d["name"] == self.domain
+            ]
+            data["count"] = len(data["domains"])
+            response["body"]["string"] = json.dumps(
+                data, separators=(",", ":")
+            ).encode()
+        return response
+
+    def _test_fallback_fn(self):
+        # Prevent SOAP credentials conflict with the Bearer token.
+        return lambda x: (
+            None if x in ("auth_username", "auth_password") else f"placeholder_{x}"
+        )
+
+    @pytest.fixture(autouse=True)
+    def _drop_soap_env(self, monkeypatch):
+        # Keep the SOAP credentials out of the REST variant
+        for var in (
+            "LEXICON_GRANSY_AUTH_USERNAME",
+            "LEXICON_GRANSY_USERNAME",
+            "LEXICON_GRANSY_AUTH_PASSWORD",
+            "LEXICON_GRANSY_PASSWORD",
+        ):
+            monkeypatch.delenv(var, raising=False)
 
 
 @pytest.mark.skipif(

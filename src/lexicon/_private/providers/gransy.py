@@ -9,6 +9,8 @@ from dataclasses import dataclass
 from importlib.resources import files
 from typing import Any, NoReturn
 
+import requests
+
 try:
     import zeep
 except BaseException:
@@ -20,6 +22,7 @@ from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
+REST_API_ENDPOINT = "https://api.subreg.cz"
 SOAP_WSDL_URL = "https://subreg.cz/wsdl"
 # Vendored copy of SOAP_WSDL_URL; a live test checks for drift
 SOAP_WSDL = files("lexicon._private.providers") / "gransy.wsdl"
@@ -36,7 +39,7 @@ class GransyRequest:
     prio: int | None = None
 
     def to_payload(self) -> dict[str, Any]:
-        """Sparse dict for the SOAP API; ``type`` is always present."""
+        """Sparse dict of the set fields; ``type`` is always present."""
         body: dict[str, Any] = {"type": self.type}
         if self.name is not None:
             body["name"] = self.name
@@ -72,6 +75,18 @@ class GransyResponse:
             prio=raw["prio"],
         )
 
+    @classmethod
+    def from_rest(cls, raw: dict[str, Any]) -> GransyResponse:
+        """Build from a REST record; apex name is "" there, None here."""
+        return cls(
+            id=raw["id"],
+            type=raw["type"],
+            name=raw["name"] or None,
+            content=raw["content"],
+            ttl=raw.get("ttl"),
+            prio=raw.get("prio"),
+        )
+
 
 class Provider(BaseProvider):
     """Provider class for Gransy"""
@@ -87,10 +102,19 @@ class Provider(BaseProvider):
             + "subreg.cz, regtons.com and regnames.eu."
         )
         parser.add_argument(
-            "--auth-username", help="specify username for authentication"
+            "--auth-username",
+            help="specify username for authentication (SOAP API at subreg.cz)",
         )
         parser.add_argument(
-            "--auth-password", help="specify password for authentication"
+            "--auth-password",
+            help="specify password for authentication (SOAP API at subreg.cz)",
+        )
+        parser.add_argument(
+            "--auth-token",
+            help=(
+                "specify Bearer token for authentication "
+                "(REST API at api.subreg.cz, used instead of SOAP)"
+            ),
         )
         parser.add_argument(
             "--remote-api-definition",
@@ -103,7 +127,13 @@ class Provider(BaseProvider):
 
     def __init__(self, config: ConfigResolver | dict[str, Any]) -> None:
         super().__init__(config)
-        self._api: _GransyApi = _SoapApi(self)
+
+        token = self._get_provider_option("auth_token")
+        self._api: _GransyApi
+        if token:
+            self._api = _RestApi(self, token)
+        else:
+            self._api = _SoapApi(self)
 
     # Authenticate against provider,
     # Make any requests required to get the domain's id for
@@ -453,6 +483,71 @@ class _SoapApi(_GransyApi):
                 return response["data"] if "data" in response else dict()
             raise Exception("Invalid status found in SOAP response")
         raise Exception("Invalid response")
+
+
+class _RestApi(_GransyApi):
+    """REST API backend (api.subreg.cz). Bearer token authentication."""
+
+    def __init__(self, provider: Provider, token: str) -> None:
+        self._provider = provider
+        self._session = requests.Session()
+        self._session.headers.update(
+            {
+                "Authorization": f"Bearer {token}",
+                "Accept": "application/json",
+            }
+        )
+
+    def authenticate(self) -> None:
+        # Token is validated implicitly by the first authenticated call.
+        return None
+
+    def list_domains(self) -> list[str]:
+        data = self._request("GET", "/domains")
+        return [d["name"] for d in data.get("domains") or []]
+
+    def list_records(self) -> list[GransyResponse]:
+        data = self._request("GET", f"/dns/{self._provider.domain}")
+        return [GransyResponse.from_rest(r) for r in data.get("records") or []]
+
+    def add_record(self, record: GransyRequest) -> None:
+        self._request(
+            "POST", f"/dns/{self._provider.domain}/record", json=record.to_payload()
+        )
+
+    def modify_record(self, identifier: int | str, record: GransyRequest) -> None:
+        self._request(
+            "PUT",
+            f"/dns/{self._provider.domain}/record/{identifier}",
+            json=record.to_payload(),
+        )
+
+    def delete_record(self, identifier: int | str) -> None:
+        self._request("DELETE", f"/dns/{self._provider.domain}/record/{identifier}")
+
+    def _request(
+        self,
+        method: str,
+        path: str,
+        json: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        url = f"{REST_API_ENDPOINT}{path}"
+        response = self._session.request(method, url, json=json)
+        if not response.ok:
+            try:
+                payload = response.json()
+            except ValueError:
+                response.raise_for_status()
+                raise
+            error = payload.get("error", "Request failed")
+            major = payload.get("code_major", 0)
+            minor = payload.get("code_minor", 0)
+            if response.status_code == 401:
+                raise AuthenticationError(error)
+            GransyError.raise_for(major=major, minor=minor, message=error)
+        if response.status_code == 204 or not response.content:
+            return {}
+        return response.json()
 
 
 class GransyError(Exception):
