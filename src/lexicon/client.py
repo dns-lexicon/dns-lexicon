@@ -102,15 +102,15 @@ class Client(AbstractContextManager):
         runtime_config = {}
 
         # Find the actual zone name for the domain
-        if self.config.resolve("lexicon:resolve_zone_name") is not None:
+        if self.config.resolve("lexicon:resolve_zone_name"):
             logging.debug(
-                "Parameter resolve_zone_name is set, use dnspython to resolve the actual zone name"
+                "Parameter resolve_zone_name is enabled, use dnspython to resolve the actual zone name"
             )
             zone_name = dns.resolver.zone_for_name(domain)
             runtime_config["domain"] = zone_name.to_text(omit_final_dot=True)
         else:
             logging.debug(
-                "Parameter resolve_zone_name is not set, use tldextract to guess the zone name from known TLDs"
+                "Parameter resolve_zone_name is not enabled, use tldextract to guess the zone name from known TLDs"
             )
             try:
                 domain_extractor = tldextract.TLDExtract(

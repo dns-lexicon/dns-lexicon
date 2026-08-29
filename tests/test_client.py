@@ -1,6 +1,8 @@
 # pylint: disable=missing-docstring
 import os
 
+import dns.name
+import dns.resolver
 import pytest
 
 import lexicon.client
@@ -172,6 +174,63 @@ def test_client_parse_env_with_auth_keys(monkeypatch, mock_provider):
         client.config.resolve("lexicon:fakeprovider:auth_username")
         == "test-username@example.com"
     )
+
+
+def test_client_init_with_resolve_zone_name_default_uses_tldextract(
+    monkeypatch, mock_provider
+):
+    def fail(*_args, **_kwargs):
+        raise AssertionError("dns.resolver must not be used")
+
+    monkeypatch.setattr(dns.resolver, "zone_for_name", fail)
+    # Direct library usage of Client: the option is not defined at all
+    options = {
+        "provider_name": "fakeprovider",
+        "action": "list",
+        "domain": "www.example.com",
+        "type": "TXT",
+    }
+    client = lexicon.client.Client(ConfigResolver().with_dict(options))
+
+    assert client.config.resolve("lexicon:domain") == "example.com"
+
+
+def test_client_init_with_resolve_zone_name_false_uses_tldextract(
+    monkeypatch, mock_provider
+):
+    def fail(*_args, **_kwargs):
+        raise AssertionError("dns.resolver must not be used")
+
+    monkeypatch.setattr(dns.resolver, "zone_for_name", fail)
+    options = {
+        "provider_name": "fakeprovider",
+        "action": "list",
+        "domain": "www.example.com",
+        "type": "TXT",
+        # the CLI always defines the option; store_true defaults to False
+        "resolve_zone_name": False,
+    }
+    client = lexicon.client.Client(ConfigResolver().with_dict(options))
+
+    assert client.config.resolve("lexicon:domain") == "example.com"
+
+
+def test_client_init_with_resolve_zone_name_true_uses_dns_resolver(
+    monkeypatch, mock_provider
+):
+    monkeypatch.setattr(
+        dns.resolver, "zone_for_name", lambda *_: dns.name.from_text("example.com.")
+    )
+    options = {
+        "provider_name": "fakeprovider",
+        "action": "list",
+        "domain": "www.example.com",
+        "type": "TXT",
+        "resolve_zone_name": True,
+    }
+    client = lexicon.client.Client(ConfigResolver().with_dict(options))
+
+    assert client.config.resolve("lexicon:domain") == "example.com"
 
 
 # TODO: add tests for Provider loading?
