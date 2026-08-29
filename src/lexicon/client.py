@@ -15,6 +15,8 @@ import tldextract
 
 from lexicon import config as helper_config
 from lexicon._private.discovery import find_providers as _find_providers
+from lexicon._private.discovery import is_installed as _is_installed
+from lexicon._private.discovery import list_extras as _list_extras
 from lexicon._private.discovery import load_provider_module as _load_provider_module
 from lexicon.exceptions import ProviderNotAvailableError
 from lexicon.interfaces import Provider
@@ -237,18 +239,23 @@ with Client(config) as operations:
         if not provider_name:
             raise AttributeError("provider_name")
 
-        try:
-            available = _find_providers()[provider_name]
-        except KeyError:
+        if provider_name not in _find_providers():
             raise ProviderNotAvailableError(
                 f"This provider ({provider_name}) is not supported by Lexicon."
             )
-        else:
-            if not available:
-                raise ProviderNotAvailableError(
-                    f"This provider ({provider_name}) has required extra dependencies that are missing. "
-                    f"Please run `pip install dns-lexicon[{provider_name}]` first before using it."
-                )
+
+        provider_class: type[Provider] = getattr(
+            _load_provider_module(provider_name), "Provider"
+        )
+
+        required = provider_class.filter_required_extras(
+            _list_extras(provider_name), self.config
+        )
+        missing = [pkg for pkg in required if not _is_installed(pkg)]
+        if missing:
+            raise ProviderNotAvailableError(
+                provider_class.missing_extras_error(provider_name, missing)
+            )
 
 
 def _resolve_tldextract_cache_path() -> str:

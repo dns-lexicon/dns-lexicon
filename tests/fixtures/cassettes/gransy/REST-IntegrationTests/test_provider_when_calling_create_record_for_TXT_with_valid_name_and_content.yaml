@@ -1,0 +1,119 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.34.2
+    method: GET
+    uri: https://api.subreg.cz/domains
+  response:
+    body:
+      string: '{"domains":[{"name":"oldium.top","expire":"2199-12-31","autorenew":"0"}],"count":1}'
+    headers:
+      CF-RAY:
+      - a3263af81fe38033-PRG
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 28 Aug 2026 20:57:47 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - PHP/7.4.33
+      cf-cache-status:
+      - DYNAMIC
+      content-length:
+      - '270'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.34.2
+    method: GET
+    uri: https://api.subreg.cz/dns/oldium.top
+  response:
+    body:
+      string: '{"domain":"oldium.top","records":[{"id":"7143878","name":"docs","type":"CNAME","content":"docs.example.com","prio":0,"ttl":3600},{"id":"7143877","name":"localhost","type":"A","content":"127.0.0.1","prio":0,"ttl":3600}]}'
+    headers:
+      CF-RAY:
+      - a3263afd2ca4b377-PRG
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 28 Aug 2026 20:57:48 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - PHP/7.4.33
+      cf-cache-status:
+      - DYNAMIC
+      content-length:
+      - '219'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"type": "TXT", "name": "_acme-challenge.test", "content": "challengetoken",
+      "ttl": 3600}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '89'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: https://api.subreg.cz/dns/oldium.top/record
+  response:
+    body:
+      string: '{"domain":"oldium.top","record_id":7143879}'
+    headers:
+      CF-RAY:
+      - a3263b00ee5ab190-PRG
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '43'
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 28 Aug 2026 20:57:48 GMT
+      Server:
+      - cloudflare
+      X-Powered-By:
+      - PHP/7.4.33
+      cf-cache-status:
+      - DYNAMIC
+    status:
+      code: 200
+      message: OK
+version: 1
