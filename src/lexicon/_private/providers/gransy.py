@@ -6,6 +6,7 @@ import logging
 from abc import ABC, abstractmethod
 from argparse import ArgumentParser
 from dataclasses import dataclass
+from importlib.resources import files
 from typing import Any, NoReturn
 
 try:
@@ -19,7 +20,9 @@ from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
 
-SOAP_WSDL = "https://subreg.cz/wsdl"
+SOAP_WSDL_URL = "https://subreg.cz/wsdl"
+# Vendored copy of SOAP_WSDL_URL; a live test checks for drift
+SOAP_WSDL = files("lexicon._private.providers") / "gransy.wsdl"
 
 
 @dataclass(slots=True, kw_only=True)
@@ -88,6 +91,14 @@ class Provider(BaseProvider):
         )
         parser.add_argument(
             "--auth-password", help="specify password for authentication"
+        )
+        parser.add_argument(
+            "--remote-api-definition",
+            action="store_true",
+            help=(
+                "use the SOAP API definition served by subreg.cz instead of the "
+                "bundled one (on every run, nothing is cached)"
+            ),
         )
 
     def __init__(self, config: ConfigResolver | dict[str, Any]) -> None:
@@ -368,7 +379,13 @@ class _SoapApi(_GransyApi):
     def __init__(self, provider: Provider) -> None:
         self._provider = provider
         self._ssid: str | None = None
-        client = zeep.Client(SOAP_WSDL)
+        # The definition is self-contained; never follow external references
+        settings = zeep.Settings(forbid_external=True)
+        if provider._get_provider_option("remote_api_definition"):
+            client = zeep.Client(SOAP_WSDL_URL, settings=settings)
+        else:
+            with SOAP_WSDL.open("rb") as wsdl:
+                client = zeep.Client(wsdl, settings=settings)
         self._service = client.service
 
     def authenticate(self) -> None:
@@ -414,7 +431,17 @@ class _SoapApi(_GransyApi):
         if self._ssid:
             args["ssid"] = self._ssid
         method = getattr(self._service, command)
-        response = method(**args)
+        try:
+            response = method(**args)
+        except (
+            zeep.exceptions.ValidationError,
+            zeep.exceptions.XMLParseError,
+            zeep.exceptions.UnexpectedElementError,
+        ) as e:
+            raise Exception(
+                f"{e} - the bundled SOAP API definition may be outdated, "
+                "try --remote-api-definition"
+            ) from e
         if response and "status" in response:
             if response["status"] == "error":
                 GransyError.raise_for(
