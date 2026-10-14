@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+### Modified
+* Fix TXT records not being found or deleted by content for `dnsimple` provider, as the DNSimple API returns TXT content wrapped in quotes
 
 ## 3.25.2 - 10/05/2026
 ### Added
