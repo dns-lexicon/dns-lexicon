@@ -207,22 +207,41 @@ class Provider(BaseProvider):
         if identifier is not None:
             if name is not None:
                 records = self._list_records_internal(identifier=identifier)
-                if len(records) == 1 and records[0]["name"] != self._full_name(name):
+                if len(records) != 1:
+                    raise Exception(f"No record found with identifier {identifier}")
+                if records[0]["name"] != self._full_name(name):
                     # API does not allow us to update name directly
                     self._update_record_with_name(records[0], rtype, name, content)
                 else:
-                    self._update_record_with_id(identifier, rtype, content)
+                    self._update_record_with_id(identifier, rtype, content, records[0])
             else:
                 self._update_record_with_id(identifier, rtype, content)
         else:
             guessed_record = self._guess_record(rtype, name)
-            self._update_record_with_id(guessed_record["id"], rtype, content)
+            self._update_record_with_id(
+                guessed_record["id"], rtype, content, guessed_record
+            )
         return True
 
     def _update_record_with_id(
-        self, identifier: int | str, rtype: str | None, content: str | None
+        self,
+        identifier: int | str,
+        rtype: str | None,
+        content: str | None,
+        old_record: dict[str, Any] | None = None,
     ) -> None:
         """Updates existing record with no sub-domain name changes"""
+        if not rtype or content is None:
+            # The API rejects a modify without type or content; keep the stored ones
+            if old_record is None:
+                records = self._list_records_internal(identifier=identifier)
+                if len(records) != 1:
+                    raise Exception(f"No record found with identifier {identifier}")
+                old_record = records[0]
+            rtype = rtype if rtype else old_record["type"]
+            if content is None:
+                content = old_record["content"]
+
         record = self._create_request_record(
             rtype,
             None,
@@ -349,7 +368,7 @@ class Provider(BaseProvider):
 
     def _list_records_internal(
         self,
-        identifier: str | None = None,
+        identifier: int | str | None = None,
         rtype: str | None = None,
         name: str | None = None,
         content: str | None = None,
