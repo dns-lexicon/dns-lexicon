@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+### Modified
+* Fix record names for domains registered with uppercase letters in `dynu` provider
 
 ## 3.25.2 - 10/05/2026
 ### Added
