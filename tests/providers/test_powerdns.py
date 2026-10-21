@@ -25,3 +25,22 @@ class TestPowerdnsProvider(IntegrationTestsV2):
         self,
     ):
         return
+
+    def test_provider_when_writing_a_cname_keeps_an_absolute_target(self):
+        provider = self.provider_module.Provider(self._test_config())
+        assert (
+            provider._clean_content("CNAME", "other.example.com.")
+            == "other.example.com."
+        )
+        assert provider._clean_content("CNAME", "docs") == "docs.sometestdomain.com."
+
+    def test_provider_when_reading_a_cname_keeps_a_target_outside_the_zone(self):
+        provider = self.provider_module.Provider(self._test_config())
+        assert (
+            provider._unclean_content("CNAME", "other.example.com.")
+            == "other.example.com"
+        )
+        assert (
+            provider._unclean_content("CNAME", "docs.sometestdomain.com.")
+            == "docs.sometestdomain.com"
+        )

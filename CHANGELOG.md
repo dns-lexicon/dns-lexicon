@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+### Modified
+* A CNAME target with a trailing dot stays absolute in the `powerdns` provider, so it can name a host outside the zone
 
 ## 3.25.2 - 10/05/2026
 ### Added
