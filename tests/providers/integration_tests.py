@@ -130,6 +130,7 @@ class IntegrationTestsV1:
     def test_provider_when_calling_create_record_for_A_with_valid_name_and_content(
         self,
     ):
+        self._skip_unless_provider_takes("A")
         provider = self._construct_authenticated_provider()
         assert provider.create_record("A", "localhost", "127.0.0.1")
 
@@ -137,6 +138,7 @@ class IntegrationTestsV1:
     def test_provider_when_calling_create_record_for_CNAME_with_valid_name_and_content(
         self,
     ):
+        self._skip_unless_provider_takes("CNAME")
         provider = self._construct_authenticated_provider()
         assert provider.create_record("CNAME", "docs", "docs.example.com")
 
@@ -144,6 +146,7 @@ class IntegrationTestsV1:
     def test_provider_when_calling_create_record_for_TXT_with_valid_name_and_content(
         self,
     ):
+        self._skip_unless_provider_takes("TXT")
         provider = self._construct_authenticated_provider()
         assert provider.create_record("TXT", "_acme-challenge.test", "challengetoken")
 
@@ -416,6 +419,15 @@ class IntegrationTestsV1:
         if self.provider_variant:
             return f"{self.provider_name}/{self.provider_variant}-{fixture_subpath}"
         return f"{self.provider_name}/{fixture_subpath}"
+
+    def _skip_unless_provider_takes(self, rtype):
+        """
+        Skip a test of a record type that the provider does not take, as its
+        VALID_TYPES says.  An empty list takes any type.
+        """
+        valid_types = self.provider_module.Provider.VALID_TYPES
+        if valid_types and rtype not in valid_types:
+            pytest.skip(f"{self.provider_name} does not take {rtype} records")
 
     def _construct_authenticated_provider(self):
         """

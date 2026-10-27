@@ -3,6 +3,7 @@
 ## master - CURRENT
 ### Added
 * A provider can name the record types that it takes in `VALID_TYPES`, and refuses any other type. `powerdns` takes any type
+* A shared integration test of a record type skips itself when the provider does not take that type. `duckdns` takes A, AAAA and TXT
 
 ## 3.25.2 - 10/05/2026
 ### Added
