@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+### Modified
+* Send the priority of MX and SRV records in the `prio` field of the `easydns` provider, from `--priority` or from the front of the record content, and list it back in front of the content
 
 ## 3.25.2 - 10/05/2026
 ### Added

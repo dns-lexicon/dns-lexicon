@@ -1,0 +1,311 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: GET
+    uri: http://sandbox.rest.easydns.net/domain/easydnstemp.com?format=json
+  response:
+    body:
+      string: '{"msg":"OK","tm":1793118584,"data":{"id":"easydnstemp.com","domain":"easydnstemp.com","exists":"Y","onsystem":"Y","expiry":false,"next_due":"2030-09-05","cloned_to":"NONE","service":"2406","sub_block":"NONE"},"status":200}'
+    headers:
+      Access-Control-Allow-Headers:
+      - x-requested-with, Content-Type, origin, authorization, accept, client-security-token,
+        HTTP_X_HTTP_METHOD_OVERRIDE, X-AUTH_COMBINED, X-AUTHTOKEN, X-RSP
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS, DELETE, PUT
+      Cache-Control:
+      - no-cache, must-revalidate
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 27 Oct 2026 16:29:43 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=5, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache/2.4.68 (Debian)
+      Set-Cookie:
+      - easyAPI=0b079fd0fa1f77dabf9cae7b6899ade1; path=/
+      - api_token=api_6ae0d178b35b91.02253411; expires=Tue, 27-Oct-2026 16:44:44 GMT;
+        Max-Age=900; path=/; domain=sandbox.rest.easydns.net
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Origin
+      X-Frame-Options:
+      - sameorigin
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"type": "SRV", "domain": "easydnstemp.com", "host": "_imaps._tcp.srv",
+      "ttl": 3600, "prio": 0, "rdata": "5 993 mail.easydnstemp.com."}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '127'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: PUT
+    uri: http://sandbox.rest.easydns.net/zones/records/add/easydnstemp.com/SRV?format=json
+  response:
+    body:
+      string: '{"msg":"OK","tm":1793118586,"data":{"host":"_imaps._tcp.srv","geozone_id":0,"ttl":3600,"prio":0,"rdata":"5
+        993 mail.easydnstemp.com.","revoked":0,"id":"147894932","new_host":"_imaps._tcp.srv.easydnstemp.com"},"status":201}'
+    headers:
+      Access-Control-Allow-Headers:
+      - x-requested-with, Content-Type, origin, authorization, accept, client-security-token,
+        HTTP_X_HTTP_METHOD_OVERRIDE, X-AUTH_COMBINED, X-AUTHTOKEN, X-RSP
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS, DELETE, PUT
+      Cache-Control:
+      - no-cache, must-revalidate
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 27 Oct 2026 16:29:45 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=5, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache/2.4.68 (Debian)
+      Set-Cookie:
+      - easyAPI=946f30e0b64464681128e8eb81ac8f05; path=/
+      - api_token=api_6ae0d17aa80282.33898679; expires=Tue, 27-Oct-2026 16:44:46 GMT;
+        Max-Age=900; path=/; domain=sandbox.rest.easydns.net
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Origin
+      X-Frame-Options:
+      - sameorigin
+    status:
+      code: 201
+      message: Created
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: GET
+    uri: http://sandbox.rest.easydns.net/zones/records/all/easydnstemp.com?format=json
+  response:
+    body:
+      string: '{"tm":1793118590,"data":[{"id":"40761155","domain":"easydnstemp.com","host":"@","ttl":"0","prio":"0","type":"NS","rdata":"LOCAL.","geozone_id":"0","last_mod":"2025-08-12
+        18:03:45"},{"id":"40761156","domain":"easydnstemp.com","host":"@","ttl":"3600","prio":null,"type":"SOA","rdata":"rush.easydns.com.
+        zone.easydns.com. %%NOW%% 3600 600 604800 300","geozone_id":"0","last_mod":"2017-09-05
+        20:31:04"},{"id":"40761157","domain":"easydnstemp.com","host":"@","ttl":"0","prio":"0","type":"MX","rdata":"LOCAL.","geozone_id":"0","last_mod":"2026-10-27
+        16:29:36"},{"id":"40761158","domain":"easydnstemp.com","host":"@","ttl":"0","prio":"0","type":"A","rdata":"192.46.219.109","geozone_id":"0","last_mod":"2025-09-19
+        18:20:35"},{"id":"46383546","domain":"easydnstemp.com","host":"tarpit","ttl":"0","prio":"0","type":"A","rdata":"10.2.64.170","geozone_id":"0","last_mod":"2025-09-19
+        18:20:35"},{"id":"73884555","domain":"easydnstemp.com","host":"veyeate","ttl":"0","prio":"0","type":"A","rdata":"10.2.71.190","geozone_id":"0","last_mod":"2025-09-19
+        18:20:35"},{"id":"77250864","domain":"easydnstemp.com","host":"_acme-challenge","ttl":"0","prio":"0","type":"TXT","rdata":"J5nb6FhH2jmXd1RmhPbweb4MA47ytZ2twTg9rLYbGkg","geozone_id":"0","last_mod":"2020-07-08
+        14:23:44"},{"id":"128352931","domain":"easydnstemp.com","host":"mail","ttl":"0","prio":"0","type":"A","rdata":"192.46.219.109","geozone_id":"0","last_mod":"2025-09-19
+        18:20:35"},{"id":"136365305","domain":"easydnstemp.com","host":"amabhulu","ttl":"0","prio":"0","type":"A","rdata":"10.2.70.123","geozone_id":"0","last_mod":"2025-09-19
+        18:20:35"},{"id":"147894932","domain":"easydnstemp.com","host":"_imaps._tcp.srv","ttl":"3600","prio":"0","type":"SRV","rdata":"5
+        993 mail.easydnstemp.com.","geozone_id":"0","last_mod":"2026-10-27 16:29:46"}],"count":10,"total":10,"start":0,"max":1000,"status":200}'
+    headers:
+      Access-Control-Allow-Headers:
+      - x-requested-with, Content-Type, origin, authorization, accept, client-security-token,
+        HTTP_X_HTTP_METHOD_OVERRIDE, X-AUTH_COMBINED, X-AUTHTOKEN, X-RSP
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS, DELETE, PUT
+      Cache-Control:
+      - no-cache, must-revalidate
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 27 Oct 2026 16:29:50 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=5, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache/2.4.68 (Debian)
+      Set-Cookie:
+      - easyAPI=16146d9bba855177b84d62c365bed31b; path=/
+      - api_token=api_6ae0d17e9e67c7.43254337; expires=Tue, 27-Oct-2026 16:44:50 GMT;
+        Max-Age=900; path=/; domain=sandbox.rest.easydns.net
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Origin
+      X-Frame-Options:
+      - sameorigin
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: GET
+    uri: http://sandbox.rest.easydns.net/zones/records/all/easydnstemp.com?format=json
+  response:
+    body:
+      string: '{"tm":1793118591,"data":[{"id":"40761155","domain":"easydnstemp.com","host":"@","ttl":"0","prio":"0","type":"NS","rdata":"LOCAL.","geozone_id":"0","last_mod":"2025-08-12
+        18:03:45"},{"id":"40761156","domain":"easydnstemp.com","host":"@","ttl":"3600","prio":null,"type":"SOA","rdata":"rush.easydns.com.
+        zone.easydns.com. %%NOW%% 3600 600 604800 300","geozone_id":"0","last_mod":"2017-09-05
+        20:31:04"},{"id":"40761157","domain":"easydnstemp.com","host":"@","ttl":"0","prio":"0","type":"MX","rdata":"LOCAL.","geozone_id":"0","last_mod":"2026-10-27
+        16:29:36"},{"id":"40761158","domain":"easydnstemp.com","host":"@","ttl":"0","prio":"0","type":"A","rdata":"192.46.219.109","geozone_id":"0","last_mod":"2025-09-19
+        18:20:35"},{"id":"46383546","domain":"easydnstemp.com","host":"tarpit","ttl":"0","prio":"0","type":"A","rdata":"10.2.64.170","geozone_id":"0","last_mod":"2025-09-19
+        18:20:35"},{"id":"73884555","domain":"easydnstemp.com","host":"veyeate","ttl":"0","prio":"0","type":"A","rdata":"10.2.71.190","geozone_id":"0","last_mod":"2025-09-19
+        18:20:35"},{"id":"77250864","domain":"easydnstemp.com","host":"_acme-challenge","ttl":"0","prio":"0","type":"TXT","rdata":"J5nb6FhH2jmXd1RmhPbweb4MA47ytZ2twTg9rLYbGkg","geozone_id":"0","last_mod":"2020-07-08
+        14:23:44"},{"id":"128352931","domain":"easydnstemp.com","host":"mail","ttl":"0","prio":"0","type":"A","rdata":"192.46.219.109","geozone_id":"0","last_mod":"2025-09-19
+        18:20:35"},{"id":"136365305","domain":"easydnstemp.com","host":"amabhulu","ttl":"0","prio":"0","type":"A","rdata":"10.2.70.123","geozone_id":"0","last_mod":"2025-09-19
+        18:20:35"},{"id":"147894932","domain":"easydnstemp.com","host":"_imaps._tcp.srv","ttl":"3600","prio":"0","type":"SRV","rdata":"5
+        993 mail.easydnstemp.com.","geozone_id":"0","last_mod":"2026-10-27 16:29:46"}],"count":10,"total":10,"start":0,"max":1000,"status":200}'
+    headers:
+      Access-Control-Allow-Headers:
+      - x-requested-with, Content-Type, origin, authorization, accept, client-security-token,
+        HTTP_X_HTTP_METHOD_OVERRIDE, X-AUTH_COMBINED, X-AUTHTOKEN, X-RSP
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS, DELETE, PUT
+      Cache-Control:
+      - no-cache, must-revalidate
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 27 Oct 2026 16:29:50 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=5, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache/2.4.68 (Debian)
+      Set-Cookie:
+      - easyAPI=da4b410a47e350f056da9a14462c8060; path=/
+      - api_token=api_6ae0d17f957744.55716377; expires=Tue, 27-Oct-2026 16:44:51 GMT;
+        Max-Age=900; path=/; domain=sandbox.rest.easydns.net
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Origin
+      X-Frame-Options:
+      - sameorigin
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: DELETE
+    uri: http://sandbox.rest.easydns.net/zones/records/easydnstemp.com/147894932?format=json
+  response:
+    body:
+      string: '{"msg":"OK","data":{"domain":"easydnstemp.com","id":"147894932"},"status":200}'
+    headers:
+      Access-Control-Allow-Headers:
+      - x-requested-with, Content-Type, origin, authorization, accept, client-security-token,
+        HTTP_X_HTTP_METHOD_OVERRIDE, X-AUTH_COMBINED, X-AUTHTOKEN, X-RSP
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS, DELETE, PUT
+      Cache-Control:
+      - no-cache, must-revalidate
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 27 Oct 2026 16:29:51 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=5, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache/2.4.68 (Debian)
+      Set-Cookie:
+      - easyAPI=50e5668b0284b1b17aea4c8bb4f74b65; path=/
+      - api_token=api_6ae0d1807a2e78.32111000; expires=Tue, 27-Oct-2026 16:44:52 GMT;
+        Max-Age=900; path=/; domain=sandbox.rest.easydns.net
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Origin
+      X-Frame-Options:
+      - sameorigin
+    status:
+      code: 200
+      message: OK
+version: 1

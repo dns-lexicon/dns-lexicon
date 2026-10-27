@@ -52,12 +52,13 @@ class Provider(BaseProvider):
     # Create record. If record already exists with the same content, do nothing'
 
     def create_record(self, rtype, name, content):
+        priority, content = self._split_priority(rtype, content)
         record = {
             "type": rtype,
             "domain": self.domain_id,
             "host": self._relative_name(name),
             "ttl": self._get_lexicon_option("ttl"),
-            "prio": 0,
+            "prio": priority,
             "rdata": content,
         }
         try:
@@ -85,7 +86,7 @@ class Provider(BaseProvider):
                 "type": record["type"],
                 "name": f"{record['host']}.{record['domain']}",
                 "ttl": record["ttl"],
-                "content": record["rdata"],
+                "content": self._join_priority(record),
                 "id": record["id"],
             }
             records.append(processed_record)
@@ -110,7 +111,9 @@ class Provider(BaseProvider):
         if name:
             data["host"] = self._relative_name(name)
         if content:
-            data["rdata"] = content
+            priority, data["rdata"] = self._split_priority(rtype, content)
+            if rtype in ("MX", "SRV"):
+                data["prio"] = priority
 
         self._post(f"/zones/records/{identifier}", data)
 
@@ -137,6 +140,25 @@ class Provider(BaseProvider):
         return True
 
     # Helpers
+
+    # easyDNS keeps the priority of an MX or SRV record in "prio", apart from
+    # "rdata".  The content of such a record is its whole RDATA, with the
+    # priority in front, as in "10 mail.example.com.", unless --priority gives
+    # the priority.
+    def _split_priority(self, rtype, content):
+        priority = self._get_lexicon_option("priority")
+        if priority is None and rtype in ("MX", "SRV") and content:
+            first, _, rest = content.partition(" ")
+            if rest and first.isdigit():
+                return int(first), rest
+        return int(priority) if priority else 0, content
+
+    # The content of a record that easyDNS lists, with the priority of an MX
+    # or SRV record in front again, so that the content reads as it was given.
+    def _join_priority(self, record):
+        if record["type"] in ("MX", "SRV") and record.get("prio") is not None:
+            return f"{record['prio']} {record['rdata']}"
+        return record["rdata"]
 
     def _request(self, action="GET", url="/", data=None, query_params=None):
         if data is None:
