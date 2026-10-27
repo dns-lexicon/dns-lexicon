@@ -3,6 +3,9 @@
 import pytest
 from integration_tests import IntegrationTestsV2
 
+from lexicon._private.providers.powerdns import Provider
+from lexicon.config import ConfigResolver
+
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
 # the tests which *each and every* implementation of the interface must
@@ -25,3 +28,28 @@ class TestPowerdnsProvider(IntegrationTestsV2):
         self,
     ):
         return
+
+
+def test_identifier_keeps_a_content_that_holds_a_slash():
+    """The base64 of a DKIM key holds slashes and equals signs."""
+    provider = Provider(
+        ConfigResolver().with_dict(
+            {
+                "provider_name": "powerdns",
+                "domain": "sometestdomain.com",
+                "powerdns": {
+                    "auth_token": "placeholder",
+                    "pdns_server": "http://127.0.0.1:8081",
+                },
+            }
+        )
+    )
+    content = "v=DKIM1; k=rsa; p=MIIBIjAN/BgkqhkiG9w0B+AQEFAAOCAQ8A/MIIBCgKCAQEA=="
+    identifier = provider._make_identifier(
+        "TXT", "default._domainkey.sometestdomain.com.", content
+    )
+    assert provider._parse_identifier(identifier) == (
+        "TXT",
+        "default._domainkey.sometestdomain.com.",
+        content,
+    )

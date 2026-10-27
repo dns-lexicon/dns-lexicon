@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+### Modified
+* Fix `powerdns` provider failing to delete or update a record whose content holds a slash, such as a DKIM key, which made an update add a second record
 
 ## 3.25.2 - 10/05/2026
 ### Added
