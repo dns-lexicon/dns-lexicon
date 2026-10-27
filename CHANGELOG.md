@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+### Added
+* A provider can name the record types that it takes in `VALID_TYPES`, and refuses any other type. `powerdns` takes any type
 
 ## 3.25.2 - 10/05/2026
 ### Added

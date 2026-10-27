@@ -36,7 +36,7 @@ import requests_unixsocket
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
-BaseProvider.VALID_TYPES = []
+
 
 class PowerDNSProviderError(Exception):
     """Generic PowerDNS exception"""
@@ -44,6 +44,9 @@ class PowerDNSProviderError(Exception):
 
 class Provider(BaseProvider):
     """Provider class for PowerDNS"""
+
+    # PowerDNS takes any type of record, as RFC 3597 describes.
+    VALID_TYPES: list[str] = []
 
     @staticmethod
     def get_nameservers() -> List[str]:
