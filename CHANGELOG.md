@@ -1,6 +1,8 @@
 # Changelog
 
 ## master - CURRENT
+### Modified
+* Send the priority of MX and SRV records in the `prio` field of the `easydns` provider, from `--priority` or from the front of the record content. The `rdata` of an MX is its target, and the `rdata` of an SRV is its whole RDATA, priority included. A listed MX gets its priority back in front of its content
 
 ## 3.25.2 - 10/05/2026
 ### Added

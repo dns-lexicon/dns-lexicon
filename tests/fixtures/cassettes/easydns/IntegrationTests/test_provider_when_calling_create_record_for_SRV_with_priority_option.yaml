@@ -1,0 +1,277 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: GET
+    uri: http://sandbox.rest.easydns.net/domain/easydnstemp.com?format=json
+  response:
+    body:
+      string: '{"msg":"OK","tm":1793381325,"data":{"id":"easydnstemp.com","domain":"easydnstemp.com","exists":"Y","onsystem":"Y","expiry":false,"next_due":"2030-09-05","cloned_to":"NONE","service":"2406","sub_block":"NONE"},"status":200}'
+    headers:
+      Access-Control-Allow-Headers:
+      - x-requested-with, Content-Type, origin, authorization, accept, client-security-token,
+        HTTP_X_HTTP_METHOD_OVERRIDE, X-AUTH_COMBINED, X-AUTHTOKEN, X-RSP
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS, DELETE, PUT
+      Cache-Control:
+      - no-cache, must-revalidate
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 30 Oct 2026 17:28:44 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=5, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache/2.4.68 (Debian)
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Origin
+      X-Frame-Options:
+      - sameorigin
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"type": "SRV", "domain": "easydnstemp.com", "host": "_imaps._tcp.srvopt",
+      "ttl": 3600, "prio": 20, "rdata": "20 5 993 mail.easydnstemp.com."}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '134'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: PUT
+    uri: http://sandbox.rest.easydns.net/zones/records/add/easydnstemp.com/SRV?format=json
+  response:
+    body:
+      string: '{"msg":"OK","tm":1793381326,"data":{"host":"_imaps._tcp.srvopt","geozone_id":0,"ttl":3600,"prio":20,"rdata":"20
+        5 993 mail.easydnstemp.com.","revoked":0,"id":"147917712","new_host":"_imaps._tcp.srvopt.easydnstemp.com"},"status":201}'
+    headers:
+      Access-Control-Allow-Headers:
+      - x-requested-with, Content-Type, origin, authorization, accept, client-security-token,
+        HTTP_X_HTTP_METHOD_OVERRIDE, X-AUTH_COMBINED, X-AUTHTOKEN, X-RSP
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS, DELETE, PUT
+      Cache-Control:
+      - no-cache, must-revalidate
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 30 Oct 2026 17:28:45 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=5, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache/2.4.68 (Debian)
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Origin
+      X-Frame-Options:
+      - sameorigin
+    status:
+      code: 201
+      message: Created
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: GET
+    uri: http://sandbox.rest.easydns.net/zones/records/all/easydnstemp.com?format=json
+  response:
+    body:
+      string: '{"tm": 1793381330, "data": [{"id": "147917712", "domain": "easydnstemp.com",
+        "host": "_imaps._tcp.srvopt", "ttl": "3600", "prio": "20", "type": "SRV",
+        "rdata": "20 5 993 mail.easydnstemp.com.", "geozone_id": "0", "last_mod":
+        "2026-10-30 17:28:46"}], "count": 10, "total": 10, "start": 0, "max": 1000,
+        "status": 200}'
+    headers:
+      Access-Control-Allow-Headers:
+      - x-requested-with, Content-Type, origin, authorization, accept, client-security-token,
+        HTTP_X_HTTP_METHOD_OVERRIDE, X-AUTH_COMBINED, X-AUTHTOKEN, X-RSP
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS, DELETE, PUT
+      Cache-Control:
+      - no-cache, must-revalidate
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 30 Oct 2026 17:28:49 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=5, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache/2.4.68 (Debian)
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Origin
+      X-Frame-Options:
+      - sameorigin
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: GET
+    uri: http://sandbox.rest.easydns.net/zones/records/all/easydnstemp.com?format=json
+  response:
+    body:
+      string: '{"tm": 1793381331, "data": [{"id": "147917712", "domain": "easydnstemp.com",
+        "host": "_imaps._tcp.srvopt", "ttl": "3600", "prio": "20", "type": "SRV",
+        "rdata": "20 5 993 mail.easydnstemp.com.", "geozone_id": "0", "last_mod":
+        "2026-10-30 17:28:46"}], "count": 10, "total": 10, "start": 0, "max": 1000,
+        "status": 200}'
+    headers:
+      Access-Control-Allow-Headers:
+      - x-requested-with, Content-Type, origin, authorization, accept, client-security-token,
+        HTTP_X_HTTP_METHOD_OVERRIDE, X-AUTH_COMBINED, X-AUTHTOKEN, X-RSP
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS, DELETE, PUT
+      Cache-Control:
+      - no-cache, must-revalidate
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 30 Oct 2026 17:28:50 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=5, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache/2.4.68 (Debian)
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Origin
+      X-Frame-Options:
+      - sameorigin
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: DELETE
+    uri: http://sandbox.rest.easydns.net/zones/records/easydnstemp.com/147917712?format=json
+  response:
+    body:
+      string: '{"msg":"OK","data":{"domain":"easydnstemp.com","id":"147917712"},"status":200}'
+    headers:
+      Access-Control-Allow-Headers:
+      - x-requested-with, Content-Type, origin, authorization, accept, client-security-token,
+        HTTP_X_HTTP_METHOD_OVERRIDE, X-AUTH_COMBINED, X-AUTHTOKEN, X-RSP
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS, DELETE, PUT
+      Cache-Control:
+      - no-cache, must-revalidate
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 30 Oct 2026 17:28:51 GMT
+      Expires:
+      - '0'
+      Keep-Alive:
+      - timeout=5, max=100
+      Pragma:
+      - no-cache
+      Server:
+      - Apache/2.4.68 (Debian)
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Origin
+      X-Frame-Options:
+      - sameorigin
+    status:
+      code: 200
+      message: OK
+version: 1
