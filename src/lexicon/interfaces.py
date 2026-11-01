@@ -145,6 +145,31 @@ class Provider(ABC):
         (e.g. specific CLI flags for auth)
         """
 
+    @classmethod
+    def filter_required_extras(
+        cls, extras: list[str], config: ConfigResolver
+    ) -> list[str]:
+        """Return the subset of ``extras`` actually required given ``config``."""
+        return extras
+
+    @classmethod
+    def missing_extras_warning(cls, provider_name: str, missing: list[str]) -> str:
+        """Help-time text shown when extras are missing."""
+        return (
+            "WARNING: some required dependencies for this provider are not "
+            f"installed. Please run `pip install dns-lexicon[{provider_name}]` "
+            "first before using it."
+        )
+
+    @classmethod
+    def missing_extras_error(cls, provider_name: str, missing: list[str]) -> str:
+        """Error raised when the provider is selected without its required extras."""
+        return (
+            f"This provider ({provider_name}) has required extra "
+            "dependencies that are missing. Please run "
+            f"`pip install dns-lexicon[{provider_name}]` first before using it."
+        )
+
     # Helpers
 
     def _request(

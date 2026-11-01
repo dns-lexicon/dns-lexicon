@@ -22,7 +22,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Setup Pages
         uses: actions/configure-pages@v6
       - name: Install uv
@@ -30,7 +30,7 @@ jobs:
       - name: Build the documentation
         run: uv run --group doc sphinx-build -M html ./docs ./docs/_build
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v5
         with:
           path: ./docs/_build/html
       - name: Deploy to GitHub Pages
