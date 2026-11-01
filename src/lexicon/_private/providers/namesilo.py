@@ -148,14 +148,14 @@ class Provider(BaseProvider):
         root = tree.getroot()
         if root.find("reply").find("code").text == "280":
             raise ValueError(
-                "An error occurred: {0}, {1}".format(
+                "An error occurred: {}, {}".format(
                     root.find("reply").find("detail").text,
                     root.find("reply").find("code").text,
                 )
             )
         if root.find("reply").find("code").text != "300":
             raise Exception(
-                "An error occurred: {0}, {1}".format(
+                "An error occurred: {}, {}".format(
                     root.find("reply").find("detail").text,
                     root.find("reply").find("code").text,
                 )

@@ -122,7 +122,7 @@ class Provider(BaseProvider):
         data = {"method": method, "params": params}
         response = self._request("POST", "", data)
 
-        if "error" in response.keys():
+        if "error" in response:
             error = response["error"]
             raise Exception("%d: %s" % (error["code"], error["message"]))
 

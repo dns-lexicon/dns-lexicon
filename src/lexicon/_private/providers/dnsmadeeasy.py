@@ -4,7 +4,6 @@ import hmac
 import json
 import logging
 from argparse import ArgumentParser
-from builtins import bytes
 from email.utils import formatdate
 from hashlib import sha1
 

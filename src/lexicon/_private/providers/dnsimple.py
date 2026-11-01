@@ -3,6 +3,7 @@
 import json
 import logging
 from argparse import ArgumentParser
+from importlib.metadata import Distribution, PackageNotFoundError
 
 import requests
 

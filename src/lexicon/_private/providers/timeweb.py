@@ -106,7 +106,7 @@ class Provider(BaseProvider):
                     f"Record {rtype} {name} returns {status_code} (already exists?)"
                 )
                 return True
-            raise e
+            raise
 
     def list_records(self, rtype=None, name=None, content=None):
         records = []

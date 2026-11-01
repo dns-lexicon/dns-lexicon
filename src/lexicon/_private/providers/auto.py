@@ -198,11 +198,11 @@ class Provider:
 
         override_provider = mapping_override_processed.get(self.domain)
         if override_provider:
-            provider = [
+            provider = next(
                 element
                 for element in AVAILABLE_PROVIDERS.items()
                 if element[0] == override_provider
-            ][0]
+            )
             LOGGER.info(
                 "Provider authoritatively mapped for domain %s: %s.",
                 self.domain,

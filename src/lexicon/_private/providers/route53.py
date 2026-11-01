@@ -55,8 +55,7 @@ class RecordSetPaginator:
                     }
                 )
             result = self.get_record_sets(**kwargs)
-            for record_set in result.get("ResourceRecordSets", []):
-                yield record_set
+            yield from result.get("ResourceRecordSets", [])
 
             is_truncated = result.get("IsTruncated", False)
 
@@ -125,10 +124,7 @@ class Provider(BaseProvider):
             if data["Config"]["PrivateZone"] != self.str2bool(self.private_zone):
                 return False
 
-        if data["Name"] != f"{self.domain}.":
-            return False
-
-        return True
+        return data["Name"] == f"{self.domain}."
 
     @staticmethod
     def str2bool(input_string):

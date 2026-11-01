@@ -254,7 +254,7 @@ def vdapi_build_caller(
                 time.sleep(interval)
                 return _(url, method, content, interval * 2)
             else:
-                raise http_error
+                raise
 
     return _
 

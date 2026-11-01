@@ -129,9 +129,8 @@ class Provider(BaseProvider):
                 if record["name"].rstrip(".") == self._full_name(name)
             ]
 
-        if content:
-            if len(content) > 1:
-                records = [record for record in records if record["content"] == content]
+        if content and len(content) > 1:
+            records = [record for record in records if record["content"] == content]
 
         LOGGER.debug("list_records: %s", records)
         return records

@@ -16,7 +16,7 @@ _PROVIDERS = os.path.join(_DOCS, "providers")
 
 def main() -> None:
     providers = [
-        provider for provider in discovery.find_providers().keys() if provider != "auto"
+        provider for provider in discovery.find_providers() if provider != "auto"
     ]
 
     shutil.rmtree(_PROVIDERS, ignore_errors=True)

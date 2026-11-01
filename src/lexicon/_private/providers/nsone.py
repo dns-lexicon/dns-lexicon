@@ -99,9 +99,7 @@ class Provider(BaseProvider):
 
             if domain and record.get("domain", None) != domain:
                 return False
-            if _type and record.get("type", None) != _type:
-                return False
-            return True
+            return not (_type and record.get("type", None) != _type)
 
         payload = self._get(f"/search?q={domain}&type=record")
         for record in payload:

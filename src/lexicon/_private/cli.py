@@ -90,7 +90,7 @@ def handle_output(
     if output_type == "QUIET":
         return
 
-    if not output_type == "JSON":
+    if output_type != "JSON":
         if action == "list":
             table = generate_list_table_result(
                 logger, results, output_type == "TABLE-NO-HEADER"

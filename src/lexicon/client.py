@@ -169,9 +169,9 @@ class Client(AbstractContextManager):
             self._state.stack.append(provider)
 
             return _ClientOperations(provider)
-        except Exception as e:
+        except Exception:
             self._state.stack.append(None)
-            raise e
+            raise
 
     def __exit__(
         self,

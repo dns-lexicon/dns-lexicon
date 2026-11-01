@@ -84,8 +84,7 @@ class Provider(BaseProvider):
         )
 
         assert json_response["redirectUrl"] == self.URLS["dashboard"], (
-            "Easyname login failed, bad EASYNAME_USER or EASYNAME_PASS.%s"
-            % login_response.url
+            f"Easyname login failed, bad EASYNAME_USER or EASYNAME_PASS.{login_response.url}"
         )
 
     def authenticate(self):

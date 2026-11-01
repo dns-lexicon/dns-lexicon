@@ -30,8 +30,7 @@ class NamecomLoader:  # pylint: disable=useless-object-inheritance,too-few-publi
     def __iter__(self):
         while self.next_page:
             response = self.get(self.url, {"page": self.next_page})
-            for data in response[self.data_key]:
-                yield data
+            yield from response[self.data_key]
             self.next_page = response.get("next_page")
 
 

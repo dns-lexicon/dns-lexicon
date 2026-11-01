@@ -17,9 +17,7 @@ def _async_request_completed(payload):
     """Looks into an async response payload to see if the requested job has finished."""
     if payload["status"] == "COMPLETED":
         return True
-    if payload["status"] == "ERROR":
-        return True
-    return False
+    return payload["status"] == "ERROR"
 
 
 class Provider(BaseProvider):
@@ -117,7 +115,7 @@ class Provider(BaseProvider):
         except Exception as error:
             if str(error).startswith("Record is a duplicate of another record"):
                 return self.update_record(None, rtype, name, content)
-            raise error
+            raise
 
         success = len(payload["records"]) > 0
         LOGGER.debug("create_record: %s", success)

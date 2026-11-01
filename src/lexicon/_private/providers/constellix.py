@@ -59,7 +59,7 @@ class Provider(BaseProvider):
             if error.response.status_code == 404:
                 payload = {}
             else:
-                raise error
+                raise
 
         for domain in payload:
             if domain["name"] == self.domain:
@@ -192,7 +192,7 @@ class Provider(BaseProvider):
         # at least one record left over after deleting, then this becomes an
         # update operation.
         if content:
-            current_content = set(r["content"] for r in records)
+            current_content = {r["content"] for r in records}
             if content in current_content and len(current_content) > 1:
                 current_content.remove(content)
                 self.update_record(
@@ -203,7 +203,7 @@ class Provider(BaseProvider):
                 )
                 return True
 
-        delete_record_id = set(record["id"] for record in records)
+        delete_record_id = {record["id"] for record in records}
 
         # We need a rtype to do a delete, so pull one from the first record if it's not supplied.
         if not rtype:
@@ -279,7 +279,7 @@ class Provider(BaseProvider):
         response.raise_for_status()
 
         # PUT and DELETE actions dont return valid json.
-        if action in ["DELETE" or action == "PUT"]:
+        if action in ["DELETE"]:
             return response.text
 
         return response.json()

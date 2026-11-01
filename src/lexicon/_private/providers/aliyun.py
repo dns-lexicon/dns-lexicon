@@ -168,11 +168,11 @@ class Provider(BaseProvider):
 
         try:
             return response.json()
-        except ValueError as invalid_json_ve:
+        except ValueError:
             LOGGER.error(
                 "aliyun dns api responsed with invalid json content, %s", response.text
             )
-            raise invalid_json_ve
+            raise
 
     def _request_aliyun(self, action, query_params=None):
         if query_params is None:

@@ -249,7 +249,7 @@ class Provider(BaseProvider):
                 data.append(content)
         except requests.exceptions.HTTPError as error:
             if error.response.status_code != 404:
-                raise error
+                raise
 
         payload = self._post(
             f"/zones/{self.domain_id}:upsertRecordSets",
@@ -298,7 +298,7 @@ class Provider(BaseProvider):
             if error.response.status_code == 404:
                 LOGGER.info("update_record: identifier=%s does not exist", identifier)
                 return True
-            raise error
+            raise
 
         payload = self._post(
             f"/zones/{self.domain_id}:upsertRecordSets", {"replacements": [record]}
@@ -322,7 +322,7 @@ class Provider(BaseProvider):
                     name,
                 )
                 return True
-            raise error
+            raise
 
         # remove content entry if it's one of the many, and update record instead of deleting it
         action = "deletions"

@@ -155,9 +155,7 @@ class Provider(BaseProvider):
             except BaseException:
                 LOGGER.error("Connection Error during create")
                 raise Exception("Connection Error")
-            if response.status_code == 201:
-                return True
-            return False
+            return response.status_code == 201
         raise Exception("RR Type not supported by Infoblox")
 
     # List all records. Return an empty list if no records found
@@ -248,9 +246,7 @@ class Provider(BaseProvider):
                     identifier=record["id"], rtype=rtype, name=name, content=content
                 )
             )
-        if False in success:
-            return False
-        return True
+        return False not in success
 
     def _update_record_internal(self, identifier, rtype=None, name=None, content=None):
         uri = self.api_endpoint + identifier
@@ -263,9 +259,7 @@ class Provider(BaseProvider):
         except BaseException:
             LOGGER.error("Connection Error during create")
             raise Exception("Connection Error")
-        if response.status_code == 200:
-            return True
-        return False
+        return response.status_code == 200
 
     # Delete an existing record.
     # If record does not exist, do nothing.
@@ -278,9 +272,7 @@ class Provider(BaseProvider):
         success = []
         for record in self.list_records(rtype, name, content):
             success.append(self._delete_record_internal(record["id"]))
-        if False in success:
-            return False
-        return True
+        return False not in success
 
     def _delete_record_internal(self, identifier=None):
         if identifier:
@@ -290,9 +282,7 @@ class Provider(BaseProvider):
             except BaseException:
                 LOGGER.error("Connection Error during create")
                 raise Exception("Connection Error")
-            if response.status_code == 200:
-                return True
-            return False
+            return response.status_code == 200
         return False
 
     # Helpers

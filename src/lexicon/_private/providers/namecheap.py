@@ -1,6 +1,8 @@
 """Module provider for Namecheap"""
 
+import functools
 import logging
+import operator
 import sys
 from argparse import ArgumentParser
 from xml.etree.ElementTree import Element, fromstring
@@ -125,9 +127,7 @@ class Provider(BaseProvider):
             # we should print the error, so people know how to correct it.
             raise AuthenticationError(f"Authentication failed: `{err!s}`")
 
-        xpath = ".//{%(ns)s}CommandResponse/{%(ns)s}DomainGetInfoResult" % {
-            "ns": _NAMESPACE
-        }
+        xpath = f".//{{{_NAMESPACE}}}CommandResponse/{{{_NAMESPACE}}}DomainGetInfoResult"
         domain_info = xml.find(xpath)
 
         def _check_hosts_permission():
@@ -141,8 +141,8 @@ class Provider(BaseProvider):
 
             # look for rights
             xpath_alt = (
-                ".//{%(ns)s}CommandResponse/{%(ns)s}DomainGetInfoResult"
-                "/{%(ns)s}Modificationrights" % {"ns": _NAMESPACE}
+                f".//{{{_NAMESPACE}}}CommandResponse/{{{_NAMESPACE}}}DomainGetInfoResult"
+                f"/{{{_NAMESPACE}}}Modificationrights"
             )
             rights_info = xml.find(xpath_alt)
             if rights_info is None:
@@ -328,7 +328,7 @@ class Provider(BaseProvider):
 
 class _ApiError(Exception):
     def __init__(self, number, text):
-        Exception.__init__(self, "%s - %s" % (number, text))
+        Exception.__init__(self, f"{number} - {text}")
         self.number = number
         self.text = text
 
@@ -389,7 +389,7 @@ class _Api:
 
         if xml.attrib["Status"] == "ERROR":
             # Response namespace must be prepended to tag names.
-            xpath = ".//{%(ns)s}Errors/{%(ns)s}Error" % {"ns": _NAMESPACE}
+            xpath = f".//{{{_NAMESPACE}}}Errors/{{{_NAMESPACE}}}Error"
             error = xml.find(xpath)
             if error is not None:
                 raise _ApiError(error.attrib["Number"], error.text)
@@ -404,9 +404,7 @@ class _Api:
         tld = extracted.suffix
         extra_payload = {"SLD": sld, "TLD": tld}
         xml = self.call("namecheap.domains.dns.getHosts", extra_payload)
-        xpath = ".//{%(ns)s}CommandResponse/{%(ns)s}DomainDNSGetHostsResult/*" % {
-            "ns": _NAMESPACE
-        }
+        xpath = f".//{{{_NAMESPACE}}}CommandResponse/{{{_NAMESPACE}}}DomainDNSGetHostsResult/*"
         results = []
         for host in xml.findall(xpath):
             results.append(host.attrib)
@@ -481,8 +479,5 @@ def _elements_names_fix(host_record):
 
 def _list_of_dictionaries_to_numbered_payload(data):
     return dict(
-        sum(
-            [[(k + str(i + 1), v) for k, v in d.items()] for i, d in enumerate(data)],
-            [],
-        )
+        functools.reduce(operator.iadd, [[(k + str(i + 1), v) for k, v in d.items()] for i, d in enumerate(data)], [])
     )

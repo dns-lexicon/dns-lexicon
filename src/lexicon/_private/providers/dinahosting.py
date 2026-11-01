@@ -233,7 +233,7 @@ class Provider(BaseProvider):
 
         rjson = response.json()
         if int(rjson["responseCode"]) != RC_SUCCESS:
-            api_error_message = "%s API Error for url: %s" % (
+            api_error_message = "{} API Error for url: {}".format(
                 rjson["responseCode"],
                 response.url,
             )

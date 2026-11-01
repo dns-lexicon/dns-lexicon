@@ -68,7 +68,7 @@ class FallbackConfigSource(ConfigSource):
 
     def resolve(self, config_key):
         config_key = config_key.split(":")
-        if not config_key[-2] == "lexicon":
+        if config_key[-2] != "lexicon":
             return self.fallback_fn(config_key[-1])
 
         return None

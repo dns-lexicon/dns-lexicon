@@ -44,10 +44,10 @@ class Provider(BaseProvider):
     def authenticate(self):
         try:
             response = self._get("/CMD_API_SHOW_DOMAINS")
-        except requests.exceptions.HTTPError as err:
+        except requests.exceptions.HTTPError:
             # A 401 error will be returned in case of incorrect or missing
             # credentials
-            raise err
+            raise
 
         # The response is a URL encoded array containing all available domains
         domains = [domain.split("=").pop() for domain in response.split("&")]

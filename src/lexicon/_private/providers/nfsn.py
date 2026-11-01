@@ -175,7 +175,7 @@ class Provider(BaseProvider):
         auth_header = {"X-NFSN-Authentication": auth_value}
 
         response = requests.request(
-            action, "".join([self.api_endpoint, url]), data=data, headers=auth_header
+            action, f"{self.api_endpoint}{url}", data=data, headers=auth_header
         )
         response.raise_for_status()
         if response.content:

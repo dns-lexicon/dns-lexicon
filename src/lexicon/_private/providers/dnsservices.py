@@ -84,7 +84,7 @@ class Provider(BaseProvider):
         print("list_records")
         payload = self._get(f"/service/{self.service_id}/dns/{self.domain_id}")
         records = []
-        for _, record in payload["records"].items():
+        for record in payload["records"].values():
             processed_record = {
                 "type": record["type"],
                 "name": record["name"],

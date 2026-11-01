@@ -476,12 +476,12 @@ class _SoapApi(_GransyApi):
 
     def list_domains(self) -> list[str]:
         response = self._call("Domains_List")
-        domains = response["domains"] if "domains" in response else []
+        domains = response.get("domains", [])
         return [d["name"] for d in domains or []]
 
     def list_records(self) -> list[GransyResponse]:
         response = self._call("Get_DNS_Zone", domain=self._provider.domain)
-        records = response["records"] if "records" in response else []
+        records = response.get("records", [])
         return [GransyResponse.from_soap(r) for r in records or []]
 
     def add_record(self, record: GransyRequest) -> None:
@@ -524,7 +524,7 @@ class _SoapApi(_GransyApi):
                     message=response["error"]["errormsg"],
                 )
             if response["status"] == "ok":
-                return response["data"] if "data" in response else dict()
+                return response.get("data", {})
             raise Exception("Invalid status found in SOAP response")
         raise Exception("Invalid response")
 

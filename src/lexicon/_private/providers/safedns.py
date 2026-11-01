@@ -41,7 +41,7 @@ class Provider(BaseProvider):
         except requests.exceptions.HTTPError as err:
             if err.response.status_code == 404:
                 raise AuthenticationError("No domain found")
-            raise err
+            raise
 
     def cleanup(self) -> None:
         pass

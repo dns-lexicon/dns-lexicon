@@ -64,7 +64,7 @@ class Provider(BaseProvider):
             ):  # ResourceRecordAlreadyExists
                 raise
 
-        if payload["code"] if "code" in payload else 0 != 0:
+        if payload.get("code", 0 != 0):
             return False
 
         LOGGER.debug("create_record: %s", payload["success"])

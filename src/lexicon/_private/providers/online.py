@@ -84,7 +84,7 @@ class Provider(BaseProvider):
         # then convert records to bind format
         bind_str = ""
         for record in records:
-            bind_str = bind_str + "{0} {1} IN {2} {3}{4}\n".format(
+            bind_str = bind_str + "{} {} IN {} {}{4}\n".format(
                 record["name"] or "@",
                 record["ttl"],
                 record["type"],
@@ -137,7 +137,7 @@ class Provider(BaseProvider):
                 "name": self._full_name(record["name"]),
                 "ttl": record["ttl"],
                 "content": record["data"],
-                "priority": record["aux"] if "aux" in record else "",
+                "priority": record.get("aux", ""),
             }
             records.append(self._clean_TXT_record(processed_record))
 

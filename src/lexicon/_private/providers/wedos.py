@@ -10,21 +10,15 @@ from lexicon.interfaces import Provider as BaseProvider
 
 
 def _filter_rtype(rtype: str, rec) -> bool:
-    if rec["type"] == rtype:
-        return True
-    return False
+    return rec["type"] == rtype
 
 
 def _filter_name(name: str, rec) -> bool:
-    if rec["name"] == name:
-        return True
-    return False
+    return rec["name"] == name
 
 
 def _filter_content(content: str, rec) -> bool:
-    if rec["content"] == content:
-        return True
-    return False
+    return rec["content"] == content
 
 
 class Provider(BaseProvider):
@@ -127,13 +121,13 @@ class Provider(BaseProvider):
             }
             records.append(processed_record)
         if rtype is not None:
-            records = list(rec for rec in records if _filter_rtype(rtype, rec))
+            records = [rec for rec in records if _filter_rtype(rtype, rec)]
         if name is not None:
-            records = list(
+            records = [
                 rec for rec in records if _filter_name(self._full_name(name), rec)
-            )
+            ]
         if content is not None:
-            records = list(rec for rec in records if _filter_content(content, rec))
+            records = [rec for rec in records if _filter_content(content, rec)]
 
         return records
 
@@ -213,10 +207,7 @@ class Provider(BaseProvider):
 
         payload = self._post(data=self._create_payload("dns-domain-commit", data))
         code = payload["response"]["code"]
-        if code == 1000:
-            return True
-        else:
-            return False
+        return code == 1000
 
     def _request(self, action="GET", url="/", data=None, query_params=None):
         if data is None:

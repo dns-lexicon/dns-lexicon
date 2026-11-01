@@ -191,9 +191,9 @@ class Provider(BaseProvider):
 
         try:
             response.raise_for_status()
-        except requests.exceptions.HTTPError as error:
+        except requests.exceptions.HTTPError:
             LOGGER.error("Content of error response:")
             LOGGER.error(response.json())
-            raise error
+            raise
 
         return response.json()

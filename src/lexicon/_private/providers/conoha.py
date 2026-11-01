@@ -49,10 +49,10 @@ class Provider(BaseProvider):
         super().__init__(config)
         self.domain_id = None
 
-        self.api_endpoint = "https://dns-service.{0}.conoha.io/v1".format(
+        self.api_endpoint = "https://dns-service.{}.conoha.io/v1".format(
             self._get_provider_option("auth_region") or "tyo1"
         )
-        self.auth_api_endpoint = "https://identity.{0}.conoha.io/v2.0".format(
+        self.auth_api_endpoint = "https://identity.{}.conoha.io/v2.0".format(
             self._get_provider_option("auth_region") or "tyo1"
         )
         self.auth_token = None
@@ -118,7 +118,7 @@ class Provider(BaseProvider):
         except requests.exceptions.HTTPError as err:
             # 409 Duplicate Record
             if err.response.status_code != 409:
-                raise err
+                raise
 
         LOGGER.debug("create_record: %s", True)
         return True

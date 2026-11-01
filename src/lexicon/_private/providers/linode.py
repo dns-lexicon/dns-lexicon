@@ -153,7 +153,7 @@ class Provider(BaseProvider):
             "Authorization": f"Bearer {self._get_provider_option('auth_token')}",
         }
 
-        request_filter = query_params["filter"] if "filter" in query_params else None
+        request_filter = query_params.get("filter", None)
         if request_filter is not None:
             default_headers["X-Filter"] = json.dumps(request_filter)
             del query_params["filter"]

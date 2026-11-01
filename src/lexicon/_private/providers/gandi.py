@@ -225,7 +225,7 @@ class Provider(BaseProvider):
             remove_count = 0
             # get all matching (by rtype and name) records - ignore 'content' for now
             records = self.list_records(rtype=rtype, name=name)
-            for current_type in set(record["type"] for record in records):
+            for current_type in {record["type"] for record in records}:
                 matching_records = [
                     record for record in records if record["type"] == current_type
                 ]

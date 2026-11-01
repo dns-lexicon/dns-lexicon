@@ -62,7 +62,7 @@ class Provider(BaseProvider):
             if error.response.status_code == 501:
                 created = True
             else:
-                raise error
+                raise
         LOGGER.debug("create_record: %s", created)
         return created
 
@@ -152,7 +152,7 @@ class Provider(BaseProvider):
                 if error.response.status_code == 501:
                     LOGGER.info("delete_record: %s does not exist", record_id)
                     continue
-                raise error
+                raise
 
         return True
 

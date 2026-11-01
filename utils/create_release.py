@@ -33,7 +33,7 @@ def main():
         )
 
     today = datetime.datetime.today()
-    towncrier_build = "uvx towncrier build --version {0} --date {1}".format(
+    towncrier_build = "uvx towncrier build --version {} --date {}".format(
         new_version, today.strftime("%d/%m/%Y")
     )
 
@@ -61,11 +61,11 @@ def main():
         subprocess.check_call("git push --tags", shell=True)
         subprocess.check_call("git push", shell=True)
 
-    except subprocess.CalledProcessError as e:
+    except subprocess.CalledProcessError:
         print("Error detected, cleaning state.")
         subprocess.call(f"git tag -d v{new_version}", shell=True)
         subprocess.check_call("git reset --hard", shell=True)
-        raise e
+        raise
 
 
 if __name__ == "__main__":
