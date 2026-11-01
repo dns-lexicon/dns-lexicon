@@ -64,6 +64,14 @@ You can test a specific provider using:
     Please note that by default, tests are replayed from recordings located in
     ``tests/fixtures/cassettes``, not against the real DNS provider APIs.
 
+Changelog
+=========
+
+Do not edit ``CHANGELOG.md`` directly. Instead, add a fragment file to the ``changelog.d``
+directory, named ``<MR number>.<type>.md`` with type one of ``added``, ``modified``,
+``fixed``, ``deprecated`` or ``removed``. See ``changelog.d/README.md`` for details.
+Fragments are compiled into ``CHANGELOG.md`` at release time.
+
 Adding a new DNS provider
 =========================
 

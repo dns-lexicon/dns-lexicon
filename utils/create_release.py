@@ -34,21 +34,14 @@ def main():
         )
 
     try:
-        with open(os.path.join(PROJECT_ROOT, "CHANGELOG.md")) as file_h:
-            changelog = file_h.read()
-
         today = datetime.datetime.today()
-        changelog = changelog.replace(
-            "## master - CURRENT\n",
-            """\
-## master - CURRENT
-
-## {0} - {1}
-""".format(new_version, today.strftime("%d/%m/%Y")),
+        subprocess.check_call(
+            "uvx towncrier build --yes --version {0} --date {1}".format(
+                new_version, today.strftime("%d/%m/%Y")
+            ),
+            shell=True,
+            cwd=PROJECT_ROOT,
         )
-
-        with open(os.path.join(PROJECT_ROOT, "CHANGELOG.md"), "w") as file_h:
-            file_h.write(changelog)
 
         subprocess.check_call(
             "uvx --from=toml-cli toml set --toml-path=pyproject.toml project.version {0}".format(
@@ -56,8 +49,7 @@ def main():
             ),
             shell=True,
         )
-        subprocess.check_call("uv run isort src tests", shell=True)
-        subprocess.check_call("uv run black src tests", shell=True)
+        subprocess.check_call("uv run ruff format src tests", shell=True)
 
         subprocess.check_call(
             'git commit -a -m "Version {0}"'.format(new_version), shell=True

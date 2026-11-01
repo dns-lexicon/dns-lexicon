@@ -79,6 +79,7 @@ dev = [
     "types-requests",
     "types-toml",
     "ruff",
+    "towncrier",
 ]
 doc = ["sphinx", "sphinx-mdinclude", "piccolo-theme"]
 
@@ -90,6 +91,40 @@ include = ["/src"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/lexicon"]
+
+[tool.towncrier]
+directory = "changelog.d"
+filename = "CHANGELOG.md"
+start_string = "<!-- towncrier release notes start -->\n"
+title_format = "## {version} - {project_date}"
+issue_format = "(#{issue})"
+template = "changelog.d/_template.md.jinja"
+underlines = ["", "", ""]
+
+[[tool.towncrier.type]]
+directory = "added"
+name = "Added"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "modified"
+name = "Modified"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "fixed"
+name = "Fixed"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "deprecated"
+name = "Deprecated"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "removed"
+name = "Removed"
+showcontent = true
 
 [tool.pytest.ini_options]
 junit_family = "xunit2"
