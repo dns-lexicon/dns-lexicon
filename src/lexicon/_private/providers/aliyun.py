@@ -4,11 +4,9 @@ import base64
 import datetime
 import hmac
 import logging
-import sys
 import uuid
 from argparse import ArgumentParser
 from hashlib import sha1
-from typing import List
 from urllib.parse import quote_plus, urlencode
 
 import requests
@@ -25,7 +23,7 @@ class Provider(BaseProvider):
     """Provider class for Aliyun"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["hichina.com"]
 
     @staticmethod
@@ -170,11 +168,11 @@ class Provider(BaseProvider):
 
         try:
             return response.json()
-        except ValueError as invalid_json_ve:
+        except ValueError:
             LOGGER.error(
                 "aliyun dns api responsed with invalid json content, %s", response.text
             )
-            raise invalid_json_ve
+            raise
 
     def _request_aliyun(self, action, query_params=None):
         if query_params is None:
@@ -212,14 +210,10 @@ class Provider(BaseProvider):
             ]
         )
 
-        if sys.version_info.major > 2:
-            sign_secret_bytes = bytes(sign_secret, "utf-8")
-            string_to_sign_bytes = bytes(string_to_sign, "utf-8")
-            sign = hmac.new(sign_secret_bytes, string_to_sign_bytes, sha1)
-            signature = base64.b64encode(sign.digest()).decode()
-        else:
-            sign = hmac.new(sign_secret, string_to_sign, sha1)
-            signature = sign.digest().encode("base64").rstrip("\n")
+        sign_secret_bytes = bytes(sign_secret, "utf-8")
+        string_to_sign_bytes = bytes(string_to_sign, "utf-8")
+        sign = hmac.new(sign_secret_bytes, string_to_sign_bytes, sha1)
+        signature = base64.b64encode(sign.digest()).decode()
 
         return signature
 
@@ -237,7 +231,7 @@ class Provider(BaseProvider):
             "SignatureMethod": "HMAC-SHA1",
             "SignatureVersion": "1.0",
             "SignatureNonce": signature_nonce,
-            "Timestamp": datetime.datetime.now(datetime.timezone.utc)
+            "Timestamp": datetime.datetime.now(datetime.UTC)
             .replace(microsecond=0)
             .isoformat()
             + "Z",

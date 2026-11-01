@@ -3,9 +3,8 @@
 import hashlib
 import logging
 from argparse import ArgumentParser
-from typing import List
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 # dnspython is an optional dependency of lexicon; do not throw an ImportError if
@@ -26,7 +25,7 @@ class Provider(BaseProvider):
     """Provider class for DDNS"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return []
 
     @staticmethod
@@ -38,7 +37,7 @@ class Provider(BaseProvider):
         parser.add_argument("--ddns-server", help="specify IP of the DDNS server")
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         alg, keyid, secret = self._get_provider_option("auth_token").split(":")
         self.keyring = dns.tsigkeyring.from_text({keyid: (alg, secret)})
         self.endpoint = self._get_provider_option("ddns_server")
@@ -51,7 +50,6 @@ class Provider(BaseProvider):
     def authenticate(self):
         if not self.endpoint:
             raise AuthenticationError("No DDNS server provided, use --ddns-server")
-        pass
 
     def cleanup(self) -> None:
         pass
@@ -120,11 +118,11 @@ class Provider(BaseProvider):
             if len(rrset) == 1:
                 identifier = rrset[0]["id"]
             elif len(rrset) < 1:
-                raise Exception(
+                raise LexiconError(
                     "No records found matching type and name - won't update"
                 )
             else:
-                raise Exception(
+                raise LexiconError(
                     "Multiple records found matching type and name - won't update"
                 )
         d_rtype, d_name, d_content = self._resolve_identifier(identifier)

@@ -9,11 +9,10 @@ EUserv API Docs: https://support.euserv.com/api-doc/
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -31,7 +30,7 @@ class Provider(BaseProvider):
     """Provider class for Euserv"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["euserv.com"]
 
     @staticmethod
@@ -44,7 +43,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.api_endpoint = API_ENDPOINT
         # Order ID for the domain
         self.order_id = None
@@ -216,7 +215,7 @@ class Provider(BaseProvider):
                 "dns_record_id": record_id,
             }
 
-            response = response = self._get(query_params=query_params)
+            response = self._get(query_params=query_params)
             LOGGER.debug("delete_record: %s", response)
 
         return True
@@ -246,7 +245,7 @@ class Provider(BaseProvider):
         response_json = response.json()
 
         if int(response_json["code"]) != RC_SUCCESS:
-            raise Exception(
+            raise LexiconError(
                 f"Error {response_json['code']} in request: {response_json['message']}"
             )
 
@@ -271,7 +270,7 @@ class Provider(BaseProvider):
         if len(records) == 1:
             return records[0]["id"]
 
-        raise Exception("No record identifier found")
+        raise LexiconError("No record identifier found")
 
     # Get the subdomain name only for the given name.
     # This provider automatically suffixes the name with the domain name.

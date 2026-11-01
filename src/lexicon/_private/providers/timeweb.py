@@ -3,11 +3,10 @@
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -24,7 +23,7 @@ class Provider(BaseProvider):
     """
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["timeweb.cloud"]
 
     @staticmethod
@@ -46,7 +45,7 @@ class Provider(BaseProvider):
             return True
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.api_endpoint = "https://api.timeweb.cloud/api/v1"
         self.api_dns = f"/domains/{self.domain}"
@@ -107,7 +106,7 @@ class Provider(BaseProvider):
                     f"Record {rtype} {name} returns {status_code} (already exists?)"
                 )
                 return True
-            raise e
+            raise
 
     def list_records(self, rtype=None, name=None, content=None):
         records = []
@@ -151,11 +150,11 @@ class Provider(BaseProvider):
                 record = records[0]
                 identifier = str(record["id"])
             elif len(records) < 1:
-                raise Exception(
+                raise LexiconError(
                     "No records found matching type and name - won't update"
                 )
             else:
-                raise Exception(
+                raise LexiconError(
                     "Multiple records found matching type and name - won't update"
                 )
         else:

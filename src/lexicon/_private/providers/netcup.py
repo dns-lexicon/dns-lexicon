@@ -3,11 +3,10 @@
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -17,7 +16,7 @@ class Provider(BaseProvider):
     """Provider class for Netcup"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["netcup.net"]
 
     @staticmethod
@@ -31,7 +30,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = 0
         self.zone_ttl = None
         self.api_session_id = None
@@ -168,12 +167,12 @@ class Provider(BaseProvider):
         else:
             auth["apisessionid"] = self.api_session_id
         if not all(auth.values()):
-            raise Exception("No valid authentication mechanism found")
+            raise LexiconError("No valid authentication mechanism found")
         data = self._request(
             "POST", url="", data={"action": method, "param": dict(params, **auth)}
         )
         if data["status"] != "success":
-            raise Exception(f"{data['longmessage']} ({data['statuscode']})")
+            raise LexiconError(f"{data['longmessage']} ({data['statuscode']})")
         return data.get("responsedata", {})
 
     def _request(self, action="GET", url="/", data=None, query_params=None):

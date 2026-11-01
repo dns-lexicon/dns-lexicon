@@ -3,12 +3,11 @@
 import logging
 import warnings
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 from requests.auth import HTTPBasicAuth
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -20,7 +19,7 @@ class Provider(BaseProvider):
     """Provider class for DirectAdmin"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         # DirectAdmin is not tied to a specific domain, so there is nothing to specify here
         return []
 
@@ -36,19 +35,15 @@ class Provider(BaseProvider):
         parser.add_argument("--endpoint", help="specify the DirectAdmin endpoint")
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
 
         self.endpoint = self._get_provider_option("endpoint")
         if self.endpoint is None:
-            raise Exception("Specify endpoint of DirectAdmin")
+            raise LexiconError("Specify endpoint of DirectAdmin")
 
     def authenticate(self):
-        try:
-            response = self._get("/CMD_API_SHOW_DOMAINS")
-        except requests.exceptions.HTTPError as err:
-            # A 401 error will be returned in case of incorrect or missing
-            # credentials
-            raise err
+        # A 401 error will be raised in case of incorrect or missing credentials
+        response = self._get("/CMD_API_SHOW_DOMAINS")
 
         # The response is a URL encoded array containing all available domains
         domains = [domain.split("=").pop() for domain in response.split("&")]

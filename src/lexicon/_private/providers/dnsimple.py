@@ -2,18 +2,12 @@
 
 import json
 import logging
-import sys
 from argparse import ArgumentParser
-from typing import List
+from importlib.metadata import Distribution, PackageNotFoundError
 
 import requests
 
-if sys.version_info[:2] < (3, 10):
-    from importlib_metadata import Distribution, PackageNotFoundError
-else:
-    from importlib.metadata import Distribution, PackageNotFoundError
-
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -41,7 +35,7 @@ class Provider(BaseProvider):
     """Provider class for DNS Simple"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["dnsimple.com"]
 
     @staticmethod
@@ -59,7 +53,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.account_id = None
         self.api_endpoint = (
@@ -76,7 +70,7 @@ class Provider(BaseProvider):
 
         for account in payload:
             if account["plan_identifier"] is None:
-                logging.warning(
+                LOGGER.warning(
                     "Skipping unconfigured account %s (%d). "
                     "To use this account, you must select a plan.",
                     account["email"],
@@ -233,7 +227,7 @@ class Provider(BaseProvider):
                     "auth_2fa"
                 )
         else:
-            raise Exception("No valid authentication mechanism found")
+            raise LexiconError("No valid authentication mechanism found")
 
         response = requests.request(
             action,
@@ -246,7 +240,7 @@ class Provider(BaseProvider):
         # if the request fails for any reason, throw an error.
         response.raise_for_status()
         if response.text and response.json()["data"] is None:
-            raise Exception("No data returned")
+            raise LexiconError("No data returned")
 
         return response.json()["data"] if response.text else None
 

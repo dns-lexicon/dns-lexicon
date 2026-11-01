@@ -2,7 +2,6 @@
 
 import argparse
 import os
-from typing import Type
 
 from lexicon._private.discovery import (
     find_missing_extras,
@@ -93,7 +92,7 @@ def generate_cli_main_parser() -> argparse.ArgumentParser:
 
     for provider in find_providers():
         provider_module = load_provider_module(provider)
-        provider_class: Type[Provider] = getattr(provider_module, "Provider")
+        provider_class: type[Provider] = provider_module.Provider
 
         subparser = subparsers.add_parser(
             provider,

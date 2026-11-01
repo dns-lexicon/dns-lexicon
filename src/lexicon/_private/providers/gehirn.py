@@ -5,12 +5,11 @@ import json
 import logging
 import re
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 from requests.auth import HTTPBasicAuth
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -42,7 +41,7 @@ class Provider(BaseProvider):
     """Provider class for Gehirn"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["gehirn.jp"]
 
     @staticmethod
@@ -55,7 +54,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.version_id = None
         self.api_endpoint = "https://api.gis.gehirn.jp/dns/v1"
@@ -133,7 +132,7 @@ class Provider(BaseProvider):
 
         if not identifier:
             if not (rtype and name and content):
-                raise Exception("type, name and content must be specified.")
+                raise LexiconError("type, name and content must be specified.")
 
             records = self._get_records(rtype=rtype, name=name)
 
@@ -155,7 +154,7 @@ class Provider(BaseProvider):
             # with identifier
             records = self._get_records(identifier=identifier)
             if not records:
-                raise Exception("Record identifier could not be found.")
+                raise LexiconError("Record identifier could not be found.")
 
             record = records[0]
 
@@ -197,7 +196,7 @@ class Provider(BaseProvider):
 
             records = self._get_records(identifier=identifier)
             if not records:
-                raise Exception("Record identifier could not be found.")
+                raise LexiconError("Record identifier could not be found.")
 
             record = records[0]
             for index, a_record in enumerate(record["records"]):
@@ -218,7 +217,7 @@ class Provider(BaseProvider):
                 LOGGER.debug("delete_record: %s", True)
                 return True
 
-            raise Exception("Record identifier could not be found.")
+            raise LexiconError("Record identifier could not be found.")
 
         record = None
         if name is not None:
@@ -244,7 +243,7 @@ class Provider(BaseProvider):
 
     # Helpers
     def _full_name(self, record_name):
-        record_name = super(Provider, self)._full_name(record_name)
+        record_name = super()._full_name(record_name)
         if not record_name.endswith("."):
             record_name += "."
         return record_name

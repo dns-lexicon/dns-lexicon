@@ -2,9 +2,8 @@
 
 import logging
 from argparse import ArgumentParser
-from typing import List
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 try:
@@ -19,7 +18,7 @@ class Provider(BaseProvider):
     """Provider class for Softlayer"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["softlayer.com"]
 
     @staticmethod
@@ -32,14 +31,14 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
 
         username = self._get_provider_option("auth_username")
         api_key = self._get_provider_option("auth_api_key")
 
         if not username or not api_key:
-            raise Exception("No username and/or api key was specified")
+            raise LexiconError("No username and/or api key was specified")
 
         sl_client = SoftLayer.create_client_from_env(username=username, api_key=api_key)
         self.sl_dns = SoftLayer.managers.dns.DNSManager(sl_client)
@@ -115,7 +114,7 @@ class Provider(BaseProvider):
             if len(records) == 1:
                 identifier = records[0]["id"]
             else:
-                raise Exception("Record identifier could not be found.")
+                raise LexiconError("Record identifier could not be found.")
 
         record = {"id": identifier}
         if rtype:

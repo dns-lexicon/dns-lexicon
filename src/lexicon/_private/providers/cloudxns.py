@@ -5,12 +5,11 @@ import json
 import logging
 import time
 from argparse import ArgumentParser
-from typing import List
 from urllib.parse import urlencode
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -20,7 +19,7 @@ class Provider(BaseProvider):
     """Provider class for CloudXNS"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["cloudxns.net"]
 
     @staticmethod
@@ -33,7 +32,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.api_endpoint = "https://www.cloudxns.net/api2"
 
@@ -118,7 +117,7 @@ class Provider(BaseProvider):
             if len(records) == 1:
                 identifier = records[0]["id"]
             else:
-                raise Exception("Record identifier could not be found.")
+                raise LexiconError("Record identifier could not be found.")
 
         data = {
             "domain_id": self.domain_id,
@@ -178,9 +177,7 @@ class Provider(BaseProvider):
             "API-KEY": self._get_provider_option("auth_username"),
             "API-REQUEST-DATE": date,
             "API-HMAC": hashlib.md5(
-                f"{self._get_provider_option('auth_username')}{self.api_endpoint}{url}{query_string}{data}{date}{self._get_provider_option('auth_token')}".encode(
-                    "utf-8"
-                )
+                f"{self._get_provider_option('auth_username')}{self.api_endpoint}{url}{query_string}{data}{date}{self._get_provider_option('auth_token')}".encode()
             ).hexdigest(),
             "API-FORMAT": "json",
         }

@@ -4,9 +4,8 @@ import logging
 import re
 import shlex
 from argparse import ArgumentParser
-from typing import List
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 try:
@@ -24,7 +23,7 @@ class Provider(BaseProvider):
     """
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return [
             "ns.inwx.de",
             "ns2.inwx.de",
@@ -51,7 +50,7 @@ class Provider(BaseProvider):
         """
         :param config: command line options
         """
-        super(Provider, self).__init__(config)
+        super().__init__(config)
 
         self._auth = {
             "user": self._get_provider_option("auth_username"),
@@ -80,7 +79,7 @@ class Provider(BaseProvider):
             if exclude_code is not None and response["code"] == exclude_code:
                 return
 
-            raise Exception(f"{message}: {response['msg']} ({response['code']})")
+            raise LexiconError(f"{message}: {response['msg']} ({response['code']})")
 
     # Make any request to validate credentials
     def authenticate(self):
@@ -96,7 +95,7 @@ class Provider(BaseProvider):
         response = self._api.nameserver.info(opts)
         try:
             self._validate_response(response=response, message="Failed to authenticate")
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             raise AuthenticationError(str(e))
 
         # set to fake id to pass tests, inwx doesn't work on domain id but

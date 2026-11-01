@@ -17,7 +17,7 @@ import yaml
 LOGGER = logging.getLogger(__name__)
 
 
-class ConfigSource(object):
+class ConfigSource:
     """
     Base class to implement a configuration source for a ConfigResolver.
     The relevant method to override is ``resolve(self, config_parameter)``.
@@ -42,7 +42,7 @@ class EnvironmentConfigSource(ConfigSource):
     """ConfigSource that resolve configuration against existing environment variables."""
 
     def __init__(self):
-        super(EnvironmentConfigSource, self).__init__()
+        super().__init__()
         self._parameters = {}
         for key, value in os.environ.items():
             if key.startswith("LEXICON_"):
@@ -83,7 +83,7 @@ class ArgsConfigSource(ConfigSource):
     """ConfigSource that resolve configuration against an argparse namespace."""
 
     def __init__(self, namespace: Namespace):
-        super(ArgsConfigSource, self).__init__()
+        super().__init__()
         self._parameters = vars(namespace)
 
     def resolve(self, config_key: str) -> str | None:
@@ -99,7 +99,7 @@ class DictConfigSource(ConfigSource):
     """ConfigSource that resolve configuration against a dict object."""
 
     def __init__(self, dict_object: dict[str, Any]):
-        super(DictConfigSource, self).__init__()
+        super().__init__()
         self._parameters = dict_object
 
     def resolve(self, config_key: str) -> str | None:
@@ -120,7 +120,7 @@ class FileConfigSource(DictConfigSource):
         with open(file_path, "r") as stream:
             yaml_object = yaml.load(stream, Loader=yaml.SafeLoader) or {}
 
-        super(FileConfigSource, self).__init__(yaml_object)
+        super().__init__(yaml_object)
 
 
 class ProviderFileConfigSource(FileConfigSource):
@@ -131,7 +131,7 @@ class ProviderFileConfigSource(FileConfigSource):
         provider_name: str,
         file_path: str | bytes | os.PathLike[str] | os.PathLike[bytes],
     ):
-        super(ProviderFileConfigSource, self).__init__(file_path)
+        super().__init__(file_path)
         # Scope the loaded config file into provider namespace
         self._parameters = {provider_name: self._parameters}
 
@@ -172,10 +172,10 @@ class LegacyDictConfigSource(DictConfigSource):
             else:
                 refactor_dict_object[key] = value
 
-        super(LegacyDictConfigSource, self).__init__(refactor_dict_object)
+        super().__init__(refactor_dict_object)
 
 
-class ConfigResolver(object):
+class ConfigResolver:
     """
     Highly customizable configuration resolver object, that gets configuration parameters
     from various sources with a precedence order. Sources and their priority are configured
@@ -213,7 +213,7 @@ class ConfigResolver(object):
     """
 
     def __init__(self):
-        super(ConfigResolver, self).__init__()
+        super().__init__()
         self._config_sources = []
 
     def resolve(self, config_key: str) -> str | None:

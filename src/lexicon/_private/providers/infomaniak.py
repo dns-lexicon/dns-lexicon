@@ -3,11 +3,10 @@
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -19,7 +18,7 @@ class Provider(BaseProvider):
     """Provider class for Infomaniak"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["infomaniak.com"]
 
     @staticmethod
@@ -32,11 +31,11 @@ class Provider(BaseProvider):
         parser.add_argument("--auth-token", help="specify the token")
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
 
         # Handling missing required parameters
         if not self._get_provider_option("auth_token"):
-            raise Exception("Error, token is not defined")
+            raise LexiconError("Error, token is not defined")
 
         # Construct DNS Infomaniak environment
         self.domain_id = None
@@ -155,9 +154,9 @@ class Provider(BaseProvider):
                 identifier = records[0]["id"]
                 record = records[0]
             elif len(records) > 1:
-                raise Exception("Several record identifiers match the request")
+                raise LexiconError("Several record identifiers match the request")
             else:
-                raise Exception("Record identifier could not be found")
+                raise LexiconError("Record identifier could not be found")
         else:
             record = self._get_record(identifier)
 
@@ -209,6 +208,6 @@ class Provider(BaseProvider):
         json_result = result.json()
 
         if json_result["result"] != "success":
-            raise Exception("API didn't return success status")
+            raise LexiconError("API didn't return success status")
 
         return json_result

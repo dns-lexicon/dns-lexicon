@@ -6,7 +6,6 @@ import random
 import string
 import time
 from argparse import ArgumentParser
-from typing import List
 from urllib.parse import urlencode
 
 import requests
@@ -23,7 +22,7 @@ class Provider(BaseProvider):
     """Provider class for nfsn"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["nearlyfreespeech.net"]
 
     @staticmethod
@@ -34,7 +33,7 @@ class Provider(BaseProvider):
         parser.add_argument("--auth-token", help="specify token used to authenticate")
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.api_endpoint = "https://api.nearlyfreespeech.net"
         self.shortname = None
@@ -42,7 +41,7 @@ class Provider(BaseProvider):
     def authenticate(self):
         try:
             self._post(f"/dns/{self.domain}/listRRs")
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             raise AuthenticationError(e)
         self.domain_id = self.domain
 
@@ -176,7 +175,7 @@ class Provider(BaseProvider):
         auth_header = {"X-NFSN-Authentication": auth_value}
 
         response = requests.request(
-            action, "".join([self.api_endpoint, url]), data=data, headers=auth_header
+            action, f"{self.api_endpoint}{url}", data=data, headers=auth_header
         )
         response.raise_for_status()
         if response.content:

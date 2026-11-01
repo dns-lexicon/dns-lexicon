@@ -29,12 +29,10 @@ attempt to detect and account for that.
 import json
 import logging
 from argparse import ArgumentParser
-from builtins import object
-from typing import List
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 try:
@@ -53,7 +51,7 @@ class Provider(BaseProvider):
     """
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["gandi.net"]
 
     @staticmethod
@@ -67,7 +65,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.default_ttl = 3600
         self.protocol = self._get_provider_option("api_protocol") or "rpc"
 
@@ -118,21 +116,13 @@ class Provider(BaseProvider):
             if current_values:
                 record = {"rrset_values": current_values + [content]}
                 if self._get_lexicon_option("ttl"):
-                    record["rrset_ttl"] = (
-                        self._get_lexicon_option("ttl")
-                        if self._get_lexicon_option("ttl") >= 300
-                        else 300
-                    )
+                    record["rrset_ttl"] = max(self._get_lexicon_option("ttl"), 300)
                 self._put(url, record)
             else:
                 record = {"rrset_values": [content]}
                 # add the ttl, if this is a new record
                 if self._get_lexicon_option("ttl"):
-                    record["rrset_ttl"] = (
-                        self._get_lexicon_option("ttl")
-                        if self._get_lexicon_option("ttl") >= 300
-                        else 300
-                    )
+                    record["rrset_ttl"] = max(self._get_lexicon_option("ttl"), 300)
                 self._post(url, record)
         LOGGER.debug("create_record: %s", True)
         return True
@@ -231,7 +221,7 @@ class Provider(BaseProvider):
             remove_count = 0
             # get all matching (by rtype and name) records - ignore 'content' for now
             records = self.list_records(rtype=rtype, name=name)
-            for current_type in set(record["type"] for record in records):
+            for current_type in {record["type"] for record in records}:
                 matching_records = [
                     record for record in records if record["type"] == current_type
                 ]
@@ -258,7 +248,7 @@ class Provider(BaseProvider):
                     remove_count += 1
 
             if remove_count == 0:
-                raise Exception("Record identifier could not be found.")
+                raise LexiconError("Record identifier could not be found.")
         else:
             self._delete(f"/domains/{self.domain_id}/records/{identifier}")
 
@@ -299,7 +289,7 @@ class Provider(BaseProvider):
         return response.json()
 
 
-class GandiRPCSubProvider(object):
+class GandiRPCSubProvider:
     """Provide Gandi RPCXML API implementation of Lexicon Provider interface.
     This implementation is called through the main LiveDNS implementation
     is RPC protocol is used.
@@ -307,7 +297,7 @@ class GandiRPCSubProvider(object):
 
     def __init__(self, api_key, api_endpoint, domain, relative_name_fn, full_name_fn):
         """Initialize Gandi RCPXML API provider."""
-        super(GandiRPCSubProvider, self).__init__()
+        super().__init__()
 
         self._api_endpoint = api_endpoint
         self._api_key = api_key
@@ -406,9 +396,9 @@ class GandiRPCSubProvider(object):
             if len(records) == 1:
                 identifier = records[0]["id"]
             elif len(records) > 1:
-                raise Exception("Several record identifiers match the request")
+                raise LexiconError("Several record identifiers match the request")
             else:
-                raise Exception("Record identifier could not be found")
+                raise LexiconError("Record identifier could not be found")
 
         identifier = str(identifier)
         version = None

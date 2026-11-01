@@ -9,6 +9,7 @@ from requests import HTTPError
 
 from lexicon._private.providers.namecom import Provider
 from lexicon.config import DictConfigSource
+from lexicon.exceptions import LexiconError
 
 
 # Hook into testing framework by inheriting unittest.TestCase and reuse
@@ -82,9 +83,11 @@ class TestNamecomProvider(IntegrationTestsV2):
     def test_provider_when_calling_create_record_should_fail_on_http_error(self):
         provider = self._construct_authenticated_provider()
         error = HTTPError(response=Mock())
-        with patch.object(provider, "_request", side_effect=error):
-            with pytest.raises(HTTPError):
-                provider.create_record("TXT", "httperror", "HTTPError")
+        with (
+            patch.object(provider, "_request", side_effect=error),
+            pytest.raises(HTTPError),
+        ):
+            provider.create_record("TXT", "httperror", "HTTPError")
 
     ############################
     # Provider.update_record() #
@@ -102,7 +105,7 @@ class TestNamecomProvider(IntegrationTestsV2):
         self,
     ):
         provider = self._construct_authenticated_provider()
-        with pytest.raises(Exception):
+        with pytest.raises(LexiconError):
             provider.update_record(None, "TXT", "missingrecord")
 
     @vcr_integration_test
@@ -112,7 +115,7 @@ class TestNamecomProvider(IntegrationTestsV2):
         provider = self._construct_authenticated_provider()
         provider.create_record("TXT", "multiple.test", "foo")
         provider.create_record("TXT", "multiple.test", "bar")
-        with pytest.raises(Exception):
+        with pytest.raises(LexiconError):
             provider.update_record(None, "TXT", "multiple.test", "updated")
 
     @vcr_integration_test

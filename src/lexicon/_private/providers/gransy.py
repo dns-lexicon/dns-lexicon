@@ -13,11 +13,11 @@ import requests
 
 try:
     import zeep
-except BaseException:
+except ImportError:
     pass
 
 from lexicon.config import ConfigResolver
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -208,7 +208,7 @@ class Provider(BaseProvider):
             if name is not None:
                 records = self._list_records_internal(identifier=identifier)
                 if len(records) != 1:
-                    raise Exception(f"No record found with identifier {identifier}")
+                    raise LexiconError(f"No record found with identifier {identifier}")
                 if records[0]["name"] != self._full_name(name):
                     # API does not allow us to update name directly
                     self._update_record_with_name(records[0], rtype, name, content)
@@ -236,7 +236,7 @@ class Provider(BaseProvider):
             if old_record is None:
                 records = self._list_records_internal(identifier=identifier)
                 if len(records) != 1:
-                    raise Exception(f"No record found with identifier {identifier}")
+                    raise LexiconError(f"No record found with identifier {identifier}")
                 old_record = records[0]
             rtype = rtype if rtype else old_record["type"]
             if content is None:
@@ -405,11 +405,11 @@ class Provider(BaseProvider):
         if len(records) == 1:
             return records[0]
         if len(records) > 1:
-            raise Exception(
+            raise LexiconError(
                 "Identifier was not provided and several existing "
                 f"records match the request for {rtype}/{name}"
             )
-        raise Exception(
+        raise LexiconError(
             "Identifier was not provided and no existing records match "
             f"the request for {rtype}/{name}"
         )
@@ -466,7 +466,7 @@ class _SoapApi(_GransyApi):
         username = self._provider._get_provider_option("auth_username")
         password = self._provider._get_provider_option("auth_password")
         if not username or not password:
-            raise Exception(
+            raise LexiconError(
                 "No valid authentication data passed, expected: auth-username and auth-password"
             )
         response = self._call("Login", login=username, password=password)
@@ -476,12 +476,12 @@ class _SoapApi(_GransyApi):
 
     def list_domains(self) -> list[str]:
         response = self._call("Domains_List")
-        domains = response["domains"] if "domains" in response else []
+        domains = response["domains"] if "domains" in response else []  # noqa: SIM401
         return [d["name"] for d in domains or []]
 
     def list_records(self) -> list[GransyResponse]:
         response = self._call("Get_DNS_Zone", domain=self._provider.domain)
-        records = response["records"] if "records" in response else []
+        records = response["records"] if "records" in response else []  # noqa: SIM401
         return [GransyResponse.from_soap(r) for r in records or []]
 
     def add_record(self, record: GransyRequest) -> None:
@@ -512,7 +512,7 @@ class _SoapApi(_GransyApi):
             zeep.exceptions.XMLParseError,
             zeep.exceptions.UnexpectedElementError,
         ) as e:
-            raise Exception(
+            raise LexiconError(
                 f"{e} - the bundled SOAP API definition may be outdated, "
                 "try --remote-api-definition"
             ) from e
@@ -524,9 +524,9 @@ class _SoapApi(_GransyApi):
                     message=response["error"]["errormsg"],
                 )
             if response["status"] == "ok":
-                return response["data"] if "data" in response else dict()
-            raise Exception("Invalid status found in SOAP response")
-        raise Exception("Invalid response")
+                return response["data"] if "data" in response else {}  # noqa: SIM401
+            raise LexiconError("Invalid status found in SOAP response")
+        raise LexiconError("Invalid response")
 
 
 class _RestApi(_GransyApi):

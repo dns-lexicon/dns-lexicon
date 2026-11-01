@@ -4,10 +4,10 @@ import hashlib
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
+from lexicon.exceptions import LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -17,7 +17,7 @@ class Provider(BaseProvider):
     """Provider class for RcodeZero"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["rcode0.net"]
 
     @staticmethod
@@ -25,7 +25,7 @@ class Provider(BaseProvider):
         parser.add_argument("--auth-token", help="specify token for authentication")
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self._zone_data = None
         self.api_endpoint = "https://my.rcodezero.at/api/v1"
@@ -127,7 +127,7 @@ class Provider(BaseProvider):
     def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         LOGGER.debug("delete %s %s %s %s", identifier, rtype, name, content)
         if identifier is None and (rtype is None or name is None):
-            raise Exception("Must specify at least id or  both rtype and name")
+            raise LexiconError("Must specify at least id or  both rtype and name")
 
         payload = self._get(f"/zones/{self.domain_id}/rrsets?page_size=-1")
 
@@ -212,7 +212,7 @@ class Provider(BaseProvider):
                     content = self._unclean_content(rrset["type"], record["content"])
                     return rtype, name, content
 
-        raise Exception(f"Record with ID {identifier} not found ")
+        raise LexiconError(f"Record with ID {identifier} not found ")
 
     def _clean_content(self, rtype, content):
         if rtype in ("TXT", "LOC"):

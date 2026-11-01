@@ -73,15 +73,16 @@ import json
 import logging
 import time
 from argparse import ArgumentParser
+from collections.abc import Callable
 from http import cookiejar
 from http.client import HTTPResponse
-from typing import Any, Callable, Dict, List, NamedTuple, Optional, TypeVar, Union
+from typing import Any, NamedTuple, TypeVar
 from urllib import request
 from urllib.error import HTTPError
 from urllib.request import OpenerDirector
 
 from lexicon.config import ConfigResolver
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -106,7 +107,7 @@ def is_domain(target: str) -> bool:
     )
 
 
-def is_sub_domain(target: str, domainname: str) -> Union[str, bool]:
+def is_sub_domain(target: str, domainname: str) -> str | bool:
     idx = target.rfind(domainname)
     return (
         target[0:idx].strip(".")
@@ -130,9 +131,9 @@ RestAPICallable = Callable[[str, str, T], RestApiResponse]
 
 
 def reastapi_add_content_type(
-    _headers: Optional[dict[str, str]],
+    _headers: dict[str, str] | None,
     content_type: str | None,
-    content: Optional[bytes],
+    content: bytes | None,
 ) -> dict[str, str]:
     """Add 'Content-Type' header if exists"""
     headers = _headers.copy() if _headers is not None else {}
@@ -183,7 +184,7 @@ def restapi_exception_not_200(response: HTTPResponse):
     # HTTPError will be raised if status >= 400
     if response.status != 200:
         LOGGER.error(f"HTTP Status: {response.status}")
-        raise Exception(f"HTTP Status: {response.status}")
+        raise LexiconError(f"HTTP Status: {response.status}")
 
 
 ########################################################################
@@ -226,7 +227,7 @@ class RecordData(NamedTuple):
 
 
 class DomainData(NamedTuple):
-    records: List[RecordData]
+    records: list[RecordData]
     ttl: int
 
 
@@ -237,7 +238,7 @@ def vdapi_build_caller(
     content_decoder=lambda x: x,
 ) -> RestAPICallable:
     def _(
-        url: str, method: str, content: Optional[T] = None, interval=1
+        url: str, method: str, content: T | None = None, interval=1
     ) -> RestApiResponse:
         try:
             return restapi_call(
@@ -253,7 +254,7 @@ def vdapi_build_caller(
                 time.sleep(interval)
                 return _(url, method, content, interval * 2)
             else:
-                raise http_error
+                raise
 
     return _
 
@@ -347,7 +348,7 @@ class Provider(BaseProvider):
         parser.add_argument("--auth-token", help="specify youyr API token")
 
     def __init__(self, config: ConfigResolver):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
 
         auth_token = self._get_provider_option("auth_token")
         assert auth_token is not None, "No authenticaion token defined"
@@ -521,8 +522,8 @@ class Provider(BaseProvider):
         self,
         action: str = "GET",
         url: str = "/",
-        data: Optional[Dict] = None,
-        query_params: Optional[Dict] = None,
+        data: dict | None = None,
+        query_params: dict | None = None,
     ) -> Any:
         pass
 
@@ -555,7 +556,7 @@ if __name__ == "__main__":
         def setUp(self):
             self.auth_token = os.environ.get("LEXICON_VALUEDOMAIN_AUTH_TOKEN")
             if self.auth_token is None:
-                raise Exception("LEXICON_VALUEDOMAIN_AUTH_TOKEN not defined")
+                raise LexiconError("LEXICON_VALUEDOMAIN_AUTH_TOKEN not defined")
             self.caller = vdapi_create_caller(self.auth_token)
 
         def tearDown(self):

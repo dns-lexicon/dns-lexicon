@@ -3,11 +3,10 @@
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -17,7 +16,7 @@ class Provider(BaseProvider):
     """Provider class for Flexible Engine Cloud"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["orange-business.com"]
 
     @staticmethod
@@ -29,7 +28,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.api_endpoint = "https://dns.prod-cloud-ocb.orange-business.com/v2"
         self.domain_id = None
 
@@ -130,9 +129,8 @@ class Provider(BaseProvider):
                 if record["name"].rstrip(".") == self._full_name(name)
             ]
 
-        if content:
-            if len(content) > 1:
-                records = [record for record in records if record["content"] == content]
+        if content and len(content) > 1:
+            records = [record for record in records if record["content"] == content]
 
         LOGGER.debug("list_records: %s", records)
         return records
@@ -145,11 +143,11 @@ class Provider(BaseProvider):
             if len(records) == 1:
                 identifier = records[0]["id"]
             elif len(records) < 1:
-                raise Exception(
+                raise LexiconError(
                     "No records found matching type and name - won't update"
                 )
             else:
-                raise Exception(
+                raise LexiconError(
                     "Multiple records found matching type and name - won't update"
                 )
 

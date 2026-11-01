@@ -3,7 +3,7 @@
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
+from typing import ClassVar
 
 from bs4 import BeautifulSoup, Tag
 from requests import Response, Session
@@ -18,7 +18,7 @@ class Provider(BaseProvider):
     easyname provider
     """
 
-    URLS = {
+    URLS: ClassVar[dict[str, str]] = {
         "login": "https://my.easyname.com/en/login",
         "login_endpoint": "https://my.easyname.com/en/authentication-api/login",
         "domain_list": "https://my.easyname.com/domains/",
@@ -32,7 +32,7 @@ class Provider(BaseProvider):
     }
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["easyname.eu"]
 
     @staticmethod
@@ -47,7 +47,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.session = Session()
         self.domain_id = None
         self._records = None
@@ -85,8 +85,7 @@ class Provider(BaseProvider):
         )
 
         assert json_response["redirectUrl"] == self.URLS["dashboard"], (
-            "Easyname login failed, bad EASYNAME_USER or EASYNAME_PASS.%s"
-            % login_response.url
+            f"Easyname login failed, bad EASYNAME_USER or EASYNAME_PASS.{login_response.url}"
         )
 
     def authenticate(self):
@@ -146,11 +145,11 @@ class Provider(BaseProvider):
         # Pull a list of records and check for ours
         was_success = len(self.list_records(rtype, name, content)) > 0
         if identifier != "" and was_success:
-            msg = "Successfully updated record {}".format(name)
+            msg = f"Successfully updated record {name}"
         elif was_success:
-            msg = "Successfully added record {}".format(name)
+            msg = f"Successfully added record {name}"
         else:
-            msg = "Failed to add/update record {}".format(name)
+            msg = f"Failed to add/update record {name}"
         LOGGER.info(msg, name)
         return was_success
 
@@ -281,8 +280,8 @@ class Provider(BaseProvider):
                         rec["priority"] = int(rec["priority"])
                     if rec["ttl"]:
                         rec["ttl"] = int(rec["ttl"])
-                except Exception as error:
-                    errmsg = "Cannot parse DNS entry ({}).".format(error)
+                except Exception as error:  # noqa: BLE001
+                    errmsg = f"Cannot parse DNS entry ({error})."
                     LOGGER.warning(errmsg)
                     raise AssertionError(errmsg)
                 records.append(rec)
@@ -387,8 +386,7 @@ class Provider(BaseProvider):
             records = [record for record in records if record["type"] == rtype]
         if name is not None:
             LOGGER.debug("Filtering %d records by name: %s", len(records), name)
-            if name.endswith("."):
-                name = name[:-1]
+            name = name.removesuffix(".")
             if rtype.lower() != "txt":
                 name = name.split(".")[0]
                 records = [
@@ -453,7 +451,7 @@ class Provider(BaseProvider):
             link = td_anchor.find("a")["href"]
             domain_id = link.rsplit("/", 1)[-1]
             return domain_id
-        except Exception as error:
+        except Exception as error:  # noqa: BLE001
             errmsg = (
                 "Cannot get the domain id even though the domain seems to exist (%s).",
                 error,

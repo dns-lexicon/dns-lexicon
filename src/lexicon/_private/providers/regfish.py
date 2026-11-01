@@ -3,11 +3,10 @@
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -17,7 +16,7 @@ class Provider(BaseProvider):
     """Provider class for Regfish"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["regfish-ns.net"]
 
     @staticmethod
@@ -28,7 +27,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.api_endpoint = "https://api.regfish.de"
 
@@ -51,21 +50,21 @@ class Provider(BaseProvider):
         }
         if self._get_lexicon_option("ttl"):
             data["ttl"] = self._get_lexicon_option("ttl")
-        if self._get_lexicon_option("priority"):
-            if self._get_lexicon_option("priority").isnumeric():
-                data["priority"] = int(self._get_lexicon_option("priority"))
+        if (
+            self._get_lexicon_option("priority")
+            and self._get_lexicon_option("priority").isnumeric()
+        ):
+            data["priority"] = int(self._get_lexicon_option("priority"))
 
         payload = {"success": True}
         try:
             payload = self._post("/dns/rr", data)
         except requests.exceptions.HTTPError as err:
             json_res = err.response.json()
-            if (
-                not json_res["code"] if "code" in json_res else 0 != 15003
-            ):  # ResourceRecordAlreadyExists
+            if json_res.get("code", 0) != 15003:  # ResourceRecordAlreadyExists
                 raise
 
-        if payload["code"] if "code" in payload else 0 != 0:
+        if payload.get("code", 0) != 0:
             return False
 
         LOGGER.debug("create_record: %s", payload["success"])
@@ -114,11 +113,11 @@ class Provider(BaseProvider):
             if len(records) == 1:
                 identifier = records[0]["id"]
             elif len(records) < 1:
-                raise Exception(
+                raise LexiconError(
                     "No records found matching type and name - won't update"
                 )
             else:
-                raise Exception(
+                raise LexiconError(
                     "Multiple records found matching type and name - won't update"
                 )
 
@@ -151,7 +150,7 @@ class Provider(BaseProvider):
         # Check if there are records to delete
         if not delete_record_id:
             # No records found to delete, raise an error or return False
-            raise Exception(f"No matching records found to delete {identifier}")
+            raise LexiconError(f"No matching records found to delete {identifier}")
 
         for record_id in delete_record_id:
             self._delete(f"/dns/rr/{record_id}")

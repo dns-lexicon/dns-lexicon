@@ -3,11 +3,11 @@
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
+from typing import ClassVar
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -16,7 +16,7 @@ LOGGER = logging.getLogger(__name__)
 class Provider(BaseProvider):
     """Provider class for Cloudflare"""
 
-    SPECIAL_TYPES = {
+    SPECIAL_TYPES: ClassVar[set[str]] = {
         "SSHFP",
         "CAA",
         "CERT",
@@ -33,7 +33,7 @@ class Provider(BaseProvider):
     }
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["cloudflare.com"]
 
     @staticmethod
@@ -62,7 +62,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.api_endpoint = "https://api.cloudflare.com/client/v4"
 
@@ -115,9 +115,11 @@ class Provider(BaseProvider):
         }
         if self._get_lexicon_option("ttl"):
             data["ttl"] = self._get_lexicon_option("ttl")
-        if self._get_lexicon_option("priority"):
-            if self._get_lexicon_option("priority").isnumeric():
-                data["priority"] = int(self._get_lexicon_option("priority"))
+        if (
+            self._get_lexicon_option("priority")
+            and self._get_lexicon_option("priority").isnumeric()
+        ):
+            data["priority"] = int(self._get_lexicon_option("priority"))
 
         payload = {"success": True}
         try:
@@ -182,11 +184,11 @@ class Provider(BaseProvider):
             if len(records) == 1:
                 identifier = records[0]["id"]
             elif len(records) < 1:
-                raise Exception(
+                raise LexiconError(
                     "No records found matching type and name - won't update"
                 )
             else:
-                raise Exception(
+                raise LexiconError(
                     "Multiple records found matching type and name - won't update"
                 )
 

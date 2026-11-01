@@ -4,7 +4,6 @@ import hashlib
 import logging
 import re
 from argparse import ArgumentParser
-from typing import List
 
 from lexicon.exceptions import AuthenticationError
 from lexicon.interfaces import Provider as BaseProvider
@@ -56,8 +55,7 @@ class RecordSetPaginator:
                     }
                 )
             result = self.get_record_sets(**kwargs)
-            for record_set in result.get("ResourceRecordSets", []):
-                yield record_set
+            yield from result.get("ResourceRecordSets", [])
 
             is_truncated = result.get("IsTruncated", False)
 
@@ -69,7 +67,7 @@ class Provider(BaseProvider):
     """Provide AWS Route 53 implementation of Lexicon Provider interface."""
 
     @staticmethod
-    def get_nameservers() -> List[re.Pattern]:
+    def get_nameservers() -> list[re.Pattern]:
         return [re.compile(r"^awsdns-\d+\.\w+$")]
 
     @staticmethod
@@ -107,7 +105,7 @@ class Provider(BaseProvider):
 
     def __init__(self, config):
         """Initialize AWS Route 53 DNS provider."""
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         # Allow setting domain_id from the command line
         self.domain_id = self._get_provider_option("zone_id") or None
         self.private_zone = self._get_provider_option("private_zone")
@@ -122,14 +120,12 @@ class Provider(BaseProvider):
 
     def filter_zone(self, data):
         """Check if a zone is private"""
-        if self.private_zone is not None:
-            if data["Config"]["PrivateZone"] != self.str2bool(self.private_zone):
-                return False
-
-        if data["Name"] != f"{self.domain}.":
+        if self.private_zone is not None and data["Config"][
+            "PrivateZone"
+        ] != self.str2bool(self.private_zone):
             return False
 
-        return True
+        return data["Name"] == f"{self.domain}."
 
     @staticmethod
     def str2bool(input_string):
@@ -215,7 +211,7 @@ class Provider(BaseProvider):
             if "Duplicate Resource Record" in error.response["Error"]["Message"]:
                 # Duplicate resource, that have been a noop. This is expected.
                 return True
-            LOGGER.error(str(error), exc_info=True)
+            LOGGER.exception("Route53 request failed")
             return False
 
     def create_record(self, rtype, name, content):

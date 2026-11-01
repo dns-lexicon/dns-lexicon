@@ -15,7 +15,7 @@ def main():
         section_pattern = NEW_SECTION_PATTERN
     else:
         section_pattern = re.compile(
-            r"^\s*##\s*{0}\s*-\s*[\d/]+\s*$".format(version.replace(".", "\\."))
+            r"^\s*##\s*{}\s*-\s*[\d/]+\s*$".format(version.replace(".", "\\."))
         )
 
     with open(os.path.join(ROOT, "CHANGELOG.md")) as file_h:

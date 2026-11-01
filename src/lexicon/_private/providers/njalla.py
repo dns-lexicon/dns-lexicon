@@ -2,11 +2,10 @@
 
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -16,7 +15,7 @@ class Provider(BaseProvider):
     """Provider class for Njalla"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["1-you.njalla.no", "2-can.njalla.in", "3-get.njalla.fo"]
 
     @staticmethod
@@ -24,7 +23,7 @@ class Provider(BaseProvider):
         parser.add_argument("--auth-token", help="specify API token for authentication")
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.api_endpoint = "https://njal.la/api/1/"
 
@@ -32,7 +31,7 @@ class Provider(BaseProvider):
         params = {"domain": self.domain}
         try:
             result = self._api_call("get-domain", params)
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             raise AuthenticationError(str(e))
 
         if result["name"] != self.domain:
@@ -118,14 +117,14 @@ class Provider(BaseProvider):
     # Helpers
     def _api_call(self, method, params):
         if self._get_provider_option("auth_token") is None:
-            raise Exception("Must provide API token")
+            raise LexiconError("Must provide API token")
 
         data = {"method": method, "params": params}
         response = self._request("POST", "", data)
 
-        if "error" in response.keys():
+        if "error" in response:
             error = response["error"]
-            raise Exception("%d: %s" % (error["code"], error["message"]))
+            raise LexiconError(f"{error['code']}: {error['message']}")
 
         return response["result"]
 
@@ -134,7 +133,7 @@ class Provider(BaseProvider):
         if len(records) == 1:
             return records[0]["id"]
 
-        raise Exception("Unambiguous record could not be found.")
+        raise LexiconError("Unambiguous record could not be found.")
 
     def _request(self, action="GET", url="/", data=None, query_params=None):
         if data is None:

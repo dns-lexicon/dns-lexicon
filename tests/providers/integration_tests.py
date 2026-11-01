@@ -4,7 +4,6 @@ import os
 import warnings
 from functools import wraps
 from types import ModuleType
-from typing import Optional
 
 import pytest
 import vcr  # type: ignore
@@ -51,7 +50,7 @@ class EngineOverrideConfigSource(ConfigSource):
     """Config source to override some provider parameters during tests"""
 
     def __init__(self, overrides):
-        super(EngineOverrideConfigSource, self).__init__()
+        super().__init__()
         self.overrides = overrides
 
     def resolve(self, config_key):
@@ -64,12 +63,12 @@ class FallbackConfigSource(ConfigSource):
     """Config source to provider fallback to provider parameters during tests"""
 
     def __init__(self, fallback_fn):
-        super(FallbackConfigSource, self).__init__()
+        super().__init__()
         self.fallback_fn = fallback_fn
 
     def resolve(self, config_key):
         config_key = config_key.split(":")
-        if not config_key[-2] == "lexicon":
+        if config_key[-2] != "lexicon":
             return self.fallback_fn(config_key[-1])
 
         return None
@@ -120,7 +119,8 @@ class IntegrationTestsV1:
             DictConfigSource({"domain": "thisisadomainidonotown.com"}), 0
         )
         provider = self.provider_module.Provider(config)
-        with pytest.raises(Exception):
+        # Providers raise heterogeneous exceptions here, not only LexiconError
+        with pytest.raises(Exception):  # noqa: B017
             provider.authenticate()
 
     ###########################################################################
@@ -438,7 +438,7 @@ class IntegrationTestsV1:
         return provider
 
     # Optional. Used to identify the test variant, if any.
-    provider_variant: Optional[str] = None
+    provider_variant: str | None = None
 
     def _filter_headers(self):
         return []

@@ -1,9 +1,8 @@
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 # tencentcloud-sdk-python is an optional dependency of lexicon; do not throw an ImportError if
@@ -21,7 +20,7 @@ class Provider(BaseProvider):
     """Provider class for QCloud"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["dnspod.tencentcloudapi.com"]
 
     @staticmethod
@@ -32,15 +31,15 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         secret_id = self._get_provider_option("secret_id")
         secret_key = self._get_provider_option("secret_key")
         if not secret_id:
-            raise Exception("Error, application secret_id is not defined")
+            raise LexiconError("Error, application secret_id is not defined")
 
         if not secret_key:
-            raise Exception("Error, application secret_key is not defined")
+            raise LexiconError("Error, application secret_key is not defined")
 
         self.cred = credential.Credential(secret_id, secret_key)
         self.client = dnspod_client.DnspodClient(self.cred, "")

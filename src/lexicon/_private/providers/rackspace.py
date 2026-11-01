@@ -4,11 +4,10 @@ import json
 import logging
 import time
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -18,16 +17,14 @@ def _async_request_completed(payload):
     """Looks into an async response payload to see if the requested job has finished."""
     if payload["status"] == "COMPLETED":
         return True
-    if payload["status"] == "ERROR":
-        return True
-    return False
+    return payload["status"] == "ERROR"
 
 
 class Provider(BaseProvider):
     """Provider class for Rackspace"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["rackspacecloud.com"]
 
     @staticmethod
@@ -58,7 +55,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.api_endpoint = "https://dns.api.rackspacecloud.com/v1.0"
         self.auth_api_endpoint = "https://identity.api.rackspacecloud.com/v2.0"
@@ -118,7 +115,7 @@ class Provider(BaseProvider):
         except Exception as error:
             if str(error).startswith("Record is a duplicate of another record"):
                 return self.update_record(None, rtype, name, content)
-            raise error
+            raise
 
         success = len(payload["records"]) > 0
         LOGGER.debug("create_record: %s", success)
@@ -171,7 +168,7 @@ class Provider(BaseProvider):
         if identifier is None:
             records = self.list_records(rtype, name)
             if not records:
-                raise Exception("Unable to find record to modify: " + name)
+                raise LexiconError("Unable to find record to modify: " + name)
             identifier = records[0]["id"]
 
         self._put_and_wait(f"/domains/{self.domain_id}/records/{identifier}", data)
@@ -241,7 +238,7 @@ class Provider(BaseProvider):
             result = self._update_response(result)
 
         if result["status"] == "ERROR":
-            raise Exception(result["error"]["details"])
+            raise LexiconError(result["error"]["details"])
 
         if "response" in result:
             return result["response"]

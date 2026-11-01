@@ -17,11 +17,10 @@ import hashlib
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -31,7 +30,7 @@ class Provider(BaseProvider):
     """Provider class for internetbs"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["topdns.com"]
 
     @staticmethod
@@ -42,7 +41,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.api_endpoint = "https://api.internet.bs"
 
@@ -82,9 +81,9 @@ class Provider(BaseProvider):
         payload = self._post("/Domain/DnsRecord/Add", None, query)
         LOGGER.debug("authenticate debug: %s", payload)
         if not payload["status"]:
-            raise Exception("Internal error. This should not happen")
+            raise LexiconError("Internal error. This should not happen")
         if payload["status"] != "SUCCESS":
-            raise Exception(f"Api error: {payload['message']}")
+            raise LexiconError(f"Api error: {payload['message']}")
         return True
 
     # List all records. Return an empty list if no records found
@@ -97,7 +96,7 @@ class Provider(BaseProvider):
 
         payload = self._get("/Domain/DnsRecord/List", query)
         if payload["status"] != "SUCCESS":
-            raise Exception(f"Api status: {payload['status']}")
+            raise LexiconError(f"Api status: {payload['status']}")
         if payload["total_records"] == 0:
             return []
 
@@ -154,9 +153,9 @@ class Provider(BaseProvider):
         LOGGER.debug("update_record payload: %s", payload)
 
         if not payload["status"]:
-            raise Exception("Internal error. This should not happen")
+            raise LexiconError("Internal error. This should not happen")
         if payload["status"] != "SUCCESS":
-            raise Exception(f"Api error: {payload['message']}")
+            raise LexiconError(f"Api error: {payload['message']}")
         return True
 
     # Delete an existing record.
@@ -187,9 +186,9 @@ class Provider(BaseProvider):
         LOGGER.debug("delete_record payload: %s", payload)
 
         if not payload["status"]:
-            raise Exception("Internal error. This should not happen")
+            raise LexiconError("Internal error. This should not happen")
         if payload["status"] != "SUCCESS":
-            raise Exception(f"Api error: {payload['message']}")
+            raise LexiconError(f"Api error: {payload['message']}")
         return True
 
     # Helpers

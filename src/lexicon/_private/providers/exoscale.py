@@ -2,10 +2,10 @@
 
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
+from lexicon.exceptions import LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -17,7 +17,7 @@ class Provider(BaseProvider):
     """Provider class for exoscale"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["exoscale.ch"]
 
     @staticmethod
@@ -28,7 +28,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.api_endpoint = "https://api.exoscale.com/dns"
 
     def authenticate(self):
@@ -180,6 +180,6 @@ class Provider(BaseProvider):
         # if the request fails for any reason, throw an error.
         response.raise_for_status()
         if response.text and response.json() is None:
-            raise Exception("No data returned")
+            raise LexiconError("No data returned")
 
         return response.json() if response.text else None

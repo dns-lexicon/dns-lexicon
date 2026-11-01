@@ -1,15 +1,16 @@
 """Module provider for Namecheap"""
 
+import functools
 import logging
+import operator
 import sys
 from argparse import ArgumentParser
-from typing import Dict, List, Optional, Tuple
 from xml.etree.ElementTree import Element, fromstring
 
 import requests
 import tldextract
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -34,7 +35,7 @@ class Provider(BaseProvider):
     """
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["namecheap.com", "registrar-servers.com"]
 
     @staticmethod
@@ -63,7 +64,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.client = _Api(
             api_user=self._get_provider_option("auth_username") or "",
             api_key=self._get_provider_option("auth_token") or "",
@@ -124,11 +125,11 @@ class Provider(BaseProvider):
             # OR if the user is not permissioned to manage this domain
             # OR the API request came from a not whitelisted IP
             # we should print the error, so people know how to correct it.
-            raise AuthenticationError(f"Authentication failed: `{str(err)}`")
+            raise AuthenticationError(f"Authentication failed: `{err!s}`")
 
-        xpath = ".//{%(ns)s}CommandResponse/{%(ns)s}DomainGetInfoResult" % {
-            "ns": _NAMESPACE
-        }
+        xpath = (
+            f".//{{{_NAMESPACE}}}CommandResponse/{{{_NAMESPACE}}}DomainGetInfoResult"
+        )
         domain_info = xml.find(xpath)
 
         def _check_hosts_permission():
@@ -142,8 +143,8 @@ class Provider(BaseProvider):
 
             # look for rights
             xpath_alt = (
-                ".//{%(ns)s}CommandResponse/{%(ns)s}DomainGetInfoResult"
-                "/{%(ns)s}Modificationrights" % {"ns": _NAMESPACE}
+                f".//{{{_NAMESPACE}}}CommandResponse/{{{_NAMESPACE}}}DomainGetInfoResult"
+                f"/{{{_NAMESPACE}}}Modificationrights"
             )
             rights_info = xml.find(xpath_alt)
             if rights_info is None:
@@ -162,7 +163,7 @@ class Provider(BaseProvider):
 
         authorized = _check_hosts_permission()
         if not authorized:
-            raise Exception(
+            raise LexiconError(
                 f"The domain {self.domain} is not controlled by this Namecheap account"
             )
 
@@ -235,8 +236,7 @@ class Provider(BaseProvider):
         if rtype:
             records = [record for record in records if record["type"] == rtype]
         if name:
-            if name.endswith("."):
-                name = name[:-1]
+            name = name.removesuffix(".")
             records = [record for record in records if name in record["name"]]
         if content:
             records = [
@@ -273,8 +273,7 @@ class Provider(BaseProvider):
         processed_record = {}
 
         name = record["name"]
-        if name.endswith("."):
-            name = name[:-1]
+        name = name.removesuffix(".")
 
         short_name = name[: name.find(self.domain) - 1]
 
@@ -331,7 +330,7 @@ class Provider(BaseProvider):
 
 class _ApiError(Exception):
     def __init__(self, number, text):
-        Exception.__init__(self, "%s - %s" % (number, text))
+        Exception.__init__(self, f"{number} - {text}")
         self.number = number
         self.text = text
 
@@ -355,14 +354,14 @@ class _Api:
         else:
             self.endpoint = "https://api.namecheap.com/xml.response"
 
-    def call(self, command: str, extra_payload: Optional[Dict] = None) -> Element:
+    def call(self, command: str, extra_payload: dict | None = None) -> Element:
         if not extra_payload:
             extra_payload = {}
         payload, extra_payload = self._payload(command, extra_payload)
         xml = self._fetch_xml(payload, extra_payload)
         return xml
 
-    def _payload(self, command: str, extra_payload: Dict) -> Tuple[Dict, Dict]:
+    def _payload(self, command: str, extra_payload: dict) -> tuple[dict, dict]:
         payload = {
             "ApiUser": self.api_user,
             "ApiKey": self.api_key,
@@ -377,9 +376,7 @@ class _Api:
             extra_payload = {}
         return payload, extra_payload
 
-    def _fetch_xml(
-        self, payload: Dict, extra_payload: Optional[Dict] = None
-    ) -> Element:
+    def _fetch_xml(self, payload: dict, extra_payload: dict | None = None) -> Element:
         if extra_payload:
             response = requests.post(self.endpoint, params=payload, data=extra_payload)
         else:
@@ -392,7 +389,7 @@ class _Api:
 
         if xml.attrib["Status"] == "ERROR":
             # Response namespace must be prepended to tag names.
-            xpath = ".//{%(ns)s}Errors/{%(ns)s}Error" % {"ns": _NAMESPACE}
+            xpath = f".//{{{_NAMESPACE}}}Errors/{{{_NAMESPACE}}}Error"
             error = xml.find(xpath)
             if error is not None:
                 raise _ApiError(error.attrib["Number"], error.text)
@@ -407,9 +404,7 @@ class _Api:
         tld = extracted.suffix
         extra_payload = {"SLD": sld, "TLD": tld}
         xml = self.call("namecheap.domains.dns.getHosts", extra_payload)
-        xpath = ".//{%(ns)s}CommandResponse/{%(ns)s}DomainDNSGetHostsResult/*" % {
-            "ns": _NAMESPACE
-        }
+        xpath = f".//{{{_NAMESPACE}}}CommandResponse/{{{_NAMESPACE}}}DomainDNSGetHostsResult/*"
         results = []
         for host in xml.findall(xpath):
             results.append(host.attrib)
@@ -418,12 +413,12 @@ class _Api:
     def domains_dns_add_host(self, domain, host_record):
         host_records_remote = self.domains_dns_get_hosts(domain)
 
-        print("Remote: %i" % len(host_records_remote))
+        print(f"Remote: {len(host_records_remote)}")
 
         host_records_remote.append(host_record)
         host_records_remote = [_elements_names_fix(x) for x in host_records_remote]
 
-        print("To set: %i" % len(host_records_remote))
+        print(f"To set: {len(host_records_remote)}")
 
         extra_payload = _list_of_dictionaries_to_numbered_payload(host_records_remote)
         extracted = tldextract.extract(domain)
@@ -435,7 +430,7 @@ class _Api:
     def domains_dns_del_host(self, domain, host_record) -> None:
         host_records_remote = self.domains_dns_get_hosts(domain)
 
-        print("Remote: %i" % len(host_records_remote))
+        print(f"Remote: {len(host_records_remote)}")
 
         host_records_new = []
         for r in host_records_remote:
@@ -451,13 +446,13 @@ class _Api:
 
         host_records_new = [_elements_names_fix(x) for x in host_records_new]
 
-        print("To set: %i" % len(host_records_new))
+        print(f"To set: {len(host_records_new)}")
 
         # Check that we delete not more than 1 record at a time
         if len(host_records_remote) != len(host_records_new) + 1:
             sys.stderr.write(
-                "Something went wrong while removing host record, delta > 1: %i -> %i, aborting API call.\n"
-                % (len(host_records_remote), len(host_records_new))
+                "Something went wrong while removing host record, delta > 1: "
+                f"{len(host_records_remote)} -> {len(host_records_new)}, aborting API call.\n"
             )
             return
 
@@ -484,7 +479,8 @@ def _elements_names_fix(host_record):
 
 def _list_of_dictionaries_to_numbered_payload(data):
     return dict(
-        sum(
+        functools.reduce(
+            operator.iadd,
             [[(k + str(i + 1), v) for k, v in d.items()] for i, d in enumerate(data)],
             [],
         )

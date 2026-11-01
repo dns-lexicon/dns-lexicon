@@ -7,10 +7,10 @@ https://www.scaleway.com/en/developers/api/
 
 import json
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
+from lexicon.exceptions import LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 
@@ -20,7 +20,7 @@ class Provider(BaseProvider):
     """
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["scw.cloud"]
 
     @staticmethod
@@ -31,7 +31,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.default_ttl = 3600
         self.endpoint = "https://api.scaleway.com/domain/v2beta1"
 
@@ -141,9 +141,9 @@ class Provider(BaseProvider):
         if not identifier:
             records = self.list_records(None, name)
             if not records:
-                raise Exception(f"Record {name} not found with type {rtype}")
+                raise LexiconError(f"Record {name} not found with type {rtype}")
             if len(records) > 1:
-                raise Exception(f"More than one {rtype} record found for {name}")
+                raise LexiconError(f"More than one {rtype} record found for {name}")
             identifier = records[0]["id"]
         patch = {
             "changes": [

@@ -5,11 +5,10 @@ import json
 import logging
 import time
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -43,7 +42,7 @@ class Provider(BaseProvider):
     """Provider class for Dreamhost"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["dreamhost.com"]
 
     @staticmethod
@@ -51,7 +50,7 @@ class Provider(BaseProvider):
         parser.add_argument("--auth-token", help="specify api key for authentication")
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.api_endpoint = "https://api.dreamhost.com/"
 
@@ -149,7 +148,7 @@ class Provider(BaseProvider):
 
         resource_list = payload.get("data", None)
         if not isinstance(resource_list, list):
-            raise Exception(f"unable to get records: {payload}")
+            raise LexiconError(f"unable to get records: {payload}")
 
         resource_list = [
             resource for resource in resource_list if resource["zone"] == self.domain
@@ -209,7 +208,7 @@ class Provider(BaseProvider):
                 dreamhost_record = Provider._record_to_dreamhost_record(each)
                 self._get("dns-remove_record", query_params=dreamhost_record)
 
-            except Exception as exception:
+            except Exception as exception:  # noqa: BLE001
                 err = exception
 
             # Sleeping for a bit to avoid triggering ddos protecting in case of looped requests
@@ -256,5 +255,5 @@ class Provider(BaseProvider):
                 raise NonExistError(f"Dreamhost non-exist error: {result}")
             if err_msg in _DATA_ALREADY_EXIST_ERROR_LIST:
                 raise AlreadyExistError(f"Dreamhost already-exist error: {result}")
-            raise Exception(f"Dreamhost api error: {result}")
+            raise LexiconError(f"Dreamhost api error: {result}")
         return result

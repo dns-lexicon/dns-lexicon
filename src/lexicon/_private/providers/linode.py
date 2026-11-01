@@ -3,7 +3,6 @@
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
@@ -17,7 +16,7 @@ class Provider(BaseProvider):
     """Provider class for Linode"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["linode.com"]
 
     @staticmethod
@@ -25,7 +24,7 @@ class Provider(BaseProvider):
         parser.add_argument("--auth-token", help="specify api key for authentication")
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.api_endpoint = "https://api.linode.com/v4/"
 
@@ -154,7 +153,7 @@ class Provider(BaseProvider):
             "Authorization": f"Bearer {self._get_provider_option('auth_token')}",
         }
 
-        request_filter = query_params["filter"] if "filter" in query_params else None
+        request_filter = query_params.get("filter", None)
         if request_filter is not None:
             default_headers["X-Filter"] = json.dumps(request_filter)
             del query_params["filter"]

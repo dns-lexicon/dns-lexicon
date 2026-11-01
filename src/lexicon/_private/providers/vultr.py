@@ -3,11 +3,10 @@
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -17,7 +16,7 @@ class Provider(BaseProvider):
     """Provider class for Vultr"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["vultr.com"]
 
     @staticmethod
@@ -25,7 +24,7 @@ class Provider(BaseProvider):
         parser.add_argument("--auth-token", help="specify token for authentication")
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.api_endpoint = "https://api.vultr.com/v2"
 
@@ -106,7 +105,7 @@ class Provider(BaseProvider):
             records = self.list_records(rtype, name)
 
             if not records:
-                raise Exception(
+                raise LexiconError(
                     f"No record(s) found for arguments: identifer={identifier}, rtype={rtype}, name={name}"
                 )
             if len(records) > 1:

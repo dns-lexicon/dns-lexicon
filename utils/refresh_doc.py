@@ -4,7 +4,6 @@ import os
 import re
 import shutil
 from os.path import dirname, join
-from typing import List, Type
 
 from lexicon._private import discovery
 from lexicon._private.discovery import load_provider_module
@@ -17,7 +16,7 @@ _PROVIDERS = os.path.join(_DOCS, "providers")
 
 def main() -> None:
     providers = [
-        provider for provider in discovery.find_providers().keys() if provider != "auto"
+        provider for provider in discovery.find_providers() if provider != "auto"
     ]
 
     shutil.rmtree(_PROVIDERS, ignore_errors=True)
@@ -54,7 +53,7 @@ List of options
     _refresh_pypi_readme()
 
 
-def _generate_table(providers: List[str]) -> None:
+def _generate_table(providers: list[str]) -> None:
     items = [f"{provider}_" for provider in providers]
     nb_columns = 5
     max_width = max(len(item) for item in items) + 1
@@ -64,7 +63,7 @@ def _generate_table(providers: List[str]) -> None:
 
     divided = [items[n : n + nb_columns] for n in range(0, len(items), nb_columns)]
     divided[-1] = [
-        divided[-1][i] if len(divided[-1]) > i else "" for i in range(0, nb_columns)
+        divided[-1][i] if len(divided[-1]) > i else "" for i in range(nb_columns)
     ]
 
     for data in divided:
@@ -93,7 +92,7 @@ def _generate_table(providers: List[str]) -> None:
 
 def _generate_provider_details(provider: str) -> None:
     provider_module = load_provider_module(provider)
-    provider_class: Type[Provider] = getattr(provider_module, "Provider")
+    provider_class: type[Provider] = provider_module.Provider
     parser = argparse.ArgumentParser()
     provider_class.configure_parser(parser)
 

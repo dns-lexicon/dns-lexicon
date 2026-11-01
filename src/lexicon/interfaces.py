@@ -5,7 +5,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from argparse import ArgumentParser
 from re import Pattern
-from typing import Any
+from typing import Any, ClassVar
 
 from lexicon.config import ConfigResolver, legacy_config_resolver
 
@@ -75,7 +75,7 @@ class Provider(ABC):
 
     # The record types that the provider takes.  A provider overrides it in its
     # own class, `None` means the provider takes any type.
-    VALID_TYPES: list[str] | None = [
+    VALID_TYPES: ClassVar[list[str] | None] = [
         "A",
         "AAAA",
         "CNAME",

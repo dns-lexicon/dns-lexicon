@@ -18,11 +18,11 @@ classifiers = [
     "Topic :: Utilities",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
 ]
 authors = [
     { name = "Jason Kulatunga", email = "jason@thesparktree.com" },
@@ -30,7 +30,7 @@ authors = [
 ]
 readme = "pypi_readme.rst"
 
-requires-python = ">= 3.10"
+requires-python = ">= 3.11"
 dependencies = [
     "tldextract >= 2",
     "cryptography >= 2",
@@ -40,7 +40,6 @@ dependencies = [
     "beautifulsoup4 >= 4",
     "pyotp >= 2",
     "dnspython >= 2",
-    "importlib-metadata >= 4.6; python_version < '3.10'",
 ]
 
 [project.urls]
@@ -148,7 +147,7 @@ filterwarnings = [
 ]
 
 [tool.mypy]
-python_version = "3.10"
+python_version = "3.11"
 show_error_codes = true
 warn_redundant_casts = true
 warn_unused_ignores = true

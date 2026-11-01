@@ -3,7 +3,6 @@
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
@@ -20,7 +19,7 @@ class Provider(BaseProvider):
     """Provider class for Dynu.com"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["dynu.com"]
 
     @staticmethod
@@ -28,7 +27,7 @@ class Provider(BaseProvider):
         parser.add_argument("--auth-token", help="specify api key for authentication")
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.api_endpoint = "https://api.dynu.com/v2"
 
@@ -63,7 +62,7 @@ class Provider(BaseProvider):
             if error.response.status_code == 501:
                 created = True
             else:
-                raise error
+                raise
         LOGGER.debug("create_record: %s", created)
         return created
 
@@ -153,7 +152,7 @@ class Provider(BaseProvider):
                 if error.response.status_code == 501:
                     LOGGER.info("delete_record: %s does not exist", record_id)
                     continue
-                raise error
+                raise
 
         return True
 
@@ -178,9 +177,7 @@ class Provider(BaseProvider):
         # if the request fails for any reason, throw an error.
         if response.status_code == 503:
             raise RuntimeError(
-                "Too many entries, limit for free service is {0}, see {1}".format(
-                    FREE_SERVICE_LIMIT, MEMBERSHIP_DETAILS
-                )
+                f"Too many entries, limit for free service is {FREE_SERVICE_LIMIT}, see {MEMBERSHIP_DETAILS}"
             )
         response.raise_for_status()
         return response.json()
@@ -285,7 +282,7 @@ class Provider(BaseProvider):
                     }
                 ),
                 "TXT": (lambda: {"textData": content}),
-            }.get(rtype, lambda: {})()
+            }.get(rtype, dict)()
         )
         return output
 

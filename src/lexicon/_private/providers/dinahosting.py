@@ -4,11 +4,10 @@
 import hashlib
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -44,7 +43,7 @@ class Provider(BaseProvider):
     """Provider class for Dinahosting"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["dinahosting.com"]
 
     @staticmethod
@@ -57,7 +56,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.api_endpoint = "https://dinahosting.com/special/api.php"
 
@@ -159,9 +158,9 @@ class Provider(BaseProvider):
 
         # Check if record exists, otherwise raise an error
         if not matching_records:
-            raise Exception("No matching records found. Cannot update.")
+            raise LexiconError("No matching records found. Cannot update.")
         if len(matching_records) > 1:
-            raise Exception("Multiple matching records found. Cannot update.")
+            raise LexiconError("Multiple matching records found. Cannot update.")
 
         record = matching_records[0]
         # The API does not offer update functions for most of the record types
@@ -234,7 +233,7 @@ class Provider(BaseProvider):
 
         rjson = response.json()
         if int(rjson["responseCode"]) != RC_SUCCESS:
-            api_error_message = "%s API Error for url: %s" % (
+            api_error_message = "{} API Error for url: {}".format(
                 rjson["responseCode"],
                 response.url,
             )
@@ -285,4 +284,4 @@ class Provider(BaseProvider):
     @staticmethod
     def _check_unsupported_type(rtype):
         if rtype in UNSUPPORTED_TYPES:
-            raise Exception(f"Record type {rtype} is not supported by the API")
+            raise LexiconError(f"Record type {rtype} is not supported by the API")

@@ -26,14 +26,13 @@ import logging
 import time
 from argparse import ArgumentParser
 from base64 import b64decode, urlsafe_b64encode
-from typing import List
 
 import requests
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import padding
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -52,7 +51,7 @@ class Provider(BaseProvider):
     """
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["googledomains.com"]
 
     @staticmethod
@@ -79,7 +78,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self._token = None
         self._private_zone = self._get_provider_option("private_zone")
@@ -101,7 +100,7 @@ class Provider(BaseProvider):
                 )
             )
         else:
-            raise Exception(
+            raise LexiconError(
                 "Invalid value for --auth-service-account-info, should be a path "
                 "prefixed with 'file::' or a base64 value prefixed by 'base64::'."
             )
@@ -115,7 +114,7 @@ class Provider(BaseProvider):
             or not self._service_account_info["private_key"]
             or not self._service_account_info["project_id"]
         ):
-            raise Exception(
+            raise LexiconError(
                 "Invalid service account info (missing either client_email/private_"
                 "key/project_id key)."
             )
@@ -274,7 +273,7 @@ class Provider(BaseProvider):
     # if it exists, to replace it with the RecordSet containing the new content we want.
     def create_record(self, rtype, name, content):
         if not rtype or not name or not content:
-            raise Exception(
+            raise LexiconError(
                 "Error, rtype, name and content are mandatory to create a record."
             )
 
@@ -334,7 +333,9 @@ class Provider(BaseProvider):
     # he three quoted methods).
     def update_record(self, identifier, rtype=None, name=None, content=None):
         if not identifier and (not rtype or not name):
-            raise Exception("Error, identifier or rtype+name parameters are required.")
+            raise LexiconError(
+                "Error, identifier or rtype+name parameters are required."
+            )
 
         if identifier:
             records = self.list_records()
@@ -345,7 +346,7 @@ class Provider(BaseProvider):
             records_to_update = self.list_records(rtype=rtype, name=name)
 
         if not records_to_update:
-            raise Exception(
+            raise LexiconError(
                 f"Error, could not find a record for given identifier: {identifier}"
             )
 
@@ -406,7 +407,7 @@ class Provider(BaseProvider):
             )
 
         if not changes:
-            raise Exception(
+            raise LexiconError(
                 "Could not find existing record matching the given parameters."
             )
 

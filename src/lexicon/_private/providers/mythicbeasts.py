@@ -4,13 +4,12 @@ import hashlib
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -20,7 +19,7 @@ class Provider(BaseProvider):
     """Provider class for Mythic Beasts"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["mythic-beasts.com"]
 
     @staticmethod
@@ -45,7 +44,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.api_endpoint = "https://api.mythic-beasts.com/dns/v2"
         self.auth_token = None
@@ -193,11 +192,11 @@ class Provider(BaseProvider):
                 filter_obj["host"] = self._relative_name(matching_record["name"])
 
             elif len(records) < 1:
-                raise Exception(
+                raise LexiconError(
                     "No records found matching type and name - won't update"
                 )
             else:
-                raise Exception(
+                raise LexiconError(
                     "Multiple records found matching type and name - won't update"
                 )
         else:
@@ -207,7 +206,7 @@ class Provider(BaseProvider):
                     matching_record = record
                     break
             else:
-                raise Exception("Can't find record with that id!")
+                raise LexiconError("Can't find record with that id!")
 
             filter_obj = {}
             filter_obj["type"] = matching_record["type"]

@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """Module for Lexicon command-line interface"""
 
 import json
@@ -6,7 +5,6 @@ import logging
 import os
 import sys
 import warnings
-from typing import Dict, List, Optional, Union
 
 from lexicon._private.parser import generate_cli_main_parser
 from lexicon.client import Client
@@ -17,9 +15,9 @@ logger = logging.getLogger(__name__)
 
 def generate_list_table_result(
     lexicon_logger: logging.Logger,
-    output: Optional[Union[bool, List[Dict]]] = None,
-    without_header: Optional[bool] = None,
-) -> Optional[str]:
+    output: bool | list[dict] | None = None,
+    without_header: bool | None = None,
+) -> str | None:
     """Convert returned data from list actions into a nice table for command line usage"""
     if not isinstance(output, list):
         lexicon_logger.debug(
@@ -50,8 +48,7 @@ def generate_list_table_result(
     for row in array:
         for idx, col in enumerate(row):
             width = len(str(col))
-            if width > column_widths[idx]:
-                column_widths[idx] = width
+            column_widths[idx] = max(column_widths[idx], width)
 
     # Add a 'nice' separator
     if not without_header:
@@ -70,8 +67,8 @@ def generate_list_table_result(
 
 
 def generate_table_results(
-    output: Optional[Union[bool, List[Dict]]] = None,
-    without_header: Optional[bool] = None,
+    output: bool | list[dict] | None = None,
+    without_header: bool | None = None,
 ) -> str:
     """Convert returned data from non-list actions into a nice table for command line usage"""
     array = []
@@ -85,14 +82,12 @@ def generate_table_results(
     return os.linesep.join(array)
 
 
-def handle_output(
-    results: Union[bool, List[Dict]], output_type: str, action: str
-) -> None:
+def handle_output(results: bool | list[dict], output_type: str, action: str) -> None:
     """Print the relevant output for given output_type"""
     if output_type == "QUIET":
         return
 
-    if not output_type == "JSON":
+    if output_type != "JSON":
         if action == "list":
             table = generate_list_table_result(
                 logger, results, output_type == "TABLE-NO-HEADER"

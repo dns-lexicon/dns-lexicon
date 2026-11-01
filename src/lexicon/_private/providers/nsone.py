@@ -3,7 +3,6 @@
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
@@ -17,7 +16,7 @@ class Provider(BaseProvider):
     """Provider class for NSOne"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["nsone.net"]
 
     @staticmethod
@@ -25,7 +24,7 @@ class Provider(BaseProvider):
         parser.add_argument("--auth-token", help="specify token for authentication")
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.api_endpoint = "https://api.nsone.net/v1"
 
@@ -100,9 +99,7 @@ class Provider(BaseProvider):
 
             if domain and record.get("domain", None) != domain:
                 return False
-            if _type and record.get("type", None) != _type:
-                return False
-            return True
+            return not (_type and record.get("type", None) != _type)
 
         payload = self._get(f"/search?q={domain}&type=record")
         for record in payload:

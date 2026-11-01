@@ -16,11 +16,10 @@ import json
 import logging
 import re
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -42,7 +41,7 @@ class _Response:
 
 class Provider(BaseProvider):
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["ns.joker.com"]
 
     @staticmethod
@@ -57,7 +56,7 @@ You can create one in the section 'Manage Joker.com API access keys' of 'My Prof
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self._session_id = None
 
@@ -137,7 +136,7 @@ You can create one in the section 'Manage Joker.com API access keys' of 'My Prof
 
     def create_record(self, rtype, name, content):
         if not rtype or not name or not content:
-            raise Exception(
+            raise LexiconError(
                 "Error, rtype, name and content are mandatory to create a record."
             )
 
@@ -173,7 +172,7 @@ You can create one in the section 'Manage Joker.com API access keys' of 'My Prof
 
     def update_record(self, identifier, rtype=None, name=None, content=None):
         if not identifier and not (rtype and name):
-            raise Exception(
+            raise LexiconError(
                 "Error, either identifier or rtype + name are mandatory to update a record."
             )
 
@@ -197,10 +196,10 @@ You can create one in the section 'Manage Joker.com API access keys' of 'My Prof
             ]
 
         if not to_update:
-            raise Exception(f"Error, could not find a record for {selector_info}.")
+            raise LexiconError(f"Error, could not find a record for {selector_info}.")
 
         if len(to_update) > 1:
-            raise Exception(
+            raise LexiconError(
                 f"Error, found more than one record for {selector_info}. "
                 "Please use an identifier to select one explicitly."
             )
@@ -220,7 +219,7 @@ You can create one in the section 'Manage Joker.com API access keys' of 'My Prof
 
     def delete_record(self, identifier=None, rtype=None, name=None, content=None):
         if not identifier and not rtype:
-            raise Exception(
+            raise LexiconError(
                 "Error, either rtype or identifier are mandatory to delete a record."
             )
 
@@ -294,13 +293,13 @@ You can create one in the section 'Manage Joker.com API access keys' of 'My Prof
         if record_name == self.domain_id:
             return "@"
 
-        return super(Provider, self)._relative_name(record_name)
+        return super()._relative_name(record_name)
 
     def _full_name(self, record_name):
         if record_name == "@":
             return self.domain_id
 
-        return super(Provider, self)._full_name(record_name)
+        return super()._full_name(record_name)
 
 
 def _extract_zonedata(data):

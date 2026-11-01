@@ -8,7 +8,7 @@ import warnings
 from contextlib import AbstractContextManager
 from threading import local
 from types import TracebackType
-from typing import Any, Type
+from typing import Any
 
 import dns.resolver
 import tldextract
@@ -20,6 +20,8 @@ from lexicon._private.discovery import list_extras as _list_extras
 from lexicon._private.discovery import load_provider_module as _load_provider_module
 from lexicon.exceptions import ProviderNotAvailableError
 from lexicon.interfaces import Provider
+
+LOGGER = logging.getLogger(__name__)
 
 
 class _ClientOperations:
@@ -105,13 +107,13 @@ class Client(AbstractContextManager):
 
         # Find the actual zone name for the domain
         if self.config.resolve("lexicon:resolve_zone_name"):
-            logging.debug(
+            LOGGER.debug(
                 "Parameter resolve_zone_name is enabled, use dnspython to resolve the actual zone name"
             )
             zone_name = dns.resolver.zone_for_name(domain)
             runtime_config["domain"] = zone_name.to_text(omit_final_dot=True)
         else:
-            logging.debug(
+            LOGGER.debug(
                 "Parameter resolve_zone_name is not enabled, use tldextract to guess the zone name from known TLDs"
             )
             try:
@@ -126,7 +128,7 @@ class Client(AbstractContextManager):
                 )
             domain_parts = domain_extractor(domain)
             runtime_config["domain"] = f"{domain_parts.domain}.{domain_parts.suffix}"
-        logging.debug(
+        LOGGER.debug(
             f"Actual zone name resolved for domain {domain}: {runtime_config['domain']}"
         )
 
@@ -142,7 +144,7 @@ class Client(AbstractContextManager):
                     delegated = delegated.rstrip(".")
                 # update domain
                 runtime_config["domain"] = f"{delegated}.{initial_domain}"
-            logging.debug(
+            LOGGER.debug(
                 f"Override resolved zone name because --delegated option is set: {runtime_config['domain']}"
             )
 
@@ -156,7 +158,7 @@ class Client(AbstractContextManager):
         self.config.add_config_source(helper_config.DictConfigSource(runtime_config), 0)
 
         provider_module = _load_provider_module(self.provider_name)
-        self.provider_class: Type[Provider] = getattr(provider_module, "Provider")
+        self.provider_class: type[Provider] = provider_module.Provider
 
         self._state = local()
         self._state.stack = []
@@ -169,15 +171,16 @@ class Client(AbstractContextManager):
             self._state.stack.append(provider)
 
             return _ClientOperations(provider)
-        except Exception as e:
+        except Exception:
             self._state.stack.append(None)
-            raise e
+            raise
 
     def __exit__(
         self,
-        __exc_type: type[BaseException] | None,
-        __exc_value: BaseException | None,
-        __traceback: TracebackType | None,
+        exc_type: type[BaseException] | None,
+        exc_value: BaseException | None,
+        traceback: TracebackType | None,
+        /,
     ) -> bool | None:
         provider: Provider | None = self._state.stack.pop(-1)
         if provider:
@@ -244,9 +247,7 @@ with Client(config) as operations:
                 f"This provider ({provider_name}) is not supported by Lexicon."
             )
 
-        provider_class: type[Provider] = getattr(
-            _load_provider_module(provider_name), "Provider"
-        )
+        provider_class: type[Provider] = _load_provider_module(provider_name).Provider
 
         required = provider_class.filter_required_extras(
             _list_extras(provider_name), self.config
@@ -260,7 +261,7 @@ with Client(config) as operations:
 
 def _resolve_tldextract_cache_path() -> str:
     if os.environ.get("TLDEXTRACT_CACHE_FILE"):
-        logging.warning(
+        LOGGER.warning(
             "TLD_EXTRACT_CACHE_FILE environment variable is deprecated, please use TLDEXTRACT_CACHE_PATH instead."
         )
         os.environ["TLDEXTRACT_CACHE_PATH"] = os.environ["TLDEXTRACT_CACHE_FILE"]

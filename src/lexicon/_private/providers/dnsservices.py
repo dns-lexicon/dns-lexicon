@@ -3,7 +3,6 @@
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
@@ -17,7 +16,7 @@ class Provider(BaseProvider):
     """Provider class for DNS.services"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["dns.services"]
 
     @staticmethod
@@ -30,7 +29,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.auth_token = None
         self.domain_id = None
         self.api_endpoint = "https://dns.services/api"
@@ -85,7 +84,7 @@ class Provider(BaseProvider):
         print("list_records")
         payload = self._get(f"/service/{self.service_id}/dns/{self.domain_id}")
         records = []
-        for _, record in payload["records"].items():
+        for record in payload["records"].values():
             processed_record = {
                 "type": record["type"],
                 "name": record["name"],

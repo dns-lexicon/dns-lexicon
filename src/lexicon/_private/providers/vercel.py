@@ -3,11 +3,10 @@
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -26,7 +25,7 @@ class Provider(BaseProvider):
     """
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["vercel-dns.com"]
 
     @staticmethod
@@ -38,7 +37,7 @@ class Provider(BaseProvider):
         parser.add_argument("--auth-token", help="specify your API token")
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.api_endpoint = "https://api.vercel.com"
 
@@ -107,7 +106,7 @@ class Provider(BaseProvider):
         result = self._post(f"/v2/domains/{self.domain}/records", data)
 
         if not result["uid"]:
-            raise Exception("Error occured when inserting the new record.")
+            raise LexiconError("Error occured when inserting the new record.")
 
         LOGGER.debug("create_record: %s", result["uid"])
 
@@ -126,7 +125,7 @@ class Provider(BaseProvider):
             records = self.list_records(rtype, name)
 
         if not records:
-            raise Exception(f"No record found for identifer: {identifier}")
+            raise LexiconError(f"No record found for identifer: {identifier}")
 
         if len(records) > 1:
             LOGGER.warning(

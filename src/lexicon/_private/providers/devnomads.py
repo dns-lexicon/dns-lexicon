@@ -13,10 +13,10 @@ specific authentication and filtering.
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
+from lexicon.exceptions import LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -30,7 +30,7 @@ class Provider(BaseProvider):
     """Provider class for DevNomads"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return []
 
     @staticmethod
@@ -38,12 +38,11 @@ class Provider(BaseProvider):
         parser.add_argument("--auth-token", help="Specify token for authentication.")
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
 
         self.api_endpoint = "https://api.devnomads.nl/services/dns"
 
-        if self.api_endpoint.endswith("/"):
-            self.api_endpoint = self.api_endpoint[:-1]
+        self.api_endpoint = self.api_endpoint.removesuffix("/")
 
         self.auth_token = self._get_provider_option("auth_token")
         if not self.auth_token:
@@ -163,7 +162,7 @@ class Provider(BaseProvider):
 
         LOGGER.debug(f"delete {rtype} {name} {content}")
         if rtype is None or name is None:
-            raise Exception("Must specify at least both rtype and name")
+            raise LexiconError("Must specify at least both rtype and name")
 
         update_data = None
         for rrset in self.zone_data()["rrsets"]:

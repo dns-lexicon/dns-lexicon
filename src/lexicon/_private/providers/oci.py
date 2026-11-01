@@ -1,4 +1,3 @@
-# coding: utf-8
 # Copyright (c) 2016, Jason Kulatunga
 # Copyright (c) 2021, Oracle and/or its affiliates.
 """
@@ -28,7 +27,6 @@ import logging
 import os
 from argparse import ArgumentParser
 from pathlib import Path
-from typing import List
 
 import requests
 
@@ -38,11 +36,9 @@ from lexicon.interfaces import Provider as BaseProvider
 # oci is an optional dependency of lexicon; do not throw an ImportError if
 # the dependency is unmet.
 try:
-    from oci._vendor.requests.exceptions import ConnectTimeout  # type: ignore
     from oci.auth.signers import InstancePrincipalsSecurityTokenSigner  # type: ignore
     from oci.config import from_file  # type: ignore
-    from oci.exceptions import ConfigFileNotFound  # type: ignore
-    from oci.exceptions import InvalidConfig, ProfileNotFound
+    from oci.exceptions import ConfigFileNotFound, ProfileNotFound  # type: ignore
     from oci.signer import Signer  # type: ignore
 except ImportError:
     pass
@@ -65,7 +61,7 @@ class Provider(BaseProvider):
     """
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["dns.oraclecloud.net"]
 
     @staticmethod
@@ -116,7 +112,7 @@ class Provider(BaseProvider):
 
     def __init__(self, config):
         """Initialize OCI DNS client."""
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self._signer = None
 
@@ -137,11 +133,8 @@ class Provider(BaseProvider):
         )
 
         if auth_type == "instance_principal":
-            try:
-                self._signer = InstancePrincipalsSecurityTokenSigner()
-                region = self._signer.region
-            except ConnectTimeout:
-                raise
+            self._signer = InstancePrincipalsSecurityTokenSigner()
+            region = self._signer.region
 
         else:
             oci_config = {}
@@ -165,10 +158,7 @@ class Provider(BaseProvider):
             if hasattr(oci_config, "region") is False:
                 oci_config["region"] = region
 
-            try:
-                self._signer = Signer.from_config(oci_config)
-            except InvalidConfig:
-                raise
+            self._signer = Signer.from_config(oci_config)
 
         self.endpoint = f"https://dns.{region}.oraclecloud.com/20180115"
         LOGGER.debug(f"Activated OCI provider with endpoint: {self.endpoint}")

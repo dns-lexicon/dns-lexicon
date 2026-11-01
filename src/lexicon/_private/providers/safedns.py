@@ -3,11 +3,10 @@
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -17,7 +16,7 @@ class Provider(BaseProvider):
     """Provider SafeDNS implementation of Lexicon Provider interface."""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["ukfast.net"]
 
     @staticmethod
@@ -31,7 +30,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.api_endpoint = "https://api.ukfast.io/safedns/v1"
 
@@ -42,7 +41,7 @@ class Provider(BaseProvider):
         except requests.exceptions.HTTPError as err:
             if err.response.status_code == 404:
                 raise AuthenticationError("No domain found")
-            raise err
+            raise
 
     def cleanup(self) -> None:
         pass
@@ -139,7 +138,7 @@ class Provider(BaseProvider):
                     records,
                 )
             else:
-                raise Exception("Record identifier could not be found")
+                raise LexiconError("Record identifier could not be found")
 
         # Make sure TXT records are wrapped in quotes
         if content:
@@ -217,7 +216,6 @@ class Provider(BaseProvider):
     # The content of TXT entries must be quoted. This static method ensures that.
     @staticmethod
     def _add_quotes(rtype, content):
-        if rtype == "TXT":
-            if not content.startswith('"') and not content.endswith('"'):
-                return f'"{content}"'
+        if rtype == "TXT" and not content.startswith('"') and not content.endswith('"'):
+            return f'"{content}"'
         return content

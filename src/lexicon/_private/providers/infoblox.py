@@ -18,11 +18,10 @@ LEXICON_INFOBLOX_AUTH_USER={user} LEXICON_INFOBLOX_AUTH_PSW={password} lexicon i
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -52,7 +51,7 @@ class Provider(BaseProvider):
     """Provider class for Infoblox"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return _NAMESERVER_DOMAINS
 
     @staticmethod
@@ -71,7 +70,7 @@ class Provider(BaseProvider):
         parser.add_argument("--ib-host", help="specify Infoblox Host exposing the WAPI")
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         # In Case .local. Domains are used, ignore the tldextract in client.py
         # this will be used in test_infoblox.py as well
         if self.config.resolve("lexicon:domain") in _NAMESERVER_DOMAINS[0]:
@@ -114,7 +113,7 @@ class Provider(BaseProvider):
         if name:
             name = self._fqdn_name(name)
         else:
-            raise Exception("Name not specified, no FQDN could be build")
+            raise LexiconError("Name not specified, no FQDN could be build")
         # Find existing records for all types
         existing = []
         for rrtype in IB_TYPE2CONTENT:
@@ -140,26 +139,24 @@ class Provider(BaseProvider):
             return False
         if any(d["type"] != "CNAME" and rtype == "CNAME" for d in existing):
             LOGGER.error("CNAME requested, but other records already exists")
-            raise Exception("CNAME requested, but other records already exists")
+            raise LexiconError("CNAME requested, but other records already exists")
         return self._create_record_internal(rtype, name, content)
 
     def _create_record_internal(self, rtype, name, content):
         if name:
             name = self._fqdn_name(name)
         else:
-            raise Exception("Name not specified, no FQDN could be build")
+            raise LexiconError("Name not specified, no FQDN could be build")
         if rtype.upper() in IB_TYPE2CONTENT:
             uri = self.api_endpoint + IB_TYPE2CONTENT[rtype.upper()][1]
             payload = self._generate_payload(rtype, name, content)
             try:
                 response = self.session.post(uri, data=json.dumps(payload))
-            except BaseException:
+            except requests.exceptions.RequestException:
                 LOGGER.error("Connection Error during create")
-                raise Exception("Connection Error")
-            if response.status_code == 201:
-                return True
-            return False
-        raise Exception("RR Type not supported by Infoblox")
+                raise LexiconError("Connection Error")
+            return response.status_code == 201
+        raise LexiconError("RR Type not supported by Infoblox")
 
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
@@ -183,18 +180,11 @@ class Provider(BaseProvider):
             name = self.domain
         records = []
         if rtype.upper() in IB_TYPE2CONTENT:
-            uri = "{0}{1}?name={2}&view={3}&_return_fields={4}{5}".format(
-                self.api_endpoint,
-                IB_TYPE2CONTENT[rtype.upper()][1],
-                name,
-                self.view,
-                IB_TYPE2CONTENT[rtype.upper()][0],
-                IB_TYPE2CONTENT[rtype.upper()][2],
-            )
+            uri = f"{self.api_endpoint}{IB_TYPE2CONTENT[rtype.upper()][1]}?name={name}&view={self.view}&_return_fields={IB_TYPE2CONTENT[rtype.upper()][0]}{IB_TYPE2CONTENT[rtype.upper()][2]}"
             try:
                 response = self.session.get(uri)
-            except BaseException:
-                raise Exception("Connection Error")
+            except requests.exceptions.RequestException:
+                raise LexiconError("Connection Error")
 
             results = response.json()
             for result in results:
@@ -256,9 +246,7 @@ class Provider(BaseProvider):
                     identifier=record["id"], rtype=rtype, name=name, content=content
                 )
             )
-        if False in success:
-            return False
-        return True
+        return False not in success
 
     def _update_record_internal(self, identifier, rtype=None, name=None, content=None):
         uri = self.api_endpoint + identifier
@@ -268,12 +256,10 @@ class Provider(BaseProvider):
         del payload["name"]
         try:
             response = self.session.put(uri, data=json.dumps(payload))
-        except BaseException:
+        except requests.exceptions.RequestException:
             LOGGER.error("Connection Error during create")
-            raise Exception("Connection Error")
-        if response.status_code == 200:
-            return True
-        return False
+            raise LexiconError("Connection Error")
+        return response.status_code == 200
 
     # Delete an existing record.
     # If record does not exist, do nothing.
@@ -286,21 +272,17 @@ class Provider(BaseProvider):
         success = []
         for record in self.list_records(rtype, name, content):
             success.append(self._delete_record_internal(record["id"]))
-        if False in success:
-            return False
-        return True
+        return False not in success
 
     def _delete_record_internal(self, identifier=None):
         if identifier:
             uri = f"{self.api_endpoint}{identifier}"
             try:
                 response = self.session.delete(uri)
-            except BaseException:
+            except requests.exceptions.RequestException:
                 LOGGER.error("Connection Error during create")
-                raise Exception("Connection Error")
-            if response.status_code == 200:
-                return True
-            return False
+                raise LexiconError("Connection Error")
+            return response.status_code == 200
         return False
 
     # Helpers

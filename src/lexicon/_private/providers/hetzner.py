@@ -4,7 +4,7 @@ import json
 import logging
 from argparse import ArgumentParser
 from time import sleep
-from typing import Any, List, Optional, TypedDict, Union
+from typing import Any, TypedDict
 
 import requests
 
@@ -26,7 +26,7 @@ class Provider(BaseProvider):
     """
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self._hetzner_impl = self._decide_provider()
 
@@ -49,27 +49,27 @@ class Provider(BaseProvider):
 
     def list_records(
         self,
-        rtype: Optional[str] = None,
-        name: Optional[str] = None,
-        content: Optional[str] = None,
+        rtype: str | None = None,
+        name: str | None = None,
+        content: str | None = None,
     ) -> list[dict[str, Any]]:
         return self._hetzner_impl.list_records(rtype, name, content)
 
     def update_record(
         self,
-        identifier: Optional[str] = None,
-        rtype: Optional[str] = None,
-        name: Optional[str] = None,
-        content: Optional[str] = None,
+        identifier: str | None = None,
+        rtype: str | None = None,
+        name: str | None = None,
+        content: str | None = None,
     ) -> bool:
         return self._hetzner_impl.update_record(identifier, rtype, name, content)
 
     def delete_record(
         self,
-        identifier: Optional[str] = None,
-        rtype: Optional[str] = None,
-        name: Optional[str] = None,
-        content: Optional[str] = None,
+        identifier: str | None = None,
+        rtype: str | None = None,
+        name: str | None = None,
+        content: str | None = None,
     ) -> bool:
         return self._hetzner_impl.delete_record(identifier, rtype, name, content)
 
@@ -87,7 +87,7 @@ class Provider(BaseProvider):
 
 class HetznerDns(BaseProvider):
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["ns.hetzner.com"]
 
     @staticmethod
@@ -95,7 +95,7 @@ class HetznerDns(BaseProvider):
         parser.add_argument("--auth-token", help="Specify Hetzner DNS API token")
 
     def __init__(self, config):
-        super(HetznerDns, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.api_endpoint = "https://dns.hetzner.com/api/v1"
 
@@ -162,11 +162,11 @@ class HetznerDns(BaseProvider):
             if len(records) == 1:
                 update_identifier = records[0]["id"]
             elif len(records) < 1:
-                raise Exception(
+                raise LexiconError(
                     "No records found matching type, name and content - won't update"
                 )
             else:
-                raise Exception(
+                raise LexiconError(
                     "Multiple records found matching type, name and content - won't update"
                 )
         self._put(f"/records/{update_identifier}", data)
@@ -279,8 +279,8 @@ class HetznerCloud(BaseProvider):
     def configure_parser(parser: ArgumentParser) -> None:
         parser.add_argument("--auth-token", help="Specify Hetzner DNS API token")
 
-    def __init__(self, config: Union[ConfigResolver, dict[str, Any]]):
-        super(HetznerCloud, self).__init__(config)
+    def __init__(self, config: ConfigResolver | dict[str, Any]):
+        super().__init__(config)
         self.domain_id = None
 
     def authenticate(self) -> None:
@@ -301,9 +301,9 @@ class HetznerCloud(BaseProvider):
 
     def list_records(
         self,
-        rtype: Optional[str] = None,
-        name: Optional[str] = None,
-        content: Optional[str] = None,
+        rtype: str | None = None,
+        name: str | None = None,
+        content: str | None = None,
     ) -> list[dict[str, Any]]:
         record_sets = self._get_record_sets(rtype, name)
 
@@ -319,10 +319,10 @@ class HetznerCloud(BaseProvider):
 
     def update_record(
         self,
-        identifier: Optional[str] = None,
-        rtype: Optional[str] = None,
-        name: Optional[str] = None,
-        content: Optional[str] = None,
+        identifier: str | None = None,
+        rtype: str | None = None,
+        name: str | None = None,
+        content: str | None = None,
     ) -> bool:
         if rtype is None or name is None or content is None:
             raise LexiconError(
@@ -334,9 +334,9 @@ class HetznerCloud(BaseProvider):
 
         records = self.list_records(rtype, name)
         if len(records) < 1:
-            raise Exception("No records found matching type and name - won't update")
+            raise LexiconError("No records found matching type and name - won't update")
         elif len(records) > 1:
-            raise Exception(
+            raise LexiconError(
                 "Multiple records found matching type and name - won't update"
             )
 
@@ -359,10 +359,10 @@ class HetznerCloud(BaseProvider):
 
     def delete_record(
         self,
-        identifier: Optional[str] = None,
-        rtype: Optional[str] = None,
-        name: Optional[str] = None,
-        content: Optional[str] = None,
+        identifier: str | None = None,
+        rtype: str | None = None,
+        name: str | None = None,
+        content: str | None = None,
     ) -> bool:
         if rtype is None or name is None:
             raise LexiconError("both rtype and name need to be passed.")
@@ -388,8 +388,8 @@ class HetznerCloud(BaseProvider):
         self,
         action: str = "GET",
         url: str = "/",
-        data: Optional[dict[str, Any]] = None,
-        query_params: Optional[dict[str, Any]] = None,
+        data: dict[str, Any] | None = None,
+        query_params: dict[str, Any] | None = None,
     ):
         query_params = query_params or {}
 
@@ -444,7 +444,7 @@ class HetznerCloud(BaseProvider):
             else:
                 raise LexiconError(err) from err
 
-    def _get_ttl(self) -> Optional[int]:
+    def _get_ttl(self) -> int | None:
         ttl_str = self._get_lexicon_option("ttl")
         if not ttl_str:
             return None

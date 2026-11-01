@@ -14,11 +14,10 @@ import json
 import logging
 import urllib
 from argparse import ArgumentParser
-from typing import Dict, List
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 __author__ = "Dmitry Verkhoturov"
@@ -32,7 +31,7 @@ class Provider(BaseProvider):
     """Provider class for Yandex Cloud"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["yandexcloud.net"]
 
     @staticmethod
@@ -57,7 +56,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.default_ttl = 600  # 10 minutes: default value, used in Yandex.Cloud DNS
         self.api_endpoint = "https://dns.api.cloud.yandex.net/dns/v1"
@@ -92,14 +91,12 @@ class Provider(BaseProvider):
 
     # verifies that the domain ID matches the domain in question
     def _cloud_id_matches_domain(self, dns_zone_id: str) -> bool:
-        payload: Dict = self._get(f"{self.api_endpoint}/zones/{dns_zone_id}")
+        payload: dict = self._get(f"{self.api_endpoint}/zones/{dns_zone_id}")
         if "zone" not in payload:
             # No DNS zone with given ID found
             return True
-        if payload["zone"] != f"{self.domain}.":
-            # Provided DNS zone ID does not match the domain
-            return False
-        return True
+        # Provided DNS zone ID must match the domain
+        return payload["zone"] == f"{self.domain}."
 
     def _get_cloud_id(self) -> str:
         """Gets Cloud ID from Resource Manager API
@@ -108,7 +105,7 @@ class Provider(BaseProvider):
         if cloud_id:
             return cloud_id
 
-        payload: Dict = self._get(f"{self.resources_api_endpoint}/clouds")
+        payload: dict = self._get(f"{self.resources_api_endpoint}/clouds")
 
         if "clouds" not in payload:
             raise AuthenticationError("No clouds found")
@@ -127,7 +124,7 @@ class Provider(BaseProvider):
         if folder_id:
             return folder_id
 
-        payload: Dict = self._get(
+        payload: dict = self._get(
             f"{self.resources_api_endpoint}/folders", {"cloudId": cloud_id}
         )
 
@@ -144,7 +141,7 @@ class Provider(BaseProvider):
         """Gets Domain ID from DnsZone API
         https://cloud.yandex.com/en/docs/dns/api-ref/DnsZone/list
         """
-        payload: Dict = self._get(
+        payload: dict = self._get(
             "/zones", {"folderId": folder_id, "filter": f"zone='{self.domain}.'"}
         )
 
@@ -155,12 +152,12 @@ class Provider(BaseProvider):
 
         return payload["dnsZones"][0]["id"]
 
-    def list_records(self, rtype=None, name=None, content=None) -> List[Dict]:
+    def list_records(self, rtype=None, name=None, content=None) -> list[dict]:
         """List all records. Return an empty list if no records found.
         type, name and content are used to filter records.
         https://cloud.yandex.com/en/docs/dns/api-ref/DnsZone/listRecordSets
         """
-        records: List[Dict] = []
+        records: list[dict] = []
 
         query_params = {"filter": ""}
         if rtype:
@@ -175,7 +172,7 @@ class Provider(BaseProvider):
         url = f"/zones/{self.domain_id}:listRecordSets"
         more_pages = True
         while more_pages:
-            payload: Dict = self._get(url, query_params)
+            payload: dict = self._get(url, query_params)
             if "nextPageToken" in payload:
                 query_params["pageToken"] = payload["nextPageToken"]
             else:
@@ -206,7 +203,7 @@ class Provider(BaseProvider):
         LOGGER.debug("list_records: %s", records)
         return records
 
-    def _get_record(self, identifier="", rtype="", name="") -> Dict:
+    def _get_record(self, identifier="", rtype="", name="") -> dict:
         """Gets a single record by rtype and name, or by identifier.
         Throws HTTPError with status code 404 if record not found.
         https://cloud.yandex.com/en/docs/dns/api-ref/DnsZone/getRecordSet"""
@@ -250,7 +247,7 @@ class Provider(BaseProvider):
                 data.append(content)
         except requests.exceptions.HTTPError as error:
             if error.response.status_code != 404:
-                raise error
+                raise
 
         payload = self._post(
             f"/zones/{self.domain_id}:upsertRecordSets",
@@ -299,7 +296,7 @@ class Provider(BaseProvider):
             if error.response.status_code == 404:
                 LOGGER.info("update_record: identifier=%s does not exist", identifier)
                 return True
-            raise error
+            raise
 
         payload = self._post(
             f"/zones/{self.domain_id}:upsertRecordSets", {"replacements": [record]}
@@ -323,7 +320,7 @@ class Provider(BaseProvider):
                     name,
                 )
                 return True
-            raise error
+            raise
 
         # remove content entry if it's one of the many, and update record instead of deleting it
         action = "deletions"
@@ -339,7 +336,7 @@ class Provider(BaseProvider):
         return self._check_request_success(payload, "delete_record")
 
     # Helpers
-    def _request(self, action="GET", url="/", data=None, query_params=None) -> Dict:
+    def _request(self, action="GET", url="/", data=None, query_params=None) -> dict:
         if data is None:
             data = {}
         if query_params is None:
@@ -347,7 +344,7 @@ class Provider(BaseProvider):
         auth_token = self._get_provider_option("auth_token")
 
         if not auth_token:
-            raise Exception("auth_token must be specified.")
+            raise LexiconError("auth_token must be specified.")
 
         default_headers = {
             "Accept": "application/json",

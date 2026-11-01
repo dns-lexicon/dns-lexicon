@@ -4,7 +4,7 @@ import hashlib
 import json
 import logging
 from argparse import ArgumentParser
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any
 
 import requests
 import tldextract
@@ -43,7 +43,7 @@ class Provider(BaseProvider):
     """
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["godaddy.com", "domaincontrol.com"]
 
     @staticmethod
@@ -54,7 +54,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.api_endpoint = "https://api.godaddy.com/v1"
 
@@ -126,11 +126,11 @@ class Provider(BaseProvider):
 
     def _find_matching_records(
         self,
-        identifier: Optional[str],
-        rtype: Optional[str],
-        name: Optional[str],
-        content: Optional[str],
-    ) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
+        identifier: str | None,
+        rtype: str | None,
+        name: str | None,
+        content: str | None,
+    ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
         root_domain = self.get_root_domain_name()
         # Retrieve existing data in DNS zone.
         records = self._get(f"/domains/{root_domain}/records")
@@ -186,16 +186,16 @@ class Provider(BaseProvider):
         # So for rtype/name approach, we search first matching record for rtype/name on which
         # content is different, and we update it before synchronizing the DNS zone.
         if not identifier and not rtype:
-            raise Exception("ERROR: rtype is required")
+            raise LexiconError("ERROR: rtype is required")
         if not identifier and not name:
-            raise Exception("ERROR: name is required")
+            raise LexiconError("ERROR: name is required")
 
         matching_records, records = self._find_matching_records(
             identifier, rtype, name, None
         )
 
         if len(matching_records) > 1:
-            LOGGER.warn(
+            LOGGER.warning(
                 "Warning, multiple matching updatable records found, first one is picked."
             )
 

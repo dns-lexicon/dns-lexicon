@@ -4,10 +4,8 @@ import hmac
 import json
 import logging
 from argparse import ArgumentParser
-from builtins import bytes
 from email.utils import formatdate
 from hashlib import sha1
-from typing import List
 
 import requests
 from requests.adapters import HTTPAdapter
@@ -35,7 +33,7 @@ class _RetryRateLimit(Retry):
         if response:
             body = json.loads(response.data)
             if "Rate limit exceeded" in body.get("error", []):
-                return super(_RetryRateLimit, self).increment(
+                return super().increment(
                     method, url, response, error, _pool, _stacktrace
                 )
 
@@ -46,7 +44,7 @@ class Provider(BaseProvider):
     """Provider class for DNSMadeEasy"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["dnsmadeeasy"]
 
     @staticmethod
@@ -57,7 +55,7 @@ class Provider(BaseProvider):
         parser.add_argument("--auth-token", help="specify token for authentication")
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.api_endpoint = (
             self._get_provider_option("api_endpoint")

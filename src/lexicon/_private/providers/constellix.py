@@ -23,11 +23,10 @@ import json
 import logging
 import time
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -37,7 +36,7 @@ class Provider(BaseProvider):
     """Provider clss for Constellix"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["constellix.com"]
 
     @staticmethod
@@ -48,7 +47,7 @@ class Provider(BaseProvider):
         parser.add_argument("--auth-token", help="specify secret key for authenticate=")
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.domain_details = None
         self.api_endpoint = "https://api.dns.constellix.com/v1"
@@ -60,7 +59,7 @@ class Provider(BaseProvider):
             if error.response.status_code == 404:
                 payload = {}
             else:
-                raise error
+                raise
 
         for domain in payload:
             if domain["name"] == self.domain:
@@ -162,7 +161,7 @@ class Provider(BaseProvider):
             identifier = record[0]["id"]
 
         if not identifier:
-            raise Exception("No identifier provided")
+            raise LexiconError("No identifier provided")
 
         data = {
             "id": identifier,
@@ -193,7 +192,7 @@ class Provider(BaseProvider):
         # at least one record left over after deleting, then this becomes an
         # update operation.
         if content:
-            current_content = set(r["content"] for r in records)
+            current_content = {r["content"] for r in records}
             if content in current_content and len(current_content) > 1:
                 current_content.remove(content)
                 self.update_record(
@@ -204,7 +203,7 @@ class Provider(BaseProvider):
                 )
                 return True
 
-        delete_record_id = set(record["id"] for record in records)
+        delete_record_id = {record["id"] for record in records}
 
         # We need a rtype to do a delete, so pull one from the first record if it's not supplied.
         if not rtype:
@@ -224,7 +223,7 @@ class Provider(BaseProvider):
         # improvement
 
         if rtype == "SOA":
-            raise Exception(
+            raise LexiconError(
                 f"{rtype} record type is not supported in the Constellix Provider"
             )
 
@@ -280,7 +279,7 @@ class Provider(BaseProvider):
         response.raise_for_status()
 
         # PUT and DELETE actions dont return valid json.
-        if action in ["DELETE" or action == "PUT"]:
+        if action in ["DELETE"]:
             return response.text
 
         return response.json()

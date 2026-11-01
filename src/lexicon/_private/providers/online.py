@@ -3,10 +3,10 @@
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
+from lexicon.exceptions import LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -22,7 +22,7 @@ class Provider(BaseProvider):
     """Provider class for Online.net"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["online.net"]
 
     @staticmethod
@@ -30,7 +30,7 @@ class Provider(BaseProvider):
         parser.add_argument("--auth-token", help="specify private api token")
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.zone_name = "Zone Automatic Lexicon "
         self.passive_zone = None
         self.active_zone = None
@@ -85,7 +85,7 @@ class Provider(BaseProvider):
         # then convert records to bind format
         bind_str = ""
         for record in records:
-            bind_str = bind_str + "{0} {1} IN {2} {3}{4}\n".format(
+            bind_str = bind_str + "{} {} IN {} {}{}\n".format(
                 record["name"] or "@",
                 record["ttl"],
                 record["type"],
@@ -97,7 +97,7 @@ class Provider(BaseProvider):
     def _enable_zone(self):
         zone = self.passive_zone
         if zone is None:
-            raise Exception("Could not enable uninitialized passive_zone")
+            raise LexiconError("Could not enable uninitialized passive_zone")
         self._patch(f"/domain/{self.domain_id}/version/{zone}/enable")
         self.passive_zone = self.active_zone
         self.active_zone = zone
@@ -121,7 +121,7 @@ class Provider(BaseProvider):
             self._post(
                 f"/domain/{self.domain_id}/version/{self.passive_zone}/zone", record
             )
-        except BaseException as error:
+        except requests.exceptions.RequestException as error:
             LOGGER.debug(error)
             return False
 
@@ -138,7 +138,7 @@ class Provider(BaseProvider):
                 "name": self._full_name(record["name"]),
                 "ttl": record["ttl"],
                 "content": record["data"],
-                "priority": record["aux"] if "aux" in record else "",
+                "priority": record.get("aux", ""),
             }
             records.append(self._clean_TXT_record(processed_record))
 
@@ -196,7 +196,7 @@ class Provider(BaseProvider):
                 record,
             )
 
-        except BaseException as error:
+        except requests.exceptions.RequestException as error:
             LOGGER.debug(error)
             return False
 
@@ -218,7 +218,7 @@ class Provider(BaseProvider):
                 self._delete(
                     f"/domain/{self.domain_id}/version/{self.passive_zone}/zone/{record['id']}"
                 )
-        except BaseException as error:
+        except requests.exceptions.RequestException as error:
             LOGGER.debug(error)
             return False
 

@@ -1,4 +1,3 @@
-# coding: utf-8
 # Copyright (c) 2016, Jason Kulatunga
 # Copyright (c) 2021, Oracle and/or its affiliates.
 import os

@@ -9,13 +9,12 @@ API Docs: https://docs.plesk.com/en-US/onyx/api-rpc
 import logging
 from argparse import ArgumentParser
 from collections import defaultdict
-from typing import Dict, List, Optional
 from xml.etree import cElementTree
 from xml.etree.ElementTree import Element
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -27,7 +26,7 @@ class Provider(BaseProvider):
     """Provider class for Plesk"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return []
 
     @staticmethod
@@ -43,12 +42,11 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
 
         self.api_endpoint = self._get_provider_option("plesk_server")
 
-        if self.api_endpoint.endswith("/"):
-            self.api_endpoint = self.api_endpoint[:-1]
+        self.api_endpoint = self.api_endpoint.removesuffix("/")
 
         if not self.api_endpoint.endswith(PLEX_URL_SUFFIX):
             self.api_endpoint += PLEX_URL_SUFFIX
@@ -69,13 +67,13 @@ class Provider(BaseProvider):
         if isinstance(result, list):
             for record in result:
                 if record["status"] == "error":
-                    raise Exception(
+                    raise LexiconError(
                         f"API returned at least one error: {record['errtext']}"
                     )
         elif response["result"]["status"] == "error":
             errcode = response["result"]["errcode"]
             errtext = response["result"]["errtext"]
-            raise Exception(f"API returned error: {errcode} ({errtext})")
+            raise LexiconError(f"API returned error: {errcode} ({errtext})")
 
         return response
 
@@ -135,7 +133,7 @@ class Provider(BaseProvider):
             LOGGER.debug("Entries found: %s", entries)
 
             if not entries:
-                raise Exception("No entry found for updating")
+                raise LexiconError("No entry found for updating")
 
             identifier = entries[0]["id"]
             entry = self.__get_dns_entry(identifier)
@@ -281,8 +279,8 @@ class Provider(BaseProvider):
         pass
 
 
-def _etree_to_dict(t: Element) -> Optional[Dict]:
-    d: Optional[Dict] = {t.tag: {} if t.attrib else None}
+def _etree_to_dict(t: Element) -> dict | None:
+    d: dict | None = {t.tag: {} if t.attrib else None}
     children = list(t)
     if children:
         dd = defaultdict(list)
@@ -303,7 +301,7 @@ def _etree_to_dict(t: Element) -> Optional[Dict]:
     return d
 
 
-def _dict_to_etree(d: Dict) -> Element:
+def _dict_to_etree(d: dict) -> Element:
     def _to_etree(d1, root):
         if not d1:
             pass

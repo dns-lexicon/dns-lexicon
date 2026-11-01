@@ -2,12 +2,11 @@
 
 import logging
 from argparse import ArgumentParser
-from typing import List
 from xml.etree import ElementTree
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -17,7 +16,7 @@ class Provider(BaseProvider):
     """Provider class for Namesilo"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["namesilo.com"]
 
     @staticmethod
@@ -25,7 +24,7 @@ class Provider(BaseProvider):
         parser.add_argument("--auth-token", help="specify key for authentication")
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.api_endpoint = (
             self._get_provider_option("api_endpoint") or "https://www.namesilo.com/api"
@@ -34,7 +33,7 @@ class Provider(BaseProvider):
     def authenticate(self):
         try:
             self._get("/getDomainInfo", {"domain": self.domain})
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             raise AuthenticationError(str(e))
         self.domain_id = self.domain
 
@@ -149,14 +148,14 @@ class Provider(BaseProvider):
         root = tree.getroot()
         if root.find("reply").find("code").text == "280":
             raise ValueError(
-                "An error occurred: {0}, {1}".format(
+                "An error occurred: {}, {}".format(
                     root.find("reply").find("detail").text,
                     root.find("reply").find("code").text,
                 )
             )
         if root.find("reply").find("code").text != "300":
-            raise Exception(
-                "An error occurred: {0}, {1}".format(
+            raise LexiconError(
+                "An error occurred: {}, {}".format(
                     root.find("reply").find("detail").text,
                     root.find("reply").find("code").text,
                 )

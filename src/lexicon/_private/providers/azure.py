@@ -13,11 +13,10 @@ support id on records (as they are hold in a recordset) so an id is generated on
 import hashlib
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -33,7 +32,7 @@ class Provider(BaseProvider):
     """Provider for Azure DNS"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return [
             "azure-dns.com",
             "azure-dns.net",
@@ -71,7 +70,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self._access_token = None
 
@@ -113,7 +112,7 @@ class Provider(BaseProvider):
 
     def _create_record_internal(self, rtype, name, content):
         if not rtype or not name or not content:
-            raise Exception(
+            raise LexiconError(
                 "Error, rtype, name and content are mandatory to create a record."
             )
 
@@ -150,7 +149,9 @@ class Provider(BaseProvider):
 
     def update_record(self, identifier, rtype=None, name=None, content=None):
         if not identifier and (not rtype or not name):
-            raise Exception("Error, identifier or rtype+name parameters are required.")
+            raise LexiconError(
+                "Error, identifier or rtype+name parameters are required."
+            )
 
         if identifier:
             records = self.list_records()
@@ -161,7 +162,7 @@ class Provider(BaseProvider):
             records_to_update = self.list_records(rtype=rtype, name=name)
 
         if not records_to_update:
-            raise Exception(
+            raise LexiconError(
                 f"Error, could not find a record for given identifier: {identifier}"
             )
 
@@ -273,9 +274,7 @@ class Provider(BaseProvider):
 
         self._access_token = result.json()["access_token"]
 
-        url = "{0}/subscriptions/{1}/resourceGroups/{2}/providers/Microsoft.Network/dnsZones".format(
-            MANAGEMENT_URL, subscription_id, resource_group
-        )
+        url = f"{MANAGEMENT_URL}/subscriptions/{subscription_id}/resourceGroups/{resource_group}/providers/Microsoft.Network/dnsZones"
         headers = {"Authorization": f"Bearer {self._access_token}"}
         params = {"api-version": API_VERSION}
 
@@ -305,10 +304,8 @@ class Provider(BaseProvider):
 
         if not domain_id:
             raise AuthenticationError(
-                "Resource group `{0}` in subscription `{1}` "
-                "does not contain the DNS zone `{2}`".format(
-                    resource_group, subscription_id, self.domain
-                )
+                f"Resource group `{resource_group}` in subscription `{subscription_id}` "
+                f"does not contain the DNS zone `{self.domain}`"
             )
 
         self.domain_id = domain_id
@@ -407,7 +404,7 @@ def _get_values_from_recordset(rtype, record):
     if values is not None:
         return values
 
-    raise Exception(f"Error, `{rtype}` entries are not supported by this provider.")
+    raise LexiconError(f"Error, `{rtype}` entries are not supported by this provider.")
 
 
 def _build_recordset_from_values(rtype, values):
@@ -432,7 +429,7 @@ def _build_recordset_from_values(rtype, values):
     if recordset:
         return recordset
 
-    raise Exception(f"Error, `{rtype}` entries are not supported by this provider.")
+    raise LexiconError(f"Error, `{rtype}` entries are not supported by this provider.")
 
 
 def _identifier(record):
