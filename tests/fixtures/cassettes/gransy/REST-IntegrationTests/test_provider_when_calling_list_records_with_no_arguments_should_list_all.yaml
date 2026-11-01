@@ -1,0 +1,78 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.34.2
+    method: GET
+    uri: https://api.subreg.cz/domains
+  response:
+    body:
+      string: '{"domains":[{"name":"oldium.top","expire":"2199-12-31","autorenew":"0"}],"count":1}'
+    headers:
+      CF-RAY:
+      - a3263b1d1808a5dc-PRG
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 28 Aug 2026 20:57:53 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - PHP/7.4.33
+      cf-cache-status:
+      - DYNAMIC
+      content-length:
+      - '270'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.34.2
+    method: GET
+    uri: https://api.subreg.cz/dns/oldium.top
+  response:
+    body:
+      string: '{"domain":"oldium.top","records":[{"id":"7143878","name":"docs","type":"CNAME","content":"docs.example.com","prio":0,"ttl":3600},{"id":"7143877","name":"localhost","type":"A","content":"127.0.0.1","prio":0,"ttl":3600},{"id":"7143881","name":"_acme-challenge.fqdn","type":"TXT","content":"challengetoken","prio":0,"ttl":3600},{"id":"7143880","name":"_acme-challenge.full","type":"TXT","content":"challengetoken","prio":0,"ttl":3600},{"id":"7143879","name":"_acme-challenge.test","type":"TXT","content":"challengetoken","prio":0,"ttl":3600}]}'
+    headers:
+      CF-RAY:
+      - a3263b20b9380a1b-PRG
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 28 Aug 2026 20:57:54 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - PHP/7.4.33
+      cf-cache-status:
+      - DYNAMIC
+      content-length:
+      - '540'
+    status:
+      code: 200
+      message: OK
+version: 1

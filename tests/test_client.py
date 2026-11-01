@@ -174,4 +174,49 @@ def test_client_parse_env_with_auth_keys(monkeypatch, mock_provider):
     )
 
 
+def test_client_init_raises_when_extras_missing(monkeypatch, extras_provider):
+    from lexicon import client as client_module
+    from lexicon.exceptions import ProviderNotAvailableError
+
+    monkeypatch.setattr(client_module, "_is_installed", lambda pkg: False)
+    options = {
+        "provider_name": "extrasprovider",
+        "action": "list",
+        "domain": "example.com",
+        "type": "TXT",
+    }
+    with pytest.raises(ProviderNotAvailableError) as exc_info:
+        lexicon.client.Client(ConfigResolver().with_dict(options))
+    assert "--use-alt" in str(exc_info.value)
+
+
+def test_client_init_does_not_raise_when_extras_missing_with_use_alt(
+    monkeypatch, extras_provider
+):
+    from lexicon import client as client_module
+
+    monkeypatch.setattr(client_module, "_is_installed", lambda pkg: False)
+    options = {
+        "provider_name": "extrasprovider",
+        "action": "list",
+        "domain": "example.com",
+        "type": "TXT",
+        "extrasprovider": {"use_alt": "yes"},
+    }
+    lexicon.client.Client(ConfigResolver().with_dict(options))
+
+
+def test_client_init_does_not_raise_when_extras_installed(monkeypatch, extras_provider):
+    from lexicon import client as client_module
+
+    monkeypatch.setattr(client_module, "_is_installed", lambda pkg: True)
+    options = {
+        "provider_name": "extrasprovider",
+        "action": "list",
+        "domain": "example.com",
+        "type": "TXT",
+    }
+    lexicon.client.Client(ConfigResolver().with_dict(options))
+
+
 # TODO: add tests for Provider loading?
