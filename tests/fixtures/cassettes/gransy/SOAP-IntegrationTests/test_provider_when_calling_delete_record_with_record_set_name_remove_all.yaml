@@ -1,0 +1,562 @@
+interactions:
+- request:
+    body: '<?xml version=''1.0'' encoding=''utf-8''?>
+
+      <soap-env:Envelope xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/"><soap-env:Body><ns0:Login
+      xmlns:ns0="http://subreg.cz/types"><login>placeholder_auth_username</login><password>placeholder_auth_password</password></ns0:Login></soap-env:Body></soap-env:Envelope>'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '283'
+      Content-Type:
+      - text/xml; charset=utf-8
+      SOAPAction:
+      - '"http://subreg.cz/wsdl#Login"'
+      User-Agent:
+      - Zeep/4.3.2 (www.python-zeep.org)
+    method: POST
+    uri: https://subreg.cz/soap/cmd.php?soap_format=1
+  response:
+    body:
+      string: '<?xml version="1.0" encoding="UTF-8"?>
+
+        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:ns1="http://subreg.cz/types"><SOAP-ENV:Body><ns1:Login_Container><response><status>ok</status><data><ssid>placeholder_ssid</ssid></data></response></ns1:Login_Container></SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+        '
+    headers:
+      CF-RAY:
+      - a329ce7eff5d851c-PRG
+      Cache-Control:
+      - max-age=0
+      Connection:
+      - keep-alive
+      Content-Type:
+      - text/xml; charset=utf-8
+      Date:
+      - Sat, 29 Aug 2026 07:22:47 GMT
+      Expires:
+      - Sat, 29 Aug 2026 07:22:47 GMT
+      Server:
+      - cloudflare
+      Vary:
+      - Accept-Encoding
+      X-Powered-By:
+      - PHP/7.4.33
+      cf-cache-status:
+      - DYNAMIC
+      content-length:
+      - '345'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '<?xml version=''1.0'' encoding=''utf-8''?>
+
+      <soap-env:Envelope xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/"><soap-env:Body><ns0:Domains_List
+      xmlns:ns0="http://subreg.cz/types"><ssid>placeholder_ssid</ssid></ns0:Domains_List></soap-env:Body></soap-env:Envelope>'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '285'
+      Content-Type:
+      - text/xml; charset=utf-8
+      SOAPAction:
+      - '"http://subreg.cz/wsdl#Domains_List"'
+      User-Agent:
+      - Zeep/4.3.2 (www.python-zeep.org)
+    method: POST
+    uri: https://subreg.cz/soap/cmd.php?soap_format=1
+  response:
+    body:
+      string: '<?xml version="1.0" encoding="UTF-8"?>
+
+        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:ns1="http://subreg.cz/types"><SOAP-ENV:Body><ns1:Domains_List_Container><response><status>ok</status><data><count>1</count><domains><name>oldium.xyz</name><expire>2199-12-31</expire><autorenew>0</autorenew></domains></data></response></ns1:Domains_List_Container></SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+        '
+    headers:
+      CF-RAY:
+      - a329ce84df90f329-PRG
+      Cache-Control:
+      - max-age=0
+      Connection:
+      - keep-alive
+      Content-Type:
+      - text/xml; charset=utf-8
+      Date:
+      - Sat, 29 Aug 2026 07:22:48 GMT
+      Expires:
+      - Sat, 29 Aug 2026 07:22:48 GMT
+      Server:
+      - cloudflare
+      Vary:
+      - Accept-Encoding
+      X-Powered-By:
+      - PHP/7.4.33
+      cf-cache-status:
+      - DYNAMIC
+      content-length:
+      - '709'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '<?xml version=''1.0'' encoding=''utf-8''?>
+
+      <soap-env:Envelope xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/"><soap-env:Body><ns0:Get_DNS_Zone
+      xmlns:ns0="http://subreg.cz/types"><ssid>placeholder_ssid</ssid><domain>oldium.xyz</domain></ns0:Get_DNS_Zone></soap-env:Body></soap-env:Envelope>'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '312'
+      Content-Type:
+      - text/xml; charset=utf-8
+      SOAPAction:
+      - '"http://subreg.cz/wsdl#Get_DNS_Zone"'
+      User-Agent:
+      - Zeep/4.3.2 (www.python-zeep.org)
+    method: POST
+    uri: https://subreg.cz/soap/cmd.php?soap_format=1
+  response:
+    body:
+      string: '<?xml version="1.0" encoding="UTF-8"?>
+
+        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:ns1="http://subreg.cz/types"><SOAP-ENV:Body><ns1:Get_DNS_Zone_Container><response><status>ok</status><data><domain>oldium.xyz</domain><records><id>7144322</id><name>docs</name><type>CNAME</type><content>docs.example.com</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144321</id><name>localhost</name><type>A</type><content>127.0.0.1</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144332</id><name>orig.nameonly.test</name><type>TXT</type><content>updated</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144328</id><name>random.fqdntest</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144327</id><name>random.fulltest</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144326</id><name>random.test</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144329</id><name>ttl.fqdn</name><type>TXT</type><content>ttlshouldbe3600</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144331</id><name>updated.test</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144336</id><name>updated.testfqdn</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144334</id><name>updated.testfull</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144342</id><name>_acme-challenge.createrecordset</name><type>TXT</type><content>challengetoken1</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144343</id><name>_acme-challenge.createrecordset</name><type>TXT</type><content>challengetoken2</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144325</id><name>_acme-challenge.fqdn</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144324</id><name>_acme-challenge.full</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144344</id><name>_acme-challenge.listrecordset</name><type>TXT</type><content>challengetoken1</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144345</id><name>_acme-challenge.listrecordset</name><type>TXT</type><content>challengetoken2</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144341</id><name>_acme-challenge.noop</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144323</id><name>_acme-challenge.test</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records></data></response></ns1:Get_DNS_Zone_Container></SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+        '
+    headers:
+      CF-RAY:
+      - a329ce8a2a9b6e75-PRG
+      Cache-Control:
+      - max-age=0
+      Connection:
+      - keep-alive
+      Content-Type:
+      - text/xml; charset=utf-8
+      Date:
+      - Sat, 29 Aug 2026 07:22:49 GMT
+      Expires:
+      - Sat, 29 Aug 2026 07:22:49 GMT
+      Server:
+      - cloudflare
+      Vary:
+      - Accept-Encoding
+      X-Powered-By:
+      - PHP/7.4.33
+      cf-cache-status:
+      - DYNAMIC
+      content-length:
+      - '2928'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '<?xml version=''1.0'' encoding=''utf-8''?>
+
+      <soap-env:Envelope xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/"><soap-env:Body><ns0:Add_DNS_Record
+      xmlns:ns0="http://subreg.cz/types"><ssid>placeholder_ssid</ssid><domain>oldium.xyz</domain><record><name>_acme-challenge.deleterecordset</name><type>TXT</type><content>challengetoken1</content><ttl>3600</ttl></record></ns0:Add_DNS_Record></soap-env:Body></soap-env:Envelope>'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '442'
+      Content-Type:
+      - text/xml; charset=utf-8
+      SOAPAction:
+      - '"http://subreg.cz/wsdl#Add_DNS_Record"'
+      User-Agent:
+      - Zeep/4.3.2 (www.python-zeep.org)
+    method: POST
+    uri: https://subreg.cz/soap/cmd.php?soap_format=1
+  response:
+    body:
+      string: '<?xml version="1.0" encoding="UTF-8"?>
+
+        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:ns1="http://subreg.cz/types"><SOAP-ENV:Body><ns1:Add_DNS_Record_Container><response><status>ok</status><data/></response></ns1:Add_DNS_Record_Container></SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+        '
+    headers:
+      CF-RAY:
+      - a329ce903eb35d09-PRG
+      Cache-Control:
+      - max-age=0
+      Connection:
+      - keep-alive
+      Content-Type:
+      - text/xml; charset=utf-8
+      Date:
+      - Sat, 29 Aug 2026 07:22:50 GMT
+      Expires:
+      - Sat, 29 Aug 2026 07:22:50 GMT
+      Server:
+      - cloudflare
+      Vary:
+      - Accept-Encoding
+      X-Powered-By:
+      - PHP/7.4.33
+      cf-cache-status:
+      - DYNAMIC
+      content-length:
+      - '312'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '<?xml version=''1.0'' encoding=''utf-8''?>
+
+      <soap-env:Envelope xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/"><soap-env:Body><ns0:Get_DNS_Zone
+      xmlns:ns0="http://subreg.cz/types"><ssid>placeholder_ssid</ssid><domain>oldium.xyz</domain></ns0:Get_DNS_Zone></soap-env:Body></soap-env:Envelope>'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '312'
+      Content-Type:
+      - text/xml; charset=utf-8
+      SOAPAction:
+      - '"http://subreg.cz/wsdl#Get_DNS_Zone"'
+      User-Agent:
+      - Zeep/4.3.2 (www.python-zeep.org)
+    method: POST
+    uri: https://subreg.cz/soap/cmd.php?soap_format=1
+  response:
+    body:
+      string: '<?xml version="1.0" encoding="UTF-8"?>
+
+        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:ns1="http://subreg.cz/types"><SOAP-ENV:Body><ns1:Get_DNS_Zone_Container><response><status>ok</status><data><domain>oldium.xyz</domain><records><id>7144322</id><name>docs</name><type>CNAME</type><content>docs.example.com</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144321</id><name>localhost</name><type>A</type><content>127.0.0.1</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144332</id><name>orig.nameonly.test</name><type>TXT</type><content>updated</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144328</id><name>random.fqdntest</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144327</id><name>random.fulltest</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144326</id><name>random.test</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144329</id><name>ttl.fqdn</name><type>TXT</type><content>ttlshouldbe3600</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144331</id><name>updated.test</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144336</id><name>updated.testfqdn</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144334</id><name>updated.testfull</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144342</id><name>_acme-challenge.createrecordset</name><type>TXT</type><content>challengetoken1</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144343</id><name>_acme-challenge.createrecordset</name><type>TXT</type><content>challengetoken2</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144346</id><name>_acme-challenge.deleterecordset</name><type>TXT</type><content>challengetoken1</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144325</id><name>_acme-challenge.fqdn</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144324</id><name>_acme-challenge.full</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144344</id><name>_acme-challenge.listrecordset</name><type>TXT</type><content>challengetoken1</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144345</id><name>_acme-challenge.listrecordset</name><type>TXT</type><content>challengetoken2</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144341</id><name>_acme-challenge.noop</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144323</id><name>_acme-challenge.test</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records></data></response></ns1:Get_DNS_Zone_Container></SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+        '
+    headers:
+      CF-RAY:
+      - a329ce962e7ef98c-PRG
+      Cache-Control:
+      - max-age=0
+      Connection:
+      - keep-alive
+      Content-Type:
+      - text/xml; charset=utf-8
+      Date:
+      - Sat, 29 Aug 2026 07:22:51 GMT
+      Expires:
+      - Sat, 29 Aug 2026 07:22:51 GMT
+      Server:
+      - cloudflare
+      Vary:
+      - Accept-Encoding
+      X-Powered-By:
+      - PHP/7.4.33
+      cf-cache-status:
+      - DYNAMIC
+      content-length:
+      - '3086'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '<?xml version=''1.0'' encoding=''utf-8''?>
+
+      <soap-env:Envelope xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/"><soap-env:Body><ns0:Add_DNS_Record
+      xmlns:ns0="http://subreg.cz/types"><ssid>placeholder_ssid</ssid><domain>oldium.xyz</domain><record><name>_acme-challenge.deleterecordset</name><type>TXT</type><content>challengetoken2</content><ttl>3600</ttl></record></ns0:Add_DNS_Record></soap-env:Body></soap-env:Envelope>'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '442'
+      Content-Type:
+      - text/xml; charset=utf-8
+      SOAPAction:
+      - '"http://subreg.cz/wsdl#Add_DNS_Record"'
+      User-Agent:
+      - Zeep/4.3.2 (www.python-zeep.org)
+    method: POST
+    uri: https://subreg.cz/soap/cmd.php?soap_format=1
+  response:
+    body:
+      string: '<?xml version="1.0" encoding="UTF-8"?>
+
+        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:ns1="http://subreg.cz/types"><SOAP-ENV:Body><ns1:Add_DNS_Record_Container><response><status>ok</status><data/></response></ns1:Add_DNS_Record_Container></SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+        '
+    headers:
+      CF-RAY:
+      - a329ce9bfe4ff9a1-PRG
+      Cache-Control:
+      - max-age=0
+      Connection:
+      - keep-alive
+      Content-Type:
+      - text/xml; charset=utf-8
+      Date:
+      - Sat, 29 Aug 2026 07:22:52 GMT
+      Expires:
+      - Sat, 29 Aug 2026 07:22:52 GMT
+      Server:
+      - cloudflare
+      Vary:
+      - Accept-Encoding
+      X-Powered-By:
+      - PHP/7.4.33
+      cf-cache-status:
+      - DYNAMIC
+      content-length:
+      - '312'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '<?xml version=''1.0'' encoding=''utf-8''?>
+
+      <soap-env:Envelope xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/"><soap-env:Body><ns0:Get_DNS_Zone
+      xmlns:ns0="http://subreg.cz/types"><ssid>placeholder_ssid</ssid><domain>oldium.xyz</domain></ns0:Get_DNS_Zone></soap-env:Body></soap-env:Envelope>'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '312'
+      Content-Type:
+      - text/xml; charset=utf-8
+      SOAPAction:
+      - '"http://subreg.cz/wsdl#Get_DNS_Zone"'
+      User-Agent:
+      - Zeep/4.3.2 (www.python-zeep.org)
+    method: POST
+    uri: https://subreg.cz/soap/cmd.php?soap_format=1
+  response:
+    body:
+      string: '<?xml version="1.0" encoding="UTF-8"?>
+
+        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:ns1="http://subreg.cz/types"><SOAP-ENV:Body><ns1:Get_DNS_Zone_Container><response><status>ok</status><data><domain>oldium.xyz</domain><records><id>7144322</id><name>docs</name><type>CNAME</type><content>docs.example.com</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144321</id><name>localhost</name><type>A</type><content>127.0.0.1</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144332</id><name>orig.nameonly.test</name><type>TXT</type><content>updated</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144328</id><name>random.fqdntest</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144327</id><name>random.fulltest</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144326</id><name>random.test</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144329</id><name>ttl.fqdn</name><type>TXT</type><content>ttlshouldbe3600</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144331</id><name>updated.test</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144336</id><name>updated.testfqdn</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144334</id><name>updated.testfull</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144342</id><name>_acme-challenge.createrecordset</name><type>TXT</type><content>challengetoken1</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144343</id><name>_acme-challenge.createrecordset</name><type>TXT</type><content>challengetoken2</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144346</id><name>_acme-challenge.deleterecordset</name><type>TXT</type><content>challengetoken1</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144347</id><name>_acme-challenge.deleterecordset</name><type>TXT</type><content>challengetoken2</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144325</id><name>_acme-challenge.fqdn</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144324</id><name>_acme-challenge.full</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144344</id><name>_acme-challenge.listrecordset</name><type>TXT</type><content>challengetoken1</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144345</id><name>_acme-challenge.listrecordset</name><type>TXT</type><content>challengetoken2</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144341</id><name>_acme-challenge.noop</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144323</id><name>_acme-challenge.test</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records></data></response></ns1:Get_DNS_Zone_Container></SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+        '
+    headers:
+      CF-RAY:
+      - a329cea249b90aca-PRG
+      Cache-Control:
+      - max-age=0
+      Connection:
+      - keep-alive
+      Content-Type:
+      - text/xml; charset=utf-8
+      Date:
+      - Sat, 29 Aug 2026 07:22:53 GMT
+      Expires:
+      - Sat, 29 Aug 2026 07:22:53 GMT
+      Server:
+      - cloudflare
+      Vary:
+      - Accept-Encoding
+      X-Powered-By:
+      - PHP/7.4.33
+      cf-cache-status:
+      - DYNAMIC
+      content-length:
+      - '3244'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '<?xml version=''1.0'' encoding=''utf-8''?>
+
+      <soap-env:Envelope xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/"><soap-env:Body><ns0:Delete_DNS_Record
+      xmlns:ns0="http://subreg.cz/types"><ssid>placeholder_ssid</ssid><domain>oldium.xyz</domain><record><id>7144346</id></record></ns0:Delete_DNS_Record></soap-env:Body></soap-env:Envelope>'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '355'
+      Content-Type:
+      - text/xml; charset=utf-8
+      SOAPAction:
+      - '"http://subreg.cz/wsdl#Delete_DNS_Record"'
+      User-Agent:
+      - Zeep/4.3.2 (www.python-zeep.org)
+    method: POST
+    uri: https://subreg.cz/soap/cmd.php?soap_format=1
+  response:
+    body:
+      string: '<?xml version="1.0" encoding="UTF-8"?>
+
+        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:ns1="http://subreg.cz/types"><SOAP-ENV:Body><ns1:Delete_DNS_Record_Container><response><status>ok</status></response></ns1:Delete_DNS_Record_Container></SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+        '
+    headers:
+      CF-RAY:
+      - a329cea7bd6cf3a2-PRG
+      Cache-Control:
+      - max-age=0
+      Connection:
+      - keep-alive
+      Content-Type:
+      - text/xml; charset=utf-8
+      Date:
+      - Sat, 29 Aug 2026 07:22:54 GMT
+      Expires:
+      - Sat, 29 Aug 2026 07:22:54 GMT
+      Server:
+      - cloudflare
+      Vary:
+      - Accept-Encoding
+      X-Powered-By:
+      - PHP/7.4.33
+      cf-cache-status:
+      - DYNAMIC
+      content-length:
+      - '311'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '<?xml version=''1.0'' encoding=''utf-8''?>
+
+      <soap-env:Envelope xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/"><soap-env:Body><ns0:Delete_DNS_Record
+      xmlns:ns0="http://subreg.cz/types"><ssid>placeholder_ssid</ssid><domain>oldium.xyz</domain><record><id>7144347</id></record></ns0:Delete_DNS_Record></soap-env:Body></soap-env:Envelope>'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '355'
+      Content-Type:
+      - text/xml; charset=utf-8
+      SOAPAction:
+      - '"http://subreg.cz/wsdl#Delete_DNS_Record"'
+      User-Agent:
+      - Zeep/4.3.2 (www.python-zeep.org)
+    method: POST
+    uri: https://subreg.cz/soap/cmd.php?soap_format=1
+  response:
+    body:
+      string: '<?xml version="1.0" encoding="UTF-8"?>
+
+        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:ns1="http://subreg.cz/types"><SOAP-ENV:Body><ns1:Delete_DNS_Record_Container><response><status>ok</status></response></ns1:Delete_DNS_Record_Container></SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+        '
+    headers:
+      CF-RAY:
+      - a329ceacd801b38f-PRG
+      Cache-Control:
+      - max-age=0
+      Connection:
+      - keep-alive
+      Content-Type:
+      - text/xml; charset=utf-8
+      Date:
+      - Sat, 29 Aug 2026 07:22:54 GMT
+      Expires:
+      - Sat, 29 Aug 2026 07:22:54 GMT
+      Server:
+      - cloudflare
+      Vary:
+      - Accept-Encoding
+      X-Powered-By:
+      - PHP/7.4.33
+      cf-cache-status:
+      - DYNAMIC
+      content-length:
+      - '311'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '<?xml version=''1.0'' encoding=''utf-8''?>
+
+      <soap-env:Envelope xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/"><soap-env:Body><ns0:Get_DNS_Zone
+      xmlns:ns0="http://subreg.cz/types"><ssid>placeholder_ssid</ssid><domain>oldium.xyz</domain></ns0:Get_DNS_Zone></soap-env:Body></soap-env:Envelope>'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '312'
+      Content-Type:
+      - text/xml; charset=utf-8
+      SOAPAction:
+      - '"http://subreg.cz/wsdl#Get_DNS_Zone"'
+      User-Agent:
+      - Zeep/4.3.2 (www.python-zeep.org)
+    method: POST
+    uri: https://subreg.cz/soap/cmd.php?soap_format=1
+  response:
+    body:
+      string: '<?xml version="1.0" encoding="UTF-8"?>
+
+        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:ns1="http://subreg.cz/types"><SOAP-ENV:Body><ns1:Get_DNS_Zone_Container><response><status>ok</status><data><domain>oldium.xyz</domain><records><id>7144322</id><name>docs</name><type>CNAME</type><content>docs.example.com</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144321</id><name>localhost</name><type>A</type><content>127.0.0.1</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144332</id><name>orig.nameonly.test</name><type>TXT</type><content>updated</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144328</id><name>random.fqdntest</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144327</id><name>random.fulltest</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144326</id><name>random.test</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144329</id><name>ttl.fqdn</name><type>TXT</type><content>ttlshouldbe3600</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144331</id><name>updated.test</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144336</id><name>updated.testfqdn</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144334</id><name>updated.testfull</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144342</id><name>_acme-challenge.createrecordset</name><type>TXT</type><content>challengetoken1</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144343</id><name>_acme-challenge.createrecordset</name><type>TXT</type><content>challengetoken2</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144325</id><name>_acme-challenge.fqdn</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144324</id><name>_acme-challenge.full</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144344</id><name>_acme-challenge.listrecordset</name><type>TXT</type><content>challengetoken1</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144345</id><name>_acme-challenge.listrecordset</name><type>TXT</type><content>challengetoken2</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144341</id><name>_acme-challenge.noop</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records><records><id>7144323</id><name>_acme-challenge.test</name><type>TXT</type><content>challengetoken</content><prio>0</prio><ttl>3600</ttl></records></data></response></ns1:Get_DNS_Zone_Container></SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+        '
+    headers:
+      CF-RAY:
+      - a329ceb30d1658b7-PRG
+      Cache-Control:
+      - max-age=0
+      Connection:
+      - keep-alive
+      Content-Type:
+      - text/xml; charset=utf-8
+      Date:
+      - Sat, 29 Aug 2026 07:22:55 GMT
+      Expires:
+      - Sat, 29 Aug 2026 07:22:55 GMT
+      Server:
+      - cloudflare
+      Vary:
+      - Accept-Encoding
+      X-Powered-By:
+      - PHP/7.4.33
+      cf-cache-status:
+      - DYNAMIC
+      content-length:
+      - '2928'
+    status:
+      code: 200
+      message: OK
+version: 1
