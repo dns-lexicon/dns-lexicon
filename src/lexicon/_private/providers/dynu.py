@@ -188,7 +188,7 @@ class Provider(BaseProvider):
     # Fetch the root domain name
     def _get_root_domain_name(self):
         payload = self._get(f"/dns/getroot/{self.domain}")
-        return payload["domainName"]
+        return payload["domainName"].lower()
 
     # Fetch a record by its ID
     def _fetch_record(self, identifier):
@@ -291,7 +291,7 @@ class Provider(BaseProvider):
 
     def _full_name(self, record_name: str) -> str:
         # strip trailing period from fqdn if present
-        record_name = record_name.rstrip(".")
+        record_name = record_name.rstrip(".").lower()
         # check if the record_name is fully specified
         root_domain = self._get_root_domain_name()
         if not record_name.endswith(root_domain):
@@ -300,7 +300,7 @@ class Provider(BaseProvider):
 
     def _relative_name(self, record_name: str) -> str:
         # strip trailing period from fqdn if present
-        record_name = record_name.rstrip(".")
+        record_name = record_name.rstrip(".").lower()
         # check if the record_name is fully specified
         root_domain = self._get_root_domain_name()
         if record_name.endswith(root_domain):

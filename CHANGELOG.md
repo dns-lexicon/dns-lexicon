@@ -3,6 +3,18 @@
 ## master - CURRENT
 ### Added
 * A provider can name the record types that it takes in `VALID_TYPES`, and refuses any other type. `powerdns` takes any type
+* The `ovh` provider accepts the OAuth2 client ID and secret of an OVHcloud service
+  account (`--auth-client-id`, `--auth-client-secret`) instead of the application key,
+  application secret and consumer key; `ovh-us` is now a valid `--auth-entrypoint`
+
+### Modified
+* Fix `powerdns` provider failing to delete or update a record whose content holds a slash, such as a DKIM key, which made an update add a second record
+* A CNAME target with a trailing dot stays absolute in the `powerdns` provider, so it can name a host outside the zone
+* Fix record names for domains registered with uppercase letters in `dynu` provider
+* Fix TXT records not being found or deleted by content for `dnsimple` provider, as the DNSimple API returns TXT content wrapped in quotes
+* Fix `porkbun` provider rejecting MX and SRV records with HTTP 400 Bad Request, by splitting the inline priority out of the record content into Porkbun's dedicated `prio` field
+* The `ovh` provider now only requires a token scoped to the managed zone (`/domain/zone/example.com/*`) instead of the whole `/domain/zone/*` scope
+* The `ovh` provider now strips the surrounding double quotes the OVH API adds around TXT record targets. This fixes duplicate detection on `create_record` and makes the `content` returned by `list_records` consistent with the other providers (behavior change: TXT content is no longer quoted)
 
 ## 3.25.2 - 10/05/2026
 ### Added
