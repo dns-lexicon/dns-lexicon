@@ -4,7 +4,6 @@ import base64
 import datetime
 import hmac
 import logging
-import sys
 import uuid
 from argparse import ArgumentParser
 from hashlib import sha1
@@ -212,14 +211,10 @@ class Provider(BaseProvider):
             ]
         )
 
-        if sys.version_info.major > 2:
-            sign_secret_bytes = bytes(sign_secret, "utf-8")
-            string_to_sign_bytes = bytes(string_to_sign, "utf-8")
-            sign = hmac.new(sign_secret_bytes, string_to_sign_bytes, sha1)
-            signature = base64.b64encode(sign.digest()).decode()
-        else:
-            sign = hmac.new(sign_secret, string_to_sign, sha1)
-            signature = sign.digest().encode("base64").rstrip("\n")
+        sign_secret_bytes = bytes(sign_secret, "utf-8")
+        string_to_sign_bytes = bytes(string_to_sign, "utf-8")
+        sign = hmac.new(sign_secret_bytes, string_to_sign_bytes, sha1)
+        signature = base64.b64encode(sign.digest()).decode()
 
         return signature
 

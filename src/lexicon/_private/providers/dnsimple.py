@@ -2,16 +2,11 @@
 
 import json
 import logging
-import sys
 from argparse import ArgumentParser
+from importlib.metadata import Distribution, PackageNotFoundError
 from typing import List
 
 import requests
-
-if sys.version_info[:2] < (3, 10):
-    from importlib_metadata import Distribution, PackageNotFoundError
-else:
-    from importlib.metadata import Distribution, PackageNotFoundError
 
 from lexicon.exceptions import AuthenticationError
 from lexicon.interfaces import Provider as BaseProvider

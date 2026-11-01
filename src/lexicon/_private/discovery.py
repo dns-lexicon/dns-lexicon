@@ -9,15 +9,10 @@ from __future__ import annotations
 import importlib
 import pkgutil
 import re
-import sys
+from importlib.metadata import Distribution, PackageNotFoundError
 from types import ModuleType
 
 from lexicon._private import providers as _providers
-
-if sys.version_info >= (3, 10):  # pragma: no cover
-    from importlib.metadata import Distribution, PackageNotFoundError
-else:
-    from importlib_metadata import Distribution, PackageNotFoundError
 
 
 def find_providers() -> list[str]:
