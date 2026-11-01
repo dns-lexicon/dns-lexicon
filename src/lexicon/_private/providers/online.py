@@ -84,7 +84,7 @@ class Provider(BaseProvider):
         # then convert records to bind format
         bind_str = ""
         for record in records:
-            bind_str = bind_str + "{} {} IN {} {}{4}\n".format(
+            bind_str = bind_str + "{} {} IN {} {}{}\n".format(
                 record["name"] or "@",
                 record["ttl"],
                 record["type"],
