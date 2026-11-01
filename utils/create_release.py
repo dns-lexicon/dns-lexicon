@@ -33,15 +33,21 @@ def main():
             )
         )
 
+    today = datetime.datetime.today()
+    towncrier_build = "uvx towncrier build --version {0} --date {1}".format(
+        new_version, today.strftime("%d/%m/%Y")
+    )
+
+    print("Changelog preview for version {0}:\n".format(new_version))
+    subprocess.check_call(towncrier_build + " --draft", shell=True, cwd=PROJECT_ROOT)
+
+    print("\nCreate release {0} with this changelog? [y/N]".format(new_version))
+    if str(input()).strip().lower() not in ("y", "yes"):
+        print("Release aborted, nothing was changed.")
+        return
+
     try:
-        today = datetime.datetime.today()
-        subprocess.check_call(
-            "uvx towncrier build --yes --version {0} --date {1}".format(
-                new_version, today.strftime("%d/%m/%Y")
-            ),
-            shell=True,
-            cwd=PROJECT_ROOT,
-        )
+        subprocess.check_call(towncrier_build + " --yes", shell=True, cwd=PROJECT_ROOT)
 
         subprocess.check_call(
             "uvx --from=toml-cli toml set --toml-path=pyproject.toml project.version {0}".format(
