@@ -119,7 +119,8 @@ class IntegrationTestsV1:
             DictConfigSource({"domain": "thisisadomainidonotown.com"}), 0
         )
         provider = self.provider_module.Provider(config)
-        with pytest.raises(Exception):
+        # Providers raise heterogeneous exceptions here, not only LexiconError
+        with pytest.raises(Exception):  # noqa: B017
             provider.authenticate()
 
     ###########################################################################

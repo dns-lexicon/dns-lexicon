@@ -83,9 +83,11 @@ class TestNamecomProvider(IntegrationTestsV2):
     def test_provider_when_calling_create_record_should_fail_on_http_error(self):
         provider = self._construct_authenticated_provider()
         error = HTTPError(response=Mock())
-        with patch.object(provider, "_request", side_effect=error):
-            with pytest.raises(HTTPError):
-                provider.create_record("TXT", "httperror", "HTTPError")
+        with (
+            patch.object(provider, "_request", side_effect=error),
+            pytest.raises(HTTPError),
+        ):
+            provider.create_record("TXT", "httperror", "HTTPError")
 
     ############################
     # Provider.update_record() #

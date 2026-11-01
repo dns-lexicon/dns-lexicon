@@ -33,7 +33,7 @@ class Provider(BaseProvider):
     def authenticate(self):
         try:
             self._get("/getDomainInfo", {"domain": self.domain})
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             raise AuthenticationError(str(e))
         self.domain_id = self.domain
 

@@ -41,7 +41,7 @@ class Provider(BaseProvider):
     def authenticate(self):
         try:
             self._post(f"/dns/{self.domain}/listRRs")
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             raise AuthenticationError(e)
         self.domain_id = self.domain
 

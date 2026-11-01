@@ -3,6 +3,7 @@
 import json
 import logging
 from argparse import ArgumentParser
+from typing import ClassVar
 
 from bs4 import BeautifulSoup, Tag
 from requests import Response, Session
@@ -17,7 +18,7 @@ class Provider(BaseProvider):
     easyname provider
     """
 
-    URLS = {
+    URLS: ClassVar[dict[str, str]] = {
         "login": "https://my.easyname.com/en/login",
         "login_endpoint": "https://my.easyname.com/en/authentication-api/login",
         "domain_list": "https://my.easyname.com/domains/",
@@ -279,7 +280,7 @@ class Provider(BaseProvider):
                         rec["priority"] = int(rec["priority"])
                     if rec["ttl"]:
                         rec["ttl"] = int(rec["ttl"])
-                except Exception as error:
+                except Exception as error:  # noqa: BLE001
                     errmsg = f"Cannot parse DNS entry ({error})."
                     LOGGER.warning(errmsg)
                     raise AssertionError(errmsg)
@@ -450,7 +451,7 @@ class Provider(BaseProvider):
             link = td_anchor.find("a")["href"]
             domain_id = link.rsplit("/", 1)[-1]
             return domain_id
-        except Exception as error:
+        except Exception as error:  # noqa: BLE001
             errmsg = (
                 "Cannot get the domain id even though the domain seems to exist (%s).",
                 error,

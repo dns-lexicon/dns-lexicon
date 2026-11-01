@@ -152,7 +152,7 @@ class Provider(BaseProvider):
             payload = self._generate_payload(rtype, name, content)
             try:
                 response = self.session.post(uri, data=json.dumps(payload))
-            except BaseException:
+            except requests.exceptions.RequestException:
                 LOGGER.error("Connection Error during create")
                 raise LexiconError("Connection Error")
             return response.status_code == 201
@@ -183,7 +183,7 @@ class Provider(BaseProvider):
             uri = f"{self.api_endpoint}{IB_TYPE2CONTENT[rtype.upper()][1]}?name={name}&view={self.view}&_return_fields={IB_TYPE2CONTENT[rtype.upper()][0]}{IB_TYPE2CONTENT[rtype.upper()][2]}"
             try:
                 response = self.session.get(uri)
-            except BaseException:
+            except requests.exceptions.RequestException:
                 raise LexiconError("Connection Error")
 
             results = response.json()
@@ -256,7 +256,7 @@ class Provider(BaseProvider):
         del payload["name"]
         try:
             response = self.session.put(uri, data=json.dumps(payload))
-        except BaseException:
+        except requests.exceptions.RequestException:
             LOGGER.error("Connection Error during create")
             raise LexiconError("Connection Error")
         return response.status_code == 200
@@ -279,7 +279,7 @@ class Provider(BaseProvider):
             uri = f"{self.api_endpoint}{identifier}"
             try:
                 response = self.session.delete(uri)
-            except BaseException:
+            except requests.exceptions.RequestException:
                 LOGGER.error("Connection Error during create")
                 raise LexiconError("Connection Error")
             return response.status_code == 200

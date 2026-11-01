@@ -28,6 +28,7 @@ import logging
 import os
 from argparse import ArgumentParser
 from contextlib import contextmanager
+from typing import ClassVar
 
 import requests
 import requests_unixsocket
@@ -46,7 +47,7 @@ class Provider(BaseProvider):
     """Provider class for PowerDNS"""
 
     # PowerDNS takes any type of record, as RFC 3597 describes.
-    VALID_TYPES: list[str] | None = None
+    VALID_TYPES: ClassVar[list[str] | None] = None
 
     @staticmethod
     def get_nameservers() -> list[str]:

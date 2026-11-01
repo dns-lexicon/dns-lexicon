@@ -21,6 +21,8 @@ from lexicon._private.discovery import load_provider_module as _load_provider_mo
 from lexicon.exceptions import ProviderNotAvailableError
 from lexicon.interfaces import Provider
 
+LOGGER = logging.getLogger(__name__)
+
 
 class _ClientOperations:
     """
@@ -105,13 +107,13 @@ class Client(AbstractContextManager):
 
         # Find the actual zone name for the domain
         if self.config.resolve("lexicon:resolve_zone_name"):
-            logging.debug(
+            LOGGER.debug(
                 "Parameter resolve_zone_name is enabled, use dnspython to resolve the actual zone name"
             )
             zone_name = dns.resolver.zone_for_name(domain)
             runtime_config["domain"] = zone_name.to_text(omit_final_dot=True)
         else:
-            logging.debug(
+            LOGGER.debug(
                 "Parameter resolve_zone_name is not enabled, use tldextract to guess the zone name from known TLDs"
             )
             try:
@@ -126,7 +128,7 @@ class Client(AbstractContextManager):
                 )
             domain_parts = domain_extractor(domain)
             runtime_config["domain"] = f"{domain_parts.domain}.{domain_parts.suffix}"
-        logging.debug(
+        LOGGER.debug(
             f"Actual zone name resolved for domain {domain}: {runtime_config['domain']}"
         )
 
@@ -142,7 +144,7 @@ class Client(AbstractContextManager):
                     delegated = delegated.rstrip(".")
                 # update domain
                 runtime_config["domain"] = f"{delegated}.{initial_domain}"
-            logging.debug(
+            LOGGER.debug(
                 f"Override resolved zone name because --delegated option is set: {runtime_config['domain']}"
             )
 
@@ -175,9 +177,10 @@ class Client(AbstractContextManager):
 
     def __exit__(
         self,
-        __exc_type: type[BaseException] | None,
-        __exc_value: BaseException | None,
-        __traceback: TracebackType | None,
+        exc_type: type[BaseException] | None,
+        exc_value: BaseException | None,
+        traceback: TracebackType | None,
+        /,
     ) -> bool | None:
         provider: Provider | None = self._state.stack.pop(-1)
         if provider:
@@ -258,7 +261,7 @@ with Client(config) as operations:
 
 def _resolve_tldextract_cache_path() -> str:
     if os.environ.get("TLDEXTRACT_CACHE_FILE"):
-        logging.warning(
+        LOGGER.warning(
             "TLD_EXTRACT_CACHE_FILE environment variable is deprecated, please use TLDEXTRACT_CACHE_PATH instead."
         )
         os.environ["TLDEXTRACT_CACHE_PATH"] = os.environ["TLDEXTRACT_CACHE_FILE"]

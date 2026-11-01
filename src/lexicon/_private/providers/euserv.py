@@ -215,7 +215,7 @@ class Provider(BaseProvider):
                 "dns_record_id": record_id,
             }
 
-            response = response = self._get(query_params=query_params)
+            response = self._get(query_params=query_params)
             LOGGER.debug("delete_record: %s", response)
 
         return True

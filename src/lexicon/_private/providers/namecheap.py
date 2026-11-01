@@ -413,12 +413,12 @@ class _Api:
     def domains_dns_add_host(self, domain, host_record):
         host_records_remote = self.domains_dns_get_hosts(domain)
 
-        print("Remote: %i" % len(host_records_remote))
+        print(f"Remote: {len(host_records_remote)}")
 
         host_records_remote.append(host_record)
         host_records_remote = [_elements_names_fix(x) for x in host_records_remote]
 
-        print("To set: %i" % len(host_records_remote))
+        print(f"To set: {len(host_records_remote)}")
 
         extra_payload = _list_of_dictionaries_to_numbered_payload(host_records_remote)
         extracted = tldextract.extract(domain)
@@ -430,7 +430,7 @@ class _Api:
     def domains_dns_del_host(self, domain, host_record) -> None:
         host_records_remote = self.domains_dns_get_hosts(domain)
 
-        print("Remote: %i" % len(host_records_remote))
+        print(f"Remote: {len(host_records_remote)}")
 
         host_records_new = []
         for r in host_records_remote:
@@ -446,13 +446,13 @@ class _Api:
 
         host_records_new = [_elements_names_fix(x) for x in host_records_new]
 
-        print("To set: %i" % len(host_records_new))
+        print(f"To set: {len(host_records_new)}")
 
         # Check that we delete not more than 1 record at a time
         if len(host_records_remote) != len(host_records_new) + 1:
             sys.stderr.write(
-                "Something went wrong while removing host record, delta > 1: %i -> %i, aborting API call.\n"
-                % (len(host_records_remote), len(host_records_new))
+                "Something went wrong while removing host record, delta > 1: "
+                f"{len(host_records_remote)} -> {len(host_records_new)}, aborting API call.\n"
             )
             return
 

@@ -95,10 +95,8 @@ class Provider(BaseProvider):
         if "zone" not in payload:
             # No DNS zone with given ID found
             return True
-        if payload["zone"] != f"{self.domain}.":
-            # Provided DNS zone ID does not match the domain
-            return False
-        return True
+        # Provided DNS zone ID must match the domain
+        return payload["zone"] == f"{self.domain}."
 
     def _get_cloud_id(self) -> str:
         """Gets Cloud ID from Resource Manager API

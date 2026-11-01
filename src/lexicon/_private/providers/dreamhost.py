@@ -208,7 +208,7 @@ class Provider(BaseProvider):
                 dreamhost_record = Provider._record_to_dreamhost_record(each)
                 self._get("dns-remove_record", query_params=dreamhost_record)
 
-            except Exception as exception:
+            except Exception as exception:  # noqa: BLE001
                 err = exception
 
             # Sleeping for a bit to avoid triggering ddos protecting in case of looped requests

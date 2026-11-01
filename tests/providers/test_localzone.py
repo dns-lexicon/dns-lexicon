@@ -31,9 +31,8 @@ mail3         IN  A     192.0.2.5             ; IPv4 address for mail3.example.c
 @pytest.fixture(scope="module", autouse=True)
 def testfile():
     """Create a local zone file for testing."""
-    test_file = open(FILENAME, "w")
-    test_file.write(ZONEFILE)
-    test_file.close()
+    with open(FILENAME, "w") as test_file:
+        test_file.write(ZONEFILE)
     yield
     os.remove(FILENAME)
 

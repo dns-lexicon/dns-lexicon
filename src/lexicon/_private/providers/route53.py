@@ -120,9 +120,10 @@ class Provider(BaseProvider):
 
     def filter_zone(self, data):
         """Check if a zone is private"""
-        if self.private_zone is not None:
-            if data["Config"]["PrivateZone"] != self.str2bool(self.private_zone):
-                return False
+        if self.private_zone is not None and data["Config"][
+            "PrivateZone"
+        ] != self.str2bool(self.private_zone):
+            return False
 
         return data["Name"] == f"{self.domain}."
 
@@ -210,7 +211,7 @@ class Provider(BaseProvider):
             if "Duplicate Resource Record" in error.response["Error"]["Message"]:
                 # Duplicate resource, that have been a noop. This is expected.
                 return True
-            LOGGER.error(str(error), exc_info=True)
+            LOGGER.exception("Route53 request failed")
             return False
 
     def create_record(self, rtype, name, content):

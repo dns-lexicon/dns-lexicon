@@ -216,7 +216,6 @@ class Provider(BaseProvider):
     # The content of TXT entries must be quoted. This static method ensures that.
     @staticmethod
     def _add_quotes(rtype, content):
-        if rtype == "TXT":
-            if not content.startswith('"') and not content.endswith('"'):
-                return f'"{content}"'
+        if rtype == "TXT" and not content.startswith('"') and not content.endswith('"'):
+            return f'"{content}"'
         return content

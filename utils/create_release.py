@@ -32,7 +32,7 @@ def main():
             f"Error new version is below current version: {new_version} < {current_version}"
         )
 
-    today = datetime.datetime.today()
+    today = datetime.datetime.now(tz=datetime.timezone.utc)
     towncrier_build = "uvx towncrier build --version {} --date {}".format(
         new_version, today.strftime("%d/%m/%Y")
     )
@@ -54,9 +54,7 @@ def main():
         )
         subprocess.check_call("uv run ruff format src tests", shell=True)
 
-        subprocess.check_call(
-            f'git commit -a -m "Version {new_version}"', shell=True
-        )
+        subprocess.check_call(f'git commit -a -m "Version {new_version}"', shell=True)
         subprocess.check_call(f"git tag v{new_version}", shell=True)
         subprocess.check_call("git push --tags", shell=True)
         subprocess.check_call("git push", shell=True)

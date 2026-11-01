@@ -31,7 +31,7 @@ class Provider(BaseProvider):
         params = {"domain": self.domain}
         try:
             result = self._api_call("get-domain", params)
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             raise AuthenticationError(str(e))
 
         if result["name"] != self.domain:
@@ -124,7 +124,7 @@ class Provider(BaseProvider):
 
         if "error" in response:
             error = response["error"]
-            raise LexiconError("%d: %s" % (error["code"], error["message"]))
+            raise LexiconError(f"{error['code']}: {error['message']}")
 
         return response["result"]
 

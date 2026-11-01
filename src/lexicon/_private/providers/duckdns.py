@@ -24,6 +24,7 @@ _list_records and _delete_record does not handle this special case.\
 
 import logging
 from argparse import ArgumentParser
+from typing import ClassVar
 
 import requests
 
@@ -43,7 +44,7 @@ class Provider(BaseProvider):
     """Provider class for Duck DNS"""
 
     # See the docstring of the module.
-    VALID_TYPES: list[str] = ["A", "AAAA", "TXT"]
+    VALID_TYPES: ClassVar[list[str]] = ["A", "AAAA", "TXT"]
 
     @staticmethod
     def get_nameservers() -> list[str]:

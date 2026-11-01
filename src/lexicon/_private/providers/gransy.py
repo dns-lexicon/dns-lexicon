@@ -13,7 +13,7 @@ import requests
 
 try:
     import zeep
-except BaseException:
+except ImportError:
     pass
 
 from lexicon.config import ConfigResolver

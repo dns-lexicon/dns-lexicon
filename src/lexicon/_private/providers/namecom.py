@@ -164,7 +164,7 @@ class NamecomProvider(BaseProvider):
 
         url = f"/domains/{self.domain}/records/{record_id}"
         record_id = self._put(url, data)["id"]
-        logging.debug("update_record: record %s has been updated", record_id)
+        LOGGER.debug("update_record: record %s has been updated", record_id)
 
         return record_id
 

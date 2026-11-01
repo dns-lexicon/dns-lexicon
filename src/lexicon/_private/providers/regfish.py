@@ -50,21 +50,21 @@ class Provider(BaseProvider):
         }
         if self._get_lexicon_option("ttl"):
             data["ttl"] = self._get_lexicon_option("ttl")
-        if self._get_lexicon_option("priority"):
-            if self._get_lexicon_option("priority").isnumeric():
-                data["priority"] = int(self._get_lexicon_option("priority"))
+        if (
+            self._get_lexicon_option("priority")
+            and self._get_lexicon_option("priority").isnumeric()
+        ):
+            data["priority"] = int(self._get_lexicon_option("priority"))
 
         payload = {"success": True}
         try:
             payload = self._post("/dns/rr", data)
         except requests.exceptions.HTTPError as err:
             json_res = err.response.json()
-            if (
-                not json_res["code"] if "code" in json_res else 0 != 15003
-            ):  # ResourceRecordAlreadyExists
+            if json_res.get("code", 0) != 15003:  # ResourceRecordAlreadyExists
                 raise
 
-        if payload.get("code", 0 != 0):
+        if payload.get("code", 0) != 0:
             return False
 
         LOGGER.debug("create_record: %s", payload["success"])

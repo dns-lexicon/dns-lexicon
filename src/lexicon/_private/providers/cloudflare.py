@@ -3,6 +3,7 @@
 import json
 import logging
 from argparse import ArgumentParser
+from typing import ClassVar
 
 import requests
 
@@ -15,7 +16,7 @@ LOGGER = logging.getLogger(__name__)
 class Provider(BaseProvider):
     """Provider class for Cloudflare"""
 
-    SPECIAL_TYPES = {
+    SPECIAL_TYPES: ClassVar[set[str]] = {
         "SSHFP",
         "CAA",
         "CERT",
@@ -114,9 +115,11 @@ class Provider(BaseProvider):
         }
         if self._get_lexicon_option("ttl"):
             data["ttl"] = self._get_lexicon_option("ttl")
-        if self._get_lexicon_option("priority"):
-            if self._get_lexicon_option("priority").isnumeric():
-                data["priority"] = int(self._get_lexicon_option("priority"))
+        if (
+            self._get_lexicon_option("priority")
+            and self._get_lexicon_option("priority").isnumeric()
+        ):
+            data["priority"] = int(self._get_lexicon_option("priority"))
 
         payload = {"success": True}
         try:

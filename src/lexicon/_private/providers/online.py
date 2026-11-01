@@ -121,7 +121,7 @@ class Provider(BaseProvider):
             self._post(
                 f"/domain/{self.domain_id}/version/{self.passive_zone}/zone", record
             )
-        except BaseException as error:
+        except requests.exceptions.RequestException as error:
             LOGGER.debug(error)
             return False
 
@@ -196,7 +196,7 @@ class Provider(BaseProvider):
                 record,
             )
 
-        except BaseException as error:
+        except requests.exceptions.RequestException as error:
             LOGGER.debug(error)
             return False
 
@@ -218,7 +218,7 @@ class Provider(BaseProvider):
                 self._delete(
                     f"/domain/{self.domain_id}/version/{self.passive_zone}/zone/{record['id']}"
                 )
-        except BaseException as error:
+        except requests.exceptions.RequestException as error:
             LOGGER.debug(error)
             return False
 

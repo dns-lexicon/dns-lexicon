@@ -75,8 +75,8 @@ class Provider(BaseProvider):
             identifiers = [identifier]
         else:
             identifiers = [r["id"] for r in self.list_records(rtype, name, content)]
-        for identifier in identifiers:
-            self._delete(_ZONES_API + "/" + self.domain_id + "/records/" + identifier)
+        for record_id in identifiers:
+            self._delete(_ZONES_API + "/" + self.domain_id + "/records/" + record_id)
         return True
 
     def _request(self, action="GET", url="/", data=None, query_params=None):

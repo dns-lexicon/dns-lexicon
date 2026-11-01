@@ -95,7 +95,7 @@ class Provider(BaseProvider):
         response = self._api.nameserver.info(opts)
         try:
             self._validate_response(response=response, message="Failed to authenticate")
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             raise AuthenticationError(str(e))
 
         # set to fake id to pass tests, inwx doesn't work on domain id but
