@@ -14,5 +14,5 @@ Base provider interface is migrated to lexicon.interfaces.provider. Please use i
     stacklevel=2,
 )
 
-for module_name, available in find_providers().items():
+for module_name in find_providers():
     sys.modules[f"lexicon.providers.{module_name}"] = load_provider_module(module_name)
