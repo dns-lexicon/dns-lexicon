@@ -1,6 +1,9 @@
 # Changelog
 
 ## master - CURRENT
+### Modified
+* The `ovh` provider now only requires a token scoped to the managed zone (`/domain/zone/example.com/*`) instead of the whole `/domain/zone/*` scope
+* The `ovh` provider now strips the surrounding double quotes the OVH API adds around TXT record targets. This fixes duplicate detection on `create_record` and makes the `content` returned by `list_records` consistent with the other providers (behavior change: TXT content is no longer quoted)
 
 ## 3.25.2 - 10/05/2026
 ### Added
