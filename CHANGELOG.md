@@ -1,6 +1,11 @@
 # Changelog
 
 ## master - CURRENT
+### Added
+* The `ovh` provider accepts the OAuth2 client ID and secret of an OVHcloud service
+  account (`--auth-client-id`, `--auth-client-secret`) instead of the application key,
+  application secret and consumer key; `ovh-us` is now a valid `--auth-entrypoint`
+
 ### Modified
 * A CNAME target with a trailing dot stays absolute in the `powerdns` provider, so it can name a host outside the zone
 * Fix record names for domains registered with uppercase letters in `dynu` provider
