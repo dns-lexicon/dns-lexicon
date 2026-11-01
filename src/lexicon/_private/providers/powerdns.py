@@ -170,7 +170,8 @@ class Provider(BaseProvider):
                 content = '"' + content
             if content[-1] != '"':
                 content += '"'
-        elif rtype == "CNAME":
+        elif rtype == "CNAME" and not content.endswith("."):
+            # A target with its trailing dot is absolute, and can be outside the zone.
             content = self._fqdn_name(content)
         return content
 
@@ -178,7 +179,8 @@ class Provider(BaseProvider):
         if rtype in ("TXT", "LOC"):
             content = content.strip('"')
         elif rtype == "CNAME":
-            content = self._full_name(content)
+            # PowerDNS answers with the absolute name, which can be outside the zone.
+            content = content.rstrip(".")
         return content
 
     def create_record(self, rtype, name, content):
