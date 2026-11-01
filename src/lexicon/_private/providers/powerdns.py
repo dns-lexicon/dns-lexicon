@@ -45,6 +45,9 @@ class PowerDNSProviderError(Exception):
 class Provider(BaseProvider):
     """Provider class for PowerDNS"""
 
+    # PowerDNS takes any type of record, as RFC 3597 describes.
+    VALID_TYPES: list[str] = []
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return []

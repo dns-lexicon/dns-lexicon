@@ -2,6 +2,7 @@
 
 ## master - CURRENT
 ### Added
+* A provider can name the record types that it takes in `VALID_TYPES`, and refuses any other type. `powerdns` takes any type
 * The `ovh` provider accepts the OAuth2 client ID and secret of an OVHcloud service
   account (`--auth-client-id`, `--auth-client-secret`) instead of the application key,
   application secret and consumer key; `ovh-us` is now a valid `--auth-entrypoint`
