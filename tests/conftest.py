@@ -23,7 +23,9 @@ def pytest_addoption(parser):
 def pytest_runtest_setup(item):
     """Standard pytest hook invoked before each test execution"""
     try:
-        skip_providers_with_optdeps = item.config.option.xfail_providers_with_missing_deps
+        skip_providers_with_optdeps = (
+            item.config.option.xfail_providers_with_missing_deps
+        )
     except AttributeError:
         pass
     else:
