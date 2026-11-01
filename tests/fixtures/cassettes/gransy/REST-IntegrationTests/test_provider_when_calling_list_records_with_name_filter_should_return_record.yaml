@@ -1,0 +1,157 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.34.2
+    method: GET
+    uri: https://api.subreg.cz/domains
+  response:
+    body:
+      string: '{"domains":[{"name":"oldium.top","expire":"2199-12-31","autorenew":"0"}],"count":1}'
+    headers:
+      CF-RAY:
+      - a3263b25ee26731b-PRG
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 28 Aug 2026 20:57:54 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - PHP/7.4.33
+      cf-cache-status:
+      - DYNAMIC
+      content-length:
+      - '270'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.34.2
+    method: GET
+    uri: https://api.subreg.cz/dns/oldium.top
+  response:
+    body:
+      string: '{"domain":"oldium.top","records":[{"id":"7143878","name":"docs","type":"CNAME","content":"docs.example.com","prio":0,"ttl":3600},{"id":"7143877","name":"localhost","type":"A","content":"127.0.0.1","prio":0,"ttl":3600},{"id":"7143881","name":"_acme-challenge.fqdn","type":"TXT","content":"challengetoken","prio":0,"ttl":3600},{"id":"7143880","name":"_acme-challenge.full","type":"TXT","content":"challengetoken","prio":0,"ttl":3600},{"id":"7143879","name":"_acme-challenge.test","type":"TXT","content":"challengetoken","prio":0,"ttl":3600}]}'
+    headers:
+      CF-RAY:
+      - a3263b2979698b99-PRG
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 28 Aug 2026 20:57:55 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - PHP/7.4.33
+      cf-cache-status:
+      - DYNAMIC
+      content-length:
+      - '540'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"type": "TXT", "name": "random.test", "content": "challengetoken", "ttl":
+      3600}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '80'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: https://api.subreg.cz/dns/oldium.top/record
+  response:
+    body:
+      string: '{"domain":"oldium.top","record_id":7143882}'
+    headers:
+      CF-RAY:
+      - a3263b2d1f5bf990-PRG
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '43'
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 28 Aug 2026 20:57:56 GMT
+      Server:
+      - cloudflare
+      X-Powered-By:
+      - PHP/7.4.33
+      cf-cache-status:
+      - DYNAMIC
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.34.2
+    method: GET
+    uri: https://api.subreg.cz/dns/oldium.top
+  response:
+    body:
+      string: '{"domain":"oldium.top","records":[{"id":"7143878","name":"docs","type":"CNAME","content":"docs.example.com","prio":0,"ttl":3600},{"id":"7143877","name":"localhost","type":"A","content":"127.0.0.1","prio":0,"ttl":3600},{"id":"7143882","name":"random.test","type":"TXT","content":"challengetoken","prio":0,"ttl":3600},{"id":"7143881","name":"_acme-challenge.fqdn","type":"TXT","content":"challengetoken","prio":0,"ttl":3600},{"id":"7143880","name":"_acme-challenge.full","type":"TXT","content":"challengetoken","prio":0,"ttl":3600},{"id":"7143879","name":"_acme-challenge.test","type":"TXT","content":"challengetoken","prio":0,"ttl":3600}]}'
+    headers:
+      CF-RAY:
+      - a3263b30fe0bf3a2-PRG
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 28 Aug 2026 20:57:56 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - PHP/7.4.33
+      cf-cache-status:
+      - DYNAMIC
+      content-length:
+      - '638'
+    status:
+      code: 200
+      message: OK
+version: 1
