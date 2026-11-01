@@ -12,7 +12,7 @@ from urllib3.util.retry import Retry
 
 from lexicon._private.discovery import lexicon_version
 from lexicon.config import ConfigResolver
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -398,7 +398,7 @@ class Provider(BaseProvider):
             case "MX" | "SRV":
                 parsed = self._parse_priority_record(content, rtype)
                 if not (priority := parsed.get("priority")) or not priority.isnumeric():
-                    raise Exception("Priority value is not present in content.")
+                    raise LexiconError("Priority value is not present in content.")
                 # Convert numeric options to int, see `technical_workbook.rst`
                 options: dict = {
                     k: (int(v) if v.isnumeric() else v) for k, v in parsed.items()
@@ -409,7 +409,7 @@ class Provider(BaseProvider):
 
     def _parse_priority_record(self, content: str, rtype: str) -> StrDict:
         if not (match := self._re[rtype].match(content)):
-            raise Exception(f"Content '{content}' is not valid for type '{rtype}'.")
+            raise LexiconError(f"Content '{content}' is not valid for type '{rtype}'.")
 
         groups = match.groupdict()
         groups["target"] = self._fqdn_name(groups["target"])

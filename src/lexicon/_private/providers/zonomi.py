@@ -24,7 +24,7 @@ from xml.etree import ElementTree
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -55,7 +55,7 @@ class Provider(BaseProvider):
         super().__init__(config)
         self.domain_id = None
         if not self._get_provider_option("auth_token"):
-            raise Exception("Error, application key is not defined")
+            raise LexiconError("Error, application key is not defined")
 
         self.api_endpoint = APIENTRYPOINT.get("zonomi")
 
@@ -109,7 +109,7 @@ class Provider(BaseProvider):
         payload = self._get("/dns/dyndns.jsp", request)
 
         if payload.find("is_ok").text != "OK:":
-            raise Exception(f"An error occurred: {payload.find('is_ok').text}")
+            raise LexiconError(f"An error occurred: {payload.find('is_ok').text}")
 
         LOGGER.debug("create_record: %s", True)
         return True
@@ -157,7 +157,7 @@ class Provider(BaseProvider):
         payload = self._get("/dns/dyndns.jsp", request)
 
         if payload.find("is_ok").text != "OK:":
-            raise Exception(f"An error occurred: {payload.find('is_ok').text}")
+            raise LexiconError(f"An error occurred: {payload.find('is_ok').text}")
 
         LOGGER.debug("delete_record: %s", True)
         return True
@@ -186,7 +186,7 @@ class Provider(BaseProvider):
         payload = self._get("/dns/dyndns.jsp", request)
 
         if payload.find("is_ok").text != "OK:":
-            raise Exception(f"An error occurred: {payload.find('is_ok').text}")
+            raise LexiconError(f"An error occurred: {payload.find('is_ok').text}")
 
         LOGGER.debug("update_record: %s", True)
         return True
@@ -205,6 +205,6 @@ class Provider(BaseProvider):
         tree = ElementTree.ElementTree(ElementTree.fromstring(response.content))
         root = tree.getroot()
         if root.tag == "error":
-            raise Exception(f"An error occurred: {root.text}")
+            raise LexiconError(f"An error occurred: {root.text}")
         response.raise_for_status()
         return root

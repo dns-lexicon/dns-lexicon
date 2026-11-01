@@ -6,6 +6,7 @@ import pytest
 from integration_tests import IntegrationTestsV2
 
 from lexicon._private.providers.duckdns import Provider
+from lexicon.exceptions import LexiconError
 
 try:
     import dns.resolver
@@ -258,5 +259,5 @@ class TestDuckdnsProvider(IntegrationTestsV2):
             Provider._get_duckdns_domain("test.testlexicon.duckdns.org")
             == "testlexicon"
         )
-        with pytest.raises(Exception):
+        with pytest.raises(LexiconError):
             Provider._get_duckdns_domain("test.testlexicon")

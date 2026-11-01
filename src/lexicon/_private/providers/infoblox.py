@@ -21,7 +21,7 @@ from argparse import ArgumentParser
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -113,7 +113,7 @@ class Provider(BaseProvider):
         if name:
             name = self._fqdn_name(name)
         else:
-            raise Exception("Name not specified, no FQDN could be build")
+            raise LexiconError("Name not specified, no FQDN could be build")
         # Find existing records for all types
         existing = []
         for rrtype in IB_TYPE2CONTENT:
@@ -139,14 +139,14 @@ class Provider(BaseProvider):
             return False
         if any(d["type"] != "CNAME" and rtype == "CNAME" for d in existing):
             LOGGER.error("CNAME requested, but other records already exists")
-            raise Exception("CNAME requested, but other records already exists")
+            raise LexiconError("CNAME requested, but other records already exists")
         return self._create_record_internal(rtype, name, content)
 
     def _create_record_internal(self, rtype, name, content):
         if name:
             name = self._fqdn_name(name)
         else:
-            raise Exception("Name not specified, no FQDN could be build")
+            raise LexiconError("Name not specified, no FQDN could be build")
         if rtype.upper() in IB_TYPE2CONTENT:
             uri = self.api_endpoint + IB_TYPE2CONTENT[rtype.upper()][1]
             payload = self._generate_payload(rtype, name, content)
@@ -154,9 +154,9 @@ class Provider(BaseProvider):
                 response = self.session.post(uri, data=json.dumps(payload))
             except BaseException:
                 LOGGER.error("Connection Error during create")
-                raise Exception("Connection Error")
+                raise LexiconError("Connection Error")
             return response.status_code == 201
-        raise Exception("RR Type not supported by Infoblox")
+        raise LexiconError("RR Type not supported by Infoblox")
 
     # List all records. Return an empty list if no records found
     # type, name and content are used to filter records.
@@ -184,7 +184,7 @@ class Provider(BaseProvider):
             try:
                 response = self.session.get(uri)
             except BaseException:
-                raise Exception("Connection Error")
+                raise LexiconError("Connection Error")
 
             results = response.json()
             for result in results:
@@ -258,7 +258,7 @@ class Provider(BaseProvider):
             response = self.session.put(uri, data=json.dumps(payload))
         except BaseException:
             LOGGER.error("Connection Error during create")
-            raise Exception("Connection Error")
+            raise LexiconError("Connection Error")
         return response.status_code == 200
 
     # Delete an existing record.
@@ -281,7 +281,7 @@ class Provider(BaseProvider):
                 response = self.session.delete(uri)
             except BaseException:
                 LOGGER.error("Connection Error during create")
-                raise Exception("Connection Error")
+                raise LexiconError("Connection Error")
             return response.status_code == 200
         return False
 

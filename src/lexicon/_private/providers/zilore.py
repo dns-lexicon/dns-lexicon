@@ -5,7 +5,7 @@ from argparse import ArgumentParser
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -87,7 +87,7 @@ class Provider(BaseProvider):
 
     def create_record(self, rtype, name, content):
         if not rtype or not name or not content:
-            raise Exception(
+            raise LexiconError(
                 "Error, rtype, name and content are mandatory to create a record."
             )
 
@@ -114,7 +114,9 @@ class Provider(BaseProvider):
 
     def update_record(self, identifier, rtype=None, name=None, content=None):
         if not identifier and (not rtype and not name):
-            raise Exception("Error, identifier or rtype+name parameters are required.")
+            raise LexiconError(
+                "Error, identifier or rtype+name parameters are required."
+            )
 
         if identifier:
             records = self.list_records()
@@ -125,7 +127,7 @@ class Provider(BaseProvider):
             records_to_update = self.list_records(rtype=rtype, name=name)
 
         if not records_to_update:
-            raise Exception("Error, could not find a record matching the request.")
+            raise LexiconError("Error, could not find a record matching the request.")
 
         if len(records_to_update) > 1:
             LOGGER.warning(
@@ -168,7 +170,7 @@ class Provider(BaseProvider):
             )
 
         if not records_to_delete:
-            raise Exception("Error, could not find a record matching the request.")
+            raise LexiconError("Error, could not find a record matching the request.")
 
         for record in records_to_delete:
             self._delete(

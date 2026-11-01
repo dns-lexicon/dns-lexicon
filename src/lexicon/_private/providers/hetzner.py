@@ -162,11 +162,11 @@ class HetznerDns(BaseProvider):
             if len(records) == 1:
                 update_identifier = records[0]["id"]
             elif len(records) < 1:
-                raise Exception(
+                raise LexiconError(
                     "No records found matching type, name and content - won't update"
                 )
             else:
-                raise Exception(
+                raise LexiconError(
                     "Multiple records found matching type, name and content - won't update"
                 )
         self._put(f"/records/{update_identifier}", data)
@@ -334,9 +334,9 @@ class HetznerCloud(BaseProvider):
 
         records = self.list_records(rtype, name)
         if len(records) < 1:
-            raise Exception("No records found matching type and name - won't update")
+            raise LexiconError("No records found matching type and name - won't update")
         elif len(records) > 1:
-            raise Exception(
+            raise LexiconError(
                 "Multiple records found matching type and name - won't update"
             )
 

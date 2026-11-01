@@ -32,7 +32,7 @@ from argparse import ArgumentParser
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 try:
@@ -116,17 +116,13 @@ class Provider(BaseProvider):
             if current_values:
                 record = {"rrset_values": current_values + [content]}
                 if self._get_lexicon_option("ttl"):
-                    record["rrset_ttl"] = (
-                        max(self._get_lexicon_option("ttl"), 300)
-                    )
+                    record["rrset_ttl"] = max(self._get_lexicon_option("ttl"), 300)
                 self._put(url, record)
             else:
                 record = {"rrset_values": [content]}
                 # add the ttl, if this is a new record
                 if self._get_lexicon_option("ttl"):
-                    record["rrset_ttl"] = (
-                        max(self._get_lexicon_option("ttl"), 300)
-                    )
+                    record["rrset_ttl"] = max(self._get_lexicon_option("ttl"), 300)
                 self._post(url, record)
         LOGGER.debug("create_record: %s", True)
         return True
@@ -252,7 +248,7 @@ class Provider(BaseProvider):
                     remove_count += 1
 
             if remove_count == 0:
-                raise Exception("Record identifier could not be found.")
+                raise LexiconError("Record identifier could not be found.")
         else:
             self._delete(f"/domains/{self.domain_id}/records/{identifier}")
 
@@ -400,9 +396,9 @@ class GandiRPCSubProvider:
             if len(records) == 1:
                 identifier = records[0]["id"]
             elif len(records) > 1:
-                raise Exception("Several record identifiers match the request")
+                raise LexiconError("Several record identifiers match the request")
             else:
-                raise Exception("Record identifier could not be found")
+                raise LexiconError("Record identifier could not be found")
 
         identifier = str(identifier)
         version = None

@@ -2,7 +2,7 @@ import json
 import logging
 from argparse import ArgumentParser
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 # tencentcloud-sdk-python is an optional dependency of lexicon; do not throw an ImportError if
@@ -36,10 +36,10 @@ class Provider(BaseProvider):
         secret_id = self._get_provider_option("secret_id")
         secret_key = self._get_provider_option("secret_key")
         if not secret_id:
-            raise Exception("Error, application secret_id is not defined")
+            raise LexiconError("Error, application secret_id is not defined")
 
         if not secret_key:
-            raise Exception("Error, application secret_key is not defined")
+            raise LexiconError("Error, application secret_key is not defined")
 
         self.cred = credential.Credential(secret_id, secret_key)
         self.client = dnspod_client.DnspodClient(self.cred, "")

@@ -5,6 +5,7 @@ from argparse import ArgumentParser
 
 import requests
 
+from lexicon.exceptions import LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -179,6 +180,6 @@ class Provider(BaseProvider):
         # if the request fails for any reason, throw an error.
         response.raise_for_status()
         if response.text and response.json() is None:
-            raise Exception("No data returned")
+            raise LexiconError("No data returned")
 
         return response.json() if response.text else None

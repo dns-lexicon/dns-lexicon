@@ -6,7 +6,7 @@ from argparse import ArgumentParser
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -106,7 +106,7 @@ class Provider(BaseProvider):
         result = self._post(f"/v2/domains/{self.domain}/records", data)
 
         if not result["uid"]:
-            raise Exception("Error occured when inserting the new record.")
+            raise LexiconError("Error occured when inserting the new record.")
 
         LOGGER.debug("create_record: %s", result["uid"])
 
@@ -125,7 +125,7 @@ class Provider(BaseProvider):
             records = self.list_records(rtype, name)
 
         if not records:
-            raise Exception(f"No record found for identifer: {identifier}")
+            raise LexiconError(f"No record found for identifer: {identifier}")
 
         if len(records) > 1:
             LOGGER.warning(

@@ -10,6 +10,7 @@ from argparse import ArgumentParser
 
 import requests
 
+from lexicon.exceptions import LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 
@@ -140,9 +141,9 @@ class Provider(BaseProvider):
         if not identifier:
             records = self.list_records(None, name)
             if not records:
-                raise Exception(f"Record {name} not found with type {rtype}")
+                raise LexiconError(f"Record {name} not found with type {rtype}")
             if len(records) > 1:
-                raise Exception(f"More than one {rtype} record found for {name}")
+                raise LexiconError(f"More than one {rtype} record found for {name}")
             identifier = records[0]["id"]
         patch = {
             "changes": [

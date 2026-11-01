@@ -6,7 +6,7 @@ from xml.etree import ElementTree
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -154,7 +154,7 @@ class Provider(BaseProvider):
                 )
             )
         if root.find("reply").find("code").text != "300":
-            raise Exception(
+            raise LexiconError(
                 "An error occurred: {}, {}".format(
                     root.find("reply").find("detail").text,
                     root.find("reply").find("code").text,

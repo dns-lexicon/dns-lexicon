@@ -26,7 +26,7 @@ from argparse import ArgumentParser
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -161,7 +161,7 @@ class Provider(BaseProvider):
             identifier = record[0]["id"]
 
         if not identifier:
-            raise Exception("No identifier provided")
+            raise LexiconError("No identifier provided")
 
         data = {
             "id": identifier,
@@ -223,7 +223,7 @@ class Provider(BaseProvider):
         # improvement
 
         if rtype == "SOA":
-            raise Exception(
+            raise LexiconError(
                 f"{rtype} record type is not supported in the Constellix Provider"
             )
 

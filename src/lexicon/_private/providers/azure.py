@@ -16,7 +16,7 @@ from argparse import ArgumentParser
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -112,7 +112,7 @@ class Provider(BaseProvider):
 
     def _create_record_internal(self, rtype, name, content):
         if not rtype or not name or not content:
-            raise Exception(
+            raise LexiconError(
                 "Error, rtype, name and content are mandatory to create a record."
             )
 
@@ -149,7 +149,9 @@ class Provider(BaseProvider):
 
     def update_record(self, identifier, rtype=None, name=None, content=None):
         if not identifier and (not rtype or not name):
-            raise Exception("Error, identifier or rtype+name parameters are required.")
+            raise LexiconError(
+                "Error, identifier or rtype+name parameters are required."
+            )
 
         if identifier:
             records = self.list_records()
@@ -160,7 +162,7 @@ class Provider(BaseProvider):
             records_to_update = self.list_records(rtype=rtype, name=name)
 
         if not records_to_update:
-            raise Exception(
+            raise LexiconError(
                 f"Error, could not find a record for given identifier: {identifier}"
             )
 
@@ -402,7 +404,7 @@ def _get_values_from_recordset(rtype, record):
     if values is not None:
         return values
 
-    raise Exception(f"Error, `{rtype}` entries are not supported by this provider.")
+    raise LexiconError(f"Error, `{rtype}` entries are not supported by this provider.")
 
 
 def _build_recordset_from_values(rtype, values):
@@ -427,7 +429,7 @@ def _build_recordset_from_values(rtype, values):
     if recordset:
         return recordset
 
-    raise Exception(f"Error, `{rtype}` entries are not supported by this provider.")
+    raise LexiconError(f"Error, `{rtype}` entries are not supported by this provider.")
 
 
 def _identifier(record):

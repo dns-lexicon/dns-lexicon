@@ -6,7 +6,7 @@ import pytest
 
 from lexicon._private.providers import ovh
 from lexicon.config import ConfigResolver
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 
 
 def _config(**options):
@@ -82,7 +82,9 @@ def test_oauth2_uses_bearer_token_and_no_signature():
         "scope": "all",
     }
     api_calls = [c for c in session.calls if c[0] != "POST"]
-    assert api_calls[0][1] == "https://eu.api.ovh.com/1.0/domain/zone/example.com/status"
+    assert (
+        api_calls[0][1] == "https://eu.api.ovh.com/1.0/domain/zone/example.com/status"
+    )
     for _, _, headers in api_calls:
         assert headers["Authorization"] == "Bearer token1"
         assert "X-Ovh-Signature" not in headers
@@ -113,7 +115,7 @@ def test_oauth2_bad_credentials():
 
 
 def test_oauth2_not_available_for_kimsufi():
-    with pytest.raises(Exception, match="not available for kimsufi-eu"):
+    with pytest.raises(LexiconError, match="not available for kimsufi-eu"):
         ovh.Provider(
             _config(
                 auth_entrypoint="kimsufi-eu",
@@ -124,12 +126,12 @@ def test_oauth2_not_available_for_kimsufi():
 
 
 def test_oauth2_requires_both_parts():
-    with pytest.raises(Exception, match="client secret is not defined"):
+    with pytest.raises(LexiconError, match="client secret is not defined"):
         ovh.Provider(_config(auth_entrypoint="ovh-eu", auth_client_id="id"))
 
 
 def test_application_key_still_required_without_oauth2():
-    with pytest.raises(Exception, match="application key is not defined"):
+    with pytest.raises(LexiconError, match="application key is not defined"):
         ovh.Provider(_config(auth_entrypoint="ovh-eu"))
 
 

@@ -6,7 +6,7 @@ from argparse import ArgumentParser
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -105,7 +105,7 @@ class Provider(BaseProvider):
             records = self.list_records(rtype, name)
 
             if not records:
-                raise Exception(
+                raise LexiconError(
                     f"No record(s) found for arguments: identifer={identifier}, rtype={rtype}, name={name}"
                 )
             if len(records) > 1:

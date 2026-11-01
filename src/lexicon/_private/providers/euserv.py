@@ -12,7 +12,7 @@ from argparse import ArgumentParser
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -245,7 +245,7 @@ class Provider(BaseProvider):
         response_json = response.json()
 
         if int(response_json["code"]) != RC_SUCCESS:
-            raise Exception(
+            raise LexiconError(
                 f"Error {response_json['code']} in request: {response_json['message']}"
             )
 
@@ -270,7 +270,7 @@ class Provider(BaseProvider):
         if len(records) == 1:
             return records[0]["id"]
 
-        raise Exception("No record identifier found")
+        raise LexiconError("No record identifier found")
 
     # Get the subdomain name only for the given name.
     # This provider automatically suffixes the name with the domain name.

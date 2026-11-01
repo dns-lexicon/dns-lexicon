@@ -9,7 +9,7 @@ import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -192,11 +192,11 @@ class Provider(BaseProvider):
                 filter_obj["host"] = self._relative_name(matching_record["name"])
 
             elif len(records) < 1:
-                raise Exception(
+                raise LexiconError(
                     "No records found matching type and name - won't update"
                 )
             else:
-                raise Exception(
+                raise LexiconError(
                     "Multiple records found matching type and name - won't update"
                 )
         else:
@@ -206,7 +206,7 @@ class Provider(BaseProvider):
                     matching_record = record
                     break
             else:
-                raise Exception("Can't find record with that id!")
+                raise LexiconError("Can't find record with that id!")
 
             filter_obj = {}
             filter_obj["type"] = matching_record["type"]

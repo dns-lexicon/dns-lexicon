@@ -17,7 +17,7 @@ from argparse import ArgumentParser
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 __author__ = "Dmitry Verkhoturov"
@@ -346,7 +346,7 @@ class Provider(BaseProvider):
         auth_token = self._get_provider_option("auth_token")
 
         if not auth_token:
-            raise Exception("auth_token must be specified.")
+            raise LexiconError("auth_token must be specified.")
 
         default_headers = {
             "Accept": "application/json",

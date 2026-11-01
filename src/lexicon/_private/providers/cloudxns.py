@@ -9,7 +9,7 @@ from urllib.parse import urlencode
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -117,7 +117,7 @@ class Provider(BaseProvider):
             if len(records) == 1:
                 identifier = records[0]["id"]
             else:
-                raise Exception("Record identifier could not be found.")
+                raise LexiconError("Record identifier could not be found.")
 
         data = {
             "domain_id": self.domain_id,

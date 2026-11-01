@@ -7,7 +7,7 @@ from typing import Any
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -65,7 +65,7 @@ class Provider(BaseProvider):
             ):
                 created = True
             else:
-                raise Exception("create_record: %s", err.response.json()["errors"])
+                raise LexiconError("create_record: %s", err.response.json()["errors"])
 
         LOGGER.debug("create_record: %s", created)
         return True
@@ -123,11 +123,11 @@ class Provider(BaseProvider):
             if len(records) == 1:
                 identifier = records[0]["id"]
             elif len(records) < 1:
-                raise Exception(
+                raise LexiconError(
                     "No records found matching type and name - won't update"
                 )
             else:
-                raise Exception(
+                raise LexiconError(
                     "Multiple records found matching type and name - won't update"
                 )
 
@@ -139,7 +139,7 @@ class Provider(BaseProvider):
         try:
             self._put(f"/domains/{self.domain_id}/dns-records/{identifier}", record)
         except requests.exceptions.HTTPError as err:
-            raise Exception("update_record: %s", err.response.json()["errors"])
+            raise LexiconError("update_record: %s", err.response.json()["errors"])
 
         LOGGER.debug("update_record: %s", True)
         return True
@@ -161,7 +161,7 @@ class Provider(BaseProvider):
             for record_id in delete_record_id:
                 self._delete(f"/domains/{self.domain_id}/dns-records/{record_id}")
         except requests.exceptions.HTTPError as err:
-            raise Exception("delete_record: %s", err.response.json()["errors"])
+            raise LexiconError("delete_record: %s", err.response.json()["errors"])
 
         LOGGER.debug("delete_record: %s", True)
         return True

@@ -186,9 +186,9 @@ class Provider(BaseProvider):
         # So for rtype/name approach, we search first matching record for rtype/name on which
         # content is different, and we update it before synchronizing the DNS zone.
         if not identifier and not rtype:
-            raise Exception("ERROR: rtype is required")
+            raise LexiconError("ERROR: rtype is required")
         if not identifier and not name:
-            raise Exception("ERROR: name is required")
+            raise LexiconError("ERROR: name is required")
 
         matching_records, records = self._find_matching_records(
             identifier, rtype, name, None

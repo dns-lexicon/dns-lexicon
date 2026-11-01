@@ -83,9 +83,7 @@ def generate_table_results(
     return os.linesep.join(array)
 
 
-def handle_output(
-    results: bool | list[dict], output_type: str, action: str
-) -> None:
+def handle_output(results: bool | list[dict], output_type: str, action: str) -> None:
     """Print the relevant output for given output_type"""
     if output_type == "QUIET":
         return

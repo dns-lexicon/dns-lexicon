@@ -7,7 +7,7 @@ from argparse import ArgumentParser
 import requests
 from requests.auth import HTTPBasicAuth
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -42,11 +42,11 @@ class Provider(BaseProvider):
         self.domain_id = None
 
         if not self._get_provider_option("auth_username"):
-            raise Exception("Error, OnApp Email Address is not defined")
+            raise LexiconError("Error, OnApp Email Address is not defined")
         if not self._get_provider_option("auth_token"):
-            raise Exception("Error, OnApp API Key is not defined")
+            raise LexiconError("Error, OnApp API Key is not defined")
         if not self._get_provider_option("auth_server"):
-            raise Exception("Error, OnApp Control Panel URL is not defined")
+            raise LexiconError("Error, OnApp Control Panel URL is not defined")
 
         self.session = requests.Session()
 
@@ -199,21 +199,21 @@ class Provider(BaseProvider):
         if record_type == "TXT":
             return "txt"
         if record_type in ("MX", "NS", "SOA", "SRV", "LOC"):
-            raise Exception(
+            raise LexiconError(
                 f"{record_type} record type is not supported in the OnApp Provider"
             )
-        raise Exception(f"{record_type} record type is unknown")
+        raise LexiconError(f"{record_type} record type is unknown")
 
     def _guess_record(self, rtype, name=None, content=None):
         records = self.list_records(rtype=rtype, name=name, content=content)
         if len(records) == 1:
             return records[0]
         if len(records) > 1:
-            raise Exception(
+            raise LexiconError(
                 "Identifier was not provided and several existing records "
                 f"match the request for {rtype}/{name}"
             )
-        raise Exception(
+        raise LexiconError(
             "Identifier was not provided and no existing records "
             f"match the request for {rtype}/{name}"
         )

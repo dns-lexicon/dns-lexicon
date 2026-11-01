@@ -10,7 +10,7 @@ from argparse import ArgumentParser
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -197,6 +197,6 @@ class Provider(BaseProvider):
         LOGGER.debug("records: %s", records)
         if len(records) == 1:
             return records[0]["id"]
-        raise Exception(
+        raise LexiconError(
             "Record identifier could not be found. Try to provide an identifier"
         )

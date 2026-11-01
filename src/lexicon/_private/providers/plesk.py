@@ -14,7 +14,7 @@ from xml.etree.ElementTree import Element
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -67,13 +67,13 @@ class Provider(BaseProvider):
         if isinstance(result, list):
             for record in result:
                 if record["status"] == "error":
-                    raise Exception(
+                    raise LexiconError(
                         f"API returned at least one error: {record['errtext']}"
                     )
         elif response["result"]["status"] == "error":
             errcode = response["result"]["errcode"]
             errtext = response["result"]["errtext"]
-            raise Exception(f"API returned error: {errcode} ({errtext})")
+            raise LexiconError(f"API returned error: {errcode} ({errtext})")
 
         return response
 
@@ -133,7 +133,7 @@ class Provider(BaseProvider):
             LOGGER.debug("Entries found: %s", entries)
 
             if not entries:
-                raise Exception("No entry found for updating")
+                raise LexiconError("No entry found for updating")
 
             identifier = entries[0]["id"]
             entry = self.__get_dns_entry(identifier)

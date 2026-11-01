@@ -7,6 +7,7 @@ from argparse import ArgumentParser
 
 import requests
 
+from lexicon.exceptions import LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -36,7 +37,7 @@ class Provider(BaseProvider):
 
         LOGGER.debug("authenticate debug: %s", response)
         if response == []:
-            raise Exception(f"Domain {self.domain} not found")
+            raise LexiconError(f"Domain {self.domain} not found")
 
         self.domain_id = response.get("id", None)
 
@@ -144,9 +145,9 @@ class Provider(BaseProvider):
             records = self.list_records(rtype, name, None)
 
         if not records:
-            raise Exception("Record not found")
+            raise LexiconError("Record not found")
         if len(records) > 1:
-            raise Exception("Record not unique")
+            raise LexiconError("Record not unique")
         orig_record = records[0]
         orig_id = orig_record["id"]
 
@@ -230,13 +231,13 @@ class Provider(BaseProvider):
                 and response_json.get("errors")[0].get("value", "") == "blocked"
             ):
                 if retries < 1:
-                    raise Exception(f"Api error: {response_json.get('errors')}")
+                    raise LexiconError(f"Api error: {response_json.get('errors')}")
                 retries = retries - 1
                 time.sleep(wait_time / 1000)
                 continue
 
             if status not in ("success", "pending"):
-                raise Exception(f"Api error: {response_json.get('errors')}")
+                raise LexiconError(f"Api error: {response_json.get('errors')}")
             # check if there a data object
             read_data = response_json.get("response", {}).get("data", None)
 

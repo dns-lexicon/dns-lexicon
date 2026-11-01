@@ -10,7 +10,7 @@ from xml.etree.ElementTree import Element, fromstring
 import requests
 import tldextract
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -127,7 +127,9 @@ class Provider(BaseProvider):
             # we should print the error, so people know how to correct it.
             raise AuthenticationError(f"Authentication failed: `{err!s}`")
 
-        xpath = f".//{{{_NAMESPACE}}}CommandResponse/{{{_NAMESPACE}}}DomainGetInfoResult"
+        xpath = (
+            f".//{{{_NAMESPACE}}}CommandResponse/{{{_NAMESPACE}}}DomainGetInfoResult"
+        )
         domain_info = xml.find(xpath)
 
         def _check_hosts_permission():
@@ -161,7 +163,7 @@ class Provider(BaseProvider):
 
         authorized = _check_hosts_permission()
         if not authorized:
-            raise Exception(
+            raise LexiconError(
                 f"The domain {self.domain} is not controlled by this Namecheap account"
             )
 
@@ -374,9 +376,7 @@ class _Api:
             extra_payload = {}
         return payload, extra_payload
 
-    def _fetch_xml(
-        self, payload: dict, extra_payload: dict | None = None
-    ) -> Element:
+    def _fetch_xml(self, payload: dict, extra_payload: dict | None = None) -> Element:
         if extra_payload:
             response = requests.post(self.endpoint, params=payload, data=extra_payload)
         else:
@@ -479,5 +479,9 @@ def _elements_names_fix(host_record):
 
 def _list_of_dictionaries_to_numbered_payload(data):
     return dict(
-        functools.reduce(operator.iadd, [[(k + str(i + 1), v) for k, v in d.items()] for i, d in enumerate(data)], [])
+        functools.reduce(
+            operator.iadd,
+            [[(k + str(i + 1), v) for k, v in d.items()] for i, d in enumerate(data)],
+            [],
+        )
     )

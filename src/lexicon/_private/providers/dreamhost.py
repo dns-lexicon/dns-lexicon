@@ -8,7 +8,7 @@ from argparse import ArgumentParser
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -148,7 +148,7 @@ class Provider(BaseProvider):
 
         resource_list = payload.get("data", None)
         if not isinstance(resource_list, list):
-            raise Exception(f"unable to get records: {payload}")
+            raise LexiconError(f"unable to get records: {payload}")
 
         resource_list = [
             resource for resource in resource_list if resource["zone"] == self.domain
@@ -255,5 +255,5 @@ class Provider(BaseProvider):
                 raise NonExistError(f"Dreamhost non-exist error: {result}")
             if err_msg in _DATA_ALREADY_EXIST_ERROR_LIST:
                 raise AlreadyExistError(f"Dreamhost already-exist error: {result}")
-            raise Exception(f"Dreamhost api error: {result}")
+            raise LexiconError(f"Dreamhost api error: {result}")
         return result

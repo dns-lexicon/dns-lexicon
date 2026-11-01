@@ -6,7 +6,7 @@ from argparse import ArgumentParser
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -69,7 +69,7 @@ class Provider(BaseProvider):
                 self._get_provider_option("auth_username")
                 and self._get_provider_option("auth_password")
             ):
-                raise Exception(
+                raise LexiconError(
                     "auth_username and auth_password or auth_token must be specified."
                 )
             auth_response = self._send_request(
@@ -102,13 +102,13 @@ class Provider(BaseProvider):
     # Create record. If record already exists with the same content, do nothing'
     def create_record(self, rtype, name, content):
         if not rtype:
-            raise Exception("rtype must be specified.")
+            raise LexiconError("rtype must be specified.")
         if not name:
-            raise Exception("name must be specified.")
+            raise LexiconError("name must be specified.")
         if not content:
-            raise Exception("content must be specified.")
+            raise LexiconError("content must be specified.")
         if not self._get_lexicon_option("priority") and rtype in ("MX", "SRV"):
-            raise Exception("priority must be specified.")
+            raise LexiconError("priority must be specified.")
 
         try:
             self._post(
@@ -158,7 +158,7 @@ class Provider(BaseProvider):
         if not identifier:
             records = self.list_records(rtype, name)
             if len(records) != 1:
-                raise Exception("Cannot determine record")
+                raise LexiconError("Cannot determine record")
             identifier = records[0]["id"]
 
         self._put(

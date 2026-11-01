@@ -1,13 +1,12 @@
 """Module provider for Name.com"""
 
-
 import logging
 from argparse import ArgumentParser
 
 from requests import HTTPError, Session
 from requests.auth import HTTPBasicAuth
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -132,7 +131,7 @@ class NamecomProvider(BaseProvider):
                 raise ValueError("Record identifier or rtype+name must be specified")
             records = self.list_records(rtype, name)
             if not records:
-                raise Exception("There is no record to update")
+                raise LexiconError("There is no record to update")
 
             if len(records) > 1:
                 filtered_records = [
@@ -142,9 +141,9 @@ class NamecomProvider(BaseProvider):
                     records = filtered_records
 
                 if len(records) > 1:
-                    raise Exception(
+                    raise LexiconError(
                         "There are multiple records to update: {}".format(
-                            ", ".join(record["id"] for record in records)
+                            ", ".join(str(record["id"]) for record in records)
                         )
                     )
 

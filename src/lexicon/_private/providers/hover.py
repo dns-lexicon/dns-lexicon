@@ -8,7 +8,7 @@ from argparse import ArgumentParser
 import pyotp
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -69,7 +69,7 @@ class Provider(BaseProvider):
         response.raise_for_status()
 
         if "hoverauth" not in response.cookies:
-            raise Exception("Unexpected auth response")
+            raise LexiconError("Unexpected auth response")
         self.cookies["hoverauth"] = response.cookies["hoverauth"]
 
         # Make sure domain exists
@@ -111,7 +111,7 @@ class Provider(BaseProvider):
         try:
             raw_records = payload["domain"]["dns"]
         except (KeyError, IndexError):
-            raise Exception("Unexpected response")
+            raise LexiconError("Unexpected response")
 
         processed_records = []
         for record in raw_records:
@@ -169,9 +169,9 @@ class Provider(BaseProvider):
             records = self.list_records(rtype, name, None)
 
         if not records:
-            raise Exception("Record not found")
+            raise LexiconError("Record not found")
         if len(records) > 1:
-            raise Exception("Record not unique")
+            raise LexiconError("Record not unique")
         orig_record = records[0]
         orig_id = orig_record["id"]
 
@@ -232,4 +232,4 @@ class Provider(BaseProvider):
         try:
             return response.json()
         except ValueError:  # response is not json
-            raise Exception("Did not get JSON response.")
+            raise LexiconError("Did not get JSON response.")

@@ -32,6 +32,7 @@ from contextlib import contextmanager
 import requests
 import requests_unixsocket
 
+from lexicon.exceptions import LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -226,7 +227,7 @@ class Provider(BaseProvider):
 
         LOGGER.debug("delete %s %s %s", rtype, name, content)
         if rtype is None or name is None:
-            raise Exception("Must specify at least both rtype and name")
+            raise LexiconError("Must specify at least both rtype and name")
 
         update_data = None
         for rrset in self.zone_data()["rrsets"]:

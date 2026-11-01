@@ -7,7 +7,7 @@ from argparse import ArgumentParser
 import requests
 from requests.auth import HTTPBasicAuth
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -39,7 +39,7 @@ class Provider(BaseProvider):
 
         self.endpoint = self._get_provider_option("endpoint")
         if self.endpoint is None:
-            raise Exception("Specify endpoint of DirectAdmin")
+            raise LexiconError("Specify endpoint of DirectAdmin")
 
     def authenticate(self):
         try:

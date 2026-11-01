@@ -1,5 +1,6 @@
 import requests
 
+from lexicon.exceptions import LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 _ZONES_API = "https://api.hosting.ionos.com/dns/v1/zones"
@@ -23,7 +24,7 @@ class Provider(BaseProvider):
             if zone["name"] == self.domain:
                 self.domain_id = zone["id"]
                 return
-        raise Exception("domain not found: " + self.domain)
+        raise LexiconError("domain not found: " + self.domain)
 
     def create_record(self, rtype, name, content):
         self._post(

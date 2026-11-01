@@ -7,7 +7,7 @@ from argparse import ArgumentParser
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -168,7 +168,7 @@ class Provider(BaseProvider):
         if identifier is None:
             records = self.list_records(rtype, name)
             if not records:
-                raise Exception("Unable to find record to modify: " + name)
+                raise LexiconError("Unable to find record to modify: " + name)
             identifier = records[0]["id"]
 
         self._put_and_wait(f"/domains/{self.domain_id}/records/{identifier}", data)
@@ -238,7 +238,7 @@ class Provider(BaseProvider):
             result = self._update_response(result)
 
         if result["status"] == "ERROR":
-            raise Exception(result["error"]["details"])
+            raise LexiconError(result["error"]["details"])
 
         if "response" in result:
             return result["response"]

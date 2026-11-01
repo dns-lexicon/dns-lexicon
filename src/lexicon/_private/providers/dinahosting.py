@@ -7,7 +7,7 @@ from argparse import ArgumentParser
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -158,9 +158,9 @@ class Provider(BaseProvider):
 
         # Check if record exists, otherwise raise an error
         if not matching_records:
-            raise Exception("No matching records found. Cannot update.")
+            raise LexiconError("No matching records found. Cannot update.")
         if len(matching_records) > 1:
-            raise Exception("Multiple matching records found. Cannot update.")
+            raise LexiconError("Multiple matching records found. Cannot update.")
 
         record = matching_records[0]
         # The API does not offer update functions for most of the record types
@@ -284,4 +284,4 @@ class Provider(BaseProvider):
     @staticmethod
     def _check_unsupported_type(rtype):
         if rtype in UNSUPPORTED_TYPES:
-            raise Exception(f"Record type {rtype} is not supported by the API")
+            raise LexiconError(f"Record type {rtype} is not supported by the API")

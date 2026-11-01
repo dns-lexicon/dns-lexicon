@@ -7,7 +7,7 @@ from importlib.metadata import Distribution, PackageNotFoundError
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -227,7 +227,7 @@ class Provider(BaseProvider):
                     "auth_2fa"
                 )
         else:
-            raise Exception("No valid authentication mechanism found")
+            raise LexiconError("No valid authentication mechanism found")
 
         response = requests.request(
             action,
@@ -240,7 +240,7 @@ class Provider(BaseProvider):
         # if the request fails for any reason, throw an error.
         response.raise_for_status()
         if response.text and response.json()["data"] is None:
-            raise Exception("No data returned")
+            raise LexiconError("No data returned")
 
         return response.json()["data"] if response.text else None
 

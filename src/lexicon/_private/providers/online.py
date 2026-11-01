@@ -6,6 +6,7 @@ from argparse import ArgumentParser
 
 import requests
 
+from lexicon.exceptions import LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -96,7 +97,7 @@ class Provider(BaseProvider):
     def _enable_zone(self):
         zone = self.passive_zone
         if zone is None:
-            raise Exception("Could not enable uninitialized passive_zone")
+            raise LexiconError("Could not enable uninitialized passive_zone")
         self._patch(f"/domain/{self.domain_id}/version/{zone}/enable")
         self.passive_zone = self.active_zone
         self.active_zone = zone

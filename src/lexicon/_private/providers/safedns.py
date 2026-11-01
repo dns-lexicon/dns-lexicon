@@ -6,7 +6,7 @@ from argparse import ArgumentParser
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -138,7 +138,7 @@ class Provider(BaseProvider):
                     records,
                 )
             else:
-                raise Exception("Record identifier could not be found")
+                raise LexiconError("Record identifier could not be found")
 
         # Make sure TXT records are wrapped in quotes
         if content:

@@ -82,7 +82,7 @@ from urllib.error import HTTPError
 from urllib.request import OpenerDirector
 
 from lexicon.config import ConfigResolver
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -184,7 +184,7 @@ def restapi_exception_not_200(response: HTTPResponse):
     # HTTPError will be raised if status >= 400
     if response.status != 200:
         LOGGER.error(f"HTTP Status: {response.status}")
-        raise Exception(f"HTTP Status: {response.status}")
+        raise LexiconError(f"HTTP Status: {response.status}")
 
 
 ########################################################################
@@ -556,7 +556,7 @@ if __name__ == "__main__":
         def setUp(self):
             self.auth_token = os.environ.get("LEXICON_VALUEDOMAIN_AUTH_TOKEN")
             if self.auth_token is None:
-                raise Exception("LEXICON_VALUEDOMAIN_AUTH_TOKEN not defined")
+                raise LexiconError("LEXICON_VALUEDOMAIN_AUTH_TOKEN not defined")
             self.caller = vdapi_create_caller(self.auth_token)
 
         def tearDown(self):

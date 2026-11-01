@@ -5,6 +5,7 @@ from argparse import ArgumentParser
 
 import requests
 
+from lexicon.exceptions import LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -160,7 +161,7 @@ class Provider(BaseProvider):
 
     def _build_authentication_data(self):
         if not self._get_provider_option("auth_password"):
-            raise Exception(
+            raise LexiconError(
                 "No valid authentication data passed, expected: auth-password"
             )
 
@@ -186,7 +187,7 @@ class Provider(BaseProvider):
         ):
             # All the options were passed with a fallback value, return an empty dictionary.
             return {}
-        raise Exception(
+        raise LexiconError(
             "No valid authentication data passed, expected: auth-id, auth-subid, auth-subuser"
         )
 
@@ -195,7 +196,7 @@ class Provider(BaseProvider):
         LOGGER.debug("records: %s", records)
         if len(records) == 1:
             return records[0]["id"]
-        raise Exception("Record identifier could not be found.")
+        raise LexiconError("Record identifier could not be found.")
 
     def _request(self, action="GET", url="/", data=None, query_params=None):
         # Set default values for missing arguments
@@ -221,7 +222,7 @@ class Provider(BaseProvider):
             and "statusDescription" in payload
             and payload["status"] != "Success"
         ):
-            raise Exception(
+            raise LexiconError(
                 "ClouDNS API request has failed: " + payload["statusDescription"]
             )
 

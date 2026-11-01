@@ -27,6 +27,7 @@ from argparse import ArgumentParser
 
 import requests
 
+from lexicon.exceptions import LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -203,7 +204,7 @@ class Provider(BaseProvider):
 
         LOGGER.debug("delete %s %s %s", rtype, name, content)
         if rtype is None or name is None:
-            raise Exception("Must specify at least both rtype and name")
+            raise LexiconError("Must specify at least both rtype and name")
 
         rname = self._fqdn_name(name)
 

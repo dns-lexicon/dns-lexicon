@@ -27,7 +27,7 @@ from argparse import ArgumentParser
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 try:
@@ -64,7 +64,7 @@ class Provider(BaseProvider):
         domain_dns = dns.name.from_text(domain)
 
         if len(domain_dns.labels) > 2 and b"duckdns" not in domain_dns.labels:
-            raise Exception(f"{domain} is not a valid Duck DNS domain.")
+            raise LexiconError(f"{domain} is not a valid Duck DNS domain.")
 
         if b"duckdns" in domain_dns.labels:
             # use only the third level domain, the one actually registered in Duck DNS
@@ -78,7 +78,7 @@ class Provider(BaseProvider):
     @staticmethod
     def _get_duckdns_rtype_param(rtype):
         if rtype not in ["A", "AAAA", "TXT"]:
-            raise Exception("Duck DNS only supports A, AAAA and TXT records.")
+            raise LexiconError("Duck DNS only supports A, AAAA and TXT records.")
 
         if rtype == "A":
             return "ip"
@@ -90,7 +90,7 @@ class Provider(BaseProvider):
     @staticmethod
     def _get_dns_record(name, rtype):
         if rtype not in ["A", "AAAA", "TXT"]:
-            raise Exception("Duck DNS only supports A, AAAA and TXT records.")
+            raise LexiconError("Duck DNS only supports A, AAAA and TXT records.")
 
         try:
             dns_rrset = Provider._get_dns_rrset(name, rtype)
@@ -137,7 +137,7 @@ class Provider(BaseProvider):
             )
 
         if rtype not in ["A", "AAAA", "TXT"]:
-            raise Exception("Duck DNS only supports A, AAAA and TXT records.")
+            raise LexiconError("Duck DNS only supports A, AAAA and TXT records.")
 
         if rtype == "A" and content == "auto":
             duckdns_content = ""
@@ -244,7 +244,7 @@ class Provider(BaseProvider):
         content = response.content.decode("utf-8")
 
         if "KO" in content:
-            raise Exception(f"KO: {params}")
+            raise LexiconError(f"KO: {params}")
 
         return content
 
@@ -264,7 +264,7 @@ class Provider(BaseProvider):
         if delete and len(records) == 0:
             return None
         else:
-            raise Exception("Unambiguous record could not be found.")
+            raise LexiconError("Unambiguous record could not be found.")
 
     def _request(self, action="GET", url="/", data=None, query_params=None):
         if query_params is None:

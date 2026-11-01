@@ -1,6 +1,5 @@
 """Module provider for Misaka.IO"""
 
-
 import base64
 import json
 import logging

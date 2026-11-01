@@ -5,7 +5,7 @@ import re
 import shlex
 from argparse import ArgumentParser
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 try:
@@ -79,7 +79,7 @@ class Provider(BaseProvider):
             if exclude_code is not None and response["code"] == exclude_code:
                 return
 
-            raise Exception(f"{message}: {response['msg']} ({response['code']})")
+            raise LexiconError(f"{message}: {response['msg']} ({response['code']})")
 
     # Make any request to validate credentials
     def authenticate(self):

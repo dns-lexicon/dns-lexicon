@@ -8,7 +8,7 @@ from argparse import ArgumentParser
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 try:
@@ -91,7 +91,7 @@ class Provider(BaseProvider):
         # Handling missing required parameters
         entrypoint = self._get_provider_option("auth_entrypoint")
         if not entrypoint:
-            raise Exception("Error, entrypoint is not defined")
+            raise LexiconError("Error, entrypoint is not defined")
         # The application key scheme wins when both are given, as it did before
         self.oauth2 = bool(
             self._get_provider_option("auth_client_id")
@@ -99,20 +99,20 @@ class Provider(BaseProvider):
         ) and not self._get_provider_option("auth_application_key")
         if self.oauth2:
             if not self._get_provider_option("auth_client_id"):
-                raise Exception("Error, client ID is not defined")
+                raise LexiconError("Error, client ID is not defined")
             if not self._get_provider_option("auth_client_secret"):
-                raise Exception("Error, client secret is not defined")
+                raise LexiconError("Error, client secret is not defined")
             if entrypoint not in OAUTH2_TOKEN_ENDPOINTS:
-                raise Exception(
+                raise LexiconError(
                     f"Error, OAuth2 client credentials are not available for {entrypoint}"
                 )
         else:
             if not self._get_provider_option("auth_application_key"):
-                raise Exception("Error, application key is not defined")
+                raise LexiconError("Error, application key is not defined")
             if not self._get_provider_option("auth_application_secret"):
-                raise Exception("Error, application secret is not defined")
+                raise LexiconError("Error, application secret is not defined")
             if not self._get_provider_option("auth_consumer_key"):
-                raise Exception("Error, consumer key is not defined")
+                raise LexiconError("Error, consumer key is not defined")
 
         # Construct DNS OVH environment
         self.domain_id = None
@@ -239,9 +239,9 @@ class Provider(BaseProvider):
             if len(records) == 1:
                 identifier = records[0]["id"]
             elif len(records) > 1:
-                raise Exception("Several record identifiers match the request")
+                raise LexiconError("Several record identifiers match the request")
             else:
-                raise Exception("Record identifier could not be found")
+                raise LexiconError("Record identifier could not be found")
 
         data = {}
         if name:

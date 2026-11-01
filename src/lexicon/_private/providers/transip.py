@@ -107,7 +107,7 @@ class Provider(BaseProvider):
 
     def create_record(self, rtype: str, name: str, content: str) -> bool:
         if not rtype or not name or not content:
-            raise Exception(
+            raise LexiconError(
                 "Error, rtype, name and content are mandatory to create a record."
             )
 
@@ -178,7 +178,9 @@ class Provider(BaseProvider):
         content: str | None = None,
     ) -> bool:
         if not identifier and (not rtype or not name):
-            raise Exception("Error, identifier or rtype+name parameters are required.")
+            raise LexiconError(
+                "Error, identifier or rtype+name parameters are required."
+            )
 
         if identifier:
             records = self.list_records()
@@ -189,7 +191,7 @@ class Provider(BaseProvider):
             records_to_update = self.list_records(rtype=rtype, name=name)
 
         if not records_to_update:
-            raise Exception(
+            raise LexiconError(
                 f"Error, could not find a record for given identifier: {identifier}"
             )
 

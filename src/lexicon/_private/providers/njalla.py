@@ -5,7 +5,7 @@ from argparse import ArgumentParser
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -117,14 +117,14 @@ class Provider(BaseProvider):
     # Helpers
     def _api_call(self, method, params):
         if self._get_provider_option("auth_token") is None:
-            raise Exception("Must provide API token")
+            raise LexiconError("Must provide API token")
 
         data = {"method": method, "params": params}
         response = self._request("POST", "", data)
 
         if "error" in response:
             error = response["error"]
-            raise Exception("%d: %s" % (error["code"], error["message"]))
+            raise LexiconError("%d: %s" % (error["code"], error["message"]))
 
         return response["result"]
 
@@ -133,7 +133,7 @@ class Provider(BaseProvider):
         if len(records) == 1:
             return records[0]["id"]
 
-        raise Exception("Unambiguous record could not be found.")
+        raise LexiconError("Unambiguous record could not be found.")
 
     def _request(self, action="GET", url="/", data=None, query_params=None):
         if data is None:

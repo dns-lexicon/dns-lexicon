@@ -7,6 +7,8 @@ from integration_tests import (
     vcr_integration_test,
 )
 
+from lexicon.exceptions import LexiconError
+
 
 class TestRoute53Provider(IntegrationTestsV2):
     """Route53 Provider Tests."""
@@ -24,7 +26,7 @@ class TestRoute53Provider(IntegrationTestsV2):
     @vcr_integration_test
     def test_provider_authenticate_private_zone_only(self):
         provider = self._build_provider_with_overrides({"private_zone": "true"})
-        with pytest.raises(Exception):
+        with pytest.raises(LexiconError):
             provider.authenticate()
 
     @vcr_integration_test

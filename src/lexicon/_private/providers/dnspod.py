@@ -5,7 +5,7 @@ from argparse import ArgumentParser
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -54,7 +54,7 @@ class Provider(BaseProvider):
         payload = self._post("/Record.Create", record)
 
         if payload["status"]["code"] not in ["1", "31"]:
-            raise Exception(payload["status"]["message"])
+            raise LexiconError(payload["status"]["message"])
 
         LOGGER.debug("create_record: %s", payload["status"]["code"] == "1")
         return payload["status"]["code"] == "1"
@@ -106,7 +106,7 @@ class Provider(BaseProvider):
         payload = self._post("/Record.Modify", data)
         LOGGER.debug("payload: %s", payload)
         if payload["status"]["code"] != "1":
-            raise Exception(payload["status"]["message"])
+            raise LexiconError(payload["status"]["message"])
 
         LOGGER.debug("update_record: %s", True)
         return True
@@ -129,7 +129,7 @@ class Provider(BaseProvider):
             )
 
             # if payload['status']['code'] != '1':
-            #    raise Exception(payload['status']['message'])
+            #    raise LexiconError(payload['status']['message'])
 
         # is always True at this point, if a non 200 response is returned an error is raised.
         LOGGER.debug("delete_record: %s", True)

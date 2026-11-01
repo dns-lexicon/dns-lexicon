@@ -6,7 +6,7 @@ from argparse import ArgumentParser
 
 import requests
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -113,11 +113,11 @@ class Provider(BaseProvider):
             if len(records) == 1:
                 identifier = records[0]["id"]
             elif len(records) < 1:
-                raise Exception(
+                raise LexiconError(
                     "No records found matching type and name - won't update"
                 )
             else:
-                raise Exception(
+                raise LexiconError(
                     "Multiple records found matching type and name - won't update"
                 )
 
@@ -150,7 +150,7 @@ class Provider(BaseProvider):
         # Check if there are records to delete
         if not delete_record_id:
             # No records found to delete, raise an error or return False
-            raise Exception(f"No matching records found to delete {identifier}")
+            raise LexiconError(f"No matching records found to delete {identifier}")
 
         for record_id in delete_record_id:
             self._delete(f"/dns/rr/{record_id}")

@@ -4,7 +4,7 @@ import hashlib
 import logging
 from argparse import ArgumentParser
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 # dnspython is an optional dependency of lexicon; do not throw an ImportError if
@@ -118,11 +118,11 @@ class Provider(BaseProvider):
             if len(rrset) == 1:
                 identifier = rrset[0]["id"]
             elif len(rrset) < 1:
-                raise Exception(
+                raise LexiconError(
                     "No records found matching type and name - won't update"
                 )
             else:
-                raise Exception(
+                raise LexiconError(
                     "Multiple records found matching type and name - won't update"
                 )
         d_rtype, d_name, d_content = self._resolve_identifier(identifier)

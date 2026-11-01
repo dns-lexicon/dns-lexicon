@@ -7,7 +7,7 @@ from argparse import ArgumentParser
 import requests
 from requests.auth import HTTPBasicAuth
 
-from lexicon.exceptions import AuthenticationError
+from lexicon.exceptions import AuthenticationError, LexiconError
 from lexicon.interfaces import Provider as BaseProvider
 
 LOGGER = logging.getLogger(__name__)
@@ -103,7 +103,7 @@ class Provider(BaseProvider):
     # Create or update a record.
     def update_record(self, identifier=None, rtype=None, name=None, content=None):
         if not (rtype and name and content):
-            raise Exception("rtype ,name and content must be specified.")
+            raise LexiconError("rtype ,name and content must be specified.")
 
         name = self._relative_name(name)
         resource_record_sets = self._get_resource_record_sets()
