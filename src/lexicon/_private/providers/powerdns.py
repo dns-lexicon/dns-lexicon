@@ -45,6 +45,9 @@ class PowerDNSProviderError(Exception):
 class Provider(BaseProvider):
     """Provider class for PowerDNS"""
 
+    # PowerDNS takes any type of record, as RFC 3597 describes.
+    VALID_TYPES: list[str] | None = None
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return []
@@ -132,11 +135,10 @@ class Provider(BaseProvider):
         return f"{rtype}/{name}={content}"
 
     def _parse_identifier(self, identifier):
-        parts = identifier.split("/")
-        rtype = parts[0]
-        parts = parts[1].split("=")
-        name = parts[0]
-        content = "=".join(parts[1:])
+        # Split once at each, because the content can hold either character,
+        # as the base64 of a DKIM key does.  A name holds neither.
+        rtype, rest = identifier.split("/", 1)
+        name, content = rest.split("=", 1)
         return rtype, name, content
 
     def list_records(self, rtype=None, name=None, content=None):
@@ -171,7 +173,8 @@ class Provider(BaseProvider):
                 content = '"' + content
             if content[-1] != '"':
                 content += '"'
-        elif rtype == "CNAME":
+        elif rtype == "CNAME" and not content.endswith("."):
+            # A target with its trailing dot is absolute, and can be outside the zone.
             content = self._fqdn_name(content)
         return content
 
@@ -179,7 +182,8 @@ class Provider(BaseProvider):
         if rtype in ("TXT", "LOC"):
             content = content.strip('"')
         elif rtype == "CNAME":
-            content = self._full_name(content)
+            # PowerDNS answers with the absolute name, which can be outside the zone.
+            content = content.rstrip(".")
         return content
 
     def create_record(self, rtype, name, content):

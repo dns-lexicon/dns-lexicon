@@ -5,6 +5,7 @@ import os
 from typing import Type
 
 from lexicon._private.discovery import (
+    find_missing_extras,
     find_providers,
     lexicon_version,
     load_provider_module,
@@ -28,7 +29,6 @@ def generate_base_provider_parser() -> argparse.ArgumentParser:
         "type",
         help="specify the entry type",
         default="TXT",
-        choices=["A", "AAAA", "CNAME", "MX", "NS", "SOA", "TXT", "SRV", "LOC"],
     )
 
     parser.add_argument("--name", help="specify the record name")
@@ -91,7 +91,7 @@ def generate_cli_main_parser() -> argparse.ArgumentParser:
     )
     subparsers.required = True
 
-    for provider, available in find_providers().items():
+    for provider in find_providers():
         provider_module = load_provider_module(provider)
         provider_class: Type[Provider] = getattr(provider_module, "Provider")
 
@@ -103,10 +103,8 @@ def generate_cli_main_parser() -> argparse.ArgumentParser:
 
         provider_class.configure_parser(subparser)
 
-        if not available:
-            subparser.epilog = (
-                "WARNING: some required dependencies for this provider are not "
-                f"installed. Please run `pip install lexicon[{provider}]` first before using it."
-            )
+        missing = find_missing_extras(provider)
+        if missing:
+            subparser.epilog = provider_class.missing_extras_warning(provider, missing)
 
     return parser
