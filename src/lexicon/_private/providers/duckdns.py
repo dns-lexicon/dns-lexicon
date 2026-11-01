@@ -43,6 +43,9 @@ LOGGER = logging.getLogger(__name__)
 class Provider(BaseProvider):
     """Provider class for Duck DNS"""
 
+    # See the docstring of the module.
+    VALID_TYPES: list[str] = ["A", "AAAA", "TXT"]
+
     @staticmethod
     def get_nameservers() -> List[str]:
         return ["ca-central-1.compute.amazonaws.com"]

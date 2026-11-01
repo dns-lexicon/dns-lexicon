@@ -37,12 +37,6 @@ class TestDuckdnsProvider(IntegrationTestsV2):
     def test_provider_authenticate_with_unmanaged_domain_should_fail(self):
         return
 
-    @pytest.mark.skip(reason="The Duck DNS API does not support CNAME records")
-    def test_provider_when_calling_create_record_for_CNAME_with_valid_name_and_content(
-        self,
-    ):
-        return
-
     @pytest.mark.skip(reason="The Duck DNS API does not support altering the TTL")
     def test_provider_when_calling_list_records_after_setting_ttl(self):
         return

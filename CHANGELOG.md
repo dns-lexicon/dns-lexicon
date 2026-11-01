@@ -15,6 +15,7 @@
 * Fix `porkbun` provider rejecting MX and SRV records with HTTP 400 Bad Request, by splitting the inline priority out of the record content into Porkbun's dedicated `prio` field
 * The `ovh` provider now only requires a token scoped to the managed zone (`/domain/zone/example.com/*`) instead of the whole `/domain/zone/*` scope
 * The `ovh` provider now strips the surrounding double quotes the OVH API adds around TXT record targets. This fixes duplicate detection on `create_record` and makes the `content` returned by `list_records` consistent with the other providers (behavior change: TXT content is no longer quoted)
+* A shared integration test of a record type skips itself when the provider does not take that type. `duckdns` takes A, AAAA and TXT
 * Send the priority of MX and SRV records in the `prio` field of the `easydns` provider, from `--priority` or from the front of the record content. The `rdata` of an MX is its target, and the `rdata` of an SRV is its whole RDATA, priority included. A listed MX gets its priority back in front of its content
 
 ## 3.25.2 - 10/05/2026
