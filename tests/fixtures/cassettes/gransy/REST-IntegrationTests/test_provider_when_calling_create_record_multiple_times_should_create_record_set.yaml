@@ -1,0 +1,198 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.34.2
+    method: GET
+    uri: https://api.subreg.cz/domains
+  response:
+    body:
+      string: '{"domains":[{"name":"oldium.top","expire":"2199-12-31","autorenew":"0"}],"count":1}'
+    headers:
+      CF-RAY:
+      - a3263c3938dc2866-PRG
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 28 Aug 2026 20:58:38 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - PHP/7.4.33
+      cf-cache-status:
+      - DYNAMIC
+      content-length:
+      - '270'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.34.2
+    method: GET
+    uri: https://api.subreg.cz/dns/oldium.top
+  response:
+    body:
+      string: '{"domain":"oldium.top","records":[{"id":"7143878","name":"docs","type":"CNAME","content":"docs.example.com","prio":0,"ttl":3600},{"id":"7143877","name":"localhost","type":"A","content":"127.0.0.1","prio":0,"ttl":3600},{"id":"7143888","name":"orig.nameonly.test","type":"TXT","content":"updated","prio":0,"ttl":3600},{"id":"7143884","name":"random.fqdntest","type":"TXT","content":"challengetoken","prio":0,"ttl":3600},{"id":"7143883","name":"random.fulltest","type":"TXT","content":"challengetoken","prio":0,"ttl":3600},{"id":"7143882","name":"random.test","type":"TXT","content":"challengetoken","prio":0,"ttl":3600},{"id":"7143885","name":"ttl.fqdn","type":"TXT","content":"ttlshouldbe3600","prio":0,"ttl":3600},{"id":"7143887","name":"updated.test","type":"TXT","content":"challengetoken","prio":0,"ttl":3600},{"id":"7143892","name":"updated.testfqdn","type":"TXT","content":"challengetoken","prio":0,"ttl":3600},{"id":"7143890","name":"updated.testfull","type":"TXT","content":"challengetoken","prio":0,"ttl":3600},{"id":"7143881","name":"_acme-challenge.fqdn","type":"TXT","content":"challengetoken","prio":0,"ttl":3600},{"id":"7143880","name":"_acme-challenge.full","type":"TXT","content":"challengetoken","prio":0,"ttl":3600},{"id":"7143897","name":"_acme-challenge.noop","type":"TXT","content":"challengetoken","prio":0,"ttl":3600},{"id":"7143879","name":"_acme-challenge.test","type":"TXT","content":"challengetoken","prio":0,"ttl":3600}]}'
+    headers:
+      CF-RAY:
+      - a3263c3cdc95b190-PRG
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 28 Aug 2026 20:58:39 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - PHP/7.4.33
+      cf-cache-status:
+      - DYNAMIC
+      content-length:
+      - '1448'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"type": "TXT", "name": "_acme-challenge.createrecordset", "content": "challengetoken1",
+      "ttl": 3600}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '101'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: https://api.subreg.cz/dns/oldium.top/record
+  response:
+    body:
+      string: '{"domain":"oldium.top","record_id":7143898}'
+    headers:
+      CF-RAY:
+      - a3263c4078ea87f2-PRG
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '43'
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 28 Aug 2026 20:58:40 GMT
+      Server:
+      - cloudflare
+      X-Powered-By:
+      - PHP/7.4.33
+      cf-cache-status:
+      - DYNAMIC
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.34.2
+    method: GET
+    uri: https://api.subreg.cz/dns/oldium.top
+  response:
+    body:
+      string: '{"domain":"oldium.top","records":[{"id":"7143878","name":"docs","type":"CNAME","content":"docs.example.com","prio":0,"ttl":3600},{"id":"7143877","name":"localhost","type":"A","content":"127.0.0.1","prio":0,"ttl":3600},{"id":"7143888","name":"orig.nameonly.test","type":"TXT","content":"updated","prio":0,"ttl":3600},{"id":"7143884","name":"random.fqdntest","type":"TXT","content":"challengetoken","prio":0,"ttl":3600},{"id":"7143883","name":"random.fulltest","type":"TXT","content":"challengetoken","prio":0,"ttl":3600},{"id":"7143882","name":"random.test","type":"TXT","content":"challengetoken","prio":0,"ttl":3600},{"id":"7143885","name":"ttl.fqdn","type":"TXT","content":"ttlshouldbe3600","prio":0,"ttl":3600},{"id":"7143887","name":"updated.test","type":"TXT","content":"challengetoken","prio":0,"ttl":3600},{"id":"7143892","name":"updated.testfqdn","type":"TXT","content":"challengetoken","prio":0,"ttl":3600},{"id":"7143890","name":"updated.testfull","type":"TXT","content":"challengetoken","prio":0,"ttl":3600},{"id":"7143898","name":"_acme-challenge.createrecordset","type":"TXT","content":"challengetoken1","prio":0,"ttl":3600},{"id":"7143881","name":"_acme-challenge.fqdn","type":"TXT","content":"challengetoken","prio":0,"ttl":3600},{"id":"7143880","name":"_acme-challenge.full","type":"TXT","content":"challengetoken","prio":0,"ttl":3600},{"id":"7143897","name":"_acme-challenge.noop","type":"TXT","content":"challengetoken","prio":0,"ttl":3600},{"id":"7143879","name":"_acme-challenge.test","type":"TXT","content":"challengetoken","prio":0,"ttl":3600}]}'
+    headers:
+      CF-RAY:
+      - a3263c443a352774-PRG
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 28 Aug 2026 20:58:40 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - PHP/7.4.33
+      cf-cache-status:
+      - DYNAMIC
+      content-length:
+      - '1567'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"type": "TXT", "name": "_acme-challenge.createrecordset", "content": "challengetoken2",
+      "ttl": 3600}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate, zstd
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '101'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: https://api.subreg.cz/dns/oldium.top/record
+  response:
+    body:
+      string: '{"domain":"oldium.top","record_id":7143899}'
+    headers:
+      CF-RAY:
+      - a3263c47ef0c3ed7-PRG
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '43'
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 28 Aug 2026 20:58:41 GMT
+      Server:
+      - cloudflare
+      X-Powered-By:
+      - PHP/7.4.33
+      cf-cache-status:
+      - DYNAMIC
+    status:
+      code: 200
+      message: OK
+version: 1

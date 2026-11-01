@@ -27,6 +27,16 @@ def _fetch_lexicon_version() -> str:
         return "unknown"
 
 
+def _unquote_txt(rtype: str, content: str) -> str:
+    """DNSimple returns TXT content wrapped in double quotes, for example
+    '"challengetoken"', while records are created and filtered without them.
+    Strip one pair of surrounding quotes so content filters match again.
+    Content without surrounding quotes is returned unchanged."""
+    if rtype == "TXT" and len(content) >= 2 and content[0] == content[-1] == '"':
+        return content[1:-1]
+    return content
+
+
 class Provider(BaseProvider):
     """Provider class for DNS Simple"""
 
@@ -131,7 +141,7 @@ class Provider(BaseProvider):
                     else f"{record['name']}.{self.domain}"
                 ),
                 "ttl": record["ttl"],
-                "content": record["content"],
+                "content": _unquote_txt(record["type"], record["content"]),
                 "id": record["id"],
             }
             if record["priority"]:

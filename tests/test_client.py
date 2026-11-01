@@ -1,6 +1,8 @@
 # pylint: disable=missing-docstring
 import os
 
+import dns.name
+import dns.resolver
 import pytest
 
 import lexicon.client
@@ -172,6 +174,108 @@ def test_client_parse_env_with_auth_keys(monkeypatch, mock_provider):
         client.config.resolve("lexicon:fakeprovider:auth_username")
         == "test-username@example.com"
     )
+
+
+def test_client_init_with_resolve_zone_name_default_uses_tldextract(
+    monkeypatch, mock_provider
+):
+    def fail(*_args, **_kwargs):
+        raise AssertionError("dns.resolver must not be used")
+
+    monkeypatch.setattr(dns.resolver, "zone_for_name", fail)
+    # Direct library usage of Client: the option is not defined at all
+    options = {
+        "provider_name": "fakeprovider",
+        "action": "list",
+        "domain": "www.example.com",
+        "type": "TXT",
+    }
+    client = lexicon.client.Client(ConfigResolver().with_dict(options))
+
+    assert client.config.resolve("lexicon:domain") == "example.com"
+
+
+def test_client_init_with_resolve_zone_name_false_uses_tldextract(
+    monkeypatch, mock_provider
+):
+    def fail(*_args, **_kwargs):
+        raise AssertionError("dns.resolver must not be used")
+
+    monkeypatch.setattr(dns.resolver, "zone_for_name", fail)
+    options = {
+        "provider_name": "fakeprovider",
+        "action": "list",
+        "domain": "www.example.com",
+        "type": "TXT",
+        # the CLI always defines the option; store_true defaults to False
+        "resolve_zone_name": False,
+    }
+    client = lexicon.client.Client(ConfigResolver().with_dict(options))
+
+    assert client.config.resolve("lexicon:domain") == "example.com"
+
+
+def test_client_init_with_resolve_zone_name_true_uses_dns_resolver(
+    monkeypatch, mock_provider
+):
+    monkeypatch.setattr(
+        dns.resolver, "zone_for_name", lambda *_: dns.name.from_text("example.com.")
+    )
+    options = {
+        "provider_name": "fakeprovider",
+        "action": "list",
+        "domain": "www.example.com",
+        "type": "TXT",
+        "resolve_zone_name": True,
+    }
+    client = lexicon.client.Client(ConfigResolver().with_dict(options))
+
+    assert client.config.resolve("lexicon:domain") == "example.com"
+
+
+def test_client_init_raises_when_extras_missing(monkeypatch, extras_provider):
+    from lexicon import client as client_module
+    from lexicon.exceptions import ProviderNotAvailableError
+
+    monkeypatch.setattr(client_module, "_is_installed", lambda pkg: False)
+    options = {
+        "provider_name": "extrasprovider",
+        "action": "list",
+        "domain": "example.com",
+        "type": "TXT",
+    }
+    with pytest.raises(ProviderNotAvailableError) as exc_info:
+        lexicon.client.Client(ConfigResolver().with_dict(options))
+    assert "--use-alt" in str(exc_info.value)
+
+
+def test_client_init_does_not_raise_when_extras_missing_with_use_alt(
+    monkeypatch, extras_provider
+):
+    from lexicon import client as client_module
+
+    monkeypatch.setattr(client_module, "_is_installed", lambda pkg: False)
+    options = {
+        "provider_name": "extrasprovider",
+        "action": "list",
+        "domain": "example.com",
+        "type": "TXT",
+        "extrasprovider": {"use_alt": "yes"},
+    }
+    lexicon.client.Client(ConfigResolver().with_dict(options))
+
+
+def test_client_init_does_not_raise_when_extras_installed(monkeypatch, extras_provider):
+    from lexicon import client as client_module
+
+    monkeypatch.setattr(client_module, "_is_installed", lambda pkg: True)
+    options = {
+        "provider_name": "extrasprovider",
+        "action": "list",
+        "domain": "example.com",
+        "type": "TXT",
+    }
+    lexicon.client.Client(ConfigResolver().with_dict(options))
 
 
 # TODO: add tests for Provider loading?

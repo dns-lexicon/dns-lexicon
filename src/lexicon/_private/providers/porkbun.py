@@ -69,8 +69,18 @@ class Provider(BaseProvider):
             "name": self._relative_name(name),
         }
 
-        if self._get_lexicon_option("priority"):
-            data["prio"] = self._get_lexicon_option("priority")
+        priority = self._get_lexicon_option("priority")
+        # Porkbun expects the record priority in a dedicated "prio" field. For MX and
+        # SRV the RDATA arrives with the priority prefixed inline (e.g. "10 mail." or
+        # "0 5 5223 xmpp.example.com."); split it out here, otherwise Porkbun rejects
+        # the create/edit with HTTP 400 Bad Request.
+        if priority is None and rtype in ("MX", "SRV"):
+            first, _, rest = content.partition(" ")
+            if rest and first.isdigit():
+                priority = first
+                data["content"] = rest
+        if priority:
+            data["prio"] = priority
 
         if self._get_lexicon_option("ttl"):
             data["ttl"] = self._get_lexicon_option("ttl")
@@ -131,8 +141,18 @@ class Provider(BaseProvider):
         if self._get_lexicon_option("ttl"):
             data["ttl"] = self._get_lexicon_option("ttl")
 
-        if self._get_lexicon_option("priority"):
-            data["prio"] = self._get_lexicon_option("priority")
+        priority = self._get_lexicon_option("priority")
+        # Porkbun expects the record priority in a dedicated "prio" field. For MX and
+        # SRV the RDATA arrives with the priority prefixed inline (e.g. "10 mail." or
+        # "0 5 5223 xmpp.example.com."); split it out here, otherwise Porkbun rejects
+        # the create/edit with HTTP 400 Bad Request.
+        if priority is None and rtype in ("MX", "SRV"):
+            first, _, rest = content.partition(" ")
+            if rest and first.isdigit():
+                priority = first
+                data["content"] = rest
+        if priority:
+            data["prio"] = priority
 
         result = self._post(endpoint, data)
 
