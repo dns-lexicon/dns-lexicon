@@ -29,7 +29,7 @@ class TestPowerdnsProvider(IntegrationTestsV2):
     ):
         return
 
-    def test_identifier_keeps_a_content_that_holds_a_slash():
+    def test_identifier_keeps_a_content_that_holds_a_slash(self):
         """The base64 of a DKIM key holds slashes and equals signs."""
         provider = Provider(
             ConfigResolver().with_dict(
