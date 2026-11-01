@@ -2,7 +2,6 @@
 
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
@@ -25,7 +24,7 @@ class Provider(BaseProvider):
     """
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["zilore.net"]
 
     @staticmethod
@@ -37,7 +36,7 @@ class Provider(BaseProvider):
         parser.add_argument("--auth-key", help="specify the Zilore API key to use")
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
 
     def authenticate(self):

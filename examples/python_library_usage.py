@@ -1,5 +1,5 @@
-from lexicon.config import ConfigResolver
 from lexicon.client import Client
+from lexicon.config import ConfigResolver
 
 lexicon_config = {
     "provider_name": "cloudflare",  # lexicon shortname for provider, see providers directory for available proviers

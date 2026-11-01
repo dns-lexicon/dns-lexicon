@@ -9,7 +9,6 @@ EUserv API Docs: https://support.euserv.com/api-doc/
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
@@ -31,7 +30,7 @@ class Provider(BaseProvider):
     """Provider class for Euserv"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["euserv.com"]
 
     @staticmethod
@@ -44,7 +43,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.api_endpoint = API_ENDPOINT
         # Order ID for the domain
         self.order_id = None

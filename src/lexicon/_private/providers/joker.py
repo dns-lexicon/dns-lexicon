@@ -16,7 +16,6 @@ import json
 import logging
 import re
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
@@ -42,7 +41,7 @@ class _Response:
 
 class Provider(BaseProvider):
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["ns.joker.com"]
 
     @staticmethod
@@ -57,7 +56,7 @@ You can create one in the section 'Manage Joker.com API access keys' of 'My Prof
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self._session_id = None
 
@@ -294,13 +293,13 @@ You can create one in the section 'Manage Joker.com API access keys' of 'My Prof
         if record_name == self.domain_id:
             return "@"
 
-        return super(Provider, self)._relative_name(record_name)
+        return super()._relative_name(record_name)
 
     def _full_name(self, record_name):
         if record_name == "@":
             return self.domain_id
 
-        return super(Provider, self)._full_name(record_name)
+        return super()._full_name(record_name)
 
 
 def _extract_zonedata(data):

@@ -28,7 +28,6 @@ import logging
 import os
 from argparse import ArgumentParser
 from contextlib import contextmanager
-from typing import List
 
 import requests
 import requests_unixsocket
@@ -49,7 +48,7 @@ class Provider(BaseProvider):
     VALID_TYPES: list[str] | None = None
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return []
 
     @staticmethod
@@ -65,7 +64,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
 
         self.api_endpoint = self._get_provider_option("pdns_server")
         if not self.api_endpoint:
@@ -82,8 +81,7 @@ class Provider(BaseProvider):
         else:
             self.unix_socket = False
 
-        if self.api_endpoint.endswith("/"):
-            self.api_endpoint = self.api_endpoint[:-1]
+        self.api_endpoint = self.api_endpoint.removesuffix("/")
 
         if not self.api_endpoint.endswith("/api/v1"):
             self.api_endpoint += "/api/v1"

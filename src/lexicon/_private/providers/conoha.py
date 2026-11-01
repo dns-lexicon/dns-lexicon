@@ -3,7 +3,6 @@
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
@@ -17,7 +16,7 @@ class Provider(BaseProvider):
     """Provider class for Conoha"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["conoha.io"]
 
     @staticmethod
@@ -47,7 +46,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
 
         self.api_endpoint = "https://dns-service.{0}.conoha.io/v1".format(

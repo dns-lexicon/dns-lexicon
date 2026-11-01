@@ -4,7 +4,6 @@ import hashlib
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 from requests.adapters import HTTPAdapter
@@ -20,7 +19,7 @@ class Provider(BaseProvider):
     """Provider class for Mythic Beasts"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["mythic-beasts.com"]
 
     @staticmethod
@@ -45,7 +44,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.api_endpoint = "https://api.mythic-beasts.com/dns/v2"
         self.auth_token = None

@@ -2,7 +2,6 @@ import datetime
 import hashlib
 import json
 from argparse import ArgumentParser
-from typing import Dict, List, Optional
 
 import requests
 
@@ -30,7 +29,7 @@ def _filter_content(content: str, rec) -> bool:
 
 class Provider(BaseProvider):
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["wedos.net", "wedos.eu", "wedos.cz", "wedos.com"]
 
     @staticmethod
@@ -45,7 +44,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.api_endpoint = "https://api.wedos.com/wapi/json"
 
@@ -110,10 +109,10 @@ class Provider(BaseProvider):
 
     def list_records(
         self,
-        rtype: Optional[str] = None,
-        name: Optional[str] = None,
-        content: Optional[str] = None,
-    ) -> List[Dict]:
+        rtype: str | None = None,
+        name: str | None = None,
+        content: str | None = None,
+    ) -> list[dict]:
         data = self._create_payload("dns-rows-list", {"domain": self.domain_id})
         payload = self._post(data=data)
         records = []
@@ -140,10 +139,10 @@ class Provider(BaseProvider):
 
     def update_record(
         self,
-        identifier: Optional[str] = None,
-        rtype: Optional[str] = None,
-        name: Optional[str] = None,
-        content: Optional[str] = None,
+        identifier: str | None = None,
+        rtype: str | None = None,
+        name: str | None = None,
+        content: str | None = None,
     ) -> bool:
         if not identifier:
             records = self.list_records(rtype, name, content)
@@ -180,10 +179,10 @@ class Provider(BaseProvider):
 
     def delete_record(
         self,
-        identifier: Optional[str] = None,
-        rtype: Optional[str] = None,
-        name: Optional[str] = None,
-        content: Optional[str] = None,
+        identifier: str | None = None,
+        rtype: str | None = None,
+        name: str | None = None,
+        content: str | None = None,
     ) -> bool:
         if not identifier:
             records = self.list_records(rtype, name, content)

@@ -1,4 +1,3 @@
-# coding: utf-8
 # Copyright (c) 2016, Jason Kulatunga
 # Copyright (c) 2021, Oracle and/or its affiliates.
 """
@@ -28,7 +27,6 @@ import logging
 import os
 from argparse import ArgumentParser
 from pathlib import Path
-from typing import List
 
 import requests
 
@@ -41,8 +39,11 @@ try:
     from oci._vendor.requests.exceptions import ConnectTimeout  # type: ignore
     from oci.auth.signers import InstancePrincipalsSecurityTokenSigner  # type: ignore
     from oci.config import from_file  # type: ignore
-    from oci.exceptions import ConfigFileNotFound  # type: ignore
-    from oci.exceptions import InvalidConfig, ProfileNotFound
+    from oci.exceptions import (
+        ConfigFileNotFound,  # type: ignore
+        InvalidConfig,
+        ProfileNotFound,
+    )
     from oci.signer import Signer  # type: ignore
 except ImportError:
     pass
@@ -65,7 +66,7 @@ class Provider(BaseProvider):
     """
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["dns.oraclecloud.net"]
 
     @staticmethod
@@ -116,7 +117,7 @@ class Provider(BaseProvider):
 
     def __init__(self, config):
         """Initialize OCI DNS client."""
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self._signer = None
 

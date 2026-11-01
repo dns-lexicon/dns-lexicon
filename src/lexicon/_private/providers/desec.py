@@ -45,7 +45,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config: ConfigResolver):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.api_endpoint = "https://desec.io/api/v1"
         self._lexicon_version = lexicon_version()
         self._token = self._get_provider_option("auth_token")

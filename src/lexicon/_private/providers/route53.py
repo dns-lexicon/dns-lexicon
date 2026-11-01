@@ -4,7 +4,6 @@ import hashlib
 import logging
 import re
 from argparse import ArgumentParser
-from typing import List
 
 from lexicon.exceptions import AuthenticationError
 from lexicon.interfaces import Provider as BaseProvider
@@ -69,7 +68,7 @@ class Provider(BaseProvider):
     """Provide AWS Route 53 implementation of Lexicon Provider interface."""
 
     @staticmethod
-    def get_nameservers() -> List[re.Pattern]:
+    def get_nameservers() -> list[re.Pattern]:
         return [re.compile(r"^awsdns-\d+\.\w+$")]
 
     @staticmethod
@@ -107,7 +106,7 @@ class Provider(BaseProvider):
 
     def __init__(self, config):
         """Initialize AWS Route 53 DNS provider."""
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         # Allow setting domain_id from the command line
         self.domain_id = self._get_provider_option("zone_id") or None
         self.private_zone = self._get_provider_option("private_zone")

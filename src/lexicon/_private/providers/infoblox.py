@@ -18,7 +18,6 @@ LEXICON_INFOBLOX_AUTH_USER={user} LEXICON_INFOBLOX_AUTH_PSW={password} lexicon i
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
@@ -52,7 +51,7 @@ class Provider(BaseProvider):
     """Provider class for Infoblox"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return _NAMESERVER_DOMAINS
 
     @staticmethod
@@ -71,7 +70,7 @@ class Provider(BaseProvider):
         parser.add_argument("--ib-host", help="specify Infoblox Host exposing the WAPI")
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         # In Case .local. Domains are used, ignore the tldextract in client.py
         # this will be used in test_infoblox.py as well
         if self.config.resolve("lexicon:domain") in _NAMESERVER_DOMAINS[0]:
@@ -183,14 +182,7 @@ class Provider(BaseProvider):
             name = self.domain
         records = []
         if rtype.upper() in IB_TYPE2CONTENT:
-            uri = "{0}{1}?name={2}&view={3}&_return_fields={4}{5}".format(
-                self.api_endpoint,
-                IB_TYPE2CONTENT[rtype.upper()][1],
-                name,
-                self.view,
-                IB_TYPE2CONTENT[rtype.upper()][0],
-                IB_TYPE2CONTENT[rtype.upper()][2],
-            )
+            uri = f"{self.api_endpoint}{IB_TYPE2CONTENT[rtype.upper()][1]}?name={name}&view={self.view}&_return_fields={IB_TYPE2CONTENT[rtype.upper()][0]}{IB_TYPE2CONTENT[rtype.upper()][2]}"
             try:
                 response = self.session.get(uri)
             except BaseException:

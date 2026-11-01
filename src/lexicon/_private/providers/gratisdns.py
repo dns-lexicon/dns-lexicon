@@ -2,7 +2,6 @@
 
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 from bs4 import BeautifulSoup
@@ -19,7 +18,7 @@ class Provider(BaseProvider):
     # XXX: Identifiers change on updates
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["gratisdns.dk"]
 
     @staticmethod
@@ -32,7 +31,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.api_endpoint = "https://admin.gratisdns.com"
         self.cookies = {}

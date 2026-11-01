@@ -4,7 +4,6 @@ import json
 import logging
 import time
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
@@ -27,7 +26,7 @@ class Provider(BaseProvider):
     """Provider class for Rackspace"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["rackspacecloud.com"]
 
     @staticmethod
@@ -58,7 +57,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.api_endpoint = "https://dns.api.rackspacecloud.com/v1.0"
         self.auth_api_endpoint = "https://identity.api.rackspacecloud.com/v2.0"

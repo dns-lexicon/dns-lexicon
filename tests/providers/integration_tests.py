@@ -4,7 +4,6 @@ import os
 import warnings
 from functools import wraps
 from types import ModuleType
-from typing import Optional
 
 import pytest
 import vcr  # type: ignore
@@ -51,7 +50,7 @@ class EngineOverrideConfigSource(ConfigSource):
     """Config source to override some provider parameters during tests"""
 
     def __init__(self, overrides):
-        super(EngineOverrideConfigSource, self).__init__()
+        super().__init__()
         self.overrides = overrides
 
     def resolve(self, config_key):
@@ -64,7 +63,7 @@ class FallbackConfigSource(ConfigSource):
     """Config source to provider fallback to provider parameters during tests"""
 
     def __init__(self, fallback_fn):
-        super(FallbackConfigSource, self).__init__()
+        super().__init__()
         self.fallback_fn = fallback_fn
 
     def resolve(self, config_key):
@@ -438,7 +437,7 @@ class IntegrationTestsV1:
         return provider
 
     # Optional. Used to identify the test variant, if any.
-    provider_variant: Optional[str] = None
+    provider_variant: str | None = None
 
     def _filter_headers(self):
         return []

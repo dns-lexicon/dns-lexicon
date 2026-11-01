@@ -1,10 +1,8 @@
 """Module provider for Name.com"""
 
-from __future__ import absolute_import
 
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 from requests import HTTPError, Session
 from requests.auth import HTTPBasicAuth
@@ -20,7 +18,7 @@ DUPLICATE_ERROR = {
 }
 
 
-class NamecomLoader(object):  # pylint: disable=useless-object-inheritance,too-few-public-methods
+class NamecomLoader:  # pylint: disable=useless-object-inheritance,too-few-public-methods
     """Loader that handles pagination for the Name.com provider."""
 
     def __init__(self, get, url, data_key, next_page=1):
@@ -41,7 +39,7 @@ class NamecomProvider(BaseProvider):
     """Provider implementation for Name.com."""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["name.com"]
 
     @staticmethod
@@ -67,7 +65,7 @@ class NamecomProvider(BaseProvider):
                 self.domain_id = domain_name
                 return
 
-        raise AuthenticationError("{} domain does not exist".format(domain_name))
+        raise AuthenticationError(f"{domain_name} domain does not exist")
 
     def cleanup(self) -> None:
         pass
@@ -87,7 +85,7 @@ class NamecomProvider(BaseProvider):
             if priority:
                 data["priority"] = priority
 
-        url = "/domains/{}/records".format(self.domain)
+        url = f"/domains/{self.domain}/records"
         try:
             record_id = self._post(url, data)["id"]
         except HTTPError as error:
@@ -102,7 +100,7 @@ class NamecomProvider(BaseProvider):
         return record_id
 
     def list_records(self, rtype=None, name=None, content=None):
-        url = "/domains/{}/records".format(self.domain)
+        url = f"/domains/{self.domain}/records"
         records = []
 
         for raw in NamecomLoader(self._get, url, "records"):
@@ -166,7 +164,7 @@ class NamecomProvider(BaseProvider):
         if content:
             data["answer"] = content
 
-        url = "/domains/{}/records/{}".format(self.domain, record_id)
+        url = f"/domains/{self.domain}/records/{record_id}"
         record_id = self._put(url, data)["id"]
         logging.debug("update_record: record %s has been updated", record_id)
 
@@ -187,14 +185,14 @@ class NamecomProvider(BaseProvider):
             ]
 
         for record_id in record_ids:
-            url = "/domains/{}/records/{}".format(self.domain, record_id)
+            url = f"/domains/{self.domain}/records/{record_id}"
             self._delete(url)
             LOGGER.debug("delete_record: record %s has been deleted", record_id)
 
         return True
 
     def _get_raw_record(self, record_id):
-        url = "/domains/{}/records/{}".format(self.domain, record_id)
+        url = f"/domains/{self.domain}/records/{record_id}"
         return self._get(url)
 
     def _request(self, action="GET", url="/", data=None, query_params=None):

@@ -4,7 +4,6 @@ import json
 import logging
 import re
 from argparse import ArgumentParser
-from typing import List
 
 import pyotp
 import requests
@@ -19,7 +18,7 @@ class Provider(BaseProvider):
     """Provider class for Hover"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["hover.com"]
 
     @staticmethod
@@ -36,7 +35,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.api_endpoint = "https://www.hover.com/api"
         self.cookies = {}

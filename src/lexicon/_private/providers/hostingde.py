@@ -4,7 +4,6 @@ import json
 import logging
 import time
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
@@ -20,7 +19,7 @@ class Provider(BaseProvider):
     """Provider class for Hosting"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["hosting.de"]
 
     @staticmethod
@@ -28,7 +27,7 @@ class Provider(BaseProvider):
         parser.add_argument("--auth-token", help="specify api key for authentication")
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.api_endpoint = "https://secure.hosting.de/api/dns/v1/json"
 

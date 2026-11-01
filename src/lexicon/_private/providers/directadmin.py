@@ -3,7 +3,6 @@
 import logging
 import warnings
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 from requests.auth import HTTPBasicAuth
@@ -20,7 +19,7 @@ class Provider(BaseProvider):
     """Provider class for DirectAdmin"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         # DirectAdmin is not tied to a specific domain, so there is nothing to specify here
         return []
 
@@ -36,7 +35,7 @@ class Provider(BaseProvider):
         parser.add_argument("--endpoint", help="specify the DirectAdmin endpoint")
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
 
         self.endpoint = self._get_provider_option("endpoint")
         if self.endpoint is None:

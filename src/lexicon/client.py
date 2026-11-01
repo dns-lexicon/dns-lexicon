@@ -8,7 +8,7 @@ import warnings
 from contextlib import AbstractContextManager
 from threading import local
 from types import TracebackType
-from typing import Any, Type
+from typing import Any
 
 import dns.resolver
 import tldextract
@@ -156,7 +156,7 @@ class Client(AbstractContextManager):
         self.config.add_config_source(helper_config.DictConfigSource(runtime_config), 0)
 
         provider_module = _load_provider_module(self.provider_name)
-        self.provider_class: Type[Provider] = getattr(provider_module, "Provider")
+        self.provider_class: type[Provider] = provider_module.Provider
 
         self._state = local()
         self._state.stack = []
@@ -244,9 +244,7 @@ with Client(config) as operations:
                 f"This provider ({provider_name}) is not supported by Lexicon."
             )
 
-        provider_class: type[Provider] = getattr(
-            _load_provider_module(provider_name), "Provider"
-        )
+        provider_class: type[Provider] = _load_provider_module(provider_name).Provider
 
         required = provider_class.filter_required_extras(
             _list_extras(provider_name), self.config

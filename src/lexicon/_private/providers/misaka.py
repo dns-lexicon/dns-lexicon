@@ -1,12 +1,10 @@
 """Module provider for Misaka.IO"""
 
-from __future__ import absolute_import
 
 import base64
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List, Tuple
 
 import requests
 
@@ -27,7 +25,7 @@ class Provider(BaseProvider):
     """Provider class for Misaka.IO"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return [
             # gTLDs
             "m1ns.com",
@@ -56,7 +54,7 @@ class Provider(BaseProvider):
         parser.add_argument("--auth-token", help="specify token for authentication")
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.api_endpoint = "https://api.misaka.io/dns"
 
@@ -251,7 +249,7 @@ class Provider(BaseProvider):
             "filters": payload["filters"],
         }
 
-    def _identifier_decode(self, identifier: str) -> Tuple[str, str]:
+    def _identifier_decode(self, identifier: str) -> tuple[str, str]:
         padding = 4 - (len(identifier) % 4)
         chain = identifier + ("=" * padding)
         decoded = base64.urlsafe_b64decode(chain)
@@ -264,6 +262,6 @@ class Provider(BaseProvider):
 
     def _identifier_encode(self, rtype: str, name: str) -> str:
         encoded = base64.urlsafe_b64encode(
-            f"{rtype}/{self._relative_name(name)}".encode("utf-8")
+            f"{rtype}/{self._relative_name(name)}".encode()
         )
         return encoded.decode("utf-8").rstrip("=")

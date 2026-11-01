@@ -2,7 +2,6 @@
 
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 from lexicon.exceptions import AuthenticationError
 from lexicon.interfaces import Provider as BaseProvider
@@ -19,7 +18,7 @@ class Provider(BaseProvider):
     """Provider class for Softlayer"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["softlayer.com"]
 
     @staticmethod
@@ -32,7 +31,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
 
         username = self._get_provider_option("auth_username")

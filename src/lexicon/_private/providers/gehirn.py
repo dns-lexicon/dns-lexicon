@@ -5,7 +5,6 @@ import json
 import logging
 import re
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 from requests.auth import HTTPBasicAuth
@@ -42,7 +41,7 @@ class Provider(BaseProvider):
     """Provider class for Gehirn"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["gehirn.jp"]
 
     @staticmethod
@@ -55,7 +54,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.version_id = None
         self.api_endpoint = "https://api.gis.gehirn.jp/dns/v1"
@@ -244,7 +243,7 @@ class Provider(BaseProvider):
 
     # Helpers
     def _full_name(self, record_name):
-        record_name = super(Provider, self)._full_name(record_name)
+        record_name = super()._full_name(record_name)
         if not record_name.endswith("."):
             record_name += "."
         return record_name

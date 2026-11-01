@@ -5,7 +5,6 @@ import json
 import logging
 import time
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
@@ -41,7 +40,7 @@ class Provider(BaseProvider):
     """Provider class for OVH"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["ovh.net", "anycast.me"]
 
     @staticmethod
@@ -87,7 +86,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
 
         # Handling missing required parameters
         entrypoint = self._get_provider_option("auth_entrypoint")

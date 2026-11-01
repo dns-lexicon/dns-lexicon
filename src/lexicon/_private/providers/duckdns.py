@@ -24,7 +24,6 @@ _list_records and _delete_record does not handle this special case.\
 
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
@@ -47,7 +46,7 @@ class Provider(BaseProvider):
     VALID_TYPES: list[str] = ["A", "AAAA", "TXT"]
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["ca-central-1.compute.amazonaws.com"]
 
     @staticmethod
@@ -57,7 +56,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.api_url = "https://www.duckdns.org"
 
     @staticmethod
@@ -65,7 +64,7 @@ class Provider(BaseProvider):
         domain_dns = dns.name.from_text(domain)
 
         if len(domain_dns.labels) > 2 and b"duckdns" not in domain_dns.labels:
-            raise Exception("{} is not a valid Duck DNS domain.".format(domain))
+            raise Exception(f"{domain} is not a valid Duck DNS domain.")
 
         if b"duckdns" in domain_dns.labels:
             # use only the third level domain, the one actually registered in Duck DNS
@@ -100,9 +99,7 @@ class Provider(BaseProvider):
 
         ttl = dns_rrset.ttl
 
-        if rtype == "A":
-            content = dns_rrset[0].address
-        elif rtype == "AAAA":
+        if rtype == "A" or rtype == "AAAA":
             content = dns_rrset[0].address
         else:
             content = dns_rrset[0].strings[0].decode("utf-8")
@@ -247,7 +244,7 @@ class Provider(BaseProvider):
         content = response.content.decode("utf-8")
 
         if "KO" in content:
-            raise Exception("KO: {}".format(params))
+            raise Exception(f"KO: {params}")
 
         return content
 

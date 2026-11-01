@@ -9,7 +9,7 @@ import uuid
 from argparse import ArgumentParser
 from base64 import b64decode, b64encode
 from json import JSONDecodeError
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 import requests
 from cryptography.hazmat.backends import default_backend
@@ -37,7 +37,7 @@ class Provider(BaseProvider):
     """
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return []
 
     @staticmethod
@@ -58,7 +58,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config: ConfigResolver):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.provider_name = "transip"
 
         private_key_conf = self._get_provider_option("auth_api_key") or ""
@@ -140,10 +140,10 @@ class Provider(BaseProvider):
 
     def list_records(
         self,
-        rtype: Optional[str] = None,
-        name: Optional[str] = None,
-        content: Optional[str] = None,
-    ) -> List[Dict[str, Any]]:
+        rtype: str | None = None,
+        name: str | None = None,
+        content: str | None = None,
+    ) -> list[dict[str, Any]]:
         data = self._get(f"/domains/{self.domain}/dns")
 
         records = []
@@ -172,10 +172,10 @@ class Provider(BaseProvider):
 
     def update_record(
         self,
-        identifier: Optional[str] = None,
-        rtype: Optional[str] = None,
-        name: Optional[str] = None,
-        content: Optional[str] = None,
+        identifier: str | None = None,
+        rtype: str | None = None,
+        name: str | None = None,
+        content: str | None = None,
     ) -> bool:
         if not identifier and (not rtype or not name):
             raise Exception("Error, identifier or rtype+name parameters are required.")
@@ -228,10 +228,10 @@ class Provider(BaseProvider):
 
     def delete_record(
         self,
-        identifier: Optional[str] = None,
-        rtype: Optional[str] = None,
-        name: Optional[str] = None,
-        content: Optional[str] = None,
+        identifier: str | None = None,
+        rtype: str | None = None,
+        name: str | None = None,
+        content: str | None = None,
     ) -> bool:
         if identifier:
             records = self.list_records()
@@ -264,9 +264,9 @@ class Provider(BaseProvider):
         self,
         action: str = "GET",
         url: str = "/",
-        data: Optional[Dict] = None,
-        query_params: Optional[Dict] = None,
-    ) -> Optional[Dict[str, Any]]:
+        data: dict | None = None,
+        query_params: dict | None = None,
+    ) -> dict[str, Any] | None:
         response = requests.request(
             action,
             f"{API_BASE_URL}{url}",

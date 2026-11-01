@@ -23,7 +23,6 @@ import json
 import logging
 import time
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
@@ -37,7 +36,7 @@ class Provider(BaseProvider):
     """Provider clss for Constellix"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["constellix.com"]
 
     @staticmethod
@@ -48,7 +47,7 @@ class Provider(BaseProvider):
         parser.add_argument("--auth-token", help="specify secret key for authenticate=")
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.domain_details = None
         self.api_endpoint = "https://api.dns.constellix.com/v1"

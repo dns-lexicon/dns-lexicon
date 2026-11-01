@@ -6,7 +6,6 @@ API doc: https://yandex.com/dev/domain/doc/reference/dns-add.html
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
@@ -24,7 +23,7 @@ class Provider(BaseProvider):
     """Provider class for Yandex PDD"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["yandex.com"]
 
     @staticmethod
@@ -35,7 +34,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.api_endpoint = "https://pddimp.yandex.ru/api2/admin/dns"
 

@@ -2,7 +2,6 @@
 
 import logging
 from argparse import ArgumentParser
-from typing import List
 from xml.etree import ElementTree
 
 import requests
@@ -17,7 +16,7 @@ class Provider(BaseProvider):
     """Provider class for Namesilo"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["namesilo.com"]
 
     @staticmethod
@@ -25,7 +24,7 @@ class Provider(BaseProvider):
         parser.add_argument("--auth-token", help="specify key for authentication")
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.api_endpoint = (
             self._get_provider_option("api_endpoint") or "https://www.namesilo.com/api"

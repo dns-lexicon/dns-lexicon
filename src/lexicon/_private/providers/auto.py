@@ -8,7 +8,7 @@ import re
 import subprocess
 from argparse import ArgumentParser
 from types import ModuleType
-from typing import Any, Type
+from typing import Any
 
 import tldextract
 
@@ -79,7 +79,7 @@ def _relevant_provider_for_domain(domain: str) -> tuple[str, ModuleType]:
     relevant_providers = []
 
     for provider_name, provider_module in AVAILABLE_PROVIDERS.items():
-        provider_class: Type[BaseProvider] = getattr(provider_module, "Provider")
+        provider_class: type[BaseProvider] = provider_module.Provider
         ns_domains = provider_class.get_nameservers()
 
         # Test plain domain string comparison
@@ -122,7 +122,7 @@ def _relevant_provider_for_domain(domain: str) -> tuple[str, ModuleType]:
 # but __getattr__ is called only if the parameter/method cannot be found in the
 # current Provider hierarchy. If it is object, it will be the case for every relevant
 # call in the Lexicon library.
-class Provider(object):
+class Provider:
     """
     Implementation of the provider 'auto'.
     For the given domain, it will resolve the actual Provider class to use by inspecting the
@@ -155,12 +155,12 @@ class Provider(object):
         # Explore and load the arguments available for every provider into the 'auto' provider.
         for provider_name, provider_module in AVAILABLE_PROVIDERS.items():
             subparser = ArgumentParser(add_help=False)
-            provider: Type[BaseProvider] = getattr(provider_module, "Provider")
+            provider: type[BaseProvider] = provider_module.Provider
             provider.configure_parser(subparser)
 
             for action in subparser._actions:
                 action.option_strings = [
-                    re.sub(r"^--(.*)$", r"--{0}-\1".format(provider_name), option)
+                    re.sub(r"^--(.*)$", rf"--{provider_name}-\1", option)
                     for option in action.option_strings
                 ]
                 action.dest = f"auto_{provider_name}_{action.dest}"

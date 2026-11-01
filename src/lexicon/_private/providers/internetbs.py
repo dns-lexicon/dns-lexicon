@@ -17,7 +17,6 @@ import hashlib
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
@@ -31,7 +30,7 @@ class Provider(BaseProvider):
     """Provider class for internetbs"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["topdns.com"]
 
     @staticmethod
@@ -42,7 +41,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.api_endpoint = "https://api.internet.bs"
 

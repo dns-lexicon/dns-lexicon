@@ -3,7 +3,6 @@
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 from bs4 import BeautifulSoup, Tag
 from requests import Response, Session
@@ -32,7 +31,7 @@ class Provider(BaseProvider):
     }
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["easyname.eu"]
 
     @staticmethod
@@ -47,7 +46,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.session = Session()
         self.domain_id = None
         self._records = None
@@ -146,11 +145,11 @@ class Provider(BaseProvider):
         # Pull a list of records and check for ours
         was_success = len(self.list_records(rtype, name, content)) > 0
         if identifier != "" and was_success:
-            msg = "Successfully updated record {}".format(name)
+            msg = f"Successfully updated record {name}"
         elif was_success:
-            msg = "Successfully added record {}".format(name)
+            msg = f"Successfully added record {name}"
         else:
-            msg = "Failed to add/update record {}".format(name)
+            msg = f"Failed to add/update record {name}"
         LOGGER.info(msg, name)
         return was_success
 
@@ -282,7 +281,7 @@ class Provider(BaseProvider):
                     if rec["ttl"]:
                         rec["ttl"] = int(rec["ttl"])
                 except Exception as error:
-                    errmsg = "Cannot parse DNS entry ({}).".format(error)
+                    errmsg = f"Cannot parse DNS entry ({error})."
                     LOGGER.warning(errmsg)
                     raise AssertionError(errmsg)
                 records.append(rec)
@@ -387,8 +386,7 @@ class Provider(BaseProvider):
             records = [record for record in records if record["type"] == rtype]
         if name is not None:
             LOGGER.debug("Filtering %d records by name: %s", len(records), name)
-            if name.endswith("."):
-                name = name[:-1]
+            name = name.removesuffix(".")
             if rtype.lower() != "txt":
                 name = name.split(".")[0]
                 records = [

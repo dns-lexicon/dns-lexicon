@@ -1,7 +1,6 @@
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 from requests.adapters import HTTPAdapter
@@ -17,7 +16,7 @@ class Provider(BaseProvider):
     """Provider class for Porkbun"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["porkbun.com"]
 
     @staticmethod
@@ -33,7 +32,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.api_endpoint = "https://api.porkbun.com/api/json/v3"
         self._api_key = self._get_provider_option("auth_key")
         self._secret_api_key = self._get_provider_option("auth_secret")

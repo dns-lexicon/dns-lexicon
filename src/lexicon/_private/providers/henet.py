@@ -3,7 +3,6 @@
 import logging
 import re
 from argparse import ArgumentParser
-from typing import List
 
 from bs4 import BeautifulSoup
 from requests import Session
@@ -20,7 +19,7 @@ class Provider(BaseProvider):
     """
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["he.net"]
 
     @staticmethod
@@ -37,7 +36,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain = self.domain
         self.domain_id = None
         self.session = None
@@ -178,8 +177,7 @@ class Provider(BaseProvider):
             records = [record for record in records if record["type"] == rtype]
         if name:
             LOGGER.debug("Filtering %d records by name: %s", len(records), name)
-            if name.endswith("."):
-                name = name[:-1]
+            name = name.removesuffix(".")
             records = [record for record in records if name in record["name"]]
         if content:
             LOGGER.debug(

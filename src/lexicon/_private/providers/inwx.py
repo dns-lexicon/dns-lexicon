@@ -4,7 +4,6 @@ import logging
 import re
 import shlex
 from argparse import ArgumentParser
-from typing import List
 
 from lexicon.exceptions import AuthenticationError
 from lexicon.interfaces import Provider as BaseProvider
@@ -24,7 +23,7 @@ class Provider(BaseProvider):
     """
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return [
             "ns.inwx.de",
             "ns2.inwx.de",
@@ -51,7 +50,7 @@ class Provider(BaseProvider):
         """
         :param config: command line options
         """
-        super(Provider, self).__init__(config)
+        super().__init__(config)
 
         self._auth = {
             "user": self._get_provider_option("auth_username"),

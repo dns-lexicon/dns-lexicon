@@ -3,7 +3,6 @@
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
@@ -17,7 +16,7 @@ class Provider(BaseProvider):
     """Provider class for Flexible Engine Cloud"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["orange-business.com"]
 
     @staticmethod
@@ -29,7 +28,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.api_endpoint = "https://dns.prod-cloud-ocb.orange-business.com/v2"
         self.domain_id = None
 

@@ -4,7 +4,6 @@ import logging
 import types
 from argparse import ArgumentParser
 from time import localtime, strftime, time
-from typing import List
 
 from lexicon.interfaces import Provider as BaseProvider
 
@@ -42,7 +41,7 @@ class Provider(BaseProvider):
     """Provider class for a localzone"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return []
 
     @staticmethod
@@ -50,7 +49,7 @@ class Provider(BaseProvider):
         parser.add_argument("--filename", help="specify location of zone master file")
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.ttl = self._get_lexicon_option("ttl")
         self.domain = self._get_lexicon_option("domain")
         self.origin = self.domain + "."

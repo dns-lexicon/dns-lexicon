@@ -20,7 +20,6 @@ Implementation notes:
 
 import logging
 from argparse import ArgumentParser
-from typing import List
 from xml.etree import ElementTree
 
 import requests
@@ -40,7 +39,7 @@ class Provider(BaseProvider):
     """Provider class for Zonomi"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["zonomi.com"]
 
     @staticmethod
@@ -53,7 +52,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         if not self._get_provider_option("auth_token"):
             raise Exception("Error, application key is not defined")

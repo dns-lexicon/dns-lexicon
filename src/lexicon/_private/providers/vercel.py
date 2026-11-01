@@ -3,7 +3,6 @@
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
@@ -26,7 +25,7 @@ class Provider(BaseProvider):
     """
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["vercel-dns.com"]
 
     @staticmethod
@@ -38,7 +37,7 @@ class Provider(BaseProvider):
         parser.add_argument("--auth-token", help="specify your API token")
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.api_endpoint = "https://api.vercel.com"
 

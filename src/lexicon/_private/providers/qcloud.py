@@ -1,7 +1,6 @@
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 from lexicon.exceptions import AuthenticationError
 from lexicon.interfaces import Provider as BaseProvider
@@ -21,7 +20,7 @@ class Provider(BaseProvider):
     """Provider class for QCloud"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["dnspod.tencentcloudapi.com"]
 
     @staticmethod
@@ -32,7 +31,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         secret_id = self._get_provider_option("secret_id")
         secret_key = self._get_provider_option("secret_key")

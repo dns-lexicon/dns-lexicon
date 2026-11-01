@@ -26,7 +26,6 @@ import logging
 import time
 from argparse import ArgumentParser
 from base64 import b64decode, urlsafe_b64encode
-from typing import List
 
 import requests
 from cryptography.hazmat.backends import default_backend
@@ -52,7 +51,7 @@ class Provider(BaseProvider):
     """
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["googledomains.com"]
 
     @staticmethod
@@ -79,7 +78,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self._token = None
         self._private_zone = self._get_provider_option("private_zone")

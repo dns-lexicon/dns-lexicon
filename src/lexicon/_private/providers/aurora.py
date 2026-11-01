@@ -7,7 +7,6 @@ import hmac
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 
@@ -21,7 +20,7 @@ class Provider(BaseProvider):
     """Provider for Aurora"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["auroradns.eu"]
 
     @staticmethod
@@ -32,7 +31,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.api_endpoint = "https://api.auroradns.eu"
 
@@ -147,7 +146,7 @@ class Provider(BaseProvider):
         if query_params is None:
             query_params = {}
 
-        time = datetime.datetime.now(datetime.timezone.utc)
+        time = datetime.datetime.now(datetime.UTC)
         timestamp = time.strftime("%Y%m%dT%H%M%SZ")
         authorization_header = self._generate_auth_header(action, url, timestamp)
 

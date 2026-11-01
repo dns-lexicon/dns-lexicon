@@ -3,7 +3,6 @@
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 from requests.auth import HTTPBasicAuth
@@ -18,7 +17,7 @@ class Provider(BaseProvider):
     """Provider class for Sakura Cloud"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["sakura.ne.jp"]
 
     @staticmethod
@@ -31,7 +30,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.domain_id = None
         self.api_endpoint = "https://secure.sakura.ad.jp/cloud/zone/is1a/api/cloud/1.1"
 
@@ -170,10 +169,10 @@ class Provider(BaseProvider):
     def _full_name(self, record_name):
         if record_name == "@":
             record_name = self.domain
-        return super(Provider, self)._full_name(record_name)
+        return super()._full_name(record_name)
 
     def _relative_name(self, record_name):
-        name = super(Provider, self)._relative_name(record_name)
+        name = super()._relative_name(record_name)
         if not name:
             name = "@"
         return name

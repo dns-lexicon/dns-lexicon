@@ -3,7 +3,6 @@
 import logging
 import sys
 from argparse import ArgumentParser
-from typing import Dict, List, Optional, Tuple
 from xml.etree.ElementTree import Element, fromstring
 
 import requests
@@ -34,7 +33,7 @@ class Provider(BaseProvider):
     """
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["namecheap.com", "registrar-servers.com"]
 
     @staticmethod
@@ -63,7 +62,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
         self.client = _Api(
             api_user=self._get_provider_option("auth_username") or "",
             api_key=self._get_provider_option("auth_token") or "",
@@ -124,7 +123,7 @@ class Provider(BaseProvider):
             # OR if the user is not permissioned to manage this domain
             # OR the API request came from a not whitelisted IP
             # we should print the error, so people know how to correct it.
-            raise AuthenticationError(f"Authentication failed: `{str(err)}`")
+            raise AuthenticationError(f"Authentication failed: `{err!s}`")
 
         xpath = ".//{%(ns)s}CommandResponse/{%(ns)s}DomainGetInfoResult" % {
             "ns": _NAMESPACE
@@ -235,8 +234,7 @@ class Provider(BaseProvider):
         if rtype:
             records = [record for record in records if record["type"] == rtype]
         if name:
-            if name.endswith("."):
-                name = name[:-1]
+            name = name.removesuffix(".")
             records = [record for record in records if name in record["name"]]
         if content:
             records = [
@@ -273,8 +271,7 @@ class Provider(BaseProvider):
         processed_record = {}
 
         name = record["name"]
-        if name.endswith("."):
-            name = name[:-1]
+        name = name.removesuffix(".")
 
         short_name = name[: name.find(self.domain) - 1]
 
@@ -355,14 +352,14 @@ class _Api:
         else:
             self.endpoint = "https://api.namecheap.com/xml.response"
 
-    def call(self, command: str, extra_payload: Optional[Dict] = None) -> Element:
+    def call(self, command: str, extra_payload: dict | None = None) -> Element:
         if not extra_payload:
             extra_payload = {}
         payload, extra_payload = self._payload(command, extra_payload)
         xml = self._fetch_xml(payload, extra_payload)
         return xml
 
-    def _payload(self, command: str, extra_payload: Dict) -> Tuple[Dict, Dict]:
+    def _payload(self, command: str, extra_payload: dict) -> tuple[dict, dict]:
         payload = {
             "ApiUser": self.api_user,
             "ApiKey": self.api_key,
@@ -378,7 +375,7 @@ class _Api:
         return payload, extra_payload
 
     def _fetch_xml(
-        self, payload: Dict, extra_payload: Optional[Dict] = None
+        self, payload: dict, extra_payload: dict | None = None
     ) -> Element:
         if extra_payload:
             response = requests.post(self.endpoint, params=payload, data=extra_payload)

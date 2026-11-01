@@ -7,7 +7,6 @@ import logging
 import uuid
 from argparse import ArgumentParser
 from hashlib import sha1
-from typing import List
 from urllib.parse import quote_plus, urlencode
 
 import requests
@@ -24,7 +23,7 @@ class Provider(BaseProvider):
     """Provider class for Aliyun"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return ["hichina.com"]
 
     @staticmethod
@@ -232,7 +231,7 @@ class Provider(BaseProvider):
             "SignatureMethod": "HMAC-SHA1",
             "SignatureVersion": "1.0",
             "SignatureNonce": signature_nonce,
-            "Timestamp": datetime.datetime.now(datetime.timezone.utc)
+            "Timestamp": datetime.datetime.now(datetime.UTC)
             .replace(microsecond=0)
             .isoformat()
             + "Z",

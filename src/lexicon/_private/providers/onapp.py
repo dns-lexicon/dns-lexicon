@@ -3,7 +3,6 @@
 import json
 import logging
 from argparse import ArgumentParser
-from typing import List
 
 import requests
 from requests.auth import HTTPBasicAuth
@@ -18,7 +17,7 @@ class Provider(BaseProvider):
     """Provider class for OnApp"""
 
     @staticmethod
-    def get_nameservers() -> List[str]:
+    def get_nameservers() -> list[str]:
         return []
 
     @staticmethod
@@ -38,7 +37,7 @@ class Provider(BaseProvider):
         )
 
     def __init__(self, config):
-        super(Provider, self).__init__(config)
+        super().__init__(config)
 
         self.domain_id = None
 
@@ -212,9 +211,9 @@ class Provider(BaseProvider):
         if len(records) > 1:
             raise Exception(
                 "Identifier was not provided and several existing records "
-                "match the request for {0}/{1}".format(rtype, name)
+                f"match the request for {rtype}/{name}"
             )
         raise Exception(
             "Identifier was not provided and no existing records "
-            "match the request for {0}/{1}".format(rtype, name)
+            f"match the request for {rtype}/{name}"
         )
