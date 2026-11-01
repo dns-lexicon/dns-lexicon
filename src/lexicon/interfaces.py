@@ -68,14 +68,14 @@ class Provider(ABC):
 
         # Check the type is valid for the given provider.
         rtype = self._get_lexicon_option("type")
-        if rtype and self.VALID_TYPES and rtype not in self.VALID_TYPES:
+        if rtype and (self.VALID_TYPES is not None and rtype not in self.VALID_TYPES):
             raise ValueError(
                 f"{rtype} records are not supported by {self.provider_name}"
             )
 
     # The record types that the provider takes.  A provider overrides it in its
-    # own class, and an empty list takes any type.
-    VALID_TYPES: list[str] = [
+    # own class, `None` means the provider takes any type.
+    VALID_TYPES: list[str] | None = [
         "A",
         "AAAA",
         "CNAME",
@@ -165,6 +165,31 @@ class Provider(ABC):
         Configure the given parser for the provider needs
         (e.g. specific CLI flags for auth)
         """
+
+    @classmethod
+    def filter_required_extras(
+        cls, extras: list[str], config: ConfigResolver
+    ) -> list[str]:
+        """Return the subset of ``extras`` actually required given ``config``."""
+        return extras
+
+    @classmethod
+    def missing_extras_warning(cls, provider_name: str, missing: list[str]) -> str:
+        """Help-time text shown when extras are missing."""
+        return (
+            "WARNING: some required dependencies for this provider are not "
+            f"installed. Please run `pip install dns-lexicon[{provider_name}]` "
+            "first before using it."
+        )
+
+    @classmethod
+    def missing_extras_error(cls, provider_name: str, missing: list[str]) -> str:
+        """Error raised when the provider is selected without its required extras."""
+        return (
+            f"This provider ({provider_name}) has required extra "
+            "dependencies that are missing. Please run "
+            f"`pip install dns-lexicon[{provider_name}]` first before using it."
+        )
 
     # Helpers
 
