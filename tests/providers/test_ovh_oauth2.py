@@ -82,7 +82,7 @@ def test_oauth2_uses_bearer_token_and_no_signature():
         "scope": "all",
     }
     api_calls = [c for c in session.calls if c[0] != "POST"]
-    assert api_calls[0][1] == "https://eu.api.ovh.com/1.0/domain/zone/"
+    assert api_calls[0][1] == "https://eu.api.ovh.com/1.0/domain/zone/example.com/status"
     for _, _, headers in api_calls:
         assert headers["Authorization"] == "Bearer token1"
         assert "X-Ovh-Signature" not in headers
