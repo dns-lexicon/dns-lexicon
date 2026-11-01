@@ -46,7 +46,7 @@ class Provider(BaseProvider):
     """Provider class for PowerDNS"""
 
     # PowerDNS takes any type of record, as RFC 3597 describes.
-    VALID_TYPES: list[str] = []
+    VALID_TYPES: list[str] | None = None
 
     @staticmethod
     def get_nameservers() -> List[str]:

@@ -68,14 +68,14 @@ class Provider(ABC):
 
         # Check the type is valid for the given provider.
         rtype = self._get_lexicon_option("type")
-        if rtype and self.VALID_TYPES and rtype not in self.VALID_TYPES:
+        if rtype and (self.VALID_TYPES is not None and rtype not in self.VALID_TYPES):
             raise ValueError(
                 f"{rtype} records are not supported by {self.provider_name}"
             )
 
     # The record types that the provider takes.  A provider overrides it in its
-    # own class, and an empty list takes any type.
-    VALID_TYPES: list[str] = [
+    # own class, `None` means the provider takes any type.
+    VALID_TYPES: list[str] | None = [
         "A",
         "AAAA",
         "CNAME",
