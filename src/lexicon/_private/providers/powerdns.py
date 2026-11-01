@@ -132,11 +132,10 @@ class Provider(BaseProvider):
         return f"{rtype}/{name}={content}"
 
     def _parse_identifier(self, identifier):
-        parts = identifier.split("/")
-        rtype = parts[0]
-        parts = parts[1].split("=")
-        name = parts[0]
-        content = "=".join(parts[1:])
+        # Split once at each, because the content can hold either character,
+        # as the base64 of a DKIM key does.  A name holds neither.
+        rtype, rest = identifier.split("/", 1)
+        name, content = rest.split("=", 1)
         return rtype, name, content
 
     def list_records(self, rtype=None, name=None, content=None):

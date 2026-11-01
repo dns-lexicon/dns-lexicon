@@ -7,6 +7,7 @@
   application secret and consumer key; `ovh-us` is now a valid `--auth-entrypoint`
 
 ### Modified
+* Fix `powerdns` provider failing to delete or update a record whose content holds a slash, such as a DKIM key, which made an update add a second record
 * A CNAME target with a trailing dot stays absolute in the `powerdns` provider, so it can name a host outside the zone
 * Fix record names for domains registered with uppercase letters in `dynu` provider
 * Fix TXT records not being found or deleted by content for `dnsimple` provider, as the DNSimple API returns TXT content wrapped in quotes
