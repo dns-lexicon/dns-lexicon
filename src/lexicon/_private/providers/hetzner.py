@@ -498,7 +498,7 @@ class HetznerCloud(BaseProvider):
 
         return [{"value": content}]
 
-    def _get_record_sets(self, rtype, name):
+    def _get_record_sets(self, rtype, name) -> list[RecordSet]:
         response = self._get(
             f"{self._zone_url()}/rrsets",
             {"type": rtype, "name": self._relative_name(name) if name else None},
