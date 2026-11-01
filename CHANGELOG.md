@@ -2,21 +2,32 @@
 
 ## master - CURRENT
 ### Added
-* A provider can name the record types that it takes in `VALID_TYPES`, and refuses any other type. `powerdns` takes any type
-* The `ovh` provider accepts the OAuth2 client ID and secret of an OVHcloud service
-  account (`--auth-client-id`, `--auth-client-secret`) instead of the application key,
-  application secret and consumer key; `ovh-us` is now a valid `--auth-entrypoint`
+* Providers can restrict the record types they accept through `VALID_TYPES`;
+  `powerdns` accepts any type (#54)
+* The `ovh` provider supports OAuth2 service accounts with `--auth-client-id` and
+  `--auth-client-secret`, and `ovh-us` is a valid `--auth-entrypoint` (#108)
+* The `gransy` provider has a REST API backend, used when `--auth-token` is set.
+  `zeep` is only required for the SOAP backend (#105)
 
 ### Modified
-* Fix `powerdns` provider failing to delete or update a record whose content holds a slash, such as a DKIM key, which made an update add a second record
-* A CNAME target with a trailing dot stays absolute in the `powerdns` provider, so it can name a host outside the zone
-* Fix record names for domains registered with uppercase letters in `dynu` provider
-* Fix TXT records not being found or deleted by content for `dnsimple` provider, as the DNSimple API returns TXT content wrapped in quotes
-* Fix `porkbun` provider rejecting MX and SRV records with HTTP 400 Bad Request, by splitting the inline priority out of the record content into Porkbun's dedicated `prio` field
-* The `ovh` provider now only requires a token scoped to the managed zone (`/domain/zone/example.com/*`) instead of the whole `/domain/zone/*` scope
-* The `ovh` provider now strips the surrounding double quotes the OVH API adds around TXT record targets. This fixes duplicate detection on `create_record` and makes the `content` returned by `list_records` consistent with the other providers (behavior change: TXT content is no longer quoted)
-* A shared integration test of a record type skips itself when the provider does not take that type. `duckdns` takes A, AAAA and TXT
-* Send the priority of MX and SRV records in the `prio` field of the `easydns` provider, from `--priority` or from the front of the record content. The `rdata` of an MX is its target, and the `rdata` of an SRV is its whole RDATA, priority included. A listed MX gets its priority back in front of its content
+* Fix `powerdns` failing to delete or update a record whose content holds a slash,
+  such as a DKIM key (#114)
+* A CNAME target with a trailing dot stays absolute in `powerdns`, so it can point
+  outside the zone (#111)
+* Fix record names for domains with uppercase letters in `dynu` (#110)
+* Fix TXT records not being found by content in `dnsimple`, as the API wraps TXT
+  content in quotes (#109)
+* Fix `porkbun` rejecting MX and SRV records with HTTP 400, by moving the priority
+  into the dedicated `prio` field (#102)
+* The `ovh` provider now requires only a token scoped to the managed zone
+  (`/domain/zone/example.com/*`) and strips the quotes the API adds around TXT
+  content. Behavior change: TXT content is no longer returned quoted (#97)
+* Fix `gransy` failing to create records at the zone apex (#105)
+* Fix `--resolve-zone-name` being always enabled from the CLI (#106)
+* Fix `easydns` not sending the priority of MX and SRV records in the `prio` field,
+  taken from `--priority` or from the front of the record content (#116)
+* The shared integration tests skip a record type the provider does not accept;
+  `duckdns` accepts A, AAAA and TXT (#115)
 
 ## 3.25.2 - 10/05/2026
 ### Added
