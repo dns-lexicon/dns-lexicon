@@ -1,4 +1,5 @@
 """Integration tests for Hetzner"""
+
 from unittest import TestCase
 
 import pytest
