@@ -2,6 +2,7 @@
 
 ## master - CURRENT
 ### Modified
+* Fix record names for domains registered with uppercase letters in `dynu` provider
 * Fix TXT records not being found or deleted by content for `dnsimple` provider, as the DNSimple API returns TXT content wrapped in quotes
 * Fix `porkbun` provider rejecting MX and SRV records with HTTP 400 Bad Request, by splitting the inline priority out of the record content into Porkbun's dedicated `prio` field
 * The `ovh` provider now only requires a token scoped to the managed zone (`/domain/zone/example.com/*`) instead of the whole `/domain/zone/*` scope
