@@ -51,7 +51,9 @@ class Provider(BaseProvider):
     # Create record. If record already exists with the same content, do nothing'
 
     def create_record(self, rtype, name, content):
-        priority, content = self._split_priority(rtype, content)
+        priority, content = self._split_priority(
+            rtype, self._absolute_target(rtype, content)
+        )
         record = {
             "type": rtype,
             "domain": self.domain_id,
@@ -85,7 +87,7 @@ class Provider(BaseProvider):
                 "type": record["type"],
                 "name": f"{record['host']}.{record['domain']}",
                 "ttl": record["ttl"],
-                "content": self._join_priority(record),
+                "content": self._target_as_served(record),
                 "id": record["id"],
             }
             records.append(processed_record)
@@ -110,7 +112,9 @@ class Provider(BaseProvider):
         if name:
             data["host"] = self._relative_name(name)
         if content:
-            priority, data["rdata"] = self._split_priority(rtype, content)
+            priority, data["rdata"] = self._split_priority(
+                rtype, self._absolute_target(rtype, content)
+            )
             if rtype in ("MX", "SRV"):
                 data["prio"] = priority
 
@@ -165,6 +169,23 @@ class Provider(BaseProvider):
         if record["type"] == "MX" and record.get("prio") is not None:
             return f"{record['prio']} {record['rdata']}"
         return record["rdata"]
+
+    # easyDNS reads a target without its trailing dot as a name inside the
+    # zone, but lexicon means it as an absolute name.  So the target of a
+    # CNAME goes up with its dot, and a target that easyDNS holds without it
+    # is read back as the name that easyDNS serves.
+    def _absolute_target(self, rtype, content):
+        if rtype == "CNAME" and content and not content.endswith("."):
+            return content + "."
+        return content
+
+    def _target_as_served(self, record):
+        content = self._join_priority(record)
+        if record["type"] != "CNAME" or not content:
+            return content
+        if content.endswith("."):
+            return content[:-1]
+        return f"{content}.{record['domain']}"
 
     def _request(self, action="GET", url="/", data=None, query_params=None):
         if data is None:
