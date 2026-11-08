@@ -32,7 +32,7 @@ class Provider(BaseProvider):
 
     @staticmethod
     def get_nameservers() -> list[str]:
-        return ["ns1.desec.io", "ns2.desec.org"]
+        return ["desec.io", "desec.org"]
 
     @staticmethod
     def configure_parser(parser: ArgumentParser) -> None:
