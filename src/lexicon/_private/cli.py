@@ -9,6 +9,7 @@ import warnings
 from lexicon._private.parser import generate_cli_main_parser
 from lexicon.client import Client
 from lexicon.config import ConfigResolver
+from lexicon.exceptions import LexiconError
 
 logger = logging.getLogger(__name__)
 
@@ -122,7 +123,11 @@ def main() -> None:
     #   * from the environment variables
     #   * from lexicon configuration files found in given --config-dir (default is current dir)
     config = ConfigResolver()
-    config.with_args(parsed_args).with_env().with_config_dir(parsed_args.config_dir)
+    try:
+        config.with_args(parsed_args).with_env().with_config_dir(parsed_args.config_dir)
+    except LexiconError as err:
+        print(f"Error: {err}", file=sys.stderr)
+        sys.exit(2)
 
     client = Client(config)
 
