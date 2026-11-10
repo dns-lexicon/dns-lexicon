@@ -1,9 +1,13 @@
 """Unit tests for the Lexicon config mechanism"""
 
+import sys
+
 import pytest
 
+from lexicon._private import cli as cli_module
 from lexicon._private.parser import generate_cli_main_parser
 from lexicon.config import ConfigResolver, ConfigSource
+from lexicon.exceptions import LexiconError
 
 
 def test_environment_resolution(monkeypatch):
@@ -135,3 +139,35 @@ def test_prioritized_resolution(tmpdir, monkeypatch):
         .resolve("lexicon:cloudflare:auth_token")
         == "TEST2"
     )
+
+
+def test_config_dir_missing_raises_clean_error(tmpdir):
+    missing = str(tmpdir.join("does_not_exist_12345"))
+
+    with pytest.raises(LexiconError, match="does_not_exist_12345"):
+        ConfigResolver().with_config_dir(missing)
+
+
+def test_main_missing_config_dir_exits_cleanly(tmpdir, capsys, monkeypatch):
+    missing = str(tmpdir.join("does_not_exist_12345"))
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "lexicon",
+            "--config-dir",
+            missing,
+            "cloudflare",
+            "list",
+            "example.com",
+            "TXT",
+        ],
+    )
+
+    with pytest.raises(SystemExit) as exc_info:
+        cli_module.main()
+
+    assert exc_info.value.code == 2
+    err = capsys.readouterr().err
+    assert "does_not_exist_12345" in err
+    assert "Traceback" not in err

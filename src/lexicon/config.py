@@ -14,6 +14,8 @@ from typing import Any
 
 import yaml
 
+from lexicon.exceptions import LexiconError
+
 LOGGER = logging.getLogger(__name__)
 
 
@@ -356,6 +358,9 @@ class ConfigResolver:
         """
         lexicon_provider_config_files = []
         lexicon_config_files = []
+
+        if not os.path.isdir(dir_path):
+            raise LexiconError(f"Configuration directory not found: {dir_path}")
 
         for path in os.listdir(dir_path):
             path = os.path.join(dir_path, path)
