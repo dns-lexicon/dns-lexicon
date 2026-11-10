@@ -168,6 +168,46 @@ class TestEasyDnsProvider(IntegrationTestsV1):
         assert self._listed(provider, "MX", "mx.update") == [content]
         assert provider.delete_record(record["id"])
 
+    # easyDNS reads a CNAME target without its trailing dot as a name inside
+    # the zone, and lexicon means it as an absolute name.
+    @vcr_integration_test
+    def test_provider_when_calling_create_record_for_CNAME_sends_an_absolute_target(
+        self,
+    ):
+        self.kept_host = "cname.absolute"
+        provider = self._construct_authenticated_provider()
+        sent = self._sent(provider)
+        target = f"target.{self.domain}"
+        assert provider.create_record("CNAME", "cname.absolute", target)
+        assert sent == [(0, f"{target}.")]
+        assert self._listed(provider, "CNAME", "cname.absolute") == [target]
+        assert provider.delete_record(None, "CNAME", "cname.absolute")
+
+    # A target held without its dot, as the provider sent one before, lists as
+    # the name that easyDNS serves for it.
+    @vcr_integration_test
+    def test_provider_when_calling_list_records_for_CNAME_held_without_its_dot(
+        self,
+    ):
+        self.kept_host = "cname.relative"
+        provider = self._construct_authenticated_provider()
+        target = f"target.{self.domain}"
+        provider._put(
+            f"/zones/records/add/{provider.domain_id}/CNAME",
+            {
+                "type": "CNAME",
+                "domain": provider.domain_id,
+                "host": "cname.relative",
+                "ttl": provider._get_lexicon_option("ttl"),
+                "prio": 0,
+                "rdata": target,
+            },
+        )
+        assert self._listed(provider, "CNAME", "cname.relative") == [
+            f"{target}.{self.domain}"
+        ]
+        assert provider.delete_record(None, "CNAME", "cname.relative")
+
     @pytest.mark.skip(reason="new test, missing recording")
     def test_provider_when_calling_update_record_should_modify_record_name_specified(
         self,
