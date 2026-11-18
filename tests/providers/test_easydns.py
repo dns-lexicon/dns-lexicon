@@ -9,6 +9,7 @@ endpoint below in their place.
 
 import json
 import os
+from unittest.mock import patch
 
 import pytest
 from integration_tests import IntegrationTestsV1, vcr_integration_test
@@ -167,6 +168,44 @@ class TestEasyDnsProvider(IntegrationTestsV1):
         assert provider.update_record(record["id"], "MX", "mx.update", content)
         assert self._listed(provider, "MX", "mx.update") == [content]
         assert provider.delete_record(record["id"])
+
+    # easyDNS lists the host of an apex record as "" when the record was made
+    # through its API, and as "@" when it was made in its console.
+    def _provider_listing_apex(self):
+        provider = self.provider_module.Provider(self._test_config())
+        provider.domain_id = self.domain
+        records = [
+            {"id": "1", "host": "", "type": "A", "rdata": "192.0.2.1"},
+            {"id": "2", "host": "@", "type": "TXT", "rdata": "v=spf1 -all"},
+            {"id": "3", "host": "www", "type": "A", "rdata": "192.0.2.2"},
+        ]
+        for record in records:
+            record.update({"domain": self.domain, "ttl": "3600", "prio": "0"})
+        return provider, {"data": records}
+
+    def test_provider_when_calling_list_records_should_name_apex_records_by_zone(
+        self,
+    ):
+        provider, payload = self._provider_listing_apex()
+        with patch.object(provider, "_get", return_value=payload):
+            assert [record["name"] for record in provider.list_records()] == [
+                self.domain,
+                self.domain,
+                f"www.{self.domain}",
+            ]
+            apex = provider.list_records(name=self.domain)
+            assert [record["id"] for record in apex] == ["1", "2"]
+
+    def test_provider_when_calling_delete_record_by_name_should_delete_apex_records(
+        self,
+    ):
+        provider, payload = self._provider_listing_apex()
+        with (
+            patch.object(provider, "_get", return_value=payload),
+            patch.object(provider, "_delete") as delete,
+        ):
+            assert provider.delete_record(None, "TXT", self.domain)
+        delete.assert_called_once_with(f"/zones/records/{self.domain}/2")
 
     @pytest.mark.skip(reason="new test, missing recording")
     def test_provider_when_calling_update_record_should_modify_record_name_specified(

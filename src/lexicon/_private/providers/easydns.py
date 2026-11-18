@@ -81,9 +81,14 @@ class Provider(BaseProvider):
         payload = self._get(f"/zones/records/all/{self.domain_id}")
         records = []
         for record in payload["data"]:
+            # easyDNS names the apex "" when the record was made through its
+            # API, and "@" when it was made in its console.
+            host = record["host"]
             processed_record = {
                 "type": record["type"],
-                "name": f"{record['host']}.{record['domain']}",
+                "name": f"{host}.{record['domain']}"
+                if host not in ("", "@")
+                else record["domain"],
                 "ttl": record["ttl"],
                 "content": self._join_priority(record),
                 "id": record["id"],
