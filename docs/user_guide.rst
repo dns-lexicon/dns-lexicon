@@ -152,7 +152,7 @@ Given the provided domain, Lexicon must determine what is the actual zone name t
 
 If the decision is "easy" for second-level domains (like ``example.com``), it is not the case for higher level
 domains. For instance ``example.com`` DNS zone could declare a delegation of subdomain ``sub.example.com`` to
-another DNS zone. In this case, a request done to ``sub.example.com`` must correctly that the zone name is
+another DNS zone. In this case, a request done to ``sub.example.com`` must correctly determine that the zone name is
 ``sub.example.com`` and not ``example.com``.
 
 Lexicon provides two ways to deal with this situation.
